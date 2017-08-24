@@ -11,12 +11,12 @@ import {
   Text,
   View
 } from 'react-native';
-import ProfilePage from './src/components/ProfilePage'
+import Router from './src/components/Router'
 
 export default class ChurchApp extends Component {
   render() {
     return (
-      <ProfilePage/>
+      <Router/>
     );
   }
 }
