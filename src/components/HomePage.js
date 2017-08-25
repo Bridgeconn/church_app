@@ -41,15 +41,16 @@ export default class HomePage extends Component{
 		        <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={require('../images/person_dummy.png')}>
-			          	<TouchableOpacity onPress={this.goToProfile.bind(this)} >
+			          	<TouchableOpacity onPress={this.goToProfile.bind(this)}>
 		       		 		<Icon name="create" style={styles.editIcon}/>
 		        		</TouchableOpacity>
-			          </Image>		
+			          	</Image>
 			        </View> 
+			        
 			        <View style={styles.profileView}>
-		        		<Text style={styles.customText}>Name</Text>
-		        		<Text style={styles.customText}>Email</Text>
-		        		<Text style={styles.customText}>Contact</Text>
+		        		<Text>{this.props.username}</Text>
+		        		<Text>Email</Text>
+		        		<Text>{this.props.password}</Text>
 		        	</View>
 		 		</View>
 		 		<View style={styles.titleView}>

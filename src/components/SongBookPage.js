@@ -73,16 +73,7 @@ export default class SongBookPage extends Component{
 	render(){
 		return(
 			<ScrollView>
-				<Header>
-		          <Left>
-		           <Title>Church App</Title>
-		          </Left>
-		          <Right>
-		            <Button>
-		              <Icon name="settings" />
-		            </Button>
-		          </Right>
-		        </Header>		       
+				    
 		 		<View style={styles.eventsView}>
 		 		<Right>
 		 			<TouchableOpacity onPress={this.playSong}>{this.state.isSongPlaying ? <Icon name="ios-play"/> : <Icon name="ios-pause" />}</TouchableOpacity> 

@@ -86,6 +86,15 @@ const styles = StyleSheet.create({
     fontSize:22,
     color:'#fff',
     fontWeight:'900'
+  },
+  NavBarCustom:{
+    backgroundColor:'blue'
+  },
+  navbarTitle:{
+    fontSize:19,
+    color:'#fff',
+    fontFamily:'roboto-medium',
+    fontWeight:'400'
   }
 
 })

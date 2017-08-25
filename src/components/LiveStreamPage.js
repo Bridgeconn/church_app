@@ -32,16 +32,7 @@ export default class LiveStreamPage extends Component{
 	render(){
 		return(
 			<ScrollView>
-				<Header>
-		          <Left>
-		           <Title>Church App</Title>
-		          </Left>
-		          <Right>
-		            <Button>
-		              <Icon name="settings" />
-		            </Button>
-		          </Right>
-		        </Header>
+			
 		 		<View style={styles.eventsView}>
 		 			<YouTube
 		          ref={component => {

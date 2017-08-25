@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker'
+import { Actions } from 'react-native-router-flux'
 import styles from '../style/styles.js'
 
 export default class ProfilePage extends Component{
@@ -25,6 +26,7 @@ export default class ProfilePage extends Component{
 	handlePress() {
      console.log(this.state.username);
      console.log(this.state.password);
+     Actions.home({username:this.state.username, password:this.state.password,image:this.state.avatarSource})
   }
   selectPhotoTapped() {
     const options = {
@@ -62,14 +64,16 @@ export default class ProfilePage extends Component{
 	render(){
 		return(
 			<ScrollView>
-				<Header>
+			<Header>
 		          <Left>
-		           <Title>Church App</Title>
+		          <TouchableOpacity>
+		           	<Title>Edit</Title>
+		           </TouchableOpacity>
 		          </Left>
 		          <Right>
-		            <Button>
-		              <Icon name="settings" />
-		            </Button>
+		            <TouchableOpacity onPress={() => this.handlePress()}>
+		              <Title>Save</Title>
+		            </TouchableOpacity>
 		          </Right>
 		        </Header>
 
@@ -112,11 +116,6 @@ export default class ProfilePage extends Component{
 				          returnKeyLabel = {"next"}
 				          onChangeText={(text) => this.setState({password:text})}
 				        />
-				        <TouchableOpacity 
-				          onPress={() => this.handlePress()}
-				          style={styles.buttonStyle}>
-				              <Text>Save</Text>
-				        </TouchableOpacity>
 					</View>
 				</View>
 			</ScrollView>
