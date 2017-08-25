@@ -16,7 +16,7 @@ export default class ProfilePage extends Component{
 		    isReady: false,
 		    status: null,
 	      	username: '',
-      		password: '',
+      		contact: '',
 	     	
 
 	  	};
@@ -25,8 +25,8 @@ export default class ProfilePage extends Component{
 
 	handlePress() {
      console.log(this.state.username);
-     console.log(this.state.password);
-     Actions.home({username:this.state.username, password:this.state.password,image:this.state.avatarSource})
+     console.log(this.state.contact);
+     Actions.home({username:this.state.username, contact:this.state.contact,image:this.state.avatarSource})
   }
   selectPhotoTapped() {
     const options = {
@@ -114,7 +114,7 @@ export default class ProfilePage extends Component{
 				          style={styles.textInputStyle}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(text) => this.setState({password:text})}
+				          onChangeText={(text) => this.setState({contact:text})}
 				        />
 					</View>
 				</View>

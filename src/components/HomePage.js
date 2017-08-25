@@ -46,11 +46,11 @@ export default class HomePage extends Component{
 		        		</TouchableOpacity>
 			          	</Image>
 			        </View> 
-			        
+
 			        <View style={styles.profileView}>
 		        		<Text>{this.props.username}</Text>
 		        		<Text>Email</Text>
-		        		<Text>{this.props.password}</Text>
+		        		<Text>{this.props.contact}</Text>
 		        	</View>
 		 		</View>
 		 		<View style={styles.titleView}>
