@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 import { 
   ScrollView,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
   Text
 } from 'react-native'
 import {Actions} from 'react-native-router-flux'
@@ -103,9 +103,9 @@ export default class SignupPage extends Component {
           value={this.state.value}
           onChange={this._onChange}
         />
-        <TouchableHighlight onPress={this._handleAdd}>
+        <TouchableOpacity onPress={this._handleAdd}>
           <Text style={[styles.button, styles.greenButton]}>Create account</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </ScrollView>
     )
   }
