@@ -26,7 +26,7 @@ export default class ProfilePage extends Component{
 	handlePress() {
      console.log(this.state.username);
      console.log(this.state.contact);
-     Actions.home({username:this.state.username, contact:this.state.contact,image:this.state.avatarSource})
+     Actions.home({username:this.state.username, contact:this.state.contact, image:this.state.avatarSource})
   }
   selectPhotoTapped() {
     const options = {
