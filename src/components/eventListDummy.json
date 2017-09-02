@@ -1,0 +1,30 @@
+{
+    "events": [
+        {
+            "event_poster_url": "http://xyzevent1.jpg",
+            "event_name": "Event 1",
+            "venue_name": "Event 1 Venue",
+            "venue_latitude": "12.3456789",
+            "venue_longitude": "34.8765432",
+            "event_time_start": "epoch1",
+            "event_time_end": "epoch2",
+            "event_topic": "This is topic for event 1",
+            "event_speaker": "Event 1 Speaker"
+
+        },
+        {
+            "event_poster_url": "http://xyzevent2.jpg",
+            "event_name": "Event 2",
+            "venue_name": "Event 2 Venue",
+            "venue_latitude": "12.3456789",
+            "venue_longitude": "34.8765432",
+            "event_time_start": "epoch1",
+            "event_time_end": "epoch2",
+            "event_topic": "This is topic for event 2",
+            "event_speaker": "Event 2 Speaker"
+        }
+    ],
+    "status": 200,
+    "error": "",
+    "message": ""
+}

@@ -14,6 +14,8 @@ import com.facebook.soloader.SoLoader;
 
 import com.imagepicker.ImagePickerPackage;
 
+import com.lugg.ReactConfig.ReactConfigPackage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSoundPackage(),
             new ReactNativeYouTube(),
             new VectorIconsPackage(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new ReactConfigPackage()
       );
     }
   };

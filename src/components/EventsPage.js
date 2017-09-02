@@ -3,7 +3,6 @@ import {AppRegistry,StyleSheet,Text,ScrollView} from 'react-native';
 import {Header, Card, Title, Left,Button,Right,Icon,Body,ListItem,List} from 'native-base'
 import Panel from './AccordionEvents';
 
-
 export default class AccordianMenuExample extends Component{
    
   render() {

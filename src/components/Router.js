@@ -10,6 +10,8 @@ import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import styles from '../style/styles.js'
 
+var Config = require('react-native-android-config');
+
 export default class RoutesPage extends Component {
    componentDidMount() {
       Actions.home();
@@ -26,52 +28,54 @@ const scenes = Actions.create(
   	<Scene 
       key = "home"       
       component = {HomePage}           
-      title = "HomePage" 
+      title = "HomePage"
       initial={true} 
       hideNavBar={true}
     />
     <Scene key = "profile"    
       component = {ProfilePage}        
-      title = "ProfilePage" 
+      title = "Edit Profile" 
       hideNavBar={true}
     />
    	<Scene 
       key = "events"     
       component = {EventsPage}         
-      title = "EventsPage" 
+      title = {Config.APP_NAME} 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle} 
-      leftButtonColor={"white"}
-      leftButtonIconSize={30} 
-      
-    />
+      navBarButtonColor={"white"} 
+      />
    	<Scene 
       key = "live"       
       component = {LiveStreamPage}     
-      title = "LiveStreamPage" 
+      title = "Live Stream" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "songs"   	  
       component = {SongBookPage}       
-      title = "SongBookPage" 
+      title = "Songbook" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "contacts"   
       component = {ContactBookPage}    
-      title = "ContactBookPage" 
+      title = "Address Book" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "verse"      
       component = {VersePage}          
-      title = "VersePage" 
+      title = "Verse of the Day" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
   </Scene>
 )

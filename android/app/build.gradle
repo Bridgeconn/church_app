@@ -96,12 +96,16 @@ android {
     defaultConfig {
         applicationId "com.churchapp"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        def props = new Properties()
+        props.load(new FileInputStream(rootProject.file('config.properties')))
+        props.each { key, val -> buildConfigField "String", key, val }
+
     }
     splits {
         abi {
@@ -141,6 +145,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-image-picker')
+    compile project(':react-native-android-config')
 }
 
 // Run this once to be able to run the application with BUCK
