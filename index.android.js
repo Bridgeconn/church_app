@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 import Router from './src/components/Router'
+import Index from './src/Login/Index'
+
 
 export default class ChurchApp extends Component {
   render() {

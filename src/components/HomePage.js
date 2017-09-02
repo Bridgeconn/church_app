@@ -6,6 +6,14 @@ import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
 
 export default class HomePage extends Component{
+	constructor(){
+		super()
+		this.state = {
+		    ImageOption: null,
+	  	};
+	  	
+	}
+	
 	goToProfile(){
 		Actions.profile()
 	}
@@ -25,6 +33,7 @@ export default class HomePage extends Component{
 		Actions.verse()
 	}
 	render(){
+		
 		return(
 			<ScrollView>
 				<Header>
@@ -40,17 +49,22 @@ export default class HomePage extends Component{
 
 		        <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-			           <Image style={styles.avatar} source={require('../images/person_dummy.png')}>
-			          	<TouchableOpacity onPress={this.goToProfile.bind(this)}>
+			           <Image style={styles.avatar} source={this.props.image}>
+			          	<TouchableOpacity onPress={ this.goToProfile}>
 		       		 		<Icon name="create" style={styles.editIcon}/>
 		        		</TouchableOpacity>
-			          	</Image>
+			          	</Image>    
+			          	<Image style={styles.avatar} source={require('../images/person_dummy.png')}>
+			          	<TouchableOpacity onPress={this.goToProfile} >
+		       		 		<Icon name="create" style={styles.editIcon}/>
+		        		</TouchableOpacity>
+		        		</Image> 
 			        </View> 
 
 			        <View style={styles.profileView}>
-		        		<Text>{this.props.username}</Text>
+		        		<Text>Name: {this.props.username}</Text>
 		        		<Text>Email</Text>
-		        		<Text>{this.props.contact}</Text>
+		        		<Text>Contact: {this.props.contact}</Text>
 		        	</View>
 		 		</View>
 		 		<View style={styles.titleView}>

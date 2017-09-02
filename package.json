@@ -22,7 +22,8 @@
 		"react-native-sound": "^0.10.4",
 		"react-native-vector-icons": "^4.3.0",
 		"react-native-youtube": "^1.0.0-beta.3",
-		"react-timer-mixin": "^0.13.3"
+		"react-timer-mixin": "^0.13.3",
+		"tcomb-form-native": "^0.6.9"
 	},
 	"devDependencies": {
 		"babel-jest": "20.0.3",

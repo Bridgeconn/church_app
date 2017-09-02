@@ -95,6 +95,26 @@ const styles = StyleSheet.create({
     color:'#fff',
     fontFamily:'roboto-medium',
     fontWeight:'400'
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  title: {
+    fontSize: 30,
+    alignSelf: 'center',
+    marginBottom: 30
   }
 
 })
