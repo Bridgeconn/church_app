@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 
-const ACCESS_TOKEN = 'access_token';
+
 
 class Login extends Component {
   constructor(){
@@ -26,56 +26,45 @@ class Login extends Component {
   goToSignup(){
     Actions.signup()
   }
-  storeToken(responseData){
-    AsyncStorage.setItem(ACCESS_TOKEN, responseData, (err)=> {
-      if(err){
-        console.log("an error");
-        throw err;
-      }
-      console.log("success");
-    }).catch((err)=> {
-        console.log("error is: " + err);
-    });
-    AsyncStorage.getItem(ACCESS_TOKEN);
-  }
-  async onLoginPressed() {
-   
+  async saveItem(item, selectedValue) {
     try {
-      let response = await fetch('https://churchappapi.herokuapp.com/api/v1/users/login', {
-                              method: 'POST',
-                              headers: {
-                                'Accept': 'application/x-www-form-urlencoded',
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                              },
-                              body: JSON.stringify({
-                                session:{
-                                  email: this.state.email,
-                                  password: this.state.password,
-                                }
-                              })
-                            })
-      console.log(response);
-      let res = await response.text();
-      console.log(res)
-      if (response.status >= 200 && response.status < 300) {
-          let accessToken = res;
-          console.log(accessToken);
-          
-          this.storeToken(accessToken);
-          Actions.home()
-      } else {
-          //Handle error
-          let error = res;
-          throw error;
-      }
-    } catch(error) {
-        this.setState({error: error});
-        console.log("error " + error);
-        this.setState({showProgress: false});
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error.message);
     }
   }
+  
+  onLoginPressed() {
+  this.setState({showProgress: true})
+    var user = {
+      email: this.state.email,
+      password: this.state.password,
+    }
+    var formBody = [];
+    for (var property in user) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(user[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    
+    if (!this.state.username || !this.state.password) return;
+      // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
+    fetch('https://churchappapi.herokuapp.com/api/v1/users/login', {
+      method: 'POST',
+      headers: { 'Accept': 'application/x-www-form-urlencodedn', 'Content-Type': 'application/x-www-form-urlencodedn' },
+      body: formBody
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+    this.saveItem('id_token', responseData.id_token),
+    alert(JSON.stringify(responseData))
+    Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!'),
+    Actions.HomePage();
+    })
+  .done();
+  }
   render() {
-
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>

@@ -13,7 +13,15 @@ export default class HomePage extends Component{
 	  	};
 	  	
 	}
-	
+	async userLogout() {
+    try {
+      await AsyncStorage.removeItem('id_token');
+      Alert.alert('Logout Success!');
+      Actions.Authentication();
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
 	goToProfile(){
 		Actions.profile()
 	}
