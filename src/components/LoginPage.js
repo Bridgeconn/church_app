@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios';
 import {
   StyleSheet,
   TextInput,
@@ -36,33 +37,20 @@ class Login extends Component {
   
   onLoginPressed() {
   this.setState({showProgress: true})
-    var user = {
-      email: this.state.email,
-      password: this.state.password,
-    }
-    var formBody = [];
-    for (var property in user) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(user[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
+  console.log('hi')
     
-    if (!this.state.username || !this.state.password) return;
-      // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
-    fetch('https://churchappapi.herokuapp.com/api/v1/users/login', {
-      method: 'POST',
-      headers: { 'Accept': 'application/x-www-form-urlencoded', 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formBody
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-    this.saveItem('id_token', responseData.id_token),
-    alert(JSON.stringify(responseData))
-    Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!'),
-    Actions.HomePage();
-    })
-  .done();
+    let data = new FormData();
+    data.append("email", this.state.email);
+    data.append("password", this.state.password);
+    
+    console.log(data)
+   
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
+        .then(response => console.log(response))
+        .catch(errors => console.log(errors))
+        this.saveItem("auth_token", response.auth_token)
+        console.log(response.auth_token)
   }
   render() {
     return (

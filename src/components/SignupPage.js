@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios';
 import {
   StyleSheet,
   TextInput,
@@ -26,62 +27,29 @@ class Register extends Component {
   }
   
 
-async saveItem(item, selectedValue) {
-  try {
-    await AsyncStorage.setItem(item, selectedValue);
-  } catch (error) {
-    console.error('AsyncStorage error: ' + error.message);
-  }
-}
+// async saveItem(item, selectedValue) {
+//   try {
+//     await AsyncStorage.setItem(item, selectedValue);
+//   } catch (error) {
+//     console.error('AsyncStorage error: ' + error.message);
+//   }
+// }
 onRegisterPressed() {
   this.setState({showProgress: true})
   console.log('hi')
- // if (!this.state.username || !this.state.password) return;
-    var user = {
-      email: this.state.email,
-      password: this.state.password,
-    }
-    console.log(user.email)
-    var formBody = [];
-    for (var property in user) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(user[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-    console.log(formBody)
-      // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
-    fetch('https://churchappapi.herokuapp.com/api/v1/users', {
-      method: 'POST',
-      headers: {'Content-Type[': 'application/x-www-form-urlencoded'},
-      body: formBody
-    })
-
-    .then((response) => response.json())
-    .then((responseData) => {
-        console.log("Response:",responseData);
-     }).catch((error) => {
-            Alert.alert('problem while adding data');
-            console.log(error)
-        })
-    .done();
-
-
-  //   .then((response) => {
-  //   console.log(response);
-  //   res = response.formBody;
-  //   console.log(res);
-  //   })
-  //   .then((responseData) => {
-  //   console.log(responseData)
-  //   this.saveItem('id_token', responseData.id_token)
-  //   alert(JSON.stringify(responseData))
-  //   console.log(responseData.id_token)
-  //   Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!')
+    let data = new FormData();
+    data.append("user[email]", this.state.email);
+    data.append("user[password]", this.state.password);
     
-  //   })
-  // .done();
-  
+    console.log(data)
+   
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
+        .then(response => console.log(response))
+        this.saveItem("auth_token", response.auth_token)
+        console.log(response.auth_token)
+        .catch(errors => console.log(errors)); 
+       
 }
   render() {
     return (
