@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios';
 import {
   StyleSheet,
   TextInput,
@@ -6,6 +7,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Text,
+  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
@@ -35,36 +37,19 @@ async saveItem(item, selectedValue) {
 onRegisterPressed() {
   this.setState({showProgress: true})
   console.log('hi')
- if (!this.state.username || !this.state.password) return;
-    var user = {
-      email: this.state.email,
-      password: this.state.password,
-    }
-    console.log(user.email)
-    var formBody = [];
-    for (var property in user) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(user[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-    console.log(formBody)
-    if (!this.state.username || !this.state.password) return;
-      // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
-    fetch('https://churchappapi.herokuapp.com/api/v1/users', {
-      method: 'POST',
-      headers: { 'Accept': 'application/x-www-form-urlencodedn', 'Content-Type': 'application/x-www-form-urlencodedn' },
-      body: formBody
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-    this.saveItem('id_token', responseData.id_token),
-    alert(JSON.stringify(responseData))
-    console.log(responseData.id_token)
-    Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!'),
-    Actions.HomePage();
-    })
-  .done();
+    console.log('email')
+    let data = new FormData();
+    data.append("user[email]", this.state.email);
+    data.append("user[password]", this.state.password);
+    
+    console.log(data)
+   
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
+        // .then(response => console.log(response))
+        .catch(errors => console.log(errors)); 
+        this.saveItem('id_token', response.id_token),
+        console.log(response.id_token)
 }
   render() {
     return (
