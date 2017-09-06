@@ -52,7 +52,7 @@ class Login extends Component {
       // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
     fetch('https://churchappapi.herokuapp.com/api/v1/users/login', {
       method: 'POST',
-      headers: { 'Accept': 'application/x-www-form-urlencodedn', 'Content-Type': 'application/x-www-form-urlencodedn' },
+      headers: { 'Accept': 'application/x-www-form-urlencoded', 'Content-Type': 'application/x-www-form-urlencoded' },
       body: formBody
     })
     .then((response) => response.json())

@@ -6,6 +6,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Text,
+  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
@@ -35,7 +36,7 @@ async saveItem(item, selectedValue) {
 onRegisterPressed() {
   this.setState({showProgress: true})
   console.log('hi')
- if (!this.state.username || !this.state.password) return;
+ // if (!this.state.username || !this.state.password) return;
     var user = {
       email: this.state.email,
       password: this.state.password,
@@ -49,22 +50,38 @@ onRegisterPressed() {
     }
     formBody = formBody.join("&");
     console.log(formBody)
-    if (!this.state.username || !this.state.password) return;
       // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
     fetch('https://churchappapi.herokuapp.com/api/v1/users', {
       method: 'POST',
-      headers: { 'Accept': 'application/x-www-form-urlencodedn', 'Content-Type': 'application/x-www-form-urlencodedn' },
+      headers: {'Content-Type[': 'application/x-www-form-urlencoded'},
       body: formBody
     })
+
     .then((response) => response.json())
     .then((responseData) => {
-    this.saveItem('id_token', responseData.id_token),
-    alert(JSON.stringify(responseData))
-    console.log(responseData.id_token)
-    Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!'),
-    Actions.HomePage();
-    })
-  .done();
+        console.log("Response:",responseData);
+     }).catch((error) => {
+            Alert.alert('problem while adding data');
+            console.log(error)
+        })
+    .done();
+
+
+  //   .then((response) => {
+  //   console.log(response);
+  //   res = response.formBody;
+  //   console.log(res);
+  //   })
+  //   .then((responseData) => {
+  //   console.log(responseData)
+  //   this.saveItem('id_token', responseData.id_token)
+  //   alert(JSON.stringify(responseData))
+  //   console.log(responseData.id_token)
+  //   Alert.alert('Login Success!', 'Click the button to get a Chuck Norris quote!')
+    
+  //   })
+  // .done();
+  
 }
   render() {
     return (
