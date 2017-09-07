@@ -39,63 +39,64 @@ class Login extends Component {
   onLoginPressed() {
   this.setState({showProgress: true})
   console.log('hi')
-    
     let data = new FormData();
     data.append("email", this.state.email);
     data.append("password", this.state.password);
-    
-    console.log(data)
-   
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => {
+          // console.log(response)
+        
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token',token)
-            this.setState({ token: token });
-          } else {
-            console.log('not found token')
+            console.log(token)
+            this.setState({ token: this.state.token });
           }
-          if(response.status==201){
-            Actions.home();
+          if(response.data.success == true){
+              console.log('enjoy')
+              console.log(response)
+              alert('login successfully')
           }
-          else{
-            console.log("something went wrong")
-          }
+         
         })
-        .catch(errors => console.log(errors))      
+        .catch(function (error) {
+          var errors = error.response.data.message
+          console.log(errors)
+          alert(errors)    
+        })    
   }
   onRegisterPressed() {
   this.setState({showProgress: true})
-  console.log('hi')
-    console.log('email')
     let data = new FormData();
     data.append("user[email]", this.state.email);
     data.append("user[password]", this.state.password);
-    
-    console.log(data)
-   
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token',token)
-            this.setState({ token: token });
-            console.log(this.state.token);
-            
-          } else {
-            alert('token not found')
+            this.setState({ token: this.state.token });
+            console.log(token); 
+            console.log('hi')
           }
-          if(response.status==201){
-            // Actions.home();
-            const result = response.data.result;
-          }
-          else{
-            alert('something went wrong')
+          if(response.data.success==true){
+             alert('hello')
           }
         })
-        .catch(errors => console.log(errors))        
+       .catch(function (error) {
+          const errors = error.response.data
+              if(errors.email) {
+                console.log("email : " +errors.email)
+                alert("email : " +errors.email)
+              }
+              else if(errors.password) {
+                console.log("password : " +errors.password)
+                alert("password : " +errors.password)
+              }
+                console.log('poor')    
+        })        
 }
   render() {
     return (
