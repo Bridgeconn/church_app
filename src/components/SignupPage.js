@@ -7,7 +7,6 @@ import {
   AsyncStorage,
   ActivityIndicator,
   Text,
-  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
@@ -19,10 +18,10 @@ class Register extends Component {
 
     this.state = {
       email: "",
-      
       password: "",
       errors: [],
       showProgress: false,
+      token: null
     }
   }
   
@@ -30,6 +29,7 @@ class Register extends Component {
 async saveItem(item, selectedValue) {
   try {
     await AsyncStorage.setItem(item, selectedValue);
+    alert('success')
   } catch (error) {
     console.error('AsyncStorage error: ' + error.message);
   }
@@ -46,10 +46,25 @@ onRegisterPressed() {
    
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
-        // .then(response => console.log(response))
-        .catch(errors => console.log(errors)); 
-        this.saveItem('id_token', response.id_token),
-        console.log(response.id_token)
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            this.setState({ token: token });
+            console.log(this.state.token);
+            
+          }
+          else {
+            alert('not found token')
+          }
+          if(response.status==201){
+            Actions.home();
+          }
+          else{
+            alert('something went wrong')
+          }
+        })
+        .catch(errors => console.log(errors))        
 }
   render() {
     return (

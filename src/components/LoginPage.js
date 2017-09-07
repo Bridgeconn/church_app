@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   Text,
+  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
@@ -47,9 +48,55 @@ class Login extends Component {
    
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
-        .then(response => console.log(response))
-        .catch(errors => console.log(errors)); 
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            this.setState({ token: token });
+          } else {
+            console.log('not found token')
+          }
+          if(response.status==201){
+            Actions.home();
+          }
+          else{
+            console.log("something went wrong")
+          }
+        })
+        .catch(errors => console.log(errors))      
   }
+  onRegisterPressed() {
+  this.setState({showProgress: true})
+  console.log('hi')
+    console.log('email')
+    let data = new FormData();
+    data.append("user[email]", this.state.email);
+    data.append("user[password]", this.state.password);
+    
+    console.log(data)
+   
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            this.setState({ token: token });
+            console.log(this.state.token);
+            
+          } else {
+            alert('token not found')
+          }
+          if(response.status==201){
+            // Actions.home();
+            const result = response.data.result;
+          }
+          else{
+            alert('something went wrong')
+          }
+        })
+        .catch(errors => console.log(errors))        
+}
   render() {
     return (
       <View style={styles.container}>
@@ -71,7 +118,7 @@ class Login extends Component {
             Login
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.goToSignup.bind(this)} style={styles.button}>
+        <TouchableHighlight onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Register
           </Text>
