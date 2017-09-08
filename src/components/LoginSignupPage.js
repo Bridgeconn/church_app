@@ -38,21 +38,6 @@ class Login extends Component {
   onLoginPressed() {
   this.setState({showProgress: true})
   console.log('hi')
-<<<<<<< HEAD:src/components/LoginPage.js
-    
-    let data = new FormData();
-    data.append("email", this.state.email);
-    data.append("password", this.state.password);
-    
-    console.log(data)
-   
-    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
-      axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
-        .then(response => console.log(response))
-        .catch(errors => console.log(errors))
-        this.saveItem("auth_token", response.auth_token)
-        console.log(response.auth_token)
-=======
     let data = new FormData();
     data.append("email", this.state.email);
     data.append("password", this.state.password);
@@ -72,11 +57,10 @@ class Login extends Component {
         })
         .catch(function (error) {
           var errors = error.response.data
-          console.log("not logged in")
-          alert("some thing went wrong")    
+          console.log("something went wrong")
+          alert('something went wrong')    
           // throw error
         })    
->>>>>>> Login/Signup:src/components/LoginSignupPage.js
   }
   onRegisterPressed() {
   this.setState({showProgress: true})
