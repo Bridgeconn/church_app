@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   Text,
+  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
@@ -16,7 +17,6 @@ import {Actions} from 'react-native-router-flux'
 class Login extends Component {
   constructor(){
     super();
-
     this.state = {
       email: "",
       password: "",
@@ -31,13 +31,14 @@ class Login extends Component {
     try {
       await AsyncStorage.setItem(item, selectedValue);
     } catch (error) {
-      console.error('AsyncStorage error: ' + error.message);
+      console.error('AsyncStorage error: ' + error);
     }
   }
   
   onLoginPressed() {
   this.setState({showProgress: true})
   console.log('hi')
+<<<<<<< HEAD:src/components/LoginPage.js
     
     let data = new FormData();
     data.append("email", this.state.email);
@@ -51,7 +52,64 @@ class Login extends Component {
         .catch(errors => console.log(errors))
         this.saveItem("auth_token", response.auth_token)
         console.log(response.auth_token)
+=======
+    let data = new FormData();
+    data.append("email", this.state.email);
+    data.append("password", this.state.password);
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            console.log(token)
+            this.setState({ token: this.state.token });
+          }
+          if(response.data.success == true){
+              console.log('enjoy')
+              alert('login successfully')
+          }
+        })
+        .catch(function (error) {
+          var errors = error.response.data
+          console.log("not logged in")
+          alert("some thing went wrong")    
+          // throw error
+        })    
+>>>>>>> Login/Signup:src/components/LoginSignupPage.js
   }
+  onRegisterPressed() {
+  this.setState({showProgress: true})
+    let data = new FormData();
+    data.append("user[email]", this.state.email);
+    data.append("user[password]", this.state.password);
+    
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            this.setState({ token: this.state.token });
+            console.log(token); 
+            console.log('hi')
+          }
+          if(response.data.success==true){
+            alert('registered')
+          }
+        })
+       .catch(function (error) {
+          const errors = error.response.data
+          if(errors.email) {
+            console.log("email : " +errors.email)
+            alert("email : " +errors.email)
+          }
+          else if(errors.password) {
+            console.log("password : " +errors.password)
+            alert("password : " +errors.password)
+          }   
+        })        
+}
   render() {
     return (
       <View style={styles.container}>
@@ -73,7 +131,7 @@ class Login extends Component {
             Login
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.goToSignup.bind(this)} style={styles.button}>
+        <TouchableHighlight onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Register
           </Text>

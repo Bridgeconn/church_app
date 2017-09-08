@@ -2,8 +2,7 @@ import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions } from 'react-native-router-flux'
 import {Icon} from 'native-base'
 import ProfilePage from './ProfilePage'
-import LoginPage from './LoginPage'
-import SignupPage from './SignupPage'
+import LoginSignupPage from './LoginSignupPage'
 import HomePage from './HomePage'
 import EventsPage from './EventsPage'
 import LiveStreamPage from './LiveStreamPage'
@@ -25,16 +24,9 @@ export default class RoutesPage extends Component {
 
 const scenes = Actions.create(
   <Scene key="root">
-  <Scene 
-      key = "signup"       
-      component = {SignupPage}           
-      title = "Signup" 
-      initial={true} 
-      hideNavBar={true}
-    />
     <Scene 
       key = "login"       
-      component = {LoginPage}           
+      component = {LoginSignupPage}           
       title = "Signup" 
       initial={true} 
       hideNavBar={true}
