@@ -13,7 +13,7 @@ import styles from '../style/styles.js'
 
 export default class RoutesPage extends Component {
    componentDidMount() {
-      Actions.loginsignup();
+      Actions.loginSignup();
     }
       render() {
           return (
@@ -24,14 +24,14 @@ export default class RoutesPage extends Component {
 
 const scenes = Actions.create(
   <Scene key="root">
-  <Scene 
-      key = "loginsignup"       
+    <Scene 
+      key = "loginSignup"       
       component = {LoginSignupPage}           
       title = "Signup" 
       initial={true} 
       hideNavBar={true}
     />
-  	<Scene 
+    <Scene 
       key = "home"       
       component = {HomePage}           
       title = "HomePage" 
@@ -39,10 +39,10 @@ const scenes = Actions.create(
     />
     <Scene key = "profile"    
       component = {ProfilePage}        
-      title = "Edit Profile" 
+      title = "ProfilePage" 
       hideNavBar={true}
     />
-   	<Scene 
+    <Scene 
       key = "events"     
       component = {EventsPage}         
       title = "EventsPage" 
@@ -52,37 +52,33 @@ const scenes = Actions.create(
       leftButtonIconSize={30} 
       
     />
-   	<Scene 
+    <Scene 
       key = "live"       
       component = {LiveStreamPage}     
-      title = "Live Stream" 
+      title = "LiveStreamPage" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
-      navBarButtonColor={"white"}
     />
-   	<Scene 
-      key = "songs"   	  
+    <Scene 
+      key = "songs"       
       component = {SongBookPage}       
-      title = "Songbook" 
+      title = "SongBookPage" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
-      navBarButtonColor={"white"}
     />
-   	<Scene 
+    <Scene 
       key = "contacts"   
       component = {ContactBookPage}    
-      title = "Address Book" 
+      title = "ContactBookPage" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
-      navBarButtonColor={"white"}
     />
-   	<Scene 
+    <Scene 
       key = "verse"      
       component = {VersePage}          
-      title = "Verse of the Day" 
+      title = "VersePage" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
-      navBarButtonColor={"white"}
     />
   </Scene>
 )

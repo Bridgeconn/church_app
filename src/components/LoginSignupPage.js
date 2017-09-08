@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   StyleSheet,
   TextInput,
-  TouchableHighlight,
+  TouchableOpacity,
   ActivityIndicator,
   AsyncStorage,
   Text,
@@ -11,9 +11,6 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-
-
-
 class Login extends Component {
   constructor(){
     super();
@@ -41,7 +38,7 @@ class Login extends Component {
     let data = new FormData();
     data.append("email", this.state.email);
     data.append("password", this.state.password);
-    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => {
           if (response.data.auth_token) {
@@ -53,13 +50,13 @@ class Login extends Component {
           if(response.data.success == true){
               console.log('enjoy')
               alert('login successfully')
+              Actions.home()
           }
         })
         .catch(function (error) {
           var errors = error.response.data
           console.log("something went wrong")
           alert('something went wrong')    
-          // throw error
         })    
   }
   onRegisterPressed() {
@@ -67,8 +64,7 @@ class Login extends Component {
     let data = new FormData();
     data.append("user[email]", this.state.email);
     data.append("user[password]", this.state.password);
-    
-    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if (response.data.auth_token) {
@@ -78,8 +74,11 @@ class Login extends Component {
             console.log(token); 
             console.log('hi')
           }
-          if(response.data.success==true){
+          console.log(response.status)
+          if(response.status==201){
+            console.log(response.status)
             alert('registered')
+            Actions.home();
           }
         })
        .catch(function (error) {
@@ -110,20 +109,16 @@ class Login extends Component {
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
-        <TouchableHighlight onPress={this.onLoginPressed.bind(this)} style={styles.button}>
+        <TouchableOpacity onPress={this.onLoginPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Login
           </Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Register
           </Text>
-        </TouchableHighlight>
-        <Text style={styles.error}>
-          {this.state.error}
-        </Text>
-
+        </TouchableOpacity>
         <ActivityIndicator animating={this.state.showProgress} size="large" style={styles.loader} />
       </View>
     );
