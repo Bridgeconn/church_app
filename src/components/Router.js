@@ -12,9 +12,9 @@ import VersePage from './VersePage'
 import styles from '../style/styles.js'
 
 export default class RoutesPage extends Component {
-   // componentDidMount() {
-   //    Actions.signup();
-   //  }
+   componentDidMount() {
+      Actions.login();
+    }
       render() {
           return (
               <Router scenes={scenes} />  
@@ -24,9 +24,9 @@ export default class RoutesPage extends Component {
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene 
-      key = "login"       
-      component = {LoginSignupPage}           
+  <Scene 
+      key = "signup"       
+      component = {SignupPage}           
       title = "Signup" 
       initial={true} 
       hideNavBar={true}
@@ -39,7 +39,7 @@ const scenes = Actions.create(
     />
     <Scene key = "profile"    
       component = {ProfilePage}        
-      title = "ProfilePage" 
+      title = "Edit Profile" 
       hideNavBar={true}
     />
    	<Scene 
@@ -55,30 +55,34 @@ const scenes = Actions.create(
    	<Scene 
       key = "live"       
       component = {LiveStreamPage}     
-      title = "LiveStreamPage" 
+      title = "Live Stream" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "songs"   	  
       component = {SongBookPage}       
-      title = "SongBookPage" 
+      title = "Songbook" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "contacts"   
       component = {ContactBookPage}    
-      title = "ContactBookPage" 
+      title = "Address Book" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
    	<Scene 
       key = "verse"      
       component = {VersePage}          
-      title = "VersePage" 
+      title = "Verse of the Day" 
       navigationBarStyle={{backgroundColor: '#3F51B5'}} 
       titleStyle={styles.navbarTitle}
+      navBarButtonColor={"white"}
     />
   </Scene>
 )

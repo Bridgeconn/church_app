@@ -12,7 +12,11 @@ import {
   View
 } from 'react-native';
 
+<<<<<<< HEAD
 export default class ChurchApplication extends Component {
+=======
+export default class ChurchApp extends Component {
+>>>>>>> 22bd387d3f76abf6b321bda70780f5fdb63ca002
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +54,8 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 AppRegistry.registerComponent('ChurchApplication', () => ChurchApplication);
+=======
+AppRegistry.registerComponent('ChurchApp', () => ChurchApp);
+>>>>>>> 22bd387d3f76abf6b321bda70780f5fdb63ca002

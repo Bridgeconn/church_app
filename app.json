@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "ChurchApplication",
   "displayName": "ChurchApplication"
+=======
+  "name": "ChurchApp",
+  "displayName": "ChurchApp"
+>>>>>>> 22bd387d3f76abf6b321bda70780f5fdb63ca002
 }
