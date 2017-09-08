@@ -13,7 +13,7 @@ export default class HomePage extends Component{
 	  	};
 	  	
 	}
-<<<<<<< HEAD
+
 	async userLogout() {
     try {
       await AsyncStorage.removeItem('id_token');
@@ -23,9 +23,6 @@ export default class HomePage extends Component{
       console.log('AsyncStorage error: ' + error.message);
     }
   }
-=======
-	
->>>>>>> 22bd387d3f76abf6b321bda70780f5fdb63ca002
 	goToProfile(){
 		Actions.profile()
 	}

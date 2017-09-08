@@ -13,7 +13,7 @@ import styles from '../style/styles.js'
 
 export default class RoutesPage extends Component {
    componentDidMount() {
-      Actions.login();
+      Actions.loginsignup();
     }
       render() {
           return (
@@ -25,8 +25,8 @@ export default class RoutesPage extends Component {
 const scenes = Actions.create(
   <Scene key="root">
   <Scene 
-      key = "signup"       
-      component = {SignupPage}           
+      key = "loginsignup"       
+      component = {LoginSignupPage}           
       title = "Signup" 
       initial={true} 
       hideNavBar={true}
