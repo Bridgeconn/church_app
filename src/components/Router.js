@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Router, Scene,  Schema, Animations, Actions } from 'react-native-router-flux'
+import { Router, Scene,  Schema, Animations, Actions,AsyncStorage } from 'react-native-router-flux'
 import {Icon} from 'native-base'
 import ProfilePage from './ProfilePage'
 import LoginSignupPage from './LoginSignupPage'
@@ -13,8 +13,10 @@ import styles from '../style/styles.js'
 
 export default class RoutesPage extends Component {
    componentDidMount() {
-      Actions.loginSignup();
-    }
+    AsyncStorage.getItem('token').then((token) => {
+      this.setState({ hasToken: token !== null})
+    });
+  }
       render() {
           return (
               <Router scenes={scenes} />  
@@ -28,12 +30,12 @@ const scenes = Actions.create(
       key = "loginSignup"       
       component = {LoginSignupPage}           
       title = "Signup" 
-      initial={true} 
+      initial={!this.state.hasToken}
       hideNavBar={true}
     />
     <Scene 
       key = "home"       
-      component = {HomePage}           
+      initial={this.state.hasToken}           
       title = "HomePage" 
       hideNavBar={true}
     />

@@ -16,9 +16,8 @@ export default class HomePage extends Component{
 
 	async userLogout() {
     try {
-      await AsyncStorage.removeItem('id_token');
-      Alert.alert('Logout Success!');
-      Actions.Authentication();
+      await AsyncStorage.removeItem('token');
+      Actions.loginSignup;
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
@@ -51,7 +50,9 @@ export default class HomePage extends Component{
 		          </Left>
 		          <Right>
 		            <Button>
-		              <Icon name="settings" />
+		            	<TouchableOpacity onPress={this.removeItem.bind(this)}>
+		              		<Text>logout</Text>
+		              	</TouchableOpacity>
 		            </Button>
 		          </Right>
 		        </Header>

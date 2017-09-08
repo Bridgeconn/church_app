@@ -74,11 +74,9 @@ class Login extends Component {
             console.log(token); 
             console.log('hi')
           }
-          console.log(response.status)
           if(response.status==201){
             console.log(response.status)
             alert('registered')
-            Actions.home();
           }
         })
        .catch(function (error) {
@@ -116,7 +114,7 @@ class Login extends Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
-            Register
+            Signup
           </Text>
         </TouchableOpacity>
         <ActivityIndicator animating={this.state.showProgress} size="large" style={styles.loader} />
