@@ -4,93 +4,125 @@ import {
   StyleSheet,
   TextInput,
   TouchableHighlight,
-  AsyncStorage,
   ActivityIndicator,
+  AsyncStorage,
   Text,
+  Alert,
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 
 
-class Register extends Component {
+
+class Login extends Component {
   constructor(){
     super();
-
     this.state = {
       email: "",
       password: "",
-      errors: [],
+      error: "",
       showProgress: false,
-      token: null
+    }
+  }
+  goToSignup(){
+    Actions.signup()
+  }
+  async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error);
     }
   }
   
-
-async saveItem(item, selectedValue) {
-  try {
-    await AsyncStorage.setItem(item, selectedValue);
-    alert('success')
-  } catch (error) {
-    console.error('AsyncStorage error: ' + error.message);
-  }
-}
-onRegisterPressed() {
+  onLoginPressed() {
   this.setState({showProgress: true})
   console.log('hi')
-    console.log('email')
+    let data = new FormData();
+    data.append("email", this.state.email);
+    data.append("password", this.state.password);
+    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
+      axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
+        .then((response) => {
+          if (response.data.auth_token) {
+            var token = response.data.auth_token;
+            this.saveItem('token',token)
+            console.log(token)
+            this.setState({ token: this.state.token });
+          }
+          if(response.data.success == true){
+              console.log('enjoy')
+              alert('login successfully')
+          }
+        })
+        .catch(function (error) {
+          var errors = error.response.data
+          console.log("not logged in")
+          alert("some thing went wrong")    
+          // throw error
+        })    
+  }
+  onRegisterPressed() {
+  this.setState({showProgress: true})
     let data = new FormData();
     data.append("user[email]", this.state.email);
     data.append("user[password]", this.state.password);
     
-    console.log(data)
-   
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Accept': 'application/json' } };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token',token)
-            this.setState({ token: token });
-            console.log(this.state.token);
-            
+            this.setState({ token: this.state.token });
+            console.log(token); 
+            console.log('hi')
           }
-          else {
-            alert('not found token')
-          }
-          if(response.status==201){
-            Actions.home();
-          }
-          else{
-            alert('something went wrong')
+          if(response.data.success==true){
+            alert('registered')
           }
         })
-        .catch(errors => console.log(errors))        
+       .catch(function (error) {
+          const errors = error.response.data
+          if(errors.email) {
+            console.log("email : " +errors.email)
+            alert("email : " +errors.email)
+          }
+          else if(errors.password) {
+            console.log("password : " +errors.password)
+            alert("password : " +errors.password)
+          }   
+        })        
 }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
-          Join us now!
+          Native on Rails
         </Text>
         <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
           style={styles.input} placeholder="Email">
         </TextInput>
-        
         <TextInput
           onChangeText={ (text)=> this.setState({password: text}) }
           style={styles.input}
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
-        
+        <TouchableHighlight onPress={this.onLoginPressed.bind(this)} style={styles.button}>
+          <Text style={styles.buttonText}>
+            Login
+          </Text>
+        </TouchableHighlight>
         <TouchableHighlight onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Register
           </Text>
         </TouchableHighlight>
-
-        <Errors errors={this.state.errors}/>
+        <Text style={styles.error}>
+          {this.state.error}
+        </Text>
 
         <ActivityIndicator animating={this.state.showProgress} size="large" style={styles.loader} />
       </View>
@@ -98,18 +130,10 @@ onRegisterPressed() {
   }
 }
 
-const Errors = (props) => {
-  return (
-    <View>
-      {props.errors.map((error, i) => <Text key={i} style={styles.error}> {error} </Text>)}
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+   
     backgroundColor: '#F5FCFF',
     padding: 10,
     paddingTop: 80
@@ -141,10 +165,13 @@ const styles = StyleSheet.create({
     color: 'red',
     paddingTop: 10
   },
+  success: {
+    color: 'green',
+    paddingTop: 10
+  },
   loader: {
     marginTop: 20
   }
 });
 
-export default Register
-
+export default Login
