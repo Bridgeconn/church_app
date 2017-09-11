@@ -16,8 +16,15 @@ export default class HomePage extends Component{
 	async userLogout() {
     try {
       await AsyncStorage.removeItem('token');
+      console.log('remove loginkey')
+      alert('Logout Success!');
+      Actions.loginSignup();
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+    try {
       await AsyncStorage.removeItem('guest_key');
-      console.log('logout')
+      console.log('remove guest_key')
       alert('Logout Success!');
       Actions.loginSignup();
     } catch (error) {
@@ -57,15 +64,6 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-		        {value ? <View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToEvents.bind(this)}>
-		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>EVENTS</Text></Image>
-		 			</TouchableOpacity>
-		 		</View> : <View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToEvents.bind(this)}>
-		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom} style={styles.hide} ><Text style={styles.titlePage}>EVENTS</Text></Image>
-		 			</TouchableOpacity>
-		 		</View> }
 		        <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
