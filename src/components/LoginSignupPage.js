@@ -20,7 +20,7 @@ class Login extends Component {
       error: "",
       token: null,
       showProgress: false,
-      guestItem:null,
+      value:''
     }
   }
   goToSignup(){
@@ -47,8 +47,7 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
-            // console.log(token)
-            // this.setState({ token: this.state.token });
+            console.log(token)
           }
           if(response.data.success == true){
               console.log('enjoy')
@@ -70,7 +69,6 @@ class Login extends Component {
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
-          
           if(response.status==201){
             console.log(response.status)
             alert('registered')
@@ -88,11 +86,23 @@ class Login extends Component {
           }   
         })        
   }
-  onGuestLogin() {
-      this.setState({showProgress: true})
-      console.log('hi')
-      console.log('hello')
-    
+  async onGuestLogin() {
+    try {
+      await AsyncStorage.setItem('guest_key', '1');
+    //    AsyncStorage.getItem('guest_key').then((value) => {
+    //   console.log(value)
+    // })
+       Actions.home()
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error);
+    }
+    //   this.setState({showProgress: true})
+    //   AsyncStorage.setItem('guest_key' ,'0')
+    //   AsyncStorage.getItem('guest_key').then((value) => {
+    //   console.log(value)
+    // })
+
+     
   }
   render() {
     return (

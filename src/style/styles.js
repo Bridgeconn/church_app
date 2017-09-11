@@ -52,6 +52,10 @@ const styles = StyleSheet.create({
   	height:200,
   	width:400,
   },
+  hide:{
+    opacity:0,
+    height:0
+  },
   titleView:{
   	justifyContent:'center',
   	alignItems:'center',

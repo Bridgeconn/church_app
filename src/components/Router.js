@@ -15,13 +15,17 @@ import styles from '../style/styles.js'
 export default class RoutesPage extends Component {
   constructor() {
     super()
-    this.state = { hasToken:false, isLoaded: false};
+    this.state = { hasToken:false, isLoaded: false, guestToken:false };
 
   }
-  componentDidMount() {
+  componentDidMount(){
     AsyncStorage.getItem('token').then((auth_token) => {
       this.setState({ hasToken: auth_token !== null, isLoaded: true })
       console.log(this.state.hasToken)
+    })
+    AsyncStorage.getItem('guest_key').then((value) => {
+      this.setState({ guestToken:value !== null, isLoaded: true })
+      console.log(this.state.value)
     })
   }
       render() {
@@ -38,13 +42,13 @@ export default class RoutesPage extends Component {
                 key = "loginSignup"       
                 component = {LoginSignupPage}           
                 title = "Signup" 
-                initial={!this.state.hasToken}
+                initial={!this.state.hasToken && !this.state.guestToken}
                 hideNavBar={true}
               />
               <Scene 
                 key = "home"  
                 component = {HomePage}              
-                initial={this.state.hasToken}           
+                initial={this.state.hasToken || this.state.guestToken}           
                 title = "HomePage" 
                 hideNavBar={true}
               />

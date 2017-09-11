@@ -4,27 +4,26 @@ import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
-
+const value =  AsyncStorage.getItem('@MySuperStore:key');
 export default class HomePage extends Component{
 	constructor(){
 		super()
+		
 		this.state = {
 		    ImageOption: null,
-	  	};
-	  	
+	  	}
 	}
-
 	async userLogout() {
     try {
       await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('guest_key');
       console.log('logout')
       alert('Logout Success!');
       Actions.loginSignup();
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
-    Actions.LoginSignupPage;
-  }
+  	}
 	goToProfile(){
 		Actions.profile()
 	}
@@ -43,6 +42,7 @@ export default class HomePage extends Component{
 	goToVerse(){
 		Actions.verse()
 	}
+
 	render(){
 		
 		return(
@@ -57,7 +57,15 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-
+		        {value ? <View style={styles.titleView}>
+		 			<TouchableOpacity onPress={this.goToEvents.bind(this)}>
+		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>EVENTS</Text></Image>
+		 			</TouchableOpacity>
+		 		</View> : <View style={styles.titleView}>
+		 			<TouchableOpacity onPress={this.goToEvents.bind(this)}>
+		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom} style={styles.hide} ><Text style={styles.titlePage}>EVENTS</Text></Image>
+		 			</TouchableOpacity>
+		 		</View> }
 		        <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
