@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
@@ -17,10 +17,13 @@ export default class HomePage extends Component{
 	async userLogout() {
     try {
       await AsyncStorage.removeItem('token');
-      Actions.loginSignup;
+      console.log('logout')
+      alert('Logout Success!');
+      Actions.loginSignup();
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+    Actions.LoginSignupPage;
   }
 	goToProfile(){
 		Actions.profile()
@@ -49,11 +52,9 @@ export default class HomePage extends Component{
 		           <Title>Church App</Title>
 		          </Left>
 		          <Right>
-		            <Button>
-		            	<TouchableOpacity onPress={this.removeItem.bind(this)}>
+		            	<TouchableOpacity onPress={this.userLogout.bind(this)}>
 		              		<Text>logout</Text>
 		              	</TouchableOpacity>
-		            </Button>
 		          </Right>
 		        </Header>
 

@@ -18,7 +18,9 @@ class Login extends Component {
       email: "",
       password: "",
       error: "",
+      token: null,
       showProgress: false,
+      guestItem:null,
     }
   }
   goToSignup(){
@@ -41,11 +43,12 @@ class Login extends Component {
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => {
+          
           if (response.data.auth_token) {
             var token = response.data.auth_token;
-            this.saveItem('token',token)
-            console.log(token)
-            this.setState({ token: this.state.token });
+            this.saveItem('token', token)
+            // console.log(token)
+            // this.setState({ token: this.state.token });
           }
           if(response.data.success == true){
               console.log('enjoy')
@@ -67,13 +70,7 @@ class Login extends Component {
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
-          if (response.data.auth_token) {
-            var token = response.data.auth_token;
-            this.saveItem('token',token)
-            this.setState({ token: this.state.token });
-            console.log(token); 
-            console.log('hi')
-          }
+          
           if(response.status==201){
             console.log(response.status)
             alert('registered')
@@ -90,12 +87,18 @@ class Login extends Component {
             alert("password : " +errors.password)
           }   
         })        
-}
+  }
+  onGuestLogin() {
+      this.setState({showProgress: true})
+      console.log('hi')
+      console.log('hello')
+    
+  }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
-          Native on Rails
+          Native
         </Text>
         <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
@@ -115,6 +118,11 @@ class Login extends Component {
         <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
             Signup
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.onGuestLogin.bind(this)} style={styles.button}>
+          <Text style={styles.buttonText}>
+            Guest Login
           </Text>
         </TouchableOpacity>
         <ActivityIndicator animating={this.state.showProgress} size="large" style={styles.loader} />
