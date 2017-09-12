@@ -89,9 +89,9 @@ class Login extends Component {
   async onGuestLogin() {
     try {
       await AsyncStorage.setItem('guest_key', '1');
-    //    AsyncStorage.getItem('guest_key').then((value) => {
-    //   console.log(value)
-    // })
+      // AsyncStorage.getItem('guest_key').then((value) => {
+      // console.log(value)
+      //  })
        Actions.home()
     } catch (error) {
       console.error('AsyncStorage error: ' + error);

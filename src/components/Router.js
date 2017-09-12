@@ -15,8 +15,7 @@ import styles from '../style/styles.js'
 export default class RoutesPage extends Component {
   constructor() {
     super()
-    this.state = { hasToken:false, isLoaded: false, guestToken:null };
-
+    this.state = { hasToken:false, isLoaded: false, guestToken:null};
   }
   componentDidMount() {
     AsyncStorage.getItem('token').then((auth_token) => {
@@ -43,13 +42,13 @@ export default class RoutesPage extends Component {
                 key = "loginSignup"       
                 component = {LoginSignupPage}           
                 title = "Signup" 
-                initial={!this.state.hasToken || !this.state.guestToken}
+                initial={this.state.guestToken || this.state.hasToken}
                 hideNavBar={true}
               />
               <Scene 
                 key = "home"  
                 component = {HomePage}              
-                initial={this.state.hasToken || this.state.guestToken}           
+                initial={!this.state.guestToken || this.state.guestToken}           
                 title = "HomePage" 
                 hideNavBar={true}
               />
