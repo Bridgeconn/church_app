@@ -89,22 +89,13 @@ class Login extends Component {
   async onGuestLogin() {
     try {
       await AsyncStorage.setItem('guest_key', '1');
-      // AsyncStorage.getItem('guest_key').then((value) => {
-      // console.log(value)
-      //  })
-       Actions.home()
+      Actions.home();
     } catch (error) {
       console.error('AsyncStorage error: ' + error);
-    }
-    //   this.setState({showProgress: true})
-    //   AsyncStorage.setItem('guest_key' ,'0')
-    //   AsyncStorage.getItem('guest_key').then((value) => {
-    //   console.log(value)
-    // })
-
-     
+    }  
   }
   render() {
+
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>

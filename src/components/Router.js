@@ -48,7 +48,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "home"  
                 component = {HomePage}              
-                initial={!this.state.guestToken || this.state.guestToken}           
+                initial={!this.state.guestToken || !this.state.hasToken}           
                 title = "HomePage" 
                 hideNavBar={true}
               />
