@@ -16,13 +16,10 @@ export default class ProfilePage extends Component{
 		    isReady: false,
 		    status: null,
 	      	username: '',
-      		contact: '',
-	     	
-
+      		contact: '',    	
 	  	};
 	  	
 	}
-
 	handlePress() {
      console.log(this.state.username);
      console.log(this.state.contact);
@@ -34,7 +31,7 @@ export default class ProfilePage extends Component{
       maxWidth: 500,
       maxHeight: 500,
       storageOptions: {
-        skipBackup: true
+      skipBackup: true
       }
     };
 

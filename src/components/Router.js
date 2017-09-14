@@ -13,42 +13,58 @@ import VersePage from './VersePage'
 import styles from '../style/styles.js'
 
 export default class RoutesPage extends Component {
-  constructor() {
-    super()
-    this.state = { hasToken:false, isLoaded: false, guestToken:null};
+  constructor(props) {
+    super(props)
+    this.state = { hasToken:false, isLoaded: false, guestKey:false};
   }
-  componentDidMount() {
-    AsyncStorage.getItem('token').then((auth_token) => {
-      this.setState({ hasToken: auth_token !== null, isLoaded: true })
-      console.log(this.state.hasToken)
+  async componentDidMount() {
+    console.log('initial token '+this.state.hasToken)
+    await AsyncStorage.getItem('token').then((auth_token) => {
+      console.log('token1 '+auth_token)
+      this.setState({ hasToken: auth_token !== null, isLoaded: auth_token !== null  })
+      console.log('loader when token'+this.state.isLoaded)
+      console.log("hasToken "+this.state.hasToken)
+      console.log("token "+auth_token)
     })
-    AsyncStorage.getItem('guest_key').then((value) => {
-      this.setState({ guestToken: value !== null, isLoaded: true })
-      console.log(this.state.guestToken)
-     
+    if(this.state.isLoaded==false){
+      console.log('initial key '+this.state.guestKey)
+      await AsyncStorage.getItem('guest').then((value) => {
+      console.log('key1 '+value)
+      this.setState({ guestKey: value !== null, isLoaded: value !==null })
+      console.log("guestKey "+this.state.guestKey)
+      console.log("key "+value)
     })
+     }
+    this.setState({isLoaded:true})
+    
   }
       render() {
+        console.log('render')
+        console.log("loader"+this.state.isLoaded)
         if (!this.state.isLoaded) {
+         
           return (
             <ActivityIndicator />
           )
          }
-         else{
+        else{
         return(
           <Router>
             <Scene key="root">
               <Scene 
                 key = "loginSignup"       
-                component = {LoginSignupPage}           
-                title = "Signup" 
-                initial={this.state.guestToken || this.state.hasToken}
+                component = {LoginSignupPage}       
+                title = "Signup"  
+                hasToken ={this.state.hasToken}
+                initial={!this.state.guestKey && !this.state.hasToken}
                 hideNavBar={true}
+                
               />
               <Scene 
                 key = "home"  
-                component = {HomePage}              
-                initial={!this.state.guestToken || !this.state.hasToken}           
+                component = {HomePage}
+                hasToken ={this.state.hasToken}
+                initial={this.state.guestKey || this.state.hasToken}         
                 title = "HomePage" 
                 hideNavBar={true}
               />

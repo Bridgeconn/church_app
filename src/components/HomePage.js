@@ -4,54 +4,29 @@ import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
-const value =  AsyncStorage.getItem('@MySuperStore:key');
 export default class HomePage extends Component{
-	constructor(){
-		super()
-		
+	constructor(props){
+		super(props)
+		console.log(props)
+		console.log("hasToken "+this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
+		    checkToken: props.hasToken
 	  	}
 	}
-	async userLogout() {
+	userLogout() {
     try {
-      await AsyncStorage.removeItem('token');
+      AsyncStorage.removeItem('token');
+      AsyncStorage.removeItem('guest');
       console.log('remove loginkey')
       alert('Logout Success!');
       Actions.loginSignup();
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
-    try {
-      await AsyncStorage.removeItem('guest_key');
-      console.log('remove guest_key')
-      alert('Logout Success!');
-      Actions.loginSignup();
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
   	}
-	goToProfile(){
-		Actions.profile()
-	}
-	goToEvents(){
-		Actions.events()
-	}
-	goToLive(){
-		Actions.live()
-	}
-	goToSong(){
-		Actions.songs()
-	}
-	goToContacts(){
-		Actions.contacts()
-	}
-	goToVerse(){
-		Actions.verse()
-	}
-
+  
 	render(){
-		
 		return(
 			<ScrollView>
 				<Header>
@@ -64,15 +39,15 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-		        <View style={styles.profileContent}>
+		        {this.props.hasToken==true ? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
-			          	<TouchableOpacity onPress={ this.goToProfile}>
+			          	<TouchableOpacity onPress={()=>{Actions.profile()}}>
 		       		 		<Icon name="create" style={styles.editIcon}/>
 		        		</TouchableOpacity>
 			          	</Image>    
 			          	<Image style={styles.avatar} source={require('../images/person_dummy.png')}>
-			          	<TouchableOpacity onPress={this.goToProfile} >
+			          	<TouchableOpacity onPress={()=>{Actions.profile()}} >
 		       		 		<Icon name="create" style={styles.editIcon}/>
 		        		</TouchableOpacity>
 		        		</Image> 
@@ -80,32 +55,32 @@ export default class HomePage extends Component{
 
 			        <View style={styles.profileView}>
 		        		<Text>Name: {this.props.username}</Text>
-		        		<Text>Email</Text>
+		        		<Text>{this.props.token}</Text>
 		        		<Text>Contact: {this.props.contact}</Text>
 		        	</View>
-		 		</View>
+		 		</View> : null}
 		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToEvents.bind(this)}>
+		 			<TouchableOpacity onPress={()=>{Actions.events()}}>
 		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>EVENTS</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToLive.bind(this)}>
+		 			<TouchableOpacity onPress={()=>{Actions.live()}}>
 		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>LIVE STREAM</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToSong.bind(this)}>
+		 			<TouchableOpacity onPress={()=>{Actions.songs()}}>
 		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>SONG BOOK</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToContacts.bind(this)}>
+		 			<TouchableOpacity onPress={()=>{Actions.contacts()}}>
 		 				<Image source={require('../images/img_contacts_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>CONTACT BOOK</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={this.goToVerse.bind(this)}>
+		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
 		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>VERSE</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
@@ -113,4 +88,3 @@ export default class HomePage extends Component{
 			)
 	}
 } 
-

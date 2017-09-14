@@ -20,7 +20,6 @@ class Login extends Component {
       error: "",
       token: null,
       showProgress: false,
-      value:''
     }
   }
   goToSignup(){
@@ -28,28 +27,26 @@ class Login extends Component {
   }
   async saveItem(item, selectedValue) {
     try {
-      await AsyncStorage.setItem(item, selectedValue);
+      AsyncStorage.setItem(item, selectedValue);
     } catch (error) {
       console.error('AsyncStorage error: ' + error);
     }
   }
-  
   onLoginPressed() {
-  this.setState({showProgress: true})
   console.log('hi')
     let data = new FormData();
     data.append("email", this.state.email);
     data.append("password", this.state.password);
     const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
-        .then((response) => {
-          
+        .then((response) => { 
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
             console.log(token)
           }
           if(response.data.success == true){
+            console.log('check toekn'+response.data.auth_token)
               console.log('enjoy')
               alert('login successfully')
               Actions.home()
@@ -62,7 +59,6 @@ class Login extends Component {
         })    
   }
   onRegisterPressed() {
-  this.setState({showProgress: true})
     let data = new FormData();
     data.append("user[email]", this.state.email);
     data.append("user[password]", this.state.password);
@@ -86,16 +82,12 @@ class Login extends Component {
           }   
         })        
   }
-  async onGuestLogin() {
-    try {
-      await AsyncStorage.setItem('guest_key', '1');
-      Actions.home();
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error);
-    }  
-  }
+   onGuestLogin() {
+      AsyncStorage.setItem("guest", '1');
+      Actions.home()
+    }
+  
   render() {
-
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
