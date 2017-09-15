@@ -8,10 +8,8 @@ export default class HomePage extends Component{
 	constructor(props){
 		super(props)
 		console.log(props)
-		console.log("hasToken "+this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
-		    checkToken: props.hasToken
 	  	}
 	}
 	userLogout() {
@@ -20,12 +18,11 @@ export default class HomePage extends Component{
       AsyncStorage.removeItem('guest');
       console.log('remove loginkey')
       alert('Logout Success!');
-      Actions.loginSignup();
+      Actions.user();
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
   	}
-  
 	render(){
 		return(
 			<ScrollView>
@@ -39,7 +36,7 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-		        {this.props.hasToken==true ? <View style={styles.profileContent}>
+		        {this.props.hasToken == true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
 			          	<TouchableOpacity onPress={()=>{Actions.profile()}}>

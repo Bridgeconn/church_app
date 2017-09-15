@@ -3,8 +3,11 @@ import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-
 import {AsyncStorage,ActivityIndicator} from 'react-native'
 import {Icon} from 'native-base'
 import ProfilePage from './ProfilePage'
-import LoginSignupPage from './LoginSignupPage'
+import User from './UserPage'
 import HomePage from './HomePage'
+import Login from './LoginPage'
+import GuestLogin from './GuestLoginPage'
+import Signup from './SignupPage'
 import EventsPage from './EventsPage'
 import LiveStreamPage from './LiveStreamPage'
 import SongBookPage from './SongBookPage'
@@ -35,14 +38,13 @@ export default class RoutesPage extends Component {
       console.log("key "+value)
     })
      }
-    this.setState({isLoaded:true})
-    
+    this.setState({isLoaded:true}) 
   }
+  
       render() {
         console.log('render')
         console.log("loader"+this.state.isLoaded)
         if (!this.state.isLoaded) {
-         
           return (
             <ActivityIndicator />
           )
@@ -52,13 +54,11 @@ export default class RoutesPage extends Component {
           <Router>
             <Scene key="root">
               <Scene 
-                key = "loginSignup"       
-                component = {LoginSignupPage}       
-                title = "Signup"  
+                key = "user"       
+                component = {User}         
                 hasToken ={this.state.hasToken}
                 initial={!this.state.guestKey && !this.state.hasToken}
-                hideNavBar={true}
-                
+                hideNavBar={true}                
               />
               <Scene 
                 key = "home"  
@@ -67,6 +67,24 @@ export default class RoutesPage extends Component {
                 initial={this.state.guestKey || this.state.hasToken}         
                 title = "HomePage" 
                 hideNavBar={true}
+              />
+              <Scene 
+                key = "login"  
+                component = {Login}
+                hasToken ={this.state.hasToken}   
+                hideNavBar={true}
+              />
+              <Scene 
+                key = "signup"  
+                component = {Signup}
+                title = "Signup" 
+                hideNavBar={true}
+              />
+              <Scene 
+                key = "guest"  
+                component = {GuestLogin}  
+                hideNavBar={true}
+                hasToken ={this.state.hasToken}
               />
               <Scene key = "profile"    
                 component = {ProfilePage}        
