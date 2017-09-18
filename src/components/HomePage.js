@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux'
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
-		console.log(props)
+		console.log("props value"+ this.props.token)
 		this.state = {
 		    ImageOption: null,
 	  	}
@@ -36,7 +36,7 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-		        {this.props.hasToken == true? <View style={styles.profileContent}>
+		        {this.props.token == true ? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
 			          	<TouchableOpacity onPress={()=>{Actions.profile()}}>

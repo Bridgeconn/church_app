@@ -29,8 +29,7 @@ class Login extends Component {
     }
   }
   onLoginPressed() {
-  console.log('hi')
-  	
+  console.log('hi') 	
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
@@ -40,12 +39,17 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
+
           }
           if(response.data.success == true){
-            	console.log('check toekn'+response.data.auth_token)
+            	console.log('check token'+response.data.auth_token)
               	console.log('enjoy')
              	alert('login successfully')	
-              	Actions.home()	
+             	AsyncStorage.getItem('token').then((auth_token) => {
+           		this.setState({token: auth_token!== null})
+           		console.log("token to home"+this.state.token)
+           		Actions.home({token:this.state.token})
+           	})	
 	        }
         })
         .catch(function (error) {
