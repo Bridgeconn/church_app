@@ -20,8 +20,6 @@ class GuestLogin extends Component {
     }
   }
     onGuestLogin() {
-      var token = this.props.hasToken
-      console.log("guestpage"+token)
       AsyncStorage.setItem("guest", '1');
       Actions.home()
       

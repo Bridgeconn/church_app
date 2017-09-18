@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
@@ -7,9 +7,11 @@ import {Actions} from 'react-native-router-flux'
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
-		console.log("props value"+ this.props.token)
+		console.log("props value token"+ this.props.token)
+		console.log("props value hastoken"+ this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
+		    isLoggedIn:false
 	  	}
 	}
 	userLogout() {
@@ -23,8 +25,9 @@ export default class HomePage extends Component{
       console.log('AsyncStorage error: ' + error.message);
     }
   	}
+  	
 	render(){
-		return(
+         	return(
 			<ScrollView>
 				<Header>
 		          <Left>
@@ -36,7 +39,7 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
-		        {this.props.token == true ? <View style={styles.profileContent}>
+		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
 			          	<TouchableOpacity onPress={()=>{Actions.profile()}}>
@@ -83,5 +86,6 @@ export default class HomePage extends Component{
 		 		</View>
 			</ScrollView>
 			)
+		
 	}
 } 

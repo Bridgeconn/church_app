@@ -2,6 +2,7 @@
     "events": [
         {
             "event_poster_url": "http://xyzevent1.jpg",
+            "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSmNHv5TnQkNBAN6mf64n6MWZMGLpRkPrdgf_EZHBwSCWF9XuF6A",
             "event_name": "Event 1",
             "venue_name": "Event 1 Venue",
             "venue_latitude": "12.3456789",

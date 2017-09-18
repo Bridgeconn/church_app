@@ -17,8 +17,9 @@ class Login extends Component {
     super(props);
     this.state = {
       error: "",
-      token: null,
+      token:false,
       showProgress: false,
+
     }
   }
   async saveItem(item, selectedValue) {
@@ -49,7 +50,7 @@ class Login extends Component {
            		this.setState({token: auth_token!== null})
            		console.log("token to home"+this.state.token)
            		Actions.home({token:this.state.token})
-           	})	
+           		})	
 	        }
         })
         .catch(function (error) {

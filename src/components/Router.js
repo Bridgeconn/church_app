@@ -18,6 +18,7 @@ import styles from '../style/styles.js'
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
+    console.log("router"+ this.props.hasToken)
     this.state = { hasToken:false, isLoaded: false, guestKey:false};
   }
   async componentDidMount() {
@@ -55,8 +56,7 @@ export default class RoutesPage extends Component {
             <Scene key="root">
               <Scene 
                 key = "user"       
-                component = {User}         
-                hasToken ={this.state.hasToken}
+                component = {User}        
                 initial={!this.state.guestKey && !this.state.hasToken}
                 hideNavBar={true}                
               />
@@ -70,8 +70,7 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "login"  
-                component = {Login}
-                hasToken ={this.state.hasToken}   
+                component = {Login} 
                 hideNavBar={true}
               />
               <Scene 
@@ -84,7 +83,6 @@ export default class RoutesPage extends Component {
                 key = "guest"  
                 component = {GuestLogin}  
                 hideNavBar={true}
-                hasToken ={this.state.hasToken}
               />
               <Scene key = "profile"    
                 component = {ProfilePage}        
