@@ -49,7 +49,9 @@ class Login extends Component {
              	AsyncStorage.getItem('token').then((auth_token) => {
            		this.setState({token: auth_token!== null})
            		console.log("token to home"+this.state.token)
-           		Actions.home({token:this.state.token})
+              // Actions.pop();
+              Actions.home({token:this.state.token})
+
            		})	
 	        }
         })
@@ -57,9 +59,13 @@ class Login extends Component {
         	console.log(error)
           	console.log("something went wrong")
          	alert('something went wrong')    
-        })    
+        }) 
   }
- 	
+ 	componentWillUpdate(prevProps, prevState) {
+      console.log("prevProps"+prevProps,"prevState "+prevState)
+      console.log("prev Props"+this.props.hasToken,"prev State "+this.state.token)
+      console.log('Component DID UPDATE!')
+   }
   render() {
     return (
       <View style={styles.container}>

@@ -9,6 +9,7 @@ import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
 import Signup from './SignupPage'
 import EventsPage from './EventsPage'
+import EventsDetail from './EventsDetail'
 import LiveStreamPage from './LiveStreamPage'
 import SongBookPage from './SongBookPage'
 import ContactBookPage from './ContactBookPage'
@@ -41,7 +42,6 @@ export default class RoutesPage extends Component {
      }
     this.setState({isLoaded:true}) 
   }
-  
       render() {
         console.log('render')
         console.log("loader"+this.state.isLoaded)
@@ -62,11 +62,13 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "home"  
+                name="Home"
                 component = {HomePage}
                 hasToken ={this.state.hasToken}
                 initial={this.state.guestKey || this.state.hasToken}         
                 title = "HomePage" 
                 hideNavBar={true}
+                type="replace"
               />
               <Scene 
                 key = "login"  
@@ -97,7 +99,13 @@ export default class RoutesPage extends Component {
                 titleStyle={styles.navbarTitle} 
                 leftButtonColor={"white"}
                 leftButtonIconSize={30} 
-                
+              />
+              <Scene 
+                key = "eventsDetails"      
+                component = {EventsDetail}          
+                title = "event Detail" 
+                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "live"       
@@ -127,6 +135,7 @@ export default class RoutesPage extends Component {
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />
+              
             </Scene>
           </Router>          
           )

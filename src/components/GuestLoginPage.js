@@ -21,10 +21,10 @@ class GuestLogin extends Component {
   }
     onGuestLogin() {
       AsyncStorage.setItem("guest", '1');
-      Actions.home()
+      Actions.home();
       
     }
- 
+  
   render() {
     return (
       <View style={styles.container}>

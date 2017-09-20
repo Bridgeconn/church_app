@@ -25,7 +25,6 @@ export default class HomePage extends Component{
       console.log('AsyncStorage error: ' + error.message);
     }
   	}
-  	
 	render(){
          	return(
 			<ScrollView>
