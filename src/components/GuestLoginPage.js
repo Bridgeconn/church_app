@@ -16,12 +16,13 @@ class GuestLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
     }
   }
     onGuestLogin() {
       AsyncStorage.setItem("guest", '1');
-      Actions.home();
+      Actions.replace(Actions.home({hasToken:false, guestKey:true}), "");
+    
+      
       
     }
   

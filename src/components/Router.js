@@ -22,11 +22,14 @@ export default class RoutesPage extends Component {
     console.log("router"+ this.props.hasToken)
     this.state = { hasToken:false, isLoaded: false, guestKey:false};
   }
+  componentWillReceiveProps(nextProps){
+    console.log("nextProps ")
+  }
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
-      this.setState({ hasToken: auth_token !== null, isLoaded: auth_token !== null  })
+      this.setState({ hasToken: auth_token !== null, isLoaded: auth_token !== null})
       console.log('loader when token'+this.state.isLoaded)
       console.log("hasToken "+this.state.hasToken)
       console.log("token "+auth_token)
@@ -58,6 +61,8 @@ export default class RoutesPage extends Component {
                 key = "user"       
                 component = {User}        
                 initial={!this.state.guestKey && !this.state.hasToken}
+                hasToken={this.state.hasToken}
+                guestKey={this.state.guestKey}
                 hideNavBar={true}                
               />
               <Scene 

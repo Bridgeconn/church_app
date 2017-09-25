@@ -1,23 +1,26 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight} from 'react-native';
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
 import {ListItem,List} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import Panel from './EventsAccordion';
 import eventsList from './eventListDummy.json'
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
+
 export default class EventsPage extends Component{
 
  constructor(){
         super()
         this.state ={
-            data:{}    
+            data: []   
           }
           this.getData =this.getData.bind(this);
     }
 
     getData(){
-      const data = eventsList
-      this.setState({data: data.events})  
+      const data = eventsList.events
+      this.setState({data: data})  
       console.log("data"+data)
     }
         componentDidMount() {
@@ -28,13 +31,17 @@ export default class EventsPage extends Component{
       console.log("render "+data.events)
           return (
                     <View style={styles.container}>
-                       <View><Text>hello</Text></View>
                        {data.map(item =>
-                        <List>
-                        <ListItem key={item.events.event_name}><Text>{item.events.event_name}</Text></ListItem>
+                        <List key={item.event_name}>
+                        <ListItem  style={{borderBottomWidth: 0}}>
+                          <Text>{item.event_name}</Text></ListItem>
+                        <ListItem  style={{borderBottomWidth: 0}}>
+                          <TouchableHighlight onPress={()=>{Actions.eventsDetails({event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url})}}>
+                            <Image source={{uri:item.event_poster_url}} style={styles.image}/>
+                          </TouchableHighlight>
+                        </ListItem>
                         </List>
                         )}
-                      
                     </View>
                 
                 )
@@ -45,9 +52,13 @@ export default class EventsPage extends Component{
 
 var styles = StyleSheet.create({
   container: {
-    flex            : 1,
-    backgroundColor : '#f4f7f9',
-    paddingTop      : 30
-  }
+    flex : 1,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  image:{
+    width:width,
+    height:height*0.33
+  },
 })
   

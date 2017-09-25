@@ -1,4 +1,8 @@
+
+
 import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
 const styles = StyleSheet.create({
 	container:{
@@ -57,10 +61,8 @@ const styles = StyleSheet.create({
     height:0
   },
   titleView:{
-  	justifyContent:'center',
-  	alignItems:'center',
-  	marginVertical: 10
-
+    width:width,
+  	height:height*0.30,
   },
   button: {
     paddingVertical: 4,

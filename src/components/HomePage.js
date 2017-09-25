@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator, BackHandler} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
+
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
@@ -14,13 +15,28 @@ export default class HomePage extends Component{
 		    isLoggedIn:false
 	  	}
 	}
+componentDidMount() {
+	BackHandler.addEventListener('hardwareBackPress', function() {
+ // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+ // Typically you would use the navigator here to go to the last state.
+
+   // this.goBack();
+   // this.exitApp(0);
+   Actions.pop();
+   return true;
+});
+}
+	
 	userLogout() {
     try {
       AsyncStorage.removeItem('token');
       AsyncStorage.removeItem('guest');
       console.log('remove loginkey')
       alert('Logout Success!');
-      Actions.user();
+      Actions.user({type:"reset", isLoggedIn:this.state.isLoggedIn, hasToken:false, isLoaded: false, guestKey:false});
+      // Actions.pop();
+      // Actions.refresh({key:'user', hasToken:false, isLoaded: false, guestKey:false});
+
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }

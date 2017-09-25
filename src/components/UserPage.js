@@ -21,10 +21,14 @@ class User extends Component {
     this.state = {
       email: "",
       password: "",
+      hasToken:this.props.hasToken,
+      guestKey:this.props.guestKey
     }
+
   }
   
   render() {
+    
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
@@ -51,6 +55,7 @@ class User extends Component {
         <GuestLogin/>
       </View>
     );
+  
   }
 }
 

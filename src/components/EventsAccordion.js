@@ -82,7 +82,6 @@ class Panel extends Component{
 var styles = StyleSheet.create({
     container   : {
         backgroundColor: '#fff',
-        margin:10,
         overflow:'hidden'
     },
     titleContainer : {
@@ -90,7 +89,6 @@ var styles = StyleSheet.create({
     },
     title       : {
         flex    : 1,
-        padding : 10,
         color   :'#2a2f43',
         fontWeight:'bold'
     },
@@ -100,10 +98,6 @@ var styles = StyleSheet.create({
     buttonImage : {
         width   : 30,
         height  : 25
-    },
-    body        : {
-        padding     : 10,
-        paddingTop  : 0
     }
 });
 
