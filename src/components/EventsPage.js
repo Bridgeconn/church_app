@@ -36,7 +36,7 @@ export default class EventsPage extends Component{
                         <ListItem  style={{borderBottomWidth: 0}}>
                           <Text>{item.event_name}</Text></ListItem>
                         <ListItem  style={{borderBottomWidth: 0}}>
-                          <TouchableHighlight onPress={()=>{Actions.eventsDetails({event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url})}}>
+                          <TouchableHighlight onPress={()=>{Actions.eventsDetails({event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url,venue_latitude:item.venue_latitude,venue_longitude:item.venue_longitude})}}>
                             <Image source={{uri:item.event_poster_url}} style={styles.image}/>
                           </TouchableHighlight>
                         </ListItem>
