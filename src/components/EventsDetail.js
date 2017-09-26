@@ -8,19 +8,17 @@ var height = Dimensions.get('window').height; //full height
 export default class EventsDetail extends Component{
   constructor(props){
     super(props)
-    console.log(this.props.venue_latitude)
     this.state = {
             region:{
-                latitude:28.655,
-                longitude: 77.244,
+            latitude:this.props.venue_latitude,
+            longitude: this.props.venue_longitude,
             latitudeDelta: 10,
             longitudeDelta: 5
             }
         }
   }
   render(){
-    const data = this.props.data 
-    console.log("data "+data)
+
     return (
       <View style={styles.container}>
       <Image source={{uri:this.props.event_poster}} style={styles.image}/>
@@ -35,7 +33,14 @@ export default class EventsDetail extends Component{
           zoomEnabled={true}
           scrollEnabled={true}
           showsScale={true}
+        >
+        <MapView.Marker
+          coordinate={{latitude: this.props.venue_latitude,
+          longitude: this.props.venue_longitude}}
+          title={"New Delhi"}
+          description={"Heart Of India"}
         />
+        </MapView>
        </View>
       </View>
       )
@@ -58,7 +63,7 @@ export default class EventsDetail extends Component{
   left: 0,
   right: 0,
   bottom: 0,
-  height:height*0.40,
+  height:height*0.35,
   width:width
 },
   containerMaps: {
