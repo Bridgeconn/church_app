@@ -12,7 +12,8 @@ export default class HomePage extends Component{
 		console.log("props value hastoken"+ this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
-		    isLoggedIn:false
+		    isLoggedIn:false,
+		    // hasToken:this.props.hasToken
 	  	}
 	}
 	componentDidMount(){
@@ -22,17 +23,20 @@ export default class HomePage extends Component{
 	componentWillUnmount(){
 	BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
 	}
-
 	handleAndroidBack = () =>{
-  		BackHandler.exitApp()
-	}	
+		if (Actions.currentScene == "home" || Actions.currentScene == "user") {
+			BackHandler.exitApp();
+			return true;
+		}
+		return false;
+	}
 	userLogout = () =>{
     try {
       AsyncStorage.removeItem('token');
       AsyncStorage.removeItem('guest');
       console.log('remove loginkey')
+      Actions.user({hasToken:false, guestKey:false});  
       alert('Logout Success!');
-      Actions.user({hasToken:false,guestKey:false});
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }

@@ -46,7 +46,7 @@ export default class EventsPage extends Component{
                 
                 )
 
-       
+                                                                                                                                                                                                                                          
 }
 }
 
