@@ -1,86 +1,59 @@
+
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {ListItem,List} from 'native-base'
+import {Actions} from 'react-native-router-flux'
+import songList from './songbookListDummy.json'
+var width = Dimensions.get('window').width; //full width
+var height = Dimensions.get('window').height; //full height
 
-import Sound from 'react-native-sound';	
-import styles from '../style/styles.js'
+export default class SongPage extends Component{
 
-export default class SongBookPage extends Component{
-	constructor(){
-		super()
-		this.state = {
-	      	isSongPlaying: false,
-	      	songLength: 0,
-	      	interval: null,
-	     	
+ constructor(){
+        super()
+        this.state ={
+            data: []   
+          }
+          this.getData =this.getData.bind(this);
+    }
 
-	  	};
-	  	this.playSong = this.playSong.bind(this);
-  		this.tick = this.tick.bind(this);
-	}
-	
+    getData(){
+      const data = songList.songbooks
+      this.setState({data: data})  
+      console.log("data"+data)
+    }
+        componentDidMount() {
+        this.getData();
+    }
+    render() {
+      const data = this.state.data;
+          return (
+                    <View style={styles.container}>
+                       {data.map(item =>
+                       	<View key={item.id}>
+                          <TouchableHighlight  onPress={()=>{Actions.songLyrics({text:item.text,song_name:item.song_name})}}>
+                             <Text style={styles.songText}>{item.song_name}</Text>
+                          </TouchableHighlight>
+                        </View>
+                        )}
+                    </View>
+                
+                )
 
-  
-	playSong() {
-	   this.state.song.play();
-	    this.setState({
-	      isSongPlaying: !this.state.isSongPlaying
-	    })
-	    if(this.state.isSongPlaying == false){
-	    	this.state.song.pause();
-	    	this.setState({
-	      	isSongPlaying: !this.state.isSongPlaying
-	    })
-	    }
-	    
-	    
-	}
+                                                                                                                                                                                                                                          
+}
+}
 
-	
-  	
-  	tick() {
-    this.state.song.getCurrentTime((seconds) => {
-      this.setState({
-        currentTime: seconds
-      })
-    })
-  	}
-   	componentWillMount() {
-    var song = new Sound('frog.wav', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        this.setState({
-          error:error.message
-        })
-      } else { // loaded successfully
-        console.log('duration in seconds: ' + song.getDuration() +
-            'number of channels: ' + song.getNumberOfChannels());
-        this.setState({
-          volume: .5,
-          song: song,
-          isSongPlaying: false,
-          songLength: song.getDuration(),
-          currentTime: 0,
-          interval: null,
-          error: null
-        })
-      }
-    })
+var styles = StyleSheet.create({
+  container: {
+    flex : 1,
+    justifyContent:"flex-start",
+    alignItems:"flex-start",
+  },
+  songText:{
+  	fontSize:20,
+  	fontWeight:"700",
+  	color:"#3F51B5"
   }
-     
+})
   
-
-	render(){
-		return(
-			<ScrollView>
-				    
-		 		<View style={styles.eventsView}>
-		 		<Right>
-		 			<TouchableOpacity onPress={this.playSong}>{this.state.isSongPlaying ? <Icon name="ios-play"/> : <Icon name="ios-pause" />}</TouchableOpacity> 
-		 		</Right>
-		 		</View>
-			</ScrollView>
-			)
-	}
-} 
-

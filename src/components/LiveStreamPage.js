@@ -22,9 +22,6 @@ export default class LiveStreamPage extends Component{
 		    fullscreen: false,
 		    volume: .5,
 	      	isVideoPlaying: false,
-	      	
-	     	
-
 	  	};
 	  	
 	}

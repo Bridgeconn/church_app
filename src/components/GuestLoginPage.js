@@ -18,14 +18,12 @@ class GuestLogin extends Component {
     this.state = {
     }
   }
-    onGuestLogin() {
-      AsyncStorage.setItem("guest", '1');
-      Actions.replace(Actions.home({hasToken:false, guestKey:true}), "");
-    
-      
-      
-    }
+  onGuestLogin() {
+    AsyncStorage.setItem("guest", '1');
+    Actions.home({hasToken:false, guestKey:true})  
+  }
   
+
   render() {
     return (
       <View style={styles.container}>

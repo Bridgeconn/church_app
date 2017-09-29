@@ -29,8 +29,8 @@ class Login extends Component {
       console.error('AsyncStorage error: ' + error);
     }
   }
-  onLoginPressed() {
-  console.log('hi') 	
+  onLoginPressed(){
+    console.log('hi') 	
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
@@ -49,7 +49,7 @@ class Login extends Component {
              	AsyncStorage.getItem('token').then((auth_token) => {
            		this.setState({token: auth_token!== null})
            		console.log("token to home"+this.state.token)
-              Actions.replace(Actions.home({token:this.state.token}), "");
+              Actions.home({token:this.state.token});
               
 
            		})	

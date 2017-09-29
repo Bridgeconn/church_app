@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
-import {AsyncStorage,ActivityIndicator} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler} from 'react-native'
 import {Icon} from 'native-base'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
@@ -12,6 +12,7 @@ import EventsPage from './EventsPage'
 import EventsDetail from './EventsDetail'
 import LiveStreamPage from './LiveStreamPage'
 import SongBookPage from './SongBookPage'
+import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import styles from '../style/styles.js'
@@ -22,9 +23,7 @@ export default class RoutesPage extends Component {
     console.log("router"+ this.props.hasToken)
     this.state = { hasToken:false, isLoaded: false, guestKey:false};
   }
-  componentWillReceiveProps(nextProps){
-    console.log("nextProps ")
-  }
+  
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
@@ -63,17 +62,19 @@ export default class RoutesPage extends Component {
                 initial={!this.state.guestKey && !this.state.hasToken}
                 hasToken={this.state.hasToken}
                 guestKey={this.state.guestKey}
-                hideNavBar={true}                
+                hideNavBar={true}  
+
               />
               <Scene 
                 key = "home"  
                 name="Home"
                 component = {HomePage}
                 hasToken ={this.state.hasToken}
+                guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}         
                 title = "HomePage" 
                 hideNavBar={true}
-                type="replace"
+                
               />
               <Scene 
                 key = "login"  
@@ -90,6 +91,7 @@ export default class RoutesPage extends Component {
                 key = "guest"  
                 component = {GuestLogin}  
                 hideNavBar={true}
+                
               />
               <Scene key = "profile"    
                 component = {ProfilePage}        
@@ -123,6 +125,13 @@ export default class RoutesPage extends Component {
                 key = "songs"       
                 component = {SongBookPage}       
                 title = "SongBookPage" 
+                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                titleStyle={styles.navbarTitle}
+              />
+              <Scene 
+                key = "songLyrics"       
+                component = {SongLyrics}       
+                title = "SongLyrics" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />

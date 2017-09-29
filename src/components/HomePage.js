@@ -12,32 +12,32 @@ export default class HomePage extends Component{
 		console.log("props value hastoken"+ this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
-		    isLoggedIn:false
+		    isLoggedIn:false,
+		    // hasToken:this.props.hasToken
 	  	}
 	}
 
-    componentDidMount() {
-    	BackHandler.addEventListener('hardwareBackPress', function() {
-    	// this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
-    	// Typically you would use the navigator here to go to the last state.
-
-		// this.goBack();
-		// this.exitApp(0);
-		Actions.pop();
-		return true;
-	});
+	componentDidMount(){
+	BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
 	}
-	
-	userLogout() {
+
+	componentWillUnmount(){
+	BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
+	}
+	handleAndroidBack = () =>{
+		if (Actions.currentScene == "home" || Actions.currentScene == "user") {
+			BackHandler.exitApp();
+			return true;
+		}
+		return false;
+	}
+	userLogout = () =>{
     try {
       AsyncStorage.removeItem('token');
       AsyncStorage.removeItem('guest');
       console.log('remove loginkey')
+      Actions.user({hasToken:false, guestKey:false});  
       alert('Logout Success!');
-      Actions.user({type:"reset", isLoggedIn:this.state.isLoggedIn, hasToken:false, isLoaded: false, guestKey:false});
-      // Actions.pop();
-      // Actions.refresh({key:'user', hasToken:false, isLoaded: false, guestKey:false});
-
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
