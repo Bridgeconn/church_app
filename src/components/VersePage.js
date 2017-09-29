@@ -70,8 +70,7 @@ var styles = StyleSheet.create({
   },
   textStyle:{
     padding:0,
-    fontSize:20,
-    fontWeight:"600"
+    fontSize:20
   }
 })
   
