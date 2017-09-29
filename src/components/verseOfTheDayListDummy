@@ -1,0 +1,22 @@
+{
+    "verses": [
+        {
+            "verse_text": "Come unto me, all ye that labor and are heavy laden, and I will give you rest.",
+            "book_name": "Matthew",
+            "chapter": 11,
+            "verse_number": "28",
+            "version": "ASV"
+
+        },
+        {
+            "verse_text": "The fear of man bringeth a snare; But whoso putteth his trust in Jehovah shall be safe.",
+            "book_name": "Proverbs",
+            "chapter": 29,
+            "verse_number": "25",
+            "version": "ASV"
+        }
+    ],
+    "status": 200,
+    "error": "",
+    "message": ""
+}

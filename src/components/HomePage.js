@@ -15,17 +15,18 @@ export default class HomePage extends Component{
 		    isLoggedIn:false
 	  	}
 	}
-componentDidMount() {
-	BackHandler.addEventListener('hardwareBackPress', function() {
- // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
- // Typically you would use the navigator here to go to the last state.
 
-   // this.goBack();
-   // this.exitApp(0);
-   Actions.pop();
-   return true;
-});
-}
+    componentDidMount() {
+    	BackHandler.addEventListener('hardwareBackPress', function() {
+    	// this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+    	// Typically you would use the navigator here to go to the last state.
+
+		// this.goBack();
+		// this.exitApp(0);
+		Actions.pop();
+		return true;
+	});
+	}
 	
 	userLogout() {
     try {
@@ -41,6 +42,7 @@ componentDidMount() {
       console.log('AsyncStorage error: ' + error.message);
     }
   	}
+
 	render(){
          	return(
 			<ScrollView>
