@@ -31,12 +31,12 @@ export default class EventsPage extends Component{
           return (
                     <View style={styles.container}>
                        {data.map(item =>
-                        <List key={item.id} >
-                        <ListItem  style={{borderBottomWidth: 0}}>
-                          <Text>{item.contact_name}</Text>
+                        <List key={item.id} style={styles.listStyle}>
+                        <ListItem  style={styles.listItemStyle}>
+                          <Text style={styles.textStyle}>{item.contact_name}</Text>
                         </ListItem>
-                        <ListItem  style={{borderBottomWidth: 0}}>
-                          <Text>{item.contact_number}</Text>
+                        <ListItem  style={styles.listItemStyle}>
+                          <Text style={styles.textStyle}>{item.contact_number}</Text>
                         </ListItem>
                         </List>
                         )}
@@ -50,10 +50,26 @@ export default class EventsPage extends Component{
 
 var styles = StyleSheet.create({
   container: {
-    flex : 1,
+    flex:1,
     justifyContent:"flex-start",
     alignItems:"flex-start",
     backgroundColor:"#fff"
   },
+  listStyle:{
+    padding:5,
+    borderRadius:5,
+    borderWidth:1,
+    margin: 5,
+    width:width*0.98,
+    borderColor: 'rgba(0,0,0,.8)'
+  },
+  listItemStyle:{
+    borderBottomWidth:0,
+  },
+  textStyle:{
+    padding:0,
+    fontSize:18
+    
+  }
 })
   
