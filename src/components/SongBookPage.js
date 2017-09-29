@@ -26,8 +26,7 @@ export default class SongPage extends Component{
         this.getData();
     }
     render() {
-      let data = this.state.data;
-      console.log("render "+data.events)
+      const data = this.state.data;
           return (
                     <View style={styles.container}>
                        {data.map(item =>
