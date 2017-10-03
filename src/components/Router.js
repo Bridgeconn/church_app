@@ -43,6 +43,17 @@ export default class RoutesPage extends Component {
     })
      }
     this.setState({isLoaded:true}) 
+    BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
+  }
+  componentWillUnmount(){
+  BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
+  }
+  handleAndroidBack = () =>{
+    if (Actions.currentScene == "home" || Actions.currentScene == "user") {
+      BackHandler.exitApp();
+      return true;
+    }
+    return false;
   }
       render() {
         console.log('render')
@@ -63,18 +74,18 @@ export default class RoutesPage extends Component {
                 hasToken={this.state.hasToken}
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
+                type="reset"
 
               />
               <Scene 
                 key = "home"  
-                name="Home"
                 component = {HomePage}
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}         
                 title = "HomePage" 
                 hideNavBar={true}
-                
+                type="reset"
               />
               <Scene 
                 key = "login"  

@@ -16,21 +16,6 @@ export default class HomePage extends Component{
 		    // hasToken:this.props.hasToken
 	  	}
 	}
-
-	componentDidMount(){
-	BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
-	}
-
-	componentWillUnmount(){
-	BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
-	}
-	handleAndroidBack = () =>{
-		if (Actions.currentScene == "home" || Actions.currentScene == "user") {
-			BackHandler.exitApp();
-			return true;
-		}
-		return false;
-	}
 	userLogout = () =>{
     try {
       AsyncStorage.removeItem('token');
