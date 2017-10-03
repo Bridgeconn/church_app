@@ -30,7 +30,7 @@ export default class HomePage extends Component{
 
 	render(){
          	return(
-			<ScrollView>
+         	<View style={styles.container}>
 				<Header>
 		          <Left>
 		           <Title>Church App</Title>
@@ -41,6 +41,7 @@ export default class HomePage extends Component{
 		              	</TouchableOpacity>
 		          </Right>
 		        </Header>
+		        <ScrollView>
 		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.props.image}>
@@ -63,7 +64,8 @@ export default class HomePage extends Component{
 		 		</View> : null}
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.events()}}>
-		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>EVENTS</Text></Image>
+		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}>
+		 				<Text style={styles.titlePage}>EVENTS</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
@@ -87,6 +89,7 @@ export default class HomePage extends Component{
 		 			</TouchableOpacity>
 		 		</View>
 			</ScrollView>
+		</View>
 			)
 		
 	}

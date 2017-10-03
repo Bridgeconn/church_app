@@ -7,13 +7,14 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		margin:10
+		margin:0
 	},
+
 	avatarContainer: {
 	marginTop:5,
 	marginLeft:5,
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
+  borderColor: '#9B9B9B',
+  borderWidth: 1 / PixelRatio.get(),
     
     
   },
@@ -53,16 +54,16 @@ const styles = StyleSheet.create({
   	fontSize:18
   },
   imageCustom:{
-  	height:200,
-  	width:400,
+  resizeMode:"stretch",
+  width:width,
+  height:height*0.30,
   },
   hide:{
     opacity:0,
     height:0
   },
   titleView:{
-    width:width,
-  	height:height*0.30,
+   
   },
   button: {
     paddingVertical: 4,
