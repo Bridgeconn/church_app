@@ -4,6 +4,7 @@ import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} fro
 import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
+import Timestamp from 'react-timestamp';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
@@ -29,6 +30,7 @@ export default class VersePage extends Component{
       const data = this.state.data;
           return (
                     <View style={styles.container}>
+
                     <ScrollView>
                        {data.map(item =>
                         <Card key={item.book_name}>
@@ -36,6 +38,7 @@ export default class VersePage extends Component{
                           <Text style={styles.textStyle}>{item.book_name}</Text>
                           <Text style={styles.textStyle}> {item.chapter} : {item.verse_number} </Text>
                           <Text style={styles.textStyle}>{item.version}</Text>
+                          <Timestamp time={item.timestamp} component={Text} style={styles.timestamp}/>
                         </CardItem>
                         <CardItem>
                           <Text style={styles.textStyle}>{item.verse_text}</Text>
@@ -67,6 +70,10 @@ var styles = StyleSheet.create({
   listItemStyle:{
     borderBottomWidth:0,
 
+  },
+  timestamp:{
+    paddingLeft:30,
+    fontSize:16
   },
   textStyle:{
     padding:0,

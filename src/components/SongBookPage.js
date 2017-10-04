@@ -51,7 +51,8 @@ var styles = StyleSheet.create({
     alignItems:"flex-start",
   },
   songText:{
-  	fontSize:20,
+  	fontSize:30,
+    padding:5,
   	fontWeight:"700",
   	color:"#3F51B5"
   }

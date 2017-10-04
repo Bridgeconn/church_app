@@ -14,8 +14,8 @@ export default class EventsDetail extends Component{
 
     return (
       <View style={styles.container}>
-      <Text>{this.props.song_name}</Text>
-       <Text>{this.props.text}</Text>       
+      <Text style={styles.textSong}>{this.props.song_name}</Text>
+       <Text style={styles.textSong}>{this.props.text}</Text>       
       </View>
       )
     }
@@ -26,6 +26,9 @@ export default class EventsDetail extends Component{
     flex : 1,
     justifyContent:"flex-start",
     alignItems:"flex-start",
+  },
+  textSong:{
+    fontSize:18
   }
 })
   
