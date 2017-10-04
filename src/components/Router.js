@@ -20,6 +20,7 @@ import styles from '../style/styles.js'
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
+    console.log("component child "+this.props.child)
     console.log("router"+ this.props.hasToken)
     this.state = { hasToken:false, isLoaded: false, guestKey:false};
   }
@@ -55,7 +56,13 @@ export default class RoutesPage extends Component {
     }
     return false;
   }
+   ComponentWillMount(){
+    Actions.refresh({key: 'eventsDetails', title: 'hi'});
+    console.log("component "+EventsPage.getData)
+  }
       render() {
+        const children = this.props.children;
+        console.log("component "+children)
         console.log('render')
         console.log("loader"+this.state.isLoaded)
         if (!this.state.isLoaded) {
@@ -83,7 +90,7 @@ export default class RoutesPage extends Component {
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}         
-                title = "HomePage" 
+                title = "Home" 
                 hideNavBar={true}
                 type="reset"
               />
@@ -106,13 +113,13 @@ export default class RoutesPage extends Component {
               />
               <Scene key = "profile"    
                 component = {ProfilePage}        
-                title = "ProfilePage" 
+                title = "Profile" 
                 hideNavBar={true}
               />
               <Scene 
                 key = "events"     
                 component = {EventsPage}         
-                title = "EventsPage" 
+                title = "Events" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle} 
                 leftButtonColor={"white"}
@@ -121,21 +128,19 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "eventsDetails"      
                 component = {EventsDetail}          
-                title = "event Detail" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
-                titleStyle={styles.navbarTitle}
+                hideNavBar={true}  
               />
               <Scene 
                 key = "live"       
                 component = {LiveStreamPage}     
-                title = "LiveStreamPage" 
+                title = "LiveStream" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "songs"       
                 component = {SongBookPage}       
-                title = "SongBookPage" 
+                title = "SongBook" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />
@@ -149,14 +154,14 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "contacts"   
                 component = {ContactBookPage}    
-                title = "ContactBookPage" 
+                title = "ContactBook" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "verse"      
                 component = {VersePage}          
-                title = "VersePage" 
+                title = "Verse" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />

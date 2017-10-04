@@ -43,8 +43,9 @@ class Login extends Component {
 
           }
           if(response.data.success == true){
+            console.log(response.data)
             	console.log('check token'+response.data.auth_token)
-              	console.log('enjoy')
+              console.log('enjoy')
              	alert('login successfully')	
              	AsyncStorage.getItem('token').then((auth_token) => {
            		this.setState({token: auth_token!== null})

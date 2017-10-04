@@ -73,6 +73,7 @@ import com.android.build.OutputFile
  */
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -87,7 +88,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion 23
@@ -138,7 +139,6 @@ android {
 
 dependencies {
     compile project(':react-native-maps')
-    compile project(':react-native-vector-icons')
     compile project(':react-native-contacts')
     compile project(':react-native-sound')
     compile project(':react-native-youtube')

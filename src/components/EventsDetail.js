@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
-import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions} from 'react-native';
-import {List, ListItem}  from 'native-base'
-import MapView from 'react-native-maps';
+import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,} from 'react-native';
+import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import MapView from 'react-native-maps'
+import {Actions} from 'react-native-router-flux'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 export default class EventsDetail extends Component{
   constructor(props){
     super(props)
+    console.log("props" +this.props.title)
     this.state = {
             region:{
             latitude:this.props.venue_latitude,
@@ -16,11 +19,20 @@ export default class EventsDetail extends Component{
             longitudeDelta: 5
             }
         }
+
   }
   render(){
-
     return (
       <View style={styles.container}>
+       <Header>
+        <Left style={{flexDirection:"row"}}>
+        <TouchableOpacity onPress={()=>Actions.pop()}>
+        <Icon name="arrow-left" style={{fontSize:20,FontWeight:"400",paddingRight:10}}/>
+        </TouchableOpacity>
+         <Title>{this.props.event_name}</Title>
+        </Left>
+        <Right/>
+      </Header>
       <Image source={{uri:this.props.event_poster}} style={styles.image}/>
        <Text>{this.props.event_name}</Text>
        <Text>{this.props.event_time_start}</Text>
@@ -50,8 +62,6 @@ export default class EventsDetail extends Component{
   var styles = StyleSheet.create({
   container: {
     flex : 1,
-    justifyContent:"flex-start",
-    alignItems:"flex-start",
   },
   image:{
     width:width,

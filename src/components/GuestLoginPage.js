@@ -23,7 +23,6 @@ class GuestLogin extends Component {
     Actions.home({hasToken:false, guestKey:true})  
   }
   
-
   render() {
     return (
       <View style={styles.container}>

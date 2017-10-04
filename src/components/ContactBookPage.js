@@ -1,14 +1,14 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
 import {ListItem,List} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import Panel from './EventsAccordion';
 import contactList from './contactListDummy.json'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
-
-export default class EventsPage extends Component{
+import Communications from 'react-native-communications';
+export default class ContactPage extends Component{
 
  constructor(){
         super()
@@ -26,6 +26,16 @@ export default class EventsPage extends Component{
         componentDidMount() {
         this.getData();
     }
+    onPressCall() {
+    const url = 'telprompt:5551231234';
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          return Linking.openURL(url)
+            .catch(() => null);
+        }
+      });
+}
     render() {
       const data = this.state.data;
           return (
@@ -35,13 +45,14 @@ export default class EventsPage extends Component{
                         <ListItem  style={styles.listItemStyle}>
                           <Text style={styles.textStyle}>{item.contact_name}</Text>
                         </ListItem>
-                        <ListItem  style={styles.listItemStyle}>
-                          <Text style={styles.textStyle}>{item.contact_number}</Text>
+                        <ListItem style={styles.listItemStyle}>
+                        <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)}>
+                            <Text style={styles.textStyle}>{item.contact_number}</Text>
+                        </TouchableOpacity>
                         </ListItem>
                         </List>
                         )}
                     </View>
-                
                 )
 
                                                                                                                                                                                                                                           
@@ -65,11 +76,20 @@ var styles = StyleSheet.create({
   },
   listItemStyle:{
     borderBottomWidth:0,
+    marginLeft:0,
+    paddingTop:0
   },
   textStyle:{
     padding:0,
     fontSize:18
     
-  }
+  },
+  holder: {
+    flex: 0.25,
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 32,
+  },
 })
   

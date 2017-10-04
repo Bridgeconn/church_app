@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
@@ -30,7 +29,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new MapsPackage(),
-            new VectorIconsPackage(),
             new ReactNativeContacts(),
             new RNSoundPackage(),
             new ReactNativeYouTube(),
