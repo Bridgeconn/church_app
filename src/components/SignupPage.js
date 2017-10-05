@@ -24,7 +24,11 @@ class Signup extends Component {
     let data = new FormData();
     data.append("user[email]", this.props.email);
     data.append("user[password]", this.props.password);
-    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
+    if(this.props.email=="" || this.props.password==""){
+      alert("please fill the fields properly")
+    }
+    else{
+       const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if(response.status==201){
@@ -43,6 +47,8 @@ class Signup extends Component {
             alert("password : " +errors.password)
           }   
         })        
+    }
+   
   }
   render() {
     return (

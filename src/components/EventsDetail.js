@@ -87,7 +87,7 @@ export default class EventsDetail extends Component{
         <TouchableOpacity onPress={() => {
             EventsDetail.addToCalendar(eventTitle, nowUTC);
           }}>
-        <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Add To calendar</Text>
+        <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Add To Calendar</Text>
         </TouchableOpacity>
        <View>
         <MapView 
