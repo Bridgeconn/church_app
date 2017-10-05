@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
+import getDirections from 'react-native-google-maps-directions'
 import {Actions} from 'react-native-router-flux'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -19,8 +20,26 @@ export default class EventsDetail extends Component{
             longitudeDelta: 5
             }
         }
-
   }
+  handleGetDirections = () => {
+      const data = {
+         source: {
+          latitude: this.props.venue_latitude,
+          longitude:this.props.venue_longitude,
+        },
+        destination: {
+          latitude: this.props.venue_latitude,
+          longitude: this.props.venue_longitude,
+        },
+        params: [
+          {
+            key: "dirflg",
+            value: "w"
+          }
+        ]
+      }
+      getDirections(data)
+    }
   render(){
     return (
       <View style={styles.container}>
@@ -45,6 +64,8 @@ export default class EventsDetail extends Component{
           zoomEnabled={true}
           scrollEnabled={true}
           showsScale={true}
+          onPress={this.handleGetDirections}
+          title="getDirections"
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
@@ -52,6 +73,9 @@ export default class EventsDetail extends Component{
         />
         </MapView>
        </View>
+       <TouchableOpacity onPress={this.handleGetDirections}>
+        <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Directions</Text>
+        </TouchableOpacity>
       </View>
       )
     }

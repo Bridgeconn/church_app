@@ -30,12 +30,16 @@ class Login extends Component {
     }
   }
   onLoginPressed(){
-    console.log('hi') 	
+    console.log('hi')
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
-    const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
-      axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
+    if(this.props.email=="" || this.props.password==""){
+      alert("please fill the fields properly")
+    }
+    else{
+      const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
+        axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => { 
           if (response.data.auth_token) {
             var token = response.data.auth_token;
@@ -44,23 +48,24 @@ class Login extends Component {
           }
           if(response.data.success == true){
             console.log(response.data)
-            	console.log('check token'+response.data.auth_token)
+              console.log('check token'+response.data.auth_token)
               console.log('enjoy')
-             	alert('login successfully')	
-             	AsyncStorage.getItem('token').then((auth_token) => {
-           		this.setState({token: auth_token!== null})
-           		console.log("token to home"+this.state.token)
+              alert('login successfully') 
+              AsyncStorage.getItem('token').then((auth_token) => {
+              this.setState({token: auth_token!== null})
+              console.log("token to home"+this.state.token)
               Actions.home({token:this.state.token});
-              
-
-           		})	
-	        }
+              })  
+          }
         })
         .catch(function (error) {
-        	console.log(error)
-          	console.log("something went wrong")
-         	alert('something went wrong')    
+          console.log(error)
+            console.log("something went wrong")
+          alert('something went wrong')    
         }) 
+    }
+
+       
   }
  	
   render() {

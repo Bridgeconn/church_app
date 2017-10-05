@@ -72,7 +72,7 @@ var styles = StyleSheet.create({
 
   },
   timestamp:{
-    paddingLeft:30,
+    marginLeft:70,
     fontSize:16
   },
   textStyle:{
