@@ -140,6 +140,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-add-calendar-event')
     compile project(':react-native-maps')
     compile project(':react-native-contacts')
     compile project(':react-native-sound')

@@ -3,10 +3,15 @@ import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
+import moment from 'moment';
 import getDirections from 'react-native-google-maps-directions'
 import {Actions} from 'react-native-router-flux'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
+const utcDateToLocalString = (momentInUTC: moment): string => {
+  return moment(momentInUTC).local().format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+};
 
 export default class EventsDetail extends Component{
   constructor(props){
@@ -40,7 +45,30 @@ export default class EventsDetail extends Component{
       }
       getDirections(data)
     }
+  static addToCalendar = (title: string, startDateUTC: moment) => {
+  const eventConfig = {
+    title,
+    startDate: utcDateToLocalString(startDateUTC),
+    endDate: utcDateToLocalString(moment.utc(startDateUTC).add(1, 'hours')),
+  };
+
+  AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
+    .then(eventId => {
+      //handle success (receives event id) or dismissing the modal (receives false)
+      if (eventId) {
+        console.warn(eventId);
+      } else {
+        console.warn('dismissed');
+      }
+    })
+    .catch((error: string) => {
+      // handle error such as when user rejected permissions
+      console.warn(error);
+    });
+  }
   render(){
+    const eventTitle = 'Lunch';
+    const nowUTC = moment.utc();
     return (
       <View style={styles.container}>
        <Header>
@@ -56,6 +84,11 @@ export default class EventsDetail extends Component{
        <Text style={{fontSize:16}}>{this.props.event_name}</Text>
        <Text  style={{fontSize:16}}>{this.props.event_time_start}</Text>
        <Text  style={{fontSize:16}}>{this.props.event_time_end}</Text>
+        <TouchableOpacity onPress={() => {
+            EventsDetail.addToCalendar(eventTitle, nowUTC);
+          }}>
+        <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Add To calendar</Text>
+        </TouchableOpacity>
        <View>
         <MapView 
           style={ styles.map }
