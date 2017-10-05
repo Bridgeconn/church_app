@@ -27,16 +27,16 @@ export default class EventsDetail extends Component{
        <Header>
         <Left style={{flexDirection:"row"}}>
         <TouchableOpacity onPress={()=>Actions.pop()}>
-        <Icon name="arrow-left" size={24} style={{marginRight:16}}/>
+        <Icon name="arrow-left" size={24} style={{marginRight:20}}/>
         </TouchableOpacity>
-        <Title style={{fontSize:20, color:"#fff"}}>{this.props.event_name}</Title>
+        <Title style={{fontSize:19, color:"#fff"}}>{this.props.event_name}</Title>
         </Left>
         <Right/>
       </Header>
       <Image source={{uri:this.props.event_poster}} style={styles.image}/>
-       <Text>{this.props.event_name}</Text>
-       <Text>{this.props.event_time_start}</Text>
-       <Text>{this.props.event_time_end}</Text>
+       <Text style={{fontSize:16}}>{this.props.event_name}</Text>
+       <Text  style={{fontSize:16}}>{this.props.event_time_start}</Text>
+       <Text  style={{fontSize:16}}>{this.props.event_time_end}</Text>
        <View>
         <MapView 
           style={ styles.map }

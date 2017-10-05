@@ -29,12 +29,12 @@ export default class EventsPage extends Component{
     render() {
       let data = this.state.data;
       console.log("render "+data.events)
-          return (
+          return (  <ScrollView>
                     <View style={styles.container}>
                        {data.map(item =>
                         <List key={item.event_name}>
                         <ListItem  style={{borderBottomWidth: 0}}>
-                          <Text>{item.event_name}</Text></ListItem>
+                          <Text style={{fontSize:20}}>{item.event_name}</Text></ListItem>
                         <ListItem  style={{borderBottomWidth: 0}}>
                           <TouchableHighlight onPress={()=>{Actions.eventsDetails({event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url,venue_latitude:item.venue_latitude,venue_longitude:item.venue_longitude})}}>
                             <Image source={{uri:item.event_poster_url}} style={styles.image}/>
@@ -43,6 +43,7 @@ export default class EventsPage extends Component{
                         </List>
                         )}
                     </View>
+                    </ScrollView>
                 
                 )
 
