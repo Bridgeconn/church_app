@@ -154,7 +154,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "contacts"   
                 component = {ContactBookPage}    
-                title = "ContactBook" 
+                title = "Contact" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />

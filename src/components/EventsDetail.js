@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
 import {Actions} from 'react-native-router-flux'
 var width = Dimensions.get('window').width; //full width
@@ -27,9 +27,9 @@ export default class EventsDetail extends Component{
        <Header>
         <Left style={{flexDirection:"row"}}>
         <TouchableOpacity onPress={()=>Actions.pop()}>
-        <Icon name="arrow-left" style={{fontSize:20,FontWeight:"400",paddingRight:10}}/>
+        <Icon name="arrow-left" size={24} style={{marginRight:16}}/>
         </TouchableOpacity>
-         <Title>{this.props.event_name}</Title>
+        <Title style={{fontSize:20, color:"#fff"}}>{this.props.event_name}</Title>
         </Left>
         <Right/>
       </Header>
@@ -49,8 +49,6 @@ export default class EventsDetail extends Component{
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
           longitude: this.props.venue_longitude}}
-          title={"New Delhi"}
-          description={"Heart Of India"}
         />
         </MapView>
        </View>

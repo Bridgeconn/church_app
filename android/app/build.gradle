@@ -71,7 +71,9 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
-
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+]
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
@@ -141,6 +143,7 @@ dependencies {
     compile project(':react-native-maps')
     compile project(':react-native-contacts')
     compile project(':react-native-sound')
+    compile project(':react-native-vector-icons')
     compile project(':react-native-youtube')
     compile project(':react-native-image-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
