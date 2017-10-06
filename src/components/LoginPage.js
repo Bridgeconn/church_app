@@ -44,7 +44,6 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
-
           }
           if(response.data.success == true){
             console.log(response.data)
@@ -60,7 +59,7 @@ class Login extends Component {
         })
         .catch(function (error) {
           console.log(error)
-            console.log("something went wrong")
+          console.log("something went wrong")
           alert('something went wrong')    
         }) 
     }

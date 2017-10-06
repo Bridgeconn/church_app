@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
-import {AsyncStorage,ActivityIndicator,BackHandler} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text} from 'react-native'
 import {Icon} from 'native-base'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
@@ -20,21 +20,19 @@ import styles from '../style/styles.js'
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
-    console.log("component child "+this.props.child)
     console.log("router"+ this.props.hasToken)
-    this.state = { hasToken:false, isLoaded: false, guestKey:false};
+    this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null};
   }
-  
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
-      this.setState({ hasToken: auth_token !== null, isLoaded: auth_token !== null})
+      this.setState({ hasToken: auth_token !== null})
       console.log('loader when token'+this.state.isLoaded)
       console.log("hasToken "+this.state.hasToken)
       console.log("token "+auth_token)
     })
-    if(this.state.isLoaded==false){
+    if(this.state.hasToken==false){
       console.log('initial key '+this.state.guestKey)
       await AsyncStorage.getItem('guest').then((value) => {
       console.log('key1 '+value)
@@ -43,13 +41,22 @@ export default class RoutesPage extends Component {
       console.log("key "+value)
     })
      }
+     else{
+     await AsyncStorage.getItem('uri').then((uri) => {
+        console.log("uri"+uri)
+        console.log('uri '+this.state.imageUri)
+        this.setState({ imageUri:uri, isLoaded:true})
+        console.log("hasUri"+this.state.imageUri)
+        })
+     }
+    
     this.setState({isLoaded:true}) 
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
   }
   componentWillUnmount(){
   BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
-  handleAndroidBack = () =>{
+  handleAndroidBack(){
     if (Actions.currentScene == "home" || Actions.currentScene == "user") {
       BackHandler.exitApp();
       return true;
@@ -65,6 +72,7 @@ export default class RoutesPage extends Component {
         console.log("component "+children)
         console.log('render')
         console.log("loader"+this.state.isLoaded)
+        console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
           return (
             <ActivityIndicator />
@@ -89,7 +97,8 @@ export default class RoutesPage extends Component {
                 component = {HomePage}
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
-                initial={this.state.guestKey || this.state.hasToken}         
+                initial={this.state.guestKey || this.state.hasToken}
+                imageUri={this.state.imageUri} 
                 title = "Home" 
                 hideNavBar={true}
                 type="reset"
@@ -114,7 +123,13 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
-                hideNavBar={true}
+                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                titleStyle={styles.navbarTitle}
+                renderRightButton = {() => 
+                  <TouchableOpacity>
+                  <Text>Save</Text>
+                  </TouchableOpacity>
+                }
               />
               <Scene 
                 key = "events"     

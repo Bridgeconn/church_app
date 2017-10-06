@@ -8,19 +8,22 @@ import {Actions} from 'react-native-router-flux'
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
-		console.log("props value token"+ this.props.token)
+		console.log("props image uri "+ this.props.imageUri)
 		console.log("props value hastoken"+ this.props.hasToken)
 		this.state = {
 		    ImageOption: null,
 		    isLoggedIn:false,
-		    // hasToken:this.props.hasToken
+		    hasUri:false,
+		    imageUri:this.props.imageUri
 	  	}
+	  	this.userLogout = this.userLogout.bind(this)
 	}
-	userLogout = () =>{
+	async userLogout(){
     try {
-      AsyncStorage.removeItem('token');
-      AsyncStorage.removeItem('guest');
-      console.log('remove loginkey')
+    await AsyncStorage.removeItem('token');
+    await  AsyncStorage.removeItem('guest');
+    await  AsyncStorage.removeItem('uri')
+    console.log('remove loginkey')
       Actions.user({hasToken:false, guestKey:false});  
       alert('Logout Success!');
     } catch (error) {
@@ -44,16 +47,13 @@ export default class HomePage extends Component{
 		        <ScrollView>
 		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-			           <Image style={styles.avatar} source={this.props.image}>
-			          	<TouchableOpacity onPress={()=>{Actions.profile()}}>
+
+			           <Image style={styles.avatar} source={this.state.imageUri==null?require('../images/person_dummy.png'):{uri:this.state.imageUri}}>
+			          	<TouchableOpacity onPress={()=>{Actions.profile({uri:this.state.imageUri})}}>
 		       		 		<Icon name="create" style={styles.editIcon}/>
 		        		</TouchableOpacity>
 			          	</Image>    
-			          	<Image style={styles.avatar} source={require('../images/person_dummy.png')}>
-			          	<TouchableOpacity onPress={()=>{Actions.profile()}} >
-		       		 		<Icon name="create" style={styles.editIcon}/>
-		        		</TouchableOpacity>
-		        		</Image> 
+			          	
 			        </View> 
 
 			        <View style={styles.profileView}>

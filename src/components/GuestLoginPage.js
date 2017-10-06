@@ -28,7 +28,7 @@ class GuestLogin extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.onGuestLogin.bind(this)} style={styles.button}>
           <Text style={styles.buttonText}>
-            Guest Login
+           Guest 
           </Text>
         </TouchableOpacity>
       </View>

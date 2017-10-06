@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
@@ -7,8 +7,8 @@ import styles from '../style/styles.js'
 
 export default class ProfilePage extends Component{
 	
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state = {
 		    avatarSource: null,
 		    videoSource: null,
@@ -16,14 +16,23 @@ export default class ProfilePage extends Component{
 		    isReady: false,
 		    status: null,
 	      	username: '',
-      		contact: '',    	
+      		contact: '',  
+      		uri:this.props.uri  	
 	  	};
 	  	
 	}
 	handlePress() {
-     console.log(this.state.username);
-     console.log(this.state.contact);
-     Actions.home({username:this.state.username, contact:this.state.contact, image:this.state.avatarSource})
+     	console.log(this.state.username);
+     	console.log(this.state.contact);
+     	Actions.home({username:this.state.username, contact:this.state.contact, image:this.state.avatarSource,imageUri:this.state.uri})
+  	}
+  	saveUrl(item, selectedValue) {
+    try {
+     AsyncStorage.setItem(item, selectedValue);
+      console.log("saved")
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error);
+    }
   }
   selectPhotoTapped() {
     const options = {
@@ -49,43 +58,30 @@ export default class ProfilePage extends Component{
       }
       else {
         let source = { uri: response.uri };
+        console.log("source"+source)
+        let uri = source.uri;
         this.setState({
-          avatarSource: source
+          avatarSource: source,
+          uri: uri
         });
+       
+       this.saveUrl('uri', uri)
+        console.log(uri+"uri")
       }
     });
   }
-
-  
-
 	render(){
 		return(
 			<ScrollView>
-			<Header>
-		          <Left>
-		          <TouchableOpacity>
-		           	<Title>Edit</Title>
-		           </TouchableOpacity>
-		          </Left>
-		          <Right>
-		            <TouchableOpacity onPress={() => this.handlePress()}>
-		              <Title>Save</Title>
-		            </TouchableOpacity>
-		          </Right>
-		        </Header>
-
 		        <View style={styles.profilePageContent}>
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
-			          { this.state.avatarSource === null ? <Image style={styles.avatarProfile} source={require('../images/person_dummy.png')}>
+			          
+			          	<Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}>
 			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
 		       		 		<Icon name="create" style={styles.editIconProfile}/>
 		        		</TouchableOpacity>
-			          </Image> : <Image style={styles.avatarProfile} source={this.state.avatarSource}>
-			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
-		       		 		<Icon name="create" style={styles.editIconProfile}/>
-		        		</TouchableOpacity>
-			          </Image>
-			          }
+			          </Image> 			          
+			          
 			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
 		       		 		<Icon name="create" style={styles.editIconProfile}/>
 		        		</TouchableOpacity>
