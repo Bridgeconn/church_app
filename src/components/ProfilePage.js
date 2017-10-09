@@ -19,12 +19,13 @@ export default class ProfilePage extends Component{
       		contact: '',  
       		uri:this.props.uri  	
 	  	};
-	  	
 	}
-	handlePress() {
+	handlePress(){
+		console.log("hello handle press")
      	console.log(this.state.username);
      	console.log(this.state.contact);
      	Actions.home({username:this.state.username, contact:this.state.contact, image:this.state.avatarSource,imageUri:this.state.uri})
+
   	}
   	saveUrl(item, selectedValue) {
     try {
@@ -75,34 +76,28 @@ export default class ProfilePage extends Component{
 			<ScrollView>
 		        <View style={styles.profilePageContent}>
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
-			          
 			          	<Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}>
 			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
 		       		 		<Icon name="create" style={styles.editIconProfile}/>
 		        		</TouchableOpacity>
 			          </Image> 			          
-			          
 			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
 		       		 		<Icon name="create" style={styles.editIconProfile}/>
-		        		</TouchableOpacity>
-		        		
+		        		</TouchableOpacity>	
 			        </View> 
 			        <View style={styles.profileView}>
 		        		<Text>
 				          Name
 				        </Text>
-
 				        <TextInput
 				          style={styles.textInputStyle}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(text) => this.setState({username:text})}
 				        />
-
 				        <Text>
 				          Contact
 				        </Text>
-
 				        <TextInput
 				          style={styles.textInputStyle}
 				          placeholder="Enter Contact"

@@ -5,11 +5,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
 import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import moment from 'moment';
-import getDirections from 'react-native-google-maps-directions'
 import {Actions} from 'react-native-router-flux'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
+
 const utcDateToLocalString = (momentInUTC: moment): string => {
+
   return moment(momentInUTC).local().format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
 };
 
@@ -26,25 +27,7 @@ export default class EventsDetail extends Component{
             }
         }
   }
-  handleGetDirections = () => {
-      const data = {
-         source: {
-          latitude: this.props.venue_latitude,
-          longitude:this.props.venue_longitude,
-        },
-        destination: {
-          latitude: this.props.venue_latitude,
-          longitude: this.props.venue_longitude,
-        },
-        params: [
-          {
-            key: "dirflg",
-            value: "w"
-          }
-        ]
-      }
-      getDirections(data)
-    }
+  
   static addToCalendar = (title: string, startDateUTC: moment) => {
   const eventConfig = {
     title,
@@ -106,9 +89,7 @@ export default class EventsDetail extends Component{
         />
         </MapView>
        </View>
-       <TouchableOpacity onPress={this.handleGetDirections}>
-        <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Directions</Text>
-        </TouchableOpacity>
+      
       </View>
       )
     }

@@ -18,15 +18,17 @@ import GuestLogin from "./GuestLoginPage"
 class User extends Component {
   constructor(props){
     super(props);
+    console.log("props user"+this.props.hasToken)
     this.state = {
       email: "",
       password: "",
-     
+      showProgress:false
     }
 
   }
   
   render() {
+    console.log("Component Parent"+Login)
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>
@@ -51,6 +53,7 @@ class User extends Component {
         password={this.state.password}
         />
         <GuestLogin/>
+       
       </View>
     );
   

@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   Text,
   Alert,
-  View
+  View,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 
@@ -18,8 +18,7 @@ class Login extends Component {
     this.state = {
       error: "",
       token:false,
-      showProgress: false,
-
+      showProgress: true
     }
   }
   async saveItem(item, selectedValue) {
@@ -41,10 +40,11 @@ class Login extends Component {
       const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
         axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => { 
+          this.setState({showProgress:false})
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
-          }
+          }   
           if(response.data.success == true){
             console.log(response.data)
               console.log('check token'+response.data.auth_token)
@@ -62,9 +62,7 @@ class Login extends Component {
           console.log("something went wrong")
           alert('something went wrong')    
         }) 
-    }
-
-       
+    }       
   }
  	
   render() {
@@ -76,7 +74,8 @@ class Login extends Component {
           </Text>
         </TouchableOpacity>
       </View>
-    );
+    )
+  
   }
 }
 

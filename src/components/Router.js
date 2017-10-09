@@ -67,10 +67,10 @@ export default class RoutesPage extends Component {
     Actions.refresh({key: 'eventsDetails', title: 'hi'});
     console.log("component "+EventsPage.getData)
   }
+  handleSave = () =>{
+    alert("hi")
+  }
       render() {
-        const children = this.props.children;
-        console.log("component "+children)
-        console.log('render')
         console.log("loader"+this.state.isLoaded)
         console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
@@ -126,7 +126,7 @@ export default class RoutesPage extends Component {
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={()=>Actions.home()}>
                   <Text>Save</Text>
                   </TouchableOpacity>
                 }
