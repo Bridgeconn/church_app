@@ -68,6 +68,7 @@ export default class RoutesPage extends Component {
     console.log("component "+EventsPage.getData)
   }
   handleSave = () =>{
+    this.child.handlePress()
     alert("hi")
   }
       render() {
@@ -123,10 +124,11 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
+                onRefSave={ref => (this.child = ref)}
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
-                  <TouchableOpacity onPress={()=>Actions.home()}>
+                  <TouchableOpacity onPress={this.handleSave}>
                   <Text>Save</Text>
                   </TouchableOpacity>
                 }

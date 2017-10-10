@@ -23,9 +23,13 @@ export default class EventsPage extends Component{
       this.setState({data: data})  
       console.log("data"+data)
     }
-        componentDidMount() {
-        this.getData();
-    }
+  componentDidMount() {
+  this.getData();
+  this.props.onRefTitleChange(this)
+  }
+  componentWillUnmount() {
+    this.props.onRefTitleChange(null)
+  }
     render() {
       let data = this.state.data;
       console.log("render "+data.events)

@@ -18,7 +18,7 @@ import GuestLogin from "./GuestLoginPage"
 class User extends Component {
   constructor(props){
     super(props);
-    console.log("props user"+this.props.hasToken)
+    console.log("props user"+this.props.child)
     this.state = {
       email: "",
       password: "",
@@ -26,7 +26,9 @@ class User extends Component {
     }
 
   }
-  
+  onClick = () => {
+    this.child.onLoginPressed()
+  }
   render() {
     console.log("Component Parent"+Login)
     return (
@@ -49,11 +51,15 @@ class User extends Component {
         password={this.state.password}
         />
         <Login 
+        onRef={ref => (this.child = ref)}
         email={this.state.email}
         password={this.state.password}
         />
+       <TouchableOpacity onPress={this.onClick}>
+       <Text>hello child</Text>
+       </TouchableOpacity>
         <GuestLogin/>
-       
+        {this.state.showProgress ? <ActivityIndicator/>:null}
       </View>
     );
   

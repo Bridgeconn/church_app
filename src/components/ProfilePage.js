@@ -24,7 +24,7 @@ export default class ProfilePage extends Component{
 		console.log("hello handle press")
      	console.log(this.state.username);
      	console.log(this.state.contact);
-     	Actions.home({username:this.state.username, contact:this.state.contact, image:this.state.avatarSource,imageUri:this.state.uri})
+     	Actions.home({username:this.state.username, contact:this.state.contact,imageUri:this.state.uri})
 
   	}
   	saveUrl(item, selectedValue) {
@@ -71,6 +71,13 @@ export default class ProfilePage extends Component{
       }
     });
   }
+  componentDidMount() {
+    this.props.onRefSave(this)
+  }
+  componentWillUnmount() {
+    this.props.onRefSave(null)
+  }
+  
 	render(){
 		return(
 			<ScrollView>

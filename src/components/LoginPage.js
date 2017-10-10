@@ -64,7 +64,12 @@ class Login extends Component {
         }) 
     }       
   }
- 	
+ 	componentDidMount() {
+    this.props.onRef(this)
+  }
+  componentWillUnmount() {
+    this.props.onRef(null)
+  }
   render() {
     return (
       <View style={styles.container}>

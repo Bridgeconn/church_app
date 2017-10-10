@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
  import Router from './src/components/Router'
- import User from './src/components/UserPage'
+ import Example from './src/Login/ExampleLifeCycle'
 
 export default class ChurchApplication extends Component {
   render() {
