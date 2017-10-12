@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
+import Spinner from 'react-native-loading-spinner-overlay';
 import Login from "./LoginPage"
 import Signup from "./SignupPage"
 import GuestLogin from "./GuestLoginPage"
@@ -18,7 +19,6 @@ import GuestLogin from "./GuestLoginPage"
 class User extends Component {
   constructor(props){
     super(props);
-    console.log("props user"+this.props.child)
     this.state = {
       email: "",
       password: "",
@@ -26,13 +26,16 @@ class User extends Component {
     }
 
   }
-  onClick = () => {
-    this.child.onLoginPressed()
-  }
+  
+  componentWillReceiveProps(props) {
+      console.log("componentWillReceivePropscallback : userPage=" + props.showProgress)
+      this.setState({showProgress:props.showProgress})
+    }
+
   render() {
-    console.log("Component Parent"+Login)
     return (
       <View style={styles.container}>
+      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
         <Text style={styles.heading}>
           Native
         </Text>
@@ -51,15 +54,11 @@ class User extends Component {
         password={this.state.password}
         />
         <Login 
-        onRef={ref => (this.child = ref)}
         email={this.state.email}
         password={this.state.password}
         />
-       <TouchableOpacity onPress={this.onClick}>
-       <Text>hello child</Text>
-       </TouchableOpacity>
         <GuestLogin/>
-        {this.state.showProgress ? <ActivityIndicator/>:null}
+
       </View>
     );
   

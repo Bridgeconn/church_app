@@ -17,7 +17,8 @@ class Signup extends Component {
 
     this.state = {
       error: "",
-      showProgress: false,
+      showProgress: true,
+
     }
   }
   onRegisterPressed() {
@@ -28,15 +29,18 @@ class Signup extends Component {
       alert("please fill the fields properly")
     }
     else{
+       Actions.refresh({showProgress:true})
        const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if(response.status==201){
+            Actions.refresh({showProgress:false})
             console.log(response.status)
             alert('registered')
           }
         })
        .catch(function (error) {
+        Actions.refresh({showProgress:false})
           const errors = error.response.data
           if(errors.email) {
             console.log("email : " +errors.email)

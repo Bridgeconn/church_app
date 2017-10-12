@@ -15,18 +15,12 @@ export default class ProfilePage extends Component{
 		    setImage:'',
 		    isReady: false,
 		    status: null,
-	      	username: '',
-      		contact: '',  
+	      	user: this.props.user,
+      		contact:this.props.contact,  
       		uri:this.props.uri  	
 	  	};
 	}
-	handlePress(){
-		console.log("hello handle press")
-     	console.log(this.state.username);
-     	console.log(this.state.contact);
-     	Actions.home({username:this.state.username, contact:this.state.contact,imageUri:this.state.uri})
-
-  	}
+	
   	saveUrl(item, selectedValue) {
     try {
      AsyncStorage.setItem(item, selectedValue);
@@ -35,6 +29,16 @@ export default class ProfilePage extends Component{
       console.error('AsyncStorage error: ' + error);
     }
   }
+  handlePress(){
+    console.log("hello handle press")
+      console.log(this.state.user);
+      console.log(this.state.contact);
+      Actions.pop({refresh:{username:this.state.user,imageUri:this.state.uri,contactNum:this.state.contact}})
+      const user = this.state.user
+      const contact = this.state.contact
+      this.saveUrl('user',user)
+      this.saveUrl('contact',contact)
+    }
   selectPhotoTapped() {
     const options = {
       quality: 1.0,
@@ -44,7 +48,6 @@ export default class ProfilePage extends Component{
       skipBackup: true
       }
     };
-
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
@@ -64,8 +67,7 @@ export default class ProfilePage extends Component{
         this.setState({
           avatarSource: source,
           uri: uri
-        });
-       
+        }); 
        this.saveUrl('uri', uri)
         console.log(uri+"uri")
       }
@@ -84,13 +86,11 @@ export default class ProfilePage extends Component{
 		        <View style={styles.profilePageContent}>
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}>
-			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
-		       		 		<Icon name="create" style={styles.editIconProfile}/>
-		        		</TouchableOpacity>
-			          </Image> 			          
-			          	<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
-		       		 		<Icon name="create" style={styles.editIconProfile}/>
-		        		</TouchableOpacity>	
+			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} >
+		       		 		      <Icon name="create" style={styles.editIconProfile}/>
+		        		    </TouchableOpacity>
+			           </Image> 			          
+			          	
 			        </View> 
 			        <View style={styles.profileView}>
 		        		<Text>
@@ -100,7 +100,8 @@ export default class ProfilePage extends Component{
 				          style={styles.textInputStyle}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(text) => this.setState({username:text})}
+				          onChangeText={(text) => this.setState({user:text})}
+                  value={this.state.user}
 				        />
 				        <Text>
 				          Contact
@@ -110,6 +111,7 @@ export default class ProfilePage extends Component{
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(text) => this.setState({contact:text})}
+                  value={this.state.contact}
 				        />
 					</View>
 				</View>

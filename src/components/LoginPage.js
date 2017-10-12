@@ -37,9 +37,12 @@ class Login extends Component {
       alert("please fill the fields properly")
     }
     else{
+      Actions.refresh({showProgress:true})
       const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
         axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
         .then((response) => { 
+          console.log("loader showpregress")
+          Actions.refresh({showProgress:false})
           this.setState({showProgress:false})
           if (response.data.auth_token) {
             var token = response.data.auth_token;
@@ -53,27 +56,23 @@ class Login extends Component {
               AsyncStorage.getItem('token').then((auth_token) => {
               this.setState({token: auth_token!== null})
               console.log("token to home"+this.state.token)
-              Actions.home({token:this.state.token});
+              Actions.home({token:this.state.token,imageUri:null});
               })  
           }
         })
         .catch(function (error) {
+          Actions.refresh({showProgress:false})
           console.log(error)
           console.log("something went wrong")
           alert('something went wrong')    
         }) 
     }       
   }
- 	componentDidMount() {
-    this.props.onRef(this)
-  }
-  componentWillUnmount() {
-    this.props.onRef(null)
-  }
+ 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.onLoginPressed.bind(this)} style={styles.button}>
+        <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={styles.button}>
           <Text style={styles.buttonText}>
             Login
           </Text>

@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     height: 170
   },
   avatarProfile: {
-    width: 400,
-    height: 270
+    width: width,
+    height: height*0.40
   },
   editIcon:{
   	justifyContent:"flex-end",

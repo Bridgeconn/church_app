@@ -19,20 +19,24 @@ export default class EventsDetail extends Component{
     super(props)
     console.log("props" +this.props.title)
     this.state = {
+            title:this.props.title,
             region:{
             latitude:this.props.venue_latitude,
             longitude: this.props.venue_longitude,
             latitudeDelta: 10,
             longitudeDelta: 5
-            }
+            },
+            event_time_start:this.props.event_time_start,
+            event_time_end:this.props.event_time_end
+
         }
   }
   
-  static addToCalendar = (title: string, startDateUTC: moment) => {
+  static addToCalendar = (title: string, startDateUTC: moment, endDateUTC: moment) => {
   const eventConfig = {
     title,
     startDate: utcDateToLocalString(startDateUTC),
-    endDate: utcDateToLocalString(moment.utc(startDateUTC).add(1, 'hours')),
+    endDate: utcDateToLocalString(endDateUTC)
   };
 
   AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
@@ -50,8 +54,8 @@ export default class EventsDetail extends Component{
     });
   }
   render(){
-    const eventTitle = 'Lunch';
     const nowUTC = moment.utc();
+    console.log("notNOWWW UTC "+nowUTC)
     return (
       <View style={styles.container}>
       <Image source={{uri:this.props.event_poster}} style={styles.image}/>
@@ -59,7 +63,7 @@ export default class EventsDetail extends Component{
        <Text  style={{fontSize:16}}>{this.props.event_time_start}</Text>
        <Text  style={{fontSize:16}}>{this.props.event_time_end}</Text>
         <TouchableOpacity onPress={() => {
-            EventsDetail.addToCalendar(eventTitle, nowUTC);
+            EventsDetail.addToCalendar(this.state.title, this.state.event_time_start, this.state.event_time_end);
           }}>
         <Text style={{fontSize:20,fontWeight:"700",color:"#3F51B5"}}>Add To Calendar</Text>
         </TouchableOpacity>

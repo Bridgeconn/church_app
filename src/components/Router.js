@@ -21,7 +21,7 @@ export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     console.log("router"+ this.props.hasToken)
-    this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null};
+    this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
   }
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
@@ -42,12 +42,24 @@ export default class RoutesPage extends Component {
     })
      }
      else{
-     await AsyncStorage.getItem('uri').then((uri) => {
+      await AsyncStorage.getItem('uri').then((uri) => {
         console.log("uri"+uri)
         console.log('uri '+this.state.imageUri)
-        this.setState({ imageUri:uri, isLoaded:true})
+        this.setState({ imageUri:uri})
         console.log("hasUri"+this.state.imageUri)
-        })
+      })
+      await AsyncStorage.getItem('user').then((user) => {
+        console.log("user"+user)
+        console.log('user '+this.state.username)
+        this.setState({ username:user,isLoaded:true})
+        console.log("hasUser"+this.state.username)
+      })
+      // await AsyncStorage.getItem('contact').then((contact) => {
+      //   console.log("contact"+contact)
+      //   console.log('contact '+this.state.contactNum)
+      //   this.setState({ contactNum:contact})
+      //   console.log("hasUser"+this.state.contactNum)
+      // })
      }
     
     this.setState({isLoaded:true}) 
@@ -65,11 +77,14 @@ export default class RoutesPage extends Component {
   }
    ComponentWillMount(){
     Actions.refresh({key: 'eventsDetails', title: 'hi'});
-    console.log("component "+EventsPage.getData)
+
   }
   handleSave = () =>{
     this.child.handlePress()
     alert("hi")
+  }
+  reloadFromAsync = () =>{
+       console.log("reloadFromAsync")             
   }
       render() {
         console.log("loader"+this.state.isLoaded)
@@ -91,7 +106,7 @@ export default class RoutesPage extends Component {
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
                 type="reset"
-
+                
               />
               <Scene 
                 key = "home"  
@@ -100,6 +115,8 @@ export default class RoutesPage extends Component {
                 guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}
                 imageUri={this.state.imageUri} 
+                username={this.state.username}
+                contactNum={this.state.contactNum}
                 title = "Home" 
                 hideNavBar={true}
                 type="reset"
@@ -129,7 +146,7 @@ export default class RoutesPage extends Component {
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
                   <TouchableOpacity onPress={this.handleSave}>
-                  <Text>Save</Text>
+                  <Text style={{paddingRight:5}}>Save</Text>
                   </TouchableOpacity>
                 }
               />
@@ -143,9 +160,13 @@ export default class RoutesPage extends Component {
                 leftButtonIconSize={30} 
               />
               <Scene 
-                key = "eventsDetails"      
-                component = {EventsDetail}          
-                hideNavBar={true}  
+                key = "eventsDetails"   
+                title = "Events"    
+                component = {EventsDetail}  
+                navigationBarStyle={{backgroundColor: '#3F51B5'}}
+                titleStyle={styles.navbarTitle} 
+                leftButtonColor={"white"}
+                leftButtonIconSize={30}           
               />
               <Scene 
                 key = "live"       

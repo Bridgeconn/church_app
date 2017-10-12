@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {View,StyleSheet,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
 import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
@@ -13,9 +13,12 @@ export default class VersePage extends Component{
  constructor(){
         super()
         this.state ={
-            data: []   
+            data: [],
+            result:""   
           }
           this.getData =this.getData.bind(this);
+          this._shareMessage = this._shareMessage.bind(this);
+          this._showResult = this._showResult.bind(this);
     }
 
     getData(){
@@ -23,14 +26,22 @@ export default class VersePage extends Component{
       this.setState({data: data})  
       console.log("data"+data)
     }
-        componentDidMount() {
-        this.getData();
+    _showResult(result) {
+    this.setState({result});
+  }
+
+  _shareMessage() {
+    Share.share({
+      message: 'This is a simple shared message'
+    }).then(this._showResult);
+  }
+  componentDidMount() {
+  this.getData();
     }
     render() {
       const data = this.state.data;
           return (
                     <View style={styles.container}>
-
                     <ScrollView>
                        {data.map(item =>
                         <Card key={item.book_name}>
@@ -43,11 +54,17 @@ export default class VersePage extends Component{
                         <CardItem>
                           <Text style={styles.textStyle}>{item.verse_text}</Text>
                         </CardItem>
+                        <CardItem>
+                        <TouchableOpacity onPress={this._shareMessage}>
+                          <Text>
+                            Share
+                          </Text>
+                        </TouchableOpacity>
+                        </CardItem>
                         </Card>
                         )}
                     </ScrollView>
                     </View>
-                
                 )
 
                                                                                                                                                                                                                                           
