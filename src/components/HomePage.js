@@ -22,28 +22,10 @@ export default class HomePage extends Component{
 		    contactNum:this.props.contactNum
 		   
 	  	}
-	  	this.userLogout = this.userLogout.bind(this)
 	}
 	setting(){
-		
+		Actions.settings();
 	}
-	async userLogout(){
-    try {
-    Actions.refresh({showProgress:true})
-    await AsyncStorage.removeItem('token');
-    await  AsyncStorage.removeItem('guest');
-    await  AsyncStorage.removeItem('uri')
-    console.log('remove loginkey')
-    Actions.refresh({showProgress:false})
-    Actions.user({hasToken:false, guestKey:false});    
-    alert('Logout Success!');
-
-    } catch (error) {
-    Actions.refresh({showProgress:false})
-    console.log('AsyncStorage error: ' + error.message);
-    }
-  	}
-
   	componentWillReceiveProps(props) {
   		console.log("componentWillReceivePropscallback : imageURI=" + props.imageUri)
   		console.log("componentWillReceivePropscallback : imageUSER=" + props.username)

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
 import HomePage from './HomePage'
+import Settings from './Settings'
 import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
 import Signup from './SignupPage'
@@ -81,11 +82,11 @@ export default class RoutesPage extends Component {
   }
   handleSave = () =>{
     this.child.handlePress()
-    alert("hi")
+    
   }
   handleSetting = () =>{
     this.child.setting()
-    alert("setting")
+    
   }
   reloadFromAsync = () =>{
        console.log("reloadFromAsync")             
@@ -129,10 +130,19 @@ export default class RoutesPage extends Component {
                 type="reset"
                 onRefSetting={ref => (this.child = ref)}
                 renderRightButton = {() => 
-                <TouchableOpacity onPress={this.setting}>
+                <TouchableOpacity onPress={this.handleSetting}>
                   <Icon name="settings" size={26} style={{paddingRight:5}}/>
                 </TouchableOpacity>
                 }
+              />
+              <Scene 
+                key = "settings"  
+                component = {Settings} 
+                title="Settings"
+                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                titleStyle={styles.navbarTitle} 
+                leftButtonColor={"white"}
+                leftButtonIconSize={30}
               />
               <Scene 
                 key = "login"  
