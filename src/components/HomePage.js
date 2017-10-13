@@ -24,6 +24,9 @@ export default class HomePage extends Component{
 	  	}
 	  	this.userLogout = this.userLogout.bind(this)
 	}
+	setting(){
+		
+	}
 	async userLogout(){
     try {
     Actions.refresh({showProgress:true})
@@ -50,21 +53,17 @@ export default class HomePage extends Component{
   		this.setState({username:props.username})
 		this.setState({contact:props.contactNum})
   	}
+  	componentDidMount() {
+    	this.props.onRefSetting(this)
+  	}
+  	componentWillUnmount() {
+    	this.props.onRefSetting(null)
+  	}
 
 	render(){
          	return(
          	<View style={styles.container}>
          	<Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
-				<Header>
-		          <Left>
-		           <Title>Church App</Title>
-		          </Left>
-		          <Right>
-		            	<TouchableOpacity onPress={this.userLogout.bind(this)}>
-		              		<Text>logout</Text>
-		              	</TouchableOpacity>
-		          </Right>
-		        </Header>
 		        <ScrollView>
 		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>

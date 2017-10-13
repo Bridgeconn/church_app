@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text} from 'react-native'
-import {Icon} from 'native-base'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
 import HomePage from './HomePage'
@@ -51,15 +51,15 @@ export default class RoutesPage extends Component {
       await AsyncStorage.getItem('user').then((user) => {
         console.log("user"+user)
         console.log('user '+this.state.username)
-        this.setState({ username:user,isLoaded:true})
+        this.setState({ username:user})
         console.log("hasUser"+this.state.username)
       })
-      // await AsyncStorage.getItem('contact').then((contact) => {
-      //   console.log("contact"+contact)
-      //   console.log('contact '+this.state.contactNum)
-      //   this.setState({ contactNum:contact})
-      //   console.log("hasUser"+this.state.contactNum)
-      // })
+      await AsyncStorage.getItem('contact').then((contact) => {
+        console.log("contact"+contact)
+        console.log('contact '+this.state.contactNum)
+        this.setState({ contactNum:contact,isLoaded:true})
+        console.log("hasUser"+this.state.contactNum)
+      })
      }
     
     this.setState({isLoaded:true}) 
@@ -82,6 +82,10 @@ export default class RoutesPage extends Component {
   handleSave = () =>{
     this.child.handlePress()
     alert("hi")
+  }
+  handleSetting = () =>{
+    this.child.setting()
+    alert("setting")
   }
   reloadFromAsync = () =>{
        console.log("reloadFromAsync")             
@@ -117,9 +121,18 @@ export default class RoutesPage extends Component {
                 imageUri={this.state.imageUri} 
                 username={this.state.username}
                 contactNum={this.state.contactNum}
-                title = "Home" 
-                hideNavBar={true}
+                title = "Church App" 
+                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                titleStyle={styles.navbarTitle} 
+                leftButtonColor={"white"}
+                leftButtonIconSize={30}
                 type="reset"
+                onRefSetting={ref => (this.child = ref)}
+                renderRightButton = {() => 
+                <TouchableOpacity onPress={this.setting}>
+                  <Icon name="settings" size={26} style={{paddingRight:5}}/>
+                </TouchableOpacity>
+                }
               />
               <Scene 
                 key = "login"  
@@ -145,9 +158,9 @@ export default class RoutesPage extends Component {
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
-                  <TouchableOpacity onPress={this.handleSave}>
+                <TouchableOpacity onPress={this.handleSave}>
                   <Text style={{paddingRight:5}}>Save</Text>
-                  </TouchableOpacity>
+                </TouchableOpacity>
                 }
               />
               <Scene 
