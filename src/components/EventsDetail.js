@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
@@ -31,7 +31,15 @@ export default class EventsDetail extends Component{
 
         }
   }
-  
+  redirectToMap() {
+    Linking.canOpenURL('http://maps.apple.com/?ll=<lat>,<long>').then(supported => {
+        if (supported) {
+            Linking.openURL('http://maps.apple.com/?ll=<lat>,<long>');
+        } else {
+            console.log('Don\'t know how to go');
+        }
+    }).catch(err => console.error('An error occurred', err));
+}
   static addToCalendar = (title: string, startDateUTC: moment, endDateUTC: moment) => {
   const eventConfig = {
     title,
@@ -75,13 +83,13 @@ export default class EventsDetail extends Component{
           zoomEnabled={true}
           scrollEnabled={true}
           showsScale={true}
-          onPress={this.handleGetDirections}
-          title="getDirections"
+          onPress={this.redirectToMap}
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
           longitude: this.props.venue_longitude}}
         />
+        
         </MapView>
        </View>
       
