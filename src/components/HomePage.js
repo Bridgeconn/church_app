@@ -74,11 +74,12 @@ export default class HomePage extends Component{
 		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>SONG BOOK</Text></Image>
 		 			</TouchableOpacity>
 		 		</View>
+		 		{this.props.token || this.props.hasToken==true?
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.contacts()}}>
 		 				<Image source={require('../images/img_contacts_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>CONTACT BOOK</Text></Image>
 		 			</TouchableOpacity>
-		 		</View>
+		 		</View>:null}
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
 		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>VERSE</Text></Image>

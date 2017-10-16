@@ -219,6 +219,7 @@ export default class RoutesPage extends Component {
                 title = "Contact" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
+                hasToken={this.state.hasToken}
               />
               <Scene 
                 key = "verse"      

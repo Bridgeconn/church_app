@@ -39,20 +39,20 @@ export default class ContactPage extends Component{
     render() {
       const data = this.state.data;
           return (
-                    <View style={styles.container}>
-                       {data.map(item =>
-                        <List key={item.id} style={styles.listStyle}>
-                        <ListItem  style={styles.listItemStyle}>
-                          <Text style={styles.textStyle}>{item.contact_name}</Text>
-                        </ListItem>
-                        <ListItem style={styles.listItemStyle}>
-                        <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)}>
-                            <Text style={styles.textStyle}>{item.contact_number}</Text>
-                        </TouchableOpacity>
-                        </ListItem>
-                        </List>
-                        )}
-                    </View>
+          <View style={styles.container}>
+             {data.map(item =>
+              <List key={item.id} style={styles.listStyle}>
+              <ListItem  style={styles.listItemStyle}>
+                <Text style={styles.textStyle}>{item.contact_name}</Text>
+              </ListItem>
+              <ListItem style={styles.listItemStyle}>
+              <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)}>
+                  <Text style={styles.textStyle}>{item.contact_number}</Text>
+              </TouchableOpacity>
+              </ListItem>
+              </List>
+              )}
+          </View>
                 )
 
                                                                                                                                                                                                                                           
