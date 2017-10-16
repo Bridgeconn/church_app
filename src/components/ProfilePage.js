@@ -114,6 +114,8 @@ export default class ProfilePage extends Component{
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({contact:user})}
                   value={this.state.contact}
+                  secureTextEntry={true}
+                  keyboardType="numeric"
 				        />
 					</View>
 				</View>

@@ -56,7 +56,7 @@ class Login extends Component {
               AsyncStorage.getItem('token').then((auth_token) => {
               this.setState({token: auth_token!== null})
               console.log("token to home"+this.state.token)
-              Actions.home({token:this.state.token,imageUri:null});
+              Actions.home({token:this.state.token,imageUri:null,contactNum:null,username:null});
               })  
           }
         })

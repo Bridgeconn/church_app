@@ -143,6 +143,7 @@ export default class RoutesPage extends Component {
                 titleStyle={styles.navbarTitle} 
                 leftButtonColor={"white"}
                 leftButtonIconSize={30}
+                type="reset"
               />
               <Scene 
                 key = "login"  

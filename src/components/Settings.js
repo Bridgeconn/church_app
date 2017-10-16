@@ -22,16 +22,15 @@ class Settings extends Component {
     }
   }
   async userLogout(){
-    try {
     Actions.refresh({showProgress:true})
+    try {
+    Actions.refresh({showProgress:false})
     await   AsyncStorage.removeItem('token');
     await   AsyncStorage.removeItem('guest');
     await   AsyncStorage.removeItem('uri')
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
-    
     console.log('remove loginkey')
-    Actions.refresh({showProgress:false})
     Actions.user({hasToken:false, guestKey:false});    
     alert('Logout Success!');
 
@@ -40,10 +39,11 @@ class Settings extends Component {
     console.log('AsyncStorage error: ' + error.message);
     }
     }
+
   render() {
     return (
       <View style={styles.container}>
-                <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
+        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
         <TouchableOpacity onPress={this.userLogout}>
           <Text>logout</Text>
         </TouchableOpacity>

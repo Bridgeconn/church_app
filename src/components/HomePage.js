@@ -35,7 +35,7 @@ export default class HomePage extends Component{
     	this.props.onRefSetting(this)
   	}
   	componentWillUnmount() {
-    	this.props.onRefSetting(null)
+    	this.props.onRefSetting(this)
   	}
 
 	render(){
