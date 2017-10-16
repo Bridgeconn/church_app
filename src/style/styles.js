@@ -91,8 +91,12 @@ const styles = StyleSheet.create({
   },
   titlePage:{
     fontSize:22,
+    position: 'absolute',
+    bottom: 8,
+    left:0,
     color:'#fff',
-    fontWeight:'900'
+    fontWeight:'900',
+   
   },
   NavBarCustom:{
     backgroundColor:'blue'
@@ -211,7 +215,7 @@ eventImage:{
   verseTextStyle:{
     padding:0,
     fontSize:20
-  }
+  },
   // eventContainerMaps: {
   //   flexDirection: 'row',
   //   justifyContent: 'space-between',
@@ -219,7 +223,14 @@ eventImage:{
   //   flex: 1,
   //   alignItems: 'center'
   // },
-
+  linearGradient: {
+        backgroundColor: "transparent",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+}
 })
 
 export default styles

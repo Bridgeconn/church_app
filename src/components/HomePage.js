@@ -5,7 +5,7 @@ import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import LinearGradient from'react-native-linear-gradient'
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
@@ -52,7 +52,6 @@ export default class HomePage extends Component{
 			          	</Image>    
 			          	
 			        </View> 
-
 			        <View style={styles.profileView}>
 		        		<Text>Name: {this.state.username}</Text>
 		        		<Text>Contact: {this.state.contactNum}</Text>
@@ -60,29 +59,43 @@ export default class HomePage extends Component{
 		 		</View> : null}
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.events()}}>
-		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}>
-		 				<Text style={styles.titlePage}>EVENTS</Text></Image>
+		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}/>
+						<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>EVENTS</Text>
+					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.live()}}>
-		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>LIVE STREAM</Text></Image>
+		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}/>
+		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>LIVE EVENTS</Text>
+					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.songs()}}>
-		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>SONG BOOK</Text></Image>
+		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}/>
+		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>SONGS</Text>
+					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
 		 		{this.props.token || this.props.hasToken==true?
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.contacts()}}>
-		 				<Image source={require('../images/img_contacts_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>CONTACT BOOK</Text></Image>
+		 				<Image source={require('../images/img_contacts_1.jpg')} style={styles.imageCustom}/>
+		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>CONTACTS</Text>
+					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>:null}
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
-		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}><Text style={styles.titlePage}>VERSE</Text></Image>
+		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}/>
+		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>VERSE</Text>
+					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
 			</ScrollView>

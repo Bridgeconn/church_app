@@ -3,6 +3,7 @@ package com.churchapplication;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.vonovak.AddCalendarEventPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new AddCalendarEventPackage(),
             new MapsPackage(),
             new ReactNativeContacts(),
