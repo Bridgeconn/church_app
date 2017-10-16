@@ -44,7 +44,6 @@ export default class HomePage extends Component{
 		        <ScrollView>
 		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-
 			           <Image style={styles.avatar} source={this.state.imageUri==null?require('../images/person_dummy.png'):{uri:this.state.imageUri}}>
 			          	<TouchableOpacity onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
 		       		 		<Icon name="create" style={styles.editIcon}/>

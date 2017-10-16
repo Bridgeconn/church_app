@@ -11,12 +11,8 @@ const styles = StyleSheet.create({
 	},
 
 	avatarContainer: {
-	marginTop:5,
-	marginLeft:5,
   borderColor: '#9B9B9B',
   borderWidth: 1 / PixelRatio.get(),
-    
-    
   },
   profileContent:{
   	flexDirection:"row",
@@ -29,8 +25,8 @@ const styles = StyleSheet.create({
   	margin:20,
   },
   avatar: {
-    width: 170,
-    height: 170
+    width: width*0.40,
+    height: height*0.25
   },
   avatarProfile: {
     width: width,
@@ -40,8 +36,7 @@ const styles = StyleSheet.create({
   	justifyContent:"flex-end",
   	alignItems:"flex-end",
   	marginTop:140,
-  	marginLeft:140
-
+  	marginLeft:140,
   },
   editIconProfile:{
     justifyContent:"flex-end",
@@ -139,7 +134,7 @@ const styles = StyleSheet.create({
     height:height*0.40,
   },
   EventMap: {
-  position: 'absolute',
+  position: "absolute",
   top: 0,
   left: 0,
   right: 0,
