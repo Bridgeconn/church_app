@@ -101,7 +101,13 @@ export default class RoutesPage extends Component {
          }
         else{
         return(
-          <Router  navigationBarStyle={{backgroundColor: '#3F51B5'}} leftButtonIconSize={30} leftButtonColor={"white"} tintColor={'white'}>
+          <Router  
+          navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+          leftButtonIconSize={30} 
+          leftButtonColor={"white"} 
+          tintColor={'white'} 
+          titleStyle={styles.navbarTitle}
+          >
             <Scene key="root">
               <Scene 
                 key = "user"       
@@ -116,19 +122,18 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "home"  
                 component = {HomePage}
+                title = "Church App" 
+                type="reset"
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}
                 imageUri={this.state.imageUri}
                 contactNum={this.state.contactNum} 
                 username={this.state.username}
-                title = "Church App" 
-                titleStyle={styles.navbarTitle} 
-                type="reset"
                 onRefSetting={ref => (this.child = ref)}
                 renderRightButton = {() => 
                 <TouchableOpacity onPress={this.handleSetting}>
-                  <Icon name="settings" size={26} style={{paddingRight:5}}/>
+                  <Icon name="settings" size={26} color="white" style={{paddingRight:5}}/>
                 </TouchableOpacity>
                 }
               />
@@ -136,8 +141,6 @@ export default class RoutesPage extends Component {
                 key = "settings"  
                 component = {Settings} 
                 title="Settings"
-                
-                titleStyle={styles.navbarTitle} 
                 type="reset"
 
               />
@@ -156,7 +159,6 @@ export default class RoutesPage extends Component {
                 key = "guest"  
                 component = {GuestLogin}  
                 hideNavBar={true}
-                
               />
               <Scene key = "profile"    
                 component = {ProfilePage}        
@@ -165,7 +167,7 @@ export default class RoutesPage extends Component {
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
                 <TouchableOpacity onPress={this.handleSave}>
-                  <Text style={{paddingRight:5}}>Save</Text>
+                  <Text style={styles.navbarTitleRight}>Save</Text>
                 </TouchableOpacity>
                 }
               />
@@ -173,8 +175,6 @@ export default class RoutesPage extends Component {
                 key = "events"     
                 component = {EventsPage}         
                 title = "Events" 
-                titleStyle={styles.navbarTitle} 
-                
               />
               <Scene 
                 key = "eventsDetails"   
@@ -187,7 +187,6 @@ export default class RoutesPage extends Component {
                 key = "live"       
                 component = {LiveStreamPage}     
                 title = "LiveStream"                 
-                titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "songs"       
@@ -199,20 +198,17 @@ export default class RoutesPage extends Component {
                 key = "songLyrics"       
                 component = {SongLyrics}       
                 title = "SongLyrics"                 
-                titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "contacts"   
                 component = {ContactBookPage}    
                 title = "Contact"                 
-                titleStyle={styles.navbarTitle}
                 hasToken={this.state.hasToken}
               />
               <Scene 
                 key = "verse"      
                 component = {VersePage}          
                 title = "Verse" 
-                titleStyle={styles.navbarTitle}
               />
               
             </Scene>

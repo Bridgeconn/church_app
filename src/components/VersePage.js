@@ -1,12 +1,11 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
 import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+import styles from '../style/styles.js'
 
 export default class VersePage extends Component{
 
@@ -46,17 +45,16 @@ export default class VersePage extends Component{
                     <ScrollView>
                        {data.map(item =>
                         <Card key={item.book_name}>
-                        <CardItem style={styles.listItemStyle}>
-                          <Text style={styles.textStyle}>{item.book_name}</Text>
-                          <Text style={styles.textStyle}> {item.chapter} : {item.verse_number} </Text>
-                          <Text style={styles.textStyle}>{item.version}</Text>
-                          <Timestamp time={item.timestamp} component={Text} style={styles.timestamp}/>
+                        <CardItem style={styles.verseListItemStyle}>
+                          <Text style={styles.verseTextStyle}>{item.book_name}</Text>
+                          <Text style={styles.verseTextStyle}> {item.chapter} : {item.verse_number} </Text>
+                          <Text style={styles.verseTextStyle}>{item.version}</Text>
+                          <Timestamp time={item.timestamp} component={Text} style={styles.verseTimestamp}/>
                         </CardItem>
                         <CardItem>
-                          <Text style={styles.textStyle}>{item.verse_text}</Text>
+                          <Text style={styles.verseTextStyle}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
-
                         <TouchableOpacity onPress={this._shareMessage.bind(this,
                           item.verse_text,
                           item.book_name,
@@ -77,32 +75,3 @@ export default class VersePage extends Component{
                                                                                                                                                                                                                                           
 }
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex:1,
-    justifyContent:"flex-start",
-    alignItems:"flex-start",
-    backgroundColor:"#fff"
-  },
-  listStyle:{
-    padding:5,
-    margin: 5,
-    width:width*0.98,
-    height:height*0.33
-  },
-  listItemStyle:{
-    borderBottomWidth:0,
-
-  },
-  timestamp:{
-    marginLeft:70,
-    fontSize:16
-  },
-  textStyle:{
-    padding:0,
-    fontSize:20
-  }
-})
-  
-

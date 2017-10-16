@@ -1,11 +1,10 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {View,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
 import {ListItem,List} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import songList from './songbookListDummy.json'
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+import styles from '../style/styles.js'
 
 export default class SongPage extends Component{
 
@@ -44,17 +43,5 @@ export default class SongPage extends Component{
 }
 }
 
-var styles = StyleSheet.create({
-  container: {
-    flex : 1,
-    justifyContent:"flex-start",
-    alignItems:"flex-start",
-  },
-  songText:{
-  	fontSize:30,
-    padding:5,
-  	fontWeight:"700",
-  	color:"#3F51B5"
-  }
-})
+
   

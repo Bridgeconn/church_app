@@ -1,12 +1,10 @@
 
 import React, {Component} from 'react'
-import {View,StyleSheet,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {View,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
 import {ListItem,List} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import Panel from './EventsAccordion';
 import eventsList from './eventListDummy.json'
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+import styles from '../style/styles.js'
 
 export default class EventsPage extends Component{
 
@@ -31,14 +29,14 @@ export default class EventsPage extends Component{
       let data = this.state.data;
       console.log("render "+data.events)
           return (  <ScrollView>
-                    <View style={styles.container}>
+                    <View style={styles.eventContainer}>
                        {data.map(item =>
                         <List key={item.event_name}>
                         <ListItem  style={{borderBottomWidth: 0}}>
                           <Text style={{fontSize:20}}>{item.event_name}</Text></ListItem>
                         <ListItem  style={{borderBottomWidth: 0}}>
                           <TouchableHighlight onPress={()=>{Actions.eventsDetails({title:item.event_name, event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url,venue_latitude:item.venue_latitude,venue_longitude:item.venue_longitude})}}>
-                            <Image source={{uri:item.event_poster_url}} style={styles.image}/>
+                            <Image source={{uri:item.event_poster_url}} style={styles.eventImage}/>
                           </TouchableHighlight>
                         </ListItem>
                         </List>
@@ -47,20 +45,7 @@ export default class EventsPage extends Component{
                     </ScrollView>
                 
                 )
-
-                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                       
 }
 }
 
-var styles = StyleSheet.create({
-  container: {
-    flex : 1,
-    justifyContent:"center",
-    alignItems:"center",
-  },
-  image:{
-    width:width,
-    height:height*0.33
-  },
-})
-  

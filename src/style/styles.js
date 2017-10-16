@@ -103,6 +103,13 @@ const styles = StyleSheet.create({
     fontFamily:'roboto-medium',
     fontWeight:'400'
   },
+  navbarTitleRight:{
+    fontSize:19,
+    color:'#fff',
+    fontFamily:'roboto-medium',
+    fontWeight:'400',
+    paddingRight:10
+  },
   button: {
     height: 36,
     backgroundColor: '#48BBEC',
@@ -122,7 +129,96 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: 'center',
     marginBottom: 30
+  },
+  eventDetailImage:{
+    width:width,
+    height:height*0.40,
+  },
+  EventMap: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height:height*0.35,
+  width:width
+},
+eventImage:{
+    width:width,
+    height:height*0.33
+  },
+  eventContainer: {
+    flex : 1,
+    justifyContent:"center",
+    alignItems:"center",
+  },
+  eventData:{
+    fontSize:16
+  },
+  eventCalendar:{
+    fontSize:20,
+    fontWeight:"700",
+    color:"#3F51B5"
+  },
+  songText:{
+    fontSize:30,
+    padding:5,
+    fontWeight:"700",
+    color:"#3F51B5"
+  }, 
+  textSong:{
+    fontSize:18
+  },
+  contactListStyle:{
+    padding:5,
+    borderRadius:5,
+    borderWidth:1,
+    margin: 5,
+    width:width*0.98,
+    borderColor: 'rgba(0,0,0,.8)'
+  },
+  contactListItemStyle:{
+    borderBottomWidth:0,
+    marginLeft:0,
+    paddingTop:0
+  },
+  contactTextStyle:{
+    padding:0,
+    fontSize:18
+    
+  },
+  contactHolder: {
+    flex: 0.25,
+    justifyContent: 'center',
+  },
+  contactText: {
+    fontSize: 32,
+  },
+  verseListStyle:{
+    padding:5,
+    margin: 5,
+    width:width*0.98,
+    height:height*0.33
+  },
+  verseListItemStyle:{
+    borderBottomWidth:0,
+
+  },
+  verseTimestamp:{
+    marginLeft:70,
+    fontSize:16
+  },
+  verseTextStyle:{
+    padding:0,
+    fontSize:20
   }
+  // eventContainerMaps: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   padding: 30,
+  //   flex: 1,
+  //   alignItems: 'center'
+  // },
 
 })
 

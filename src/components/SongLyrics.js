@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
-import {StyleSheet,Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions} from 'react-native';
+import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions} from 'react-native';
 import {List, ListItem}  from 'native-base'
-
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+import styles from '../style/styles.js'
 
 export default class EventsDetail extends Component{
   constructor(props){
@@ -21,14 +19,4 @@ export default class EventsDetail extends Component{
     }
   }
 
-  var styles = StyleSheet.create({
-  container: {
-    flex : 1,
-    justifyContent:"flex-start",
-    alignItems:"flex-start",
-  },
-  textSong:{
-    fontSize:18
-  }
-})
-  
+
