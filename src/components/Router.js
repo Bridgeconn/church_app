@@ -42,7 +42,7 @@ export default class RoutesPage extends Component {
       console.log("key "+value)
     })
      }
-     else{
+      else{
       await AsyncStorage.getItem('uri').then((uri) => {
         console.log("uri"+uri)
         console.log('uri '+this.state.imageUri)
@@ -58,8 +58,8 @@ export default class RoutesPage extends Component {
       await AsyncStorage.getItem('contact').then((contact) => {
         console.log("contact"+contact)
         console.log('contact '+this.state.contactNum)
-        this.setState({ contactNum:contact,isLoaded:true})
-        console.log("hasUser"+this.state.contactNum)
+        this.setState({contactNum:contact})
+        console.log("contact"+this.state.contactNum)
       })
      }
     
@@ -119,9 +119,9 @@ export default class RoutesPage extends Component {
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
                 initial={this.state.guestKey || this.state.hasToken}
-                imageUri={this.state.imageUri} 
+                imageUri={this.state.imageUri}
+                contactNum={this.state.contactNum} 
                 username={this.state.username}
-                contactNum={this.state.contactNum}
                 title = "Church App" 
                 navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle} 

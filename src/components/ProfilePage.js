@@ -16,8 +16,8 @@ export default class ProfilePage extends Component{
 		    isReady: false,
 		    status: null,
 	      	user: this.props.user,
-      		contact:this.props.contact,  
-      		uri:this.props.uri  	
+      		uri:this.props.uri, 
+          contact:this.props.contact 	
 	  	};
 	}
 	
@@ -29,15 +29,17 @@ export default class ProfilePage extends Component{
       console.error('AsyncStorage error: ' + error);
     }
   }
-  handlePress(){
+  async handlePress(){
     console.log("hello handle press")
       console.log(this.state.user);
       console.log(this.state.contact);
       Actions.pop({refresh:{username:this.state.user,imageUri:this.state.uri,contactNum:this.state.contact}})
       const user = this.state.user
       const contact = this.state.contact
-      this.saveUrl('user',user)
-      this.saveUrl('contact',contact)
+      this.setState({user})
+      this.setState({contact})
+      await AsyncStorage.setItem('user',user);
+      await AsyncStorage.setItem('contact',contact);
     }
   selectPhotoTapped() {
     const options = {
@@ -100,7 +102,7 @@ export default class ProfilePage extends Component{
 				          style={styles.textInputStyle}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(text) => this.setState({user:text})}
+				          onChangeText={(user) => this.setState({user:user})}
                   value={this.state.user}
 				        />
 				        <Text>
@@ -110,7 +112,7 @@ export default class ProfilePage extends Component{
 				          style={styles.textInputStyle}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(text) => this.setState({contact:text})}
+				          onChangeText={(user) => this.setState({contact:user})}
                   value={this.state.contact}
 				        />
 					</View>

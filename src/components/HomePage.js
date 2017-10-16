@@ -9,7 +9,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 export default class HomePage extends Component{
 	constructor(props){
 		super(props)
-		console.log("contact"+this.props.contactNum)
+		console.log("props contact"+this.props.contactNum)
 		console.log("props image uri "+ this.props.imageUri)
 		console.log("props value hastoken"+ this.props.hasToken)
 		this.state = {
@@ -17,10 +17,8 @@ export default class HomePage extends Component{
 		    isLoggedIn:false,
 		    hasUri:false,
 		    imageUri:this.props.imageUri,
-		    showProgress:false,
 		    username:this.props.username,
-		    contactNum:this.props.contactNum
-		   
+		   	contactNum:this.props.contactNum
 	  	}
 	}
 	setting(){
@@ -29,11 +27,9 @@ export default class HomePage extends Component{
   	componentWillReceiveProps(props) {
   		console.log("componentWillReceivePropscallback : imageURI=" + props.imageUri)
   		console.log("componentWillReceivePropscallback : imageUSER=" + props.username)
-  		console.log("componentWillReceivePropscallback : imageCONTACT=" + props.contactNum)
-  			
   		this.setState({imageUri:props.imageUri})
   		this.setState({username:props.username})
-		this.setState({contact:props.contactNum})
+  		this.setState({contactNum:props.contactNum})
   	}
   	componentDidMount() {
     	this.props.onRefSetting(this)
@@ -45,7 +41,6 @@ export default class HomePage extends Component{
 	render(){
          	return(
          	<View style={styles.container}>
-         	<Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
 		        <ScrollView>
 		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>

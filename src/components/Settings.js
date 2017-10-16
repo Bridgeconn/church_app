@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 class Settings extends Component {
@@ -42,6 +43,7 @@ class Settings extends Component {
   render() {
     return (
       <View style={styles.container}>
+                <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
         <TouchableOpacity onPress={this.userLogout}>
           <Text>logout</Text>
         </TouchableOpacity>

@@ -30,9 +30,10 @@ export default class VersePage extends Component{
     this.setState({result});
   }
 
-  _shareMessage() {
+  _shareMessage(message, book_name, chapter, version, verse_number) {
+    let messageText = book_name+ " "+chapter+ ":"+verse_number+ " " +version+ "\n" +message;
     Share.share({
-      message: 'This is a simple shared message'
+      message: messageText
     }).then(this._showResult);
   }
   componentDidMount() {
@@ -55,7 +56,13 @@ export default class VersePage extends Component{
                           <Text style={styles.textStyle}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
-                        <TouchableOpacity onPress={this._shareMessage}>
+
+                        <TouchableOpacity onPress={this._shareMessage.bind(this,
+                          item.verse_text,
+                          item.book_name,
+                          item.chapter,
+                          item.version,
+                          item.verse_number)}>
                           <Text>
                             Share
                           </Text>
