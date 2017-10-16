@@ -26,9 +26,9 @@ export default class EventsDetail extends Component{
         }
   }
   redirectToMap() {
-    Linking.canOpenURL('http://maps.apple.com/?ll=<lat>,<long>').then(supported => {
+    Linking.canOpenURL("google.navigation:q=American Century Investments&mode=").then(supported => {
         if (supported) {
-            Linking.openURL('http://maps.apple.com/?ll=<lat>,<long>');
+            Linking.openURL("google.navigation:q=American Century Investments&mode=");
         } else {
             console.log('Don\'t know how to go');
         }

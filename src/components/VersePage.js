@@ -31,7 +31,7 @@ export default class VersePage extends Component{
   }
 
   _shareMessage(message, book_name, chapter, version, verse_number) {
-    let messageText = book_name+ " "+chapter+ ":"+verse_number+ " " +version+ "\n" +message;
+    let messageText = book_name+" " +chapter+ ":" +verse_number+ " " +version+ "\n" +message;
     Share.share({
       message: messageText
     }).then(this._showResult);
