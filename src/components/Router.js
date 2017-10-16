@@ -101,7 +101,7 @@ export default class RoutesPage extends Component {
          }
         else{
         return(
-          <Router>
+          <Router  navigationBarStyle={{backgroundColor: '#3F51B5'}} leftButtonIconSize={30} leftButtonColor={"white"} tintColor={'white'}>
             <Scene key="root">
               <Scene 
                 key = "user"       
@@ -123,10 +123,7 @@ export default class RoutesPage extends Component {
                 contactNum={this.state.contactNum} 
                 username={this.state.username}
                 title = "Church App" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle} 
-                leftButtonColor={"white"}
-                leftButtonIconSize={30}
                 type="reset"
                 onRefSetting={ref => (this.child = ref)}
                 renderRightButton = {() => 
@@ -139,11 +136,10 @@ export default class RoutesPage extends Component {
                 key = "settings"  
                 component = {Settings} 
                 title="Settings"
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                
                 titleStyle={styles.navbarTitle} 
-                leftButtonColor={"white"}
-                leftButtonIconSize={30}
                 type="reset"
+
               />
               <Scene 
                 key = "login"  
@@ -165,8 +161,7 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
-                onRefSave={ref => (this.child = ref)}
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                onRefSave={ref => (this.child = ref)}                
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
                 <TouchableOpacity onPress={this.handleSave}>
@@ -178,46 +173,38 @@ export default class RoutesPage extends Component {
                 key = "events"     
                 component = {EventsPage}         
                 title = "Events" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle} 
-                leftButtonColor={"white"}
-                leftButtonIconSize={30} 
+                
               />
               <Scene 
                 key = "eventsDetails"   
                 title = "Events"    
-                component = {EventsDetail}  
-                navigationBarStyle={{backgroundColor: '#3F51B5'}}
+                component = {EventsDetail}                  
                 titleStyle={styles.navbarTitle} 
-                leftButtonColor={"white"}
-                leftButtonIconSize={30}           
+                       
               />
               <Scene 
                 key = "live"       
                 component = {LiveStreamPage}     
-                title = "LiveStream" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                title = "LiveStream"                 
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "songs"       
                 component = {SongBookPage}       
-                title = "SongBook" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                title = "SongBook"                
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "songLyrics"       
                 component = {SongLyrics}       
-                title = "SongLyrics" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                title = "SongLyrics"                 
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
                 key = "contacts"   
                 component = {ContactBookPage}    
-                title = "Contact" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+                title = "Contact"                 
                 titleStyle={styles.navbarTitle}
                 hasToken={this.state.hasToken}
               />
@@ -225,7 +212,6 @@ export default class RoutesPage extends Component {
                 key = "verse"      
                 component = {VersePage}          
                 title = "Verse" 
-                navigationBarStyle={{backgroundColor: '#3F51B5'}} 
                 titleStyle={styles.navbarTitle}
               />
               
