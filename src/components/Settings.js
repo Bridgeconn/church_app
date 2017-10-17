@@ -8,11 +8,16 @@ import {
   AsyncStorage,
   Text,
   Alert,
-  View
+  View,
+  ScrollView,
+  Share,
+  Platform
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
+import {Card,CardItem,Body} from 'native-base';
 
+var Config = require('react-native-android-config');
 
 class Settings extends Component {
   constructor(props){
@@ -31,7 +36,7 @@ class Settings extends Component {
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
     console.log('remove loginkey')
-    Actions.user({hasToken:false, guestKey:false});    
+    Actions.reset("user", {hasToken:false, guestKey:false})
     alert('Logout Success!');
 
     } catch (error) {
@@ -40,13 +45,43 @@ class Settings extends Component {
     }
     }
 
+    _shareMessage(message) {
+      if(Platform.OS=="android"){
+      let packageName = Config.API_URL;
+      let messageText = "Hey checkout this awesome Church App  https://play.google.com/store/apps/details?id="+packageName;
+      console.log("share package name")
+      Share.share({
+        message: messageText
+      }).then(this._showResult);
+    }
+  }
+
+_showResult(result) {
+    this.setState({result});
+  }
+
   render() {
     return (
       <View style={styles.container}>
+      <ScrollView>
         <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
-        <TouchableOpacity onPress={this.userLogout}>
-          <Text>logout</Text>
+       
+        <TouchableOpacity  onPress={this.userLogout}>
+           <Card>
+            <Text style={{margin:20}}>Logout</Text>
+            </Card>
         </TouchableOpacity>
+        <TouchableOpacity >
+          <Card>
+            <Text style={{margin:20}}>About</Text>
+          </Card>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={this._shareMessage.bind(this)}>
+        <Card>
+            <Text style={{margin:20}}>Share</Text>
+        </Card>
+    </TouchableOpacity>
+      </ScrollView>
       </View>
     );
   

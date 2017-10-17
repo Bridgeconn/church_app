@@ -121,8 +121,13 @@ android {
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "true"]
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+        debug {
+            manifestPlaceholders = [excludeSystemAlertWindowPermission: "false"]
+        }
+        
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -140,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-android-config')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-add-calendar-event')
     compile project(':react-native-maps')

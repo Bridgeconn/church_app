@@ -1,7 +1,6 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
-import {ListItem,List,Card,CardItem,Body} from 'native-base'
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';

@@ -141,7 +141,6 @@ export default class RoutesPage extends Component {
                 key = "settings"  
                 component = {Settings} 
                 title="Settings"
-                type="reset"
 
               />
               <Scene 

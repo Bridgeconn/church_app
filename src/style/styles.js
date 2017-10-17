@@ -219,6 +219,8 @@ eventImage:{
   //   alignItems: 'center'
   // },
   linearGradient: {
+    width: width,
+    height:height*0.3,
         backgroundColor: "transparent",
         position: "absolute",
         top: 0,

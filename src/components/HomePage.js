@@ -35,7 +35,7 @@ export default class HomePage extends Component{
     	this.props.onRefSetting(this)
   	}
   	componentWillUnmount() {
-    	this.props.onRefSetting(this)
+    	this.props.onRefSetting(null)
   	}
 
 	render(){
@@ -58,16 +58,18 @@ export default class HomePage extends Component{
 		 		</View> : null}
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.events()}}>
-		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}/>
-						<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}>
+						<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>EVENTS</Text>
 					    </LinearGradient>
+					    </Image>
+					    
 		 			</TouchableOpacity>
 		 		</View>
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.live()}}>
 		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}/>
-		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>LIVE EVENTS</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
@@ -75,7 +77,7 @@ export default class HomePage extends Component{
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.songs()}}>
 		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}/>
-		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>SONGS</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
@@ -84,7 +86,7 @@ export default class HomePage extends Component{
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.contacts()}}>
 		 				<Image source={require('../images/img_contacts_1.jpg')} style={styles.imageCustom}/>
-		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>CONTACTS</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
@@ -92,7 +94,7 @@ export default class HomePage extends Component{
 		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
 		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}/>
-		 				<LinearGradient  colors={["transparent", "#eee"]} locations={[0.4,1.2]} style={styles.linearGradient}>
+		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>VERSE</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
