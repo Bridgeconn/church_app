@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking} from 'react-native';
+import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
@@ -23,17 +23,37 @@ export default class EventsDetail extends Component{
 
         }
   }
-  redirectToMap() {
-    Linking.canOpenURL("google.navigation:q=American Century Investments&mode=").then(supported => {
-        if (supported) {
-            Linking.openURL("google.navigation:q=American Century Investments&mode=");
-        } else {
-            console.log('Don\'t know how to go');
-        }
-    }).catch(err => console.error('An error occurred', err));
-}
+//   redirectToMap() {
+//     Linking.canOpenURL('http://maps.google.com/maps?daddr=<lat>,<long>').then(supported => {
+//         if (supported) {
+//             Linking.openURL('http://maps.google.com/maps?daddr=<lat>,<long>');
+//         } else {
+//             console.log('Don\'t know how to go');
+//         }
+//     }).catch(err => console.error('An error occurred', err));
+// }
 
-
+ openGps(longitudeMap,latitudeMap){
+      var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:'
+      var url = scheme +longitudeMap+ ',' +latitudeMap
+      this.openExternalApp(url)
+    }
+  
+  openExternalApp = (url) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        Alert.alert(
+          'ERROR',
+          'Unable to open: ' + url,
+          [
+            {text: 'OK'},
+          ]
+        );
+      }
+    });
+  }
   addToCalendar(title, startDateUTC, endDateUTC) {
   const eventConfig = {
     title,
@@ -181,8 +201,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           region={this.state.region}
           zoomEnabled={true}
           scrollEnabled={true}
-          showsScale={true}
-          onPress={this.redirectToMap}
+          onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,

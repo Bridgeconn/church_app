@@ -133,7 +133,7 @@ export default class RoutesPage extends Component {
                 onRefSetting={ref => (this.child = ref)}
                 renderRightButton = {() => 
                 <TouchableOpacity onPress={this.handleSetting}>
-                  <Icon name="settings" size={26} color="white" style={{paddingRight:5}}/>
+                  <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
                 </TouchableOpacity>
                 }
               />

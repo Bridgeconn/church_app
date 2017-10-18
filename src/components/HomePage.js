@@ -70,7 +70,7 @@ export default class HomePage extends Component{
 		 			<TouchableOpacity onPress={()=>{Actions.live()}}>
 		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}/>
 		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
-					   		<Text style={styles.titlePage}>LIVE EVENTS</Text>
+					   		<Text style={styles.titlePage}>LIVE STREAM</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
