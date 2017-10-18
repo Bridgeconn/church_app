@@ -33,17 +33,17 @@ const styles = StyleSheet.create({
     height: height*0.40
   },
   editIcon:{
-  	justifyContent:"flex-end",
-  	alignItems:"flex-end",
-  	marginTop:140,
-  	marginLeft:140,
+  	position: 'absolute',
+    bottom: 8,
+    right:20 
   },
   editIconProfile:{
-    justifyContent:"flex-end",
-    alignItems:"flex-end",
-    marginTop:220,
-    marginLeft:350
-
+    position: 'absolute',
+    bottom: 8,
+    right:20 
+  },
+  iconProfile:{
+    paddingRight:20,
   },
   customText:{
   	fontSize:18
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     left:0,
     color:'#fff',
     fontWeight:'900',
-   
+    padding:10
   },
   NavBarCustom:{
     backgroundColor:'blue'
@@ -227,7 +227,14 @@ eventImage:{
         bottom: 0,
         left: 0,
         right: 0
-}
+},
+eventMapButton:{
+  fontSize:20,
+  fontWeight:"bold",
+  color:"#000000",
+  padding:10
+},
+
 })
 
 export default styles

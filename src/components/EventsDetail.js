@@ -200,14 +200,14 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           mapType={"standard"}
           region={this.state.region}
           zoomEnabled={true}
-          scrollEnabled={true}
-          onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
+          scrollEnabled={true} 
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
           longitude: this.props.venue_longitude}}
         />
         </MapView>
+        <TouchableOpacity onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} ><Text style={styles.eventMapButton}>Directions</Text></TouchableOpacity>
        </View>
       
       </View>
