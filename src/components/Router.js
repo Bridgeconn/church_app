@@ -17,6 +17,7 @@ import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import styles from '../style/styles.js'
+import SplashScreen from 'react-native-splash-screen'
 
 export default class RoutesPage extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class RoutesPage extends Component {
     this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
   }
   async componentDidMount() {
+    SplashScreen.hide()
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
