@@ -60,6 +60,25 @@ const styles = StyleSheet.create({
   titleView:{
    
   },
+  userContainer:{
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+    padding: 10,
+    paddingTop:50,
+  },
+  heading:{
+    fontSize:26,
+    fontWeight:"bold",
+    color:"#48BEEC"
+  },
+   input: {
+    height: 50,
+    marginTop: 10,
+    padding: 4,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: '#48bbec'
+  },
   button: {
     paddingVertical: 4,
     paddingHorizontal: 8,

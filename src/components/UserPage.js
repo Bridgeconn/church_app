@@ -15,7 +15,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Login from "./LoginPage"
 import Signup from "./SignupPage"
 import GuestLogin from "./GuestLoginPage"
-
+import styles from '../style/styles.js'
 class User extends Component {
   constructor(props){
     super(props);
@@ -34,10 +34,10 @@ class User extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.userContainer}>
       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
         <Text style={styles.heading}>
-          Native
+          Church App
         </Text>
         <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
@@ -65,22 +65,5 @@ class User extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    padding: 10,
-    paddingTop:50,
-
-  },
-  input: {
-    height: 50,
-    marginTop: 10,
-    padding: 4,
-    fontSize: 18,
-    borderWidth: 1,
-    borderColor: '#48bbec'
-  }
-});
 
 export default User

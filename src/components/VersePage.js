@@ -69,8 +69,6 @@ export default class VersePage extends Component{
                         )}
                     </ScrollView>
                     </View>
-                )
-
-                                                                                                                                                                                                                                          
+                )                                                                                                                                                                                                                                        
 }
 }
