@@ -21,9 +21,9 @@ export default class HomePage extends Component{
 		   	contactNum:this.props.contactNum
 	  	}
 	}
-	setting(){
-		Actions.settings();
-	}
+	// setting(){
+	// 	Actions.settings();
+	// }
   	componentWillReceiveProps(props) {
   		console.log("componentWillReceivePropscallback : imageURI=" + props.imageUri)
   		console.log("componentWillReceivePropscallback : imageUSER=" + props.username)
@@ -31,12 +31,12 @@ export default class HomePage extends Component{
   		this.setState({username:props.username})
   		this.setState({contactNum:props.contactNum})
   	}
-  	componentDidMount() {
-    	this.props.onRefSetting(this)
-  	}
-  	componentWillUnmount() {
-    	this.props.onRefSetting(null)
-  	}
+  	// componentDidMount() {
+   //  	this.props.onRefSetting(this)
+  	// }
+  	// componentWillUnmount() {
+   //  	this.props.onRefSetting(null)
+  	// }
 
 	render(){
          	return(
@@ -51,7 +51,7 @@ export default class HomePage extends Component{
 			        </View> 
 			        <View style={styles.profileView}>
 		        		<Text>Name: {this.state.username}</Text>
-		        		<Text>Contact: {this.state.contactNum}</Text>
+		        		<Text>Contact Number: {this.state.contactNum}</Text>
 		        	</View>
 		 		</View> : null}
 		 		<View style={styles.titleView}>

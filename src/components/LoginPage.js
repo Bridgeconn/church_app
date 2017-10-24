@@ -52,7 +52,6 @@ class Login extends Component {
             console.log(response.data)
               console.log('check token'+response.data.auth_token)
               console.log('enjoy')
-              alert('login successfully') 
               AsyncStorage.getItem('token').then((auth_token) => {
               this.setState({token: auth_token!== null})
               console.log("token to home"+this.state.token)

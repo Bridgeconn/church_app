@@ -86,10 +86,7 @@ export default class RoutesPage extends Component {
     this.child.handlePress()
     
   }
-  handleSetting = () =>{
-    this.child.setting()
-    
-  }
+  
   reloadFromAsync = () =>{
        console.log("reloadFromAsync")             
   }
@@ -134,7 +131,7 @@ export default class RoutesPage extends Component {
                 username={this.state.username}
                 onRefSetting={ref => (this.child = ref)}
                 renderRightButton = {() => 
-                <TouchableOpacity onPress={this.handleSetting}>
+                <TouchableOpacity onPress={()=>{Actions.settings()}}>
                   <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
                 </TouchableOpacity>
                 }

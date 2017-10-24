@@ -104,7 +104,7 @@ export default class ProfilePage extends Component{
                   value={this.state.user}
 				        />
 				        <Text>
-				          Contact
+				          Contact Number
 				        </Text>
 				        <TextInput
 				          style={styles.textInputStyle}
@@ -112,7 +112,6 @@ export default class ProfilePage extends Component{
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({contact:user})}
                   value={this.state.contact}
-                  secureTextEntry={true}
                   keyboardType="numeric"
 				        />
 					</View>

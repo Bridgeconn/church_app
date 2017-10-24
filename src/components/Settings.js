@@ -36,7 +36,7 @@ class Settings extends Component {
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
     console.log('remove loginkey')
-    Actions.reset("user", {hasToken:false, guestKey:false})
+    Actions.user("user",{hasToken:false, guestKey:false})
     alert('Logout Success!');
 
     } catch (error) {
