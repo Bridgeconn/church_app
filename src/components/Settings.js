@@ -23,24 +23,22 @@ class Settings extends Component {
   constructor(props){
     super(props)
     this.state ={
-      showProgress:false,
+     showProgress: false
     }
   }
   async userLogout(){
-    Actions.refresh({showProgress:true})
     try {
-    Actions.refresh({showProgress:false})
+    Actions.refresh({showProgress:true})
     await   AsyncStorage.removeItem('token');
     await   AsyncStorage.removeItem('guest');
     await   AsyncStorage.removeItem('uri')
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
-    console.log('remove loginkey')
-    Actions.user("user",{hasToken:false, guestKey:false})
+    Actions.refresh({showProgress:false})
+    Actions.reset("user", {hasToken:false, guestKey:false})
     alert('Logout Success!');
 
     } catch (error) {
-    Actions.refresh({showProgress:false})
     console.log('AsyncStorage error: ' + error.message);
     }
     }
@@ -65,7 +63,6 @@ _showResult(result) {
       <View style={styles.container}>
       <ScrollView>
         <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
-       
         <TouchableOpacity  onPress={this.userLogout}>
            <Card>
             <Text style={{margin:20}}>Logout</Text>

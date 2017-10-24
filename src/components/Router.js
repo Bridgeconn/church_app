@@ -116,7 +116,6 @@ export default class RoutesPage extends Component {
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
                 type="reset"
-                
               />
               <Scene 
                 key = "home"  
