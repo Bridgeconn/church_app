@@ -171,12 +171,14 @@ eventImage:{
     alignItems:"center",
   },
   eventData:{
-    fontSize:16
+    fontSize:16,
+    left:10
   },
   eventCalendar:{
     fontSize:20,
     fontWeight:"700",
-    color:"#3F51B5"
+    color:"#3F51B5",
+    left:10
   },
   songText:{
     fontSize:30,
@@ -251,8 +253,16 @@ eventMapButton:{
   fontSize:20,
   fontWeight:"bold",
   color:"#000000",
-  padding:10
+  padding:5
 },
+mapTouchable:{
+  width:width*0.28,
+  backgroundColor:'#eee',
+  borderRadius:8,
+  left:7,
+  position:"absolute",
+  bottom:-233 
+}
 
 })
 

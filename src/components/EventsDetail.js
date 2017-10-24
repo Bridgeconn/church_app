@@ -207,7 +207,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           longitude: this.props.venue_longitude}}
         />
         </MapView>
-        <TouchableOpacity onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} ><Text style={styles.eventMapButton}>Directions</Text></TouchableOpacity>
+        <TouchableOpacity onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} style={styles.mapTouchable}><Text style={styles.eventMapButton}>go to maps</Text></TouchableOpacity>
        </View>
       
       </View>
