@@ -44,11 +44,10 @@ export default class VersePage extends Component{
                     <View style={styles.container}>
                     <ScrollView>
                        {data.map(item =>
-                        <Card key={item.book_name}>
+                        <Card key={item.book_name} style={styles.cardVerse}>
                         <CardItem style={styles.verseListItemStyle}>
                           <Text style={styles.verseTextStyle}>{item.book_name}</Text>
-                          <Text style={styles.verseTextStyle}> {item.chapter} : {item.verse_number} </Text>
-                          <Text style={styles.verseTextStyle}>{item.version}</Text>
+                          <Text style={styles.verseTextStyle}> {item.chapter} : {item.verse_number}  {item.version}</Text>
                           <Timestamp time={item.timestamp} component={Text} style={styles.verseTimestamp}/>
                         </CardItem>
                         <CardItem>

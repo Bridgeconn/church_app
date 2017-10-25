@@ -221,10 +221,14 @@ eventImage:{
   },
   verseListItemStyle:{
     borderBottomWidth:0,
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardVerse:{
+    margin:40
   },
   verseTimestamp:{
-    marginLeft:70,
+    
     fontSize:16
   },
   verseTextStyle:{

@@ -192,7 +192,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
               this.state.event_time_end
               );
           }}>
-        <Text style={styles.eventCalendar}>Add To Calendar</Text>
+        <Text style={styles.eventCalendar}>Add event</Text>
         </TouchableOpacity>
        <View>
         <MapView 
