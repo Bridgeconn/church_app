@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableHighlight,Image,Dimensions} from 'react-native';
+import {View,Text,ScrollView,TouchableHighlight,Image,Dimensions,ActivityIndicator} from 'react-native';
 import {ListItem,List} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import eventsList from './eventListDummy.json'
@@ -11,12 +11,14 @@ export default class EventsPage extends Component{
  constructor(){
         super()
         this.state ={
-            data: []   
+            data: [],
+             loading:true,  
           }
           this.getData =this.getData.bind(this);
     }
 
     getData(){
+
       const data = eventsList.events
       this.setState({data: data})  
       console.log("data"+data)
@@ -36,7 +38,7 @@ export default class EventsPage extends Component{
                           <Text style={{fontSize:20}}>{item.event_name}</Text></ListItem>
                         <ListItem  style={{borderBottomWidth: 0}}>
                           <TouchableHighlight onPress={()=>{Actions.eventsDetails({title:item.event_name, event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url,venue_latitude:item.venue_latitude,venue_longitude:item.venue_longitude})}}>
-                            <Image source={{uri:item.event_poster_url}} style={styles.eventImage}/>
+                            <Image source={{uri:item.event_poster_url}} style={styles.eventImage} onLoadEnd={ ()=>{ this.setState({ loading: false }) }}><ActivityIndicator animating={ this.state.loading }/></Image>
                           </TouchableHighlight>
                         </ListItem>
                         </List>

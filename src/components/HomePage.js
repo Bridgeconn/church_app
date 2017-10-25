@@ -37,12 +37,12 @@ export default class HomePage extends Component{
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			           <Image style={styles.avatar} source={this.state.imageUri==null?require('../images/person_dummy.png'):{uri:this.state.imageUri}}/>
 			          	<TouchableOpacity style={styles.editIcon} onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
-		       		 		<Icon name="create" size={26}/>
+		       		 		<Icon name="create" style={styles.iconProfileHome}/>
 		        		</TouchableOpacity>
 			        </View> 
 			        <View style={styles.profileView}>
-		        		<Text>Name: {this.state.username}</Text>
-		        		<Text>Contact Number: {this.state.contactNum}</Text>
+		        		<Text>{this.state.username}</Text>
+		        		<Text>{this.state.contactNum}</Text>
 		        	</View>
 		 		</View> : null}
 		 		<View style={styles.titleView}>

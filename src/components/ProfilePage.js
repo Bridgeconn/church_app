@@ -46,9 +46,7 @@ export default class ProfilePage extends Component{
       quality: 1.0,
       maxWidth: 500,
       maxHeight: 500,
-      storageOptions: {
-      skipBackup: true
-      }
+     
     };
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -74,6 +72,7 @@ export default class ProfilePage extends Component{
         console.log(uri+"uri")
       }
     });
+  
   }
   componentDidMount() {
     this.props.onRefSave(this)
@@ -89,7 +88,7 @@ export default class ProfilePage extends Component{
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}/>
 			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} style={styles.editIconProfile}>
-		       		 		      <Icon name="create" size={30} style={styles.iconProfile}/>
+		       		 		      <Icon name="create" style={styles.iconProfile}/>
 		        		    </TouchableOpacity>  			          
 			        </View> 
 			        <View style={styles.profileView}>

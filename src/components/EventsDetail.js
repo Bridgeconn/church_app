@@ -1,5 +1,6 @@
+
 import React, {Component} from 'react'
-import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform} from 'react-native';
+import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform,ActivityIndicator} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
@@ -192,7 +193,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
               this.state.event_time_end
               );
           }}>
-        <Text style={styles.eventCalendar}>Add To Calendar</Text>
+        <Text style={styles.eventCalendar}>Add event</Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -201,17 +202,15 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           region={this.state.region}
           zoomEnabled={true}
           scrollEnabled={true} 
+          onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
           longitude: this.props.venue_longitude}}
         />
         </MapView>
-        
        </View>
-        <View style={{flex:1,justifyContent:"flex-end",alignItems:"flex-end"}}>
-          <TouchableOpacity onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} style={styles.mapTouchable}><Text style={styles.eventMapButton}>go to maps</Text></TouchableOpacity>
-        </View>
+      <View style={{flex:1,justifyContent:'flex-end',alignItems:'flex-end',alignSelf:'flex-start'}}><Button onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} style={styles.mapTouchable} title="add to map" color="#3F51B5"/></View>
       </View>
       )
     }
