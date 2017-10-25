@@ -253,18 +253,17 @@ eventImage:{
         right: 0
 },
 eventMapButton:{
-  fontSize:20,
+  fontSize:24,
   fontWeight:"bold",
   color:"#000",
   padding:5
 },
 mapTouchable:{
-  width:width*0.28,
-  backgroundColor:'#eee',
+  width:width*0.32,
+  backgroundColor:'#3F51B5',
   borderRadius:8,
   left:7,
   position:"absolute",
-  bottom:-233 
 }
 
 })

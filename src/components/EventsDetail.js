@@ -192,7 +192,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
               this.state.event_time_end
               );
           }}>
-        <Text style={styles.eventCalendar}>Add event</Text>
+        <Text style={styles.eventCalendar}>Add To Calendar</Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -201,15 +201,17 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           region={this.state.region}
           zoomEnabled={true}
           scrollEnabled={true} 
-          onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
         >
         <MapView.Marker
           coordinate={{latitude: this.props.venue_latitude,
           longitude: this.props.venue_longitude}}
         />
         </MapView>
+        
        </View>
-      
+        <View style={{flex:1,justifyContent:"flex-end",alignItems:"flex-end"}}>
+          <TouchableOpacity onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} style={styles.mapTouchable}><Text style={styles.eventMapButton}>go to maps</Text></TouchableOpacity>
+        </View>
       </View>
       )
     }
