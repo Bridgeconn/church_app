@@ -167,7 +167,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
                   return '' + day + date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear() + ', ' + hours + ':' + minutes + ampm;
                 
                 default:
-                  return '' + dateofMonth + '-' + MONTHS[date.getMonth()] + '  ' +  
+                  return '' + dateofMonth + '-' + MONTHS[date.getMonth()] + '-' + date.getFullYear()+'  ' +  
                     hours + ':' + minutes + ' '+ampm
             }
         }
