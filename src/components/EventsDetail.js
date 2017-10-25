@@ -167,10 +167,8 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
                   return '' + day + date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear() + ', ' + hours + ':' + minutes + ampm;
                 
                 default:
-                  return '' + date.getFullYear() + '-' + month + '-' + 
-                    dateofMonth + 'T' +  
-                    hours + ':' + minutes + ':' + seconds + '.'+ milliseconds+
-                    this.getTimezone(date);
+                  return '' + dateofMonth + '-' + MONTHS[date.getMonth()] + '  ' +  
+                    hours + ':' + minutes + ' '+ampm
             }
         }
 
