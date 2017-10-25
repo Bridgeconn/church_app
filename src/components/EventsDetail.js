@@ -7,6 +7,7 @@ import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 export default class EventsDetail extends Component{
+  
   constructor(props){
     super(props)
     console.log("props" +this.props.title)
@@ -38,7 +39,6 @@ export default class EventsDetail extends Component{
       var url = scheme +longitudeMap+ ',' +latitudeMap
       this.openExternalApp(url)
     }
-  
   openExternalApp = (url) => {
     Linking.canOpenURL(url).then(supported => {
       if (supported) {

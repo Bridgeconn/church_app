@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';import {ListItem,List,Card,CardItem,Body} from 'native-base'
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Button} from 'react-native';
+import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
@@ -54,16 +55,17 @@ export default class VersePage extends Component{
                           <Text style={styles.verseTextStyle}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
-                        <TouchableOpacity onPress={this._shareMessage.bind(this,
+                        <Button  onPress={this._shareMessage.bind(this,
                           item.verse_text,
                           item.book_name,
                           item.chapter,
                           item.version,
-                          item.verse_number)}>
-                          <Text>
-                            Share
-                          </Text>
-                        </TouchableOpacity>
+                          item.verse_number)}
+                          title="Share"
+                          color="#3F51B5"
+                          >
+                        
+                        </Button>
                         </CardItem>
                         </Card>
                         )}
