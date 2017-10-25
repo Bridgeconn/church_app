@@ -63,9 +63,7 @@ export default class VersePage extends Component{
                           item.verse_number)}
                           title="Share"
                           color="#3F51B5"
-                          >
-                        
-                        </Button>
+                          />
                         </CardItem>
                         </Card>
                         )}

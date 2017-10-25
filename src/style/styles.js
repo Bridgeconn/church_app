@@ -181,9 +181,8 @@ eventImage:{
     left:10
   },
   songText:{
-    fontSize:30,
+    fontSize:22,
     padding:5,
-    fontWeight:"700",
     color:"#3F51B5"
   }, 
   textSong:{
@@ -252,7 +251,7 @@ eventImage:{
 eventMapButton:{
   fontSize:20,
   fontWeight:"bold",
-  color:"#000000",
+  color:"#000",
   padding:5
 },
 mapTouchable:{

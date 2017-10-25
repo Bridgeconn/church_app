@@ -30,7 +30,7 @@ export default class SongPage extends Component{
                     <View style={styles.container}>
                        {data.map(item =>
                        	<View key={item.id}>
-                          <TouchableHighlight  onPress={()=>{Actions.songLyrics({text:item.text,song_name:item.song_name})}}>
+                          <TouchableHighlight  onPress={()=>{Actions.songLyrics({text:item.text,title:item.song_name})}}>
                              <Text style={styles.songText}>{item.song_name}</Text>
                           </TouchableHighlight>
                         </View>
