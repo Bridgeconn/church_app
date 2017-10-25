@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
   	position: 'absolute',
     bottom: 8,
     right:20 
+   
   },
   editIconProfile:{
     position: 'absolute',
     bottom: 8,
-    right:20 
+    right:20,
+    
   },
-  iconProfile:{
-    paddingRight:20,
-  },
+
   customText:{
   	fontSize:18
   },
@@ -224,9 +224,6 @@ eventImage:{
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  cardVerse:{
-    margin:40
-  },
   verseTimestamp:{
     
     fontSize:16
@@ -259,10 +256,12 @@ eventMapButton:{
   padding:5
 },
 mapTouchable:{
-  backgroundColor:'#3F51B5',
+  width:width*0.28,
+  backgroundColor:'#eee',
   borderRadius:8,
   left:7,
   position:"absolute",
+  
 }
 
 })

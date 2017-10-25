@@ -86,9 +86,9 @@ export default class ProfilePage extends Component{
 			<ScrollView>
 		        <View style={styles.profilePageContent}>
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
-			          	<Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}/>
-			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)} style={styles.editIconProfile}>
-		       		 		      <Icon name="create" style={styles.iconProfile}/>
+			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                    <Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}/>
+		       		 		      <Icon name="create"  style={styles.editIconProfile}/>
 		        		    </TouchableOpacity>  			          
 			        </View> 
 			        <View style={styles.profileView}>
