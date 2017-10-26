@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
-import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,NetInfo} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
 import HomePage from './HomePage'
+import NavBar from './NavBar'
 import Settings from './Settings'
 import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
@@ -132,9 +133,14 @@ export default class RoutesPage extends Component {
                 contactNum={this.state.contactNum} 
                 username={this.state.username}
                 renderRightButton = {() => 
+                  <View style={{flexDirection:"row"}}>
+                <TouchableOpacity onPress={()=>{Actions.profile()}}>
+                  <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={()=>{Actions.settings()}}>
                   <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
                 </TouchableOpacity>
+                </View>
                 }
               />
               <Scene 
