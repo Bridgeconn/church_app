@@ -151,13 +151,9 @@ const styles = StyleSheet.create({
   eventDetailImage:{
     width:width,
     height:height*0.40,
+    marginBottom:15
   },
   EventMap: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
   height:height*0.35,
   width:width
 },
@@ -171,14 +167,15 @@ eventImage:{
     alignItems:"center",
   },
   eventData:{
-    fontSize:16,
-    left:10
+    fontSize:20,
+    padding:1
   },
   eventCalendar:{
     fontSize:20,
     fontWeight:"700",
     color:"#3F51B5",
-    left:10
+    marginTop:10,
+    marginBottom:20
   },
   songText:{
     fontSize:22,
@@ -256,14 +253,12 @@ eventMapButton:{
   padding:5
 },
 mapTouchable:{
-  width:width*0.28,
-  backgroundColor:'#eee',
-  borderRadius:8,
-  left:7,
+  width:width*0.40,
   position:"absolute",
-  
+  margin:10,
+  right:0,
+  bottom:0,  
 }
-
 })
 
 export default styles

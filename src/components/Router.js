@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
-import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,NetInfo} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import User from './UserPage'
@@ -26,7 +26,7 @@ export default class RoutesPage extends Component {
     this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
   }
   async componentDidMount() {
-    SplashScreen.hide()
+    // SplashScreen.hide()
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
@@ -42,6 +42,9 @@ export default class RoutesPage extends Component {
       this.setState({ guestKey: value !== null, isLoaded: value !==null })
       console.log("guestKey "+this.state.guestKey)
       console.log("key "+value)
+      if (value!==null){
+        SplashScreen.hide()
+      }
     })
      }
       else{
@@ -66,6 +69,7 @@ export default class RoutesPage extends Component {
      }
     
     this.setState({isLoaded:true}) 
+    SplashScreen.hide()
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
   }
   componentWillUnmount(){
@@ -86,19 +90,19 @@ export default class RoutesPage extends Component {
     this.child.handlePress()
   }
   
-  reloadFromAsync = () =>{
-       console.log("reloadFromAsync")             
-  }
       render() {
+
         console.log("loader"+this.state.isLoaded)
         console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
           return (
-            <ActivityIndicator />
+          //   <ActivityIndicator />
+          null
           )
          }
         else{
         return(
+          // SplashScreen.hide()
           <Router  
           navigationBarStyle={{backgroundColor: '#3F51B5'}} 
           leftButtonIconSize={30} 

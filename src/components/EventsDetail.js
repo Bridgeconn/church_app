@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react'
-import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform,ActivityIndicator} from 'react-native';
+import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform,ActivityIndicator,ScrollView} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
@@ -20,7 +20,9 @@ export default class EventsDetail extends Component{
             longitudeDelta: 5
             },
             event_time_start:this.props.event_time_start,
-            event_time_end:this.props.event_time_end
+            event_time_end:this.props.event_time_end,
+            event_topic:this.props.event_topic,
+            event_speaker:this.props.event_speaker
 
         }
   }
@@ -76,8 +78,6 @@ export default class EventsDetail extends Component{
       console.warn(error);
     });
   }
-
-
   getTimezone(date) {
     var offset = date.getTimezoneOffset();
     var minutes = Math.abs(offset);
@@ -174,16 +174,18 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 
   render(){
     return (
+      
       <View style={styles.container}>
+      <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
-        <Text style={styles.eventData}>
-          Event Name: {this.props.event_name}</Text>
         <Text  style={styles.eventData}>
           Start Time: {this.prettyTime(new Date(this.state.event_time_start))}
         </Text>
         <Text  style={styles.eventData}>
           End Time: {this.prettyTime(new Date(this.state.event_time_end))} 
         </Text>
+        <Text  style={styles.eventData}>Event Topic: {this.state.event_topic}</Text>
+        <Text  style={styles.eventData}>Event Speaker: {this.state.event_speaker}</Text>
         <TouchableOpacity onPress={() => {
             this.addToCalendar(
               this.state.title, 
@@ -191,7 +193,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
               this.state.event_time_end
               );
           }}>
-        <Text style={styles.eventCalendar}>Add event</Text>
+        <Text style={styles.eventCalendar}>Add event to calender</Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -208,8 +210,10 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
         />
         </MapView>
        </View>
-      <View style={{flex:1,justifyContent:'flex-end',alignItems:'flex-end',alignSelf:'flex-start'}}><Button onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)} style={styles.mapTouchable} title="add to map" color="#3F51B5"/></View>
+      <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
+      </ScrollView>
       </View>
+   
       )
     }
   }

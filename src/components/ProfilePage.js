@@ -43,14 +43,13 @@ export default class ProfilePage extends Component{
     }
   selectPhotoTapped() {
     const options = {
+      title: 'Select Profile Picture',
       quality: 1.0,
       maxWidth: 500,
       maxHeight: 500,
-     
-    };
+     }
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
+      console.log('Response = '+JSON.stringify({options}))
       if (response.didCancel) {
         console.log('User cancelled photo picker');
       }
@@ -72,7 +71,7 @@ export default class ProfilePage extends Component{
         console.log(uri+"uri")
       }
     });
-  
+    
   }
   componentDidMount() {
     this.props.onRefSave(this)

@@ -9,6 +9,7 @@ import {
   Text,
   Alert,
   View,
+  NetInfo
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 
@@ -18,7 +19,8 @@ class Login extends Component {
     this.state = {
       error: "",
       token:false,
-      showProgress: true
+      showProgress: true,
+      status:true
     }
   }
   async saveItem(item, selectedValue) {
@@ -56,7 +58,7 @@ class Login extends Component {
               this.setState({token: auth_token!== null})
               console.log("token to home"+this.state.token)
               Actions.home({token:this.state.token,imageUri:null,contactNum:null,username:null});
-              })  
+            })  
           }
         })
         .catch(function (error) {
@@ -67,7 +69,9 @@ class Login extends Component {
         }) 
     }       
   }
- 
+
+  
+
   render() {
     return (
       <View style={styles.container}>
