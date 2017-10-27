@@ -33,7 +33,7 @@ export default class HomePage extends Component{
          	return(
          	<View style={styles.container}>
 		        <ScrollView>
-		        {this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
+		        {/*this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<TouchableOpacity   onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
 			          	<Image style={styles.avatar} source={this.state.imageUri==null?require('../images/person_dummy.png'):{uri:this.state.imageUri}}/>
@@ -44,18 +44,16 @@ export default class HomePage extends Component{
 		        		<Text>{this.state.username}</Text>
 		        		<Text>{this.state.contactNum}</Text>
 		        	</View>
-		 		</View> : null}
-		 		<View style={styles.titleView}>
+		 		</View> : null*/}
+		 		<View style={{flex:1,padding:10,justifyContent:"center",alignItems:"center",alignSelf:"center"}}> 
+		 		<View style={{flexDirection:"row",flex:1}}>
 		 			<TouchableOpacity onPress={()=>{Actions.events()}}>
 		 				<Image source={require('../images/img_events_1.jpg')} style={styles.imageCustom}>
 						<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>EVENTS</Text>
 					    </LinearGradient>
-					    </Image>
-					    
+					    </Image>  
 		 			</TouchableOpacity>
-		 		</View>
-		 		<View style={styles.titleView}>
 		 			<TouchableOpacity onPress={()=>{Actions.live()}}>
 		 				<Image source={require('../images/img_livestream_1.jpg')} style={styles.imageCustom}/>
 		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
@@ -63,11 +61,17 @@ export default class HomePage extends Component{
 					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
-		 		<View style={styles.titleView}>
+		 		<View style={{flexDirection:"row",flex:1}}>
 		 			<TouchableOpacity onPress={()=>{Actions.songs()}}>
 		 				<Image source={require('../images/img_songbook_2.jpg')} style={styles.imageCustom}/>
 		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>SONGS</Text>
+					    </LinearGradient>
+		 			</TouchableOpacity>
+		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
+		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}/>
+		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>VERSE</Text>
 					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>
@@ -80,14 +84,7 @@ export default class HomePage extends Component{
 					    </LinearGradient>
 		 			</TouchableOpacity>
 		 		</View>:null}
-		 		<View style={styles.titleView}>
-		 			<TouchableOpacity onPress={()=>{Actions.verse()}}>
-		 				<Image source={require('../images/img_verseotd_1.jpg')} style={styles.imageCustom}/>
-		 				<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
-					   		<Text style={styles.titlePage}>VERSE</Text>
-					    </LinearGradient>
-		 			</TouchableOpacity>
-		 		</View>
+		 	</View>
 			</ScrollView>
 		</View>
 			)

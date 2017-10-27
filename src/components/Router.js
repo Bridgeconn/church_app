@@ -27,7 +27,6 @@ export default class RoutesPage extends Component {
     this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
   }
   async componentDidMount() {
-    // SplashScreen.hide()
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
@@ -49,6 +48,7 @@ export default class RoutesPage extends Component {
     })
      }
       else{
+      SplashScreen.hide()
       await AsyncStorage.getItem('uri').then((uri) => {
         console.log("uri"+uri)
         console.log('uri '+this.state.imageUri)

@@ -7,7 +7,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		margin:0
+    margin:10
 	},
 
 	avatarContainer: {
@@ -49,16 +49,8 @@ const styles = StyleSheet.create({
   	fontSize:18
   },
   imageCustom:{
-  resizeMode:"stretch",
-  width:width,
+  width:width/2,
   height:height*0.30,
-  },
-  hide:{
-    opacity:0,
-    height:0
-  },
-  titleView:{
-   
   },
   userContainer:{
     flex: 1,
@@ -258,7 +250,17 @@ mapTouchable:{
   margin:10,
   right:0,
   bottom:0,  
-}
+},
+list: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    item: {
+        margin: 3,
+        width: width/3,
+        height:height/3
+    }
+
 })
 
 export default styles
