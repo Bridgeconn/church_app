@@ -52,6 +52,10 @@ const styles = StyleSheet.create({
   width:width/2,
   height:height*0.30,
   },
+  HomeCustom:{
+  width:width/2,
+  height:height*0.30,
+  },
   userContainer:{
     flex: 1,
     backgroundColor: '#F5FCFF',
@@ -257,9 +261,17 @@ list: {
     },
     item: {
         margin: 3,
-        width: width/3,
-        height:height/3
-    }
+        width: width/2,
+        height:height
+    },
+    listView:{
+      flexDirection: 'row',
+      flexWrap: 'wrap'
+    },
+  card: {
+  width: (width / 2) - 15,
+
+} 
 
 })
 

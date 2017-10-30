@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator, BackHandler} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator, BackHandler,ListView} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
@@ -13,6 +13,7 @@ export default class HomePage extends Component{
 		console.log("props contact"+this.props.contactNum)
 		console.log("props image uri "+ this.props.imageUri)
 		console.log("props value hastoken"+ this.props.hasToken)
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
 		    ImageOption: null,
 		    isLoggedIn:false,
@@ -20,8 +21,7 @@ export default class HomePage extends Component{
 		    imageUri:this.props.imageUri,
 		    username:this.props.username,
 		   	contactNum:this.props.contactNum,
-		   	itemList:[
-		   	{	name:'event',
+		   	dataSource: ds.cloneWithRows([{	name:'event',
 		   		imagePath:require('../images/img_events_1.jpg'),
 		   		Func: () => {
 		   			Actions.events()
@@ -51,8 +51,7 @@ export default class HomePage extends Component{
 		   			Actions.contacts()
 		   		}
 		   	},
-
-		   	]
+]),
 	  	}
 	}
 	
@@ -67,22 +66,20 @@ export default class HomePage extends Component{
          	return(
          	<View style={styles.container}>
 		        <ScrollView>
-		        <View style={{flex:1}}>
-		        {
-		        	this.state.itemList.map(item => 
-		        		<View style={{flex:1}}>
-		        		<Text>{item.name}</Text>
-		        		<TouchableOpacity onPress={item.Func}>
-		        			<Image key={item.name} source={item.imagePath} style={{width:400,height:400}}/>
+		        <ListView
+			        contentContainerStyle={styles.listView}
+			        dataSource={this.state.dataSource}
+			        renderRow={(data) => 
+			        	<View style={styles.card}>
+		        		<TouchableOpacity onPress={data.Func}>
+		        			<Image source={data.imagePath} style={styles.imageCustom}/>
 		        		<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
-					   		<Text style={styles.titlePage}>{item.name}</Text>
+					   		<Text style={styles.titlePage}>{data.name}</Text>
 					    </LinearGradient>
 		        		</TouchableOpacity>
 		        		</View>
-		        	)
-		        	
-		        }
-		        </View>
+			        }
+			    />
 		        {/*this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<TouchableOpacity   onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
