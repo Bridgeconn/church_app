@@ -12,8 +12,10 @@ export default class HomePage extends Component{
 		super(props)
 		console.log("props contact"+this.props.contactNum)
 		console.log("props image uri "+ this.props.imageUri)
-		console.log("props value hastoken"+ this.props.hasToken)
+		console.log("props value hastoken home"+ this.props.hasToken)
+		console.log("props value token home"+ this.props.token)
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+		const ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
 		    ImageOption: null,
 		    isLoggedIn:false,
@@ -45,13 +47,19 @@ export default class HomePage extends Component{
 		   			Actions.verse()
 		   		}
 		   	},
+		   	
+
+			]),
+			dataSource2: ds2.cloneWithRows([
 		   	{	name:'contacts',
 		   		imagePath:require('../images/img_contacts_1.jpg'),
 		   		Func:()=>{
 		   			Actions.contacts()
+
 		   		}
 		   	},
-]),
+
+			])
 	  	}
 	}
 	
@@ -64,8 +72,9 @@ export default class HomePage extends Component{
   	}
  	render(){
          	return(
-         	<View style={styles.container}>
+         	
 		        <ScrollView>
+		        <View style={styles.container}>
 		        <ListView
 			        contentContainerStyle={styles.listView}
 			        dataSource={this.state.dataSource}
@@ -80,6 +89,23 @@ export default class HomePage extends Component{
 		        		</View>
 			        }
 			    />
+			    { this.props.token || this.props.hasToken==true? 
+			    <ListView
+			        contentContainerStyle={styles.listView}
+			        dataSource={this.state.dataSource2}
+			        renderRow={(data) => 
+			        	<View style={styles.card}>
+		        		<TouchableOpacity onPress={data.Func}>
+		        			<Image source={data.imagePath} style={styles.imageCustom}/>
+		        		<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
+					   		<Text style={styles.titlePage}>{data.name}</Text>
+					    </LinearGradient>
+		        		</TouchableOpacity>
+		        		</View>
+			        }
+			    /> :null}
+			    
+			    </View>
 		        {/*this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<TouchableOpacity   onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
@@ -93,8 +119,6 @@ export default class HomePage extends Component{
 		        	</View>
 		 		</View> : null*/}
 			</ScrollView>
-		</View>
 			)
-		
 	}
 } 

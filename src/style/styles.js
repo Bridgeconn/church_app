@@ -255,22 +255,13 @@ mapTouchable:{
   right:0,
   bottom:0,  
 },
-list: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    item: {
-        margin: 3,
-        width: width/2,
-        height:height
-    },
-    listView:{
-      flexDirection: 'row',
-      flexWrap: 'wrap'
-    },
-  card: {
-  width: (width / 2) - 15,
 
+listView:{
+  flexDirection: 'row',
+  flexWrap: 'wrap'
+},
+card: {
+width: (width / 2) - 15,
 } 
 
 })
