@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator, BackHandler,ListView} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker';
 import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import LinearGradient from'react-native-linear-gradient'
+import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 export default class HomePage extends Component{
 	constructor(props){
@@ -23,27 +24,28 @@ export default class HomePage extends Component{
 		    imageUri:this.props.imageUri,
 		    username:this.props.username,
 		   	contactNum:this.props.contactNum,
-		   	dataSource: ds.cloneWithRows([{	name:'event',
+		   	dataSource: ds.cloneWithRows([{	
+		   		name:'Events',
 		   		imagePath:require('../images/img_events_1.jpg'),
-		   		Func: () => {
+		   		goToFunc: () => {
 		   			Actions.events()
 		   		}
 		   	},
-		   	{	name:'live',
+		   	{	name:'Livestream',
 		   		imagePath:require('../images/img_livestream_1.jpg'),
-		   		Func: () => {
+		   		goToFunc: () => {
 		   			Actions.live()
 		   		}
 		   	},
-		   	{	name:'song',
+		   	{	name:'Songbook',
 		   		imagePath:require('../images/img_songbook_2.jpg'),
-		   		Func:() => {
+		   		goToFunc:() => {
 		   			Actions.songs()
 		   		}
 		   	},
-		   {	name:'verse',
+		   {	name:'Verse of the day',
 		   		imagePath:require('../images/img_verseotd_1.jpg'),
-		   		Func:()=>{
+		   		goToFunc:()=>{
 		   			Actions.verse()
 		   		}
 		   	},
@@ -51,9 +53,9 @@ export default class HomePage extends Component{
 
 			]),
 			dataSource2: ds2.cloneWithRows([
-		   	{	name:'contacts',
+		   	{	name:'Contacts',
 		   		imagePath:require('../images/img_contacts_1.jpg'),
-		   		Func:()=>{
+		   		goToFunc:()=>{
 		   			Actions.contacts()
 
 		   		}
@@ -72,7 +74,7 @@ export default class HomePage extends Component{
   	}
  	render(){
          	return(
-         	
+         	<View style={{flex:1}}>
 		        <ScrollView>
 		        <View style={styles.container}>
 		        <ListView
@@ -80,7 +82,7 @@ export default class HomePage extends Component{
 			        dataSource={this.state.dataSource}
 			        renderRow={(data) => 
 			        	<View style={styles.card}>
-		        		<TouchableOpacity onPress={data.Func}>
+		        		<TouchableOpacity onPress={data.goToFunc}>
 		        			<Image source={data.imagePath} style={styles.imageCustom}/>
 		        		<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>{data.name}</Text>
@@ -95,7 +97,7 @@ export default class HomePage extends Component{
 			        dataSource={this.state.dataSource2}
 			        renderRow={(data) => 
 			        	<View style={styles.card}>
-		        		<TouchableOpacity onPress={data.Func}>
+		        		<TouchableOpacity onPress={data.goToFunc}>
 		        			<Image source={data.imagePath} style={styles.imageCustom}/>
 		        		<LinearGradient  colors={["transparent", "#474747"]} locations={[0.7, 1]} style={styles.linearGradient}>
 					   		<Text style={styles.titlePage}>{data.name}</Text>
@@ -119,6 +121,8 @@ export default class HomePage extends Component{
 		        	</View>
 		 		</View> : null*/}
 			</ScrollView>
+			
+        	</View>
 			)
 	}
 } 

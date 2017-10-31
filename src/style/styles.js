@@ -7,7 +7,6 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-    margin:10
 	},
 
 	avatarContainer: {
@@ -186,7 +185,8 @@ eventImage:{
     borderRadius:5,
     borderWidth:1,
     margin: 5,
-    width:width*0.98,
+    left:5,
+    width:width-20,
     borderColor: 'rgba(0,0,0,.8)'
   },
   contactListItemStyle:{
@@ -258,10 +258,15 @@ mapTouchable:{
 
 listView:{
   flexDirection: 'row',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
+  marginLeft:8,
+  marginRight:8,
+  marginTop:8,
 },
 card: {
-width: (width / 2) - 15,
+width: (width / 2)-8,
+padding:4,
+
 } 
 
 })

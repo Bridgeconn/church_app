@@ -49,6 +49,7 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
+            
           }   
           if(response.data.success == true){
             console.log(response.data)

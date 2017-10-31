@@ -16,7 +16,7 @@ import Login from "./LoginPage"
 import Signup from "./SignupPage"
 import GuestLogin from "./GuestLoginPage"
 import styles from '../style/styles.js'
-class User extends Component {
+class Register extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -66,4 +66,4 @@ class User extends Component {
 }
 
 
-export default User
+export default Register

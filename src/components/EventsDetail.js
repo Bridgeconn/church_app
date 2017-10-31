@@ -175,7 +175,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
   render(){
     return (
       
-      <View style={styles.container}>
+      <View style={{flex:1}}>
       <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
         <Text  style={styles.eventData}>

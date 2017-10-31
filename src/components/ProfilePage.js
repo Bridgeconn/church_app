@@ -66,7 +66,7 @@ export default class ProfilePage extends Component{
         this.setState({
           avatarSource: source,
           uri: uri
-        }); 
+        }) 
        this.saveUrl('uri', uri)
         console.log(uri+"uri")
       }

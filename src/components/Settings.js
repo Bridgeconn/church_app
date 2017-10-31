@@ -35,8 +35,8 @@ class Settings extends Component {
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
     Actions.refresh({showProgress:false})
-    Actions.reset("user", {hasToken:false, guestKey:false})
-    alert('Logout Success!');
+    Actions.reset("register", {hasToken:false, guestKey:false})
+    // alert('Logout Success!');
 
     } catch (error) {
     console.log('AsyncStorage error: ' + error.message);
@@ -60,7 +60,7 @@ _showResult(result) {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
       <ScrollView>
         <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
         <TouchableOpacity  onPress={this.userLogout}>

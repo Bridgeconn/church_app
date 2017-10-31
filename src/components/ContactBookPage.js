@@ -39,7 +39,8 @@ export default class ContactPage extends Component{
     render() {
       const data = this.state.data;
           return (
-          <View style={styles.container}>
+          	<View style={{flex:1}}>
+          <View style={{flex:1}}>
              {data.map(item =>
               <List key={item.id} style={styles.contactListStyle}>
               <ListItem  style={styles.contactListItemStyle}>
@@ -54,6 +55,7 @@ export default class ContactPage extends Component{
               </ListItem>
               </List>
               )}
+          </View>
           </View>
                 )
 

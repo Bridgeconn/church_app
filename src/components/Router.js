@@ -3,8 +3,9 @@ import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-
 import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
-import User from './UserPage'
+import Register from './RegisterPage'
 import HomePage from './HomePage'
+import HomePage2 from './HomePage2'
 import NavBar from './NavBar'
 import Settings from './Settings'
 import Login from './LoginPage'
@@ -26,6 +27,7 @@ export default class RoutesPage extends Component {
     console.log("router"+ this.props.hasToken)
     this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
   }
+
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
@@ -42,13 +44,10 @@ export default class RoutesPage extends Component {
       this.setState({ guestKey: value !== null, isLoaded: value !==null })
       console.log("guestKey "+this.state.guestKey)
       console.log("key "+value)
-      if (value!==null){
-        SplashScreen.hide()
-      }
+      
     })
      }
       else{
-      SplashScreen.hide()
       await AsyncStorage.getItem('uri').then((uri) => {
         console.log("uri"+uri)
         console.log('uri '+this.state.imageUri)
@@ -70,7 +69,7 @@ export default class RoutesPage extends Component {
      }
     
     this.setState({isLoaded:true}) 
-    SplashScreen.hide()
+    this.hideSplashScreen()
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
   }
   componentWillUnmount(){
@@ -86,6 +85,11 @@ export default class RoutesPage extends Component {
    ComponentWillMount(){
     Actions.refresh({key: 'eventsDetails', title: 'hi'});
 
+  }
+  hideSplashScreen(){
+    setTimeout(()=>{SplashScreen.hide()},
+         500
+      )
   }
   handleSave = () =>{
     this.child.handlePress()
@@ -113,8 +117,8 @@ export default class RoutesPage extends Component {
           >
             <Scene key="root">
               <Scene 
-                key = "user"       
-                component = {User}        
+                key = "register"       
+                component = {Register}        
                 initial={!this.state.guestKey && !this.state.hasToken}
                 hasToken={this.state.hasToken}
                 guestKey={this.state.guestKey}
@@ -147,7 +151,6 @@ export default class RoutesPage extends Component {
                 key = "settings"  
                 component = {Settings} 
                 title="Settings"
-
               />
               <Scene 
                 key = "login"  
@@ -215,8 +218,28 @@ export default class RoutesPage extends Component {
                 component = {VersePage}          
                 title = "Verse" 
               />
-              
+              {
+                this.state.guestKey || this.state.hasToken ?
+                <Scene key="home" type="replace"  hideNavBar={true} tabs={true} tabBarPosition="bottom" >
+                    <Scene key="tab1" component={EventsPage} title="Events"renderRightButton = {() => 
+                  <View style={{flexDirection:"row"}}>
+                <TouchableOpacity onPress={()=>{Actions.profile()}}>
+                  <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>{Actions.settings()}}>
+                  <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
+                </TouchableOpacity>
+                </View>
+                } />
+
+                    <Scene key="tab2" component={ContactBookPage} title="Contact" />
+                    <Scene key="tab3" component={SongBookPage} title="SongBook" />
+                    <Scene key="tab4" component={VersePage} title="Verse" />
+                    <Scene key="tab5" component={LiveStreamPage} title="Livestream" />
+                </Scene>:null
+              }
             </Scene>
+            
           </Router>          
           )
         }
