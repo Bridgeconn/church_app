@@ -49,7 +49,7 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
-            
+            AsyncStorage.setItem('user_type', '2');
           }   
           if(response.data.success == true){
             console.log(response.data)

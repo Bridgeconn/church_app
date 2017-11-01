@@ -94,6 +94,22 @@ export default class RoutesPage extends Component {
   handleSave = () =>{
     this.child.handlePress()
   }
+//     async checkUserSignedIn(){
+//     try {
+//       let value = await AsyncStorage.getItem('user_type');
+       
+//       if(value == 1){
+//         Actions.home()
+          
+//       }
+//       else if (value == 2){
+//           Actions.register()
+//        }
+
+//     } catch (error) {
+//       // Error retrieving data
+//     }
+// }
   
       render() {
 
@@ -220,29 +236,39 @@ export default class RoutesPage extends Component {
               />
               {
                 this.state.guestKey || this.state.hasToken ?
-                <Scene key="home" type="replace"  hideNavBar={true} tabs={true} tabBarPosition="bottom" >
-                    <Scene key="tab1" component={EventsPage} title="Events"renderRightButton = {() => 
+                <Scene key="home" type="reset" tabs hideNavBar={true}  allowFontScaling={true} animationEnabled={false} tabBarStyle={styles.tabBar} tabs={true} tabBarPosition="bottom" 
+                renderRightButton = {() => 
                   <View style={{flexDirection:"row"}}>
-                <TouchableOpacity onPress={()=>{Actions.profile()}}>
-                  <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{Actions.settings()}}>
-                  <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
-                </TouchableOpacity>
-                </View>
-                } />
-
-                    <Scene key="tab2" component={ContactBookPage} title="Contact" />
-                    <Scene key="tab3" component={SongBookPage} title="SongBook" />
-                    <Scene key="tab4" component={VersePage} title="Verse" />
-                    <Scene key="tab5" component={LiveStreamPage} title="Livestream" />
+                    <TouchableOpacity onPress={()=>{Actions.profile()}}>
+                      <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{Actions.settings()}}>
+                      <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
+                    </TouchableOpacity>
+                  </View>
+                }>
+                    <Scene key="tab1" component={EventsPage} title="Events" titleStyle={{fontSize:16}} icon={TabIcon} iconName="account"/>
+                    <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
+                    <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music"/>
+                    <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
+                    <Scene key="tab5" component={LiveStreamPage} title="Livestream" icon={TabIcon} iconName="video"/>
                 </Scene>:null
               }
-            </Scene>
-            
+            </Scene> 
           </Router>          
           )
         }
       }
   }
 
+class TabIcon extends Component {
+  render() {
+    var color = this.props.selected ? '#00f240' : '#301c2a';
+
+    return (
+      <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
+        <Icon style={{color: color}} name={this.props.iconName || "circle"} size={20}/>
+      </View>
+    );
+  }
+}

@@ -267,8 +267,14 @@ card: {
 width: (width / 2)-8,
 padding:4,
 
-} 
+},
 
+tabBar: {
+    borderTopColor: 'darkgrey',
+    borderTopWidth: 1 / PixelRatio.get(),
+    backgroundColor: 'ghostwhite',
+    opacity: 0.98
+  },
 })
 
 export default styles
