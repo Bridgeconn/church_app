@@ -236,7 +236,7 @@ export default class RoutesPage extends Component {
               />
               {
                 this.state.guestKey || this.state.hasToken ?
-                <Scene key="home" type="reset" tabs hideNavBar={true}  allowFontScaling={true} animationEnabled={false} tabBarStyle={styles.tabBar} tabs={true} tabBarPosition="bottom" 
+                <Scene key="home" type="reset" tabs hideNavBar={true}  showLabel={false}  animationEnabled={false} tabBarStyle={styles.tabBar} tabs={true} tabBarPosition="bottom" 
                 renderRightButton = {() => 
                   <View style={{flexDirection:"row"}}>
                     <TouchableOpacity onPress={()=>{Actions.profile()}}>
@@ -247,7 +247,7 @@ export default class RoutesPage extends Component {
                     </TouchableOpacity>
                   </View>
                 }>
-                    <Scene key="tab1" component={EventsPage} title="Events" titleStyle={{fontSize:16}} icon={TabIcon} iconName="account"/>
+                    <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="account"/>
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
@@ -263,11 +263,12 @@ export default class RoutesPage extends Component {
 
 class TabIcon extends Component {
   render() {
-    var color = this.props.selected ? '#00f240' : '#301c2a';
+    var color = this.props.selected ? '#3F51B5' : '#301c2a';
 
     return (
       <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
         <Icon style={{color: color}} name={this.props.iconName || "circle"} size={20}/>
+        <Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>
       </View>
     );
   }
