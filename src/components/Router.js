@@ -263,11 +263,11 @@ export default class RoutesPage extends Component {
 
 class TabIcon extends Component {
   render() {
-    var color = this.props.selected ? '#3F51B5' : '#301c2a';
+    var color = this.props.selected ? '#0000':'#3F51B5'
 
     return (
       <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
-        <Icon style={{color: color}} name={this.props.iconName || "circle"} size={20}/>
+        <Icon color={color} name={this.props.iconName || "circle"} size={20}/>
         <Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>
       </View>
     );
