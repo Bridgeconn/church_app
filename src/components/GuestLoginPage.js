@@ -19,8 +19,8 @@ class GuestLogin extends Component {
     }
   }
   onGuestLogin() {
-    AsyncStorage.setItem("user_type", '1');
-    Actions.home({hasToken:false, guestKey:true})  
+    AsyncStorage.setItem("guest", '1');
+    Actions.home2()  
   }
   
   render() {

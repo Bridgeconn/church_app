@@ -46,8 +46,9 @@ export default class RoutesPage extends Component {
       console.log("key "+value)
       
     })
+      
      }
-      else{
+      else{  
       await AsyncStorage.getItem('uri').then((uri) => {
         console.log("uri"+uri)
         console.log('uri '+this.state.imageUri)
@@ -66,6 +67,7 @@ export default class RoutesPage extends Component {
         this.setState({contactNum:contact})
         console.log("contact"+this.state.contactNum)
       })
+      
      }
     
     this.setState({isLoaded:true}) 
@@ -76,7 +78,9 @@ export default class RoutesPage extends Component {
   BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
   handleAndroidBack(){
-    if (Actions.currentScene == "home" || Actions.currentScene == "user") {
+    console.log('back press'+Actions.currentScene)
+    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1") {
+        console.log("home2")
       BackHandler.exitApp();
       return true;
     }
@@ -134,8 +138,8 @@ export default class RoutesPage extends Component {
             <Scene key="root">
               <Scene 
                 key = "register"       
-                component = {Register}        
-                initial={!this.state.guestKey && !this.state.hasToken}
+                component = {Register}   
+                initial = {!this.state.guestKey && !this.state.hasToken}     
                 hasToken={this.state.hasToken}
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
@@ -146,9 +150,9 @@ export default class RoutesPage extends Component {
                 component = {HomePage}
                 title = "Church App" 
                 type="reset"
+                initial={false}
                 hasToken ={this.state.hasToken}
                 guestKey ={this.state.guestKey}
-                initial={this.state.guestKey || this.state.hasToken}
                 imageUri={this.state.imageUri}
                 contactNum={this.state.contactNum} 
                 username={this.state.username}
@@ -234,26 +238,35 @@ export default class RoutesPage extends Component {
                 component = {VersePage}          
                 title = "Verse" 
               />
-              {
-                this.state.guestKey || this.state.hasToken ?
-                <Scene key="home" type="reset" tabs hideNavBar={true}  showLabel={false}  animationEnabled={false} tabBarStyle={styles.tabBar} tabs={true} tabBarPosition="bottom" 
+              
+              <Scene 
+              key="home2" 
+              type="reset"  
+              hideNavBar={true}  
+              
+              initial={this.state.guestKey || this.state.hasToken}
+              showLabel={false} 
+              animationEnabled={false} 
+              tabBarStyle={styles.tabBar} 
+              tabs={true} 
+              tabBarPosition="bottom" 
                 renderRightButton = {() => 
                   <View style={{flexDirection:"row"}}>
                     <TouchableOpacity onPress={()=>{Actions.profile()}}>
-                      <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
+                      <Icon name="account-circle" size={24} color="white" style={{paddingRight:20}}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{Actions.settings()}}>
-                      <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
+                      <Icon name="settings" size={24} color="white" style={{paddingRight:20}}/>
                     </TouchableOpacity>
                   </View>
-                }>
-                    <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="account"/>
+                }
+               >
+                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="account"/>
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
                     <Scene key="tab5" component={LiveStreamPage} title="Livestream" icon={TabIcon} iconName="video"/>
-                </Scene>:null
-              }
+              </Scene>
             </Scene> 
           </Router>          
           )
@@ -263,12 +276,11 @@ export default class RoutesPage extends Component {
 
 class TabIcon extends Component {
   render() {
-    var color = this.props.selected ? '#0000':'#3F51B5'
-
+    var color = this.props.focused ? '#ce42f4':'#3F51B5'
     return (
       <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
-        <Icon color={color} name={this.props.iconName || "circle"} size={20}/>
-        <Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>
+        <Icon color={color} name={this.props.iconName || "circle"} size={24}/>
+        {this.props.focused?<Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>:null}
       </View>
     );
   }

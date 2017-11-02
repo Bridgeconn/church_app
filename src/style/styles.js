@@ -217,6 +217,16 @@ eventImage:{
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+   contactListStyle:{
+    padding:5,
+    margin: 5,
+
+  },
+  contactListItemStyle:{
+    borderBottomWidth:0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   verseTimestamp:{
     
     fontSize:16
@@ -270,10 +280,15 @@ padding:4,
 },
 
 tabBar: {
-    borderTopColor: 'darkgrey',
-    borderTopWidth: 1 / PixelRatio.get(),
+    shadowColor: 'darkgrey',
+    shadowOffset: {
+     width:width,
+     height:2
+   },
     backgroundColor: 'ghostwhite',
-    opacity: 0.98
+    opacity: 0.98,
+    height:56,
+    elevation:4
   },
 })
 
