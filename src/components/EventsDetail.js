@@ -193,7 +193,7 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
               this.state.event_time_end
               );
           }}>
-        <Text style={styles.eventCalendar}>Add event to calender</Text>
+        <Text style={styles.eventCalendar}>Add event to calender <Icon name="calendar-plus" size={24}/></Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -209,8 +209,8 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           longitude: this.props.venue_longitude}}
         />
         </MapView>
+        <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
        </View>
-      <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
       </ScrollView>
       </View>
    

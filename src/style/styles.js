@@ -7,6 +7,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
+    margin:8
 	},
 
 	avatarContainer: {
@@ -163,19 +164,20 @@ eventImage:{
   },
   eventData:{
     fontSize:20,
-    padding:1
+    padding:1,
+    marginLeft:8
   },
   eventCalendar:{
     fontSize:20,
     fontWeight:"700",
     color:"#3F51B5",
     marginTop:10,
-    marginBottom:20
+    marginBottom:20,
+    marginLeft:8
   },
   songText:{
     fontSize:22,
     padding:5,
-    color:"#3F51B5"
   }, 
   textSong:{
     fontSize:18
@@ -263,7 +265,7 @@ mapTouchable:{
   position:"absolute",
   margin:10,
   right:0,
-  bottom:0,  
+    
 },
 
 listView:{
