@@ -79,7 +79,7 @@ export default class EventsDetail extends Component{
     });
   }
   getTimezone(date) {
-    var offset = date.getTimezoneOffset();
+    var offset = date.getTimezoneOffset()*1000;
     var minutes = Math.abs(offset);
     var hours = Math.floor(minutes / 60);
     var prefix = offset < 0 ? "+" : "-";
