@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
-import {Card,CardItem} from 'native-base'
+import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import contactList from './contactListDummy.json'
 import styles from '../style/styles.js'
@@ -39,20 +39,24 @@ export default class ContactPage extends Component{
     render() {
       const data = this.state.data;
           return (
-          	<View style={{flex:1}}>
+          	<View style={styles.container}>
+            <ScrollView>
              {data.map(item =>
+              <Content>
               <Card key={item.id}>
-              <CardItem  style={styles.contactListStyle}>
+              <CardItem>
                 <Text>{item.contact_name}</Text>
               </CardItem>
-              <CardItem  style={styles.contactListItemStyle}>
+              <CardItem >
               <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)} style={{flexDirection:"row"}}>
-              <Icon name="call" size={30} />
+              <Icon name="call" size={24} />
               <Text >{item.contact_number}</Text>   
               </TouchableOpacity>
               </CardItem>
               </Card>
+              </Content>
               )}
+            </ScrollView>
           </View>
                 )
 

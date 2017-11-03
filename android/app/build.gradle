@@ -144,11 +144,11 @@ android {
     }
 }
 
-dependencies {
+dependencies {    
     compile project(':react-native-splash-screen')
+    compile project(':react-native-add-calendar-event')
     compile project(':react-native-android-config')
     compile project(':react-native-linear-gradient')
-    compile project(':react-native-add-calendar-event')
     compile project(':react-native-maps')
     compile project(':react-native-contacts')
     compile project(':react-native-sound')

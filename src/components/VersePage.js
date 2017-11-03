@@ -1,12 +1,12 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Button} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
 import {ListItem,List,Card,CardItem,Body} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
 import styles from '../style/styles.js'
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 export default class VersePage extends Component{
 
  constructor(){
@@ -46,15 +46,14 @@ export default class VersePage extends Component{
                        {data.map(item =>
                         <Card key={item.book_name} style={styles.cardVerse}>
                         <CardItem style={styles.verseListItemStyle}>
-                          <Text style={styles.verseTextStyle}>{item.book_name}</Text>
-                          <Text style={styles.verseTextStyle}> {item.chapter} : {item.verse_number}  {item.version}</Text>
+                          <Text style={styles.verseTextStyle}>{item.book_name} {item.chapter} : {item.verse_number} {item.version}</Text>
                           <Timestamp time={item.timestamp} component={Text} style={styles.verseTimestamp}/>
                         </CardItem>
                         <CardItem>
                           <Text style={styles.verseTextStyle}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
-                        <Button  onPress={this._shareMessage.bind(this,
+                        <TouchableOpacity  onPress={this._shareMessage.bind(this,
                           item.verse_text,
                           item.book_name,
                           item.chapter,
@@ -62,7 +61,9 @@ export default class VersePage extends Component{
                           item.verse_number)}
                           title="Share"
                           color="#3F51B5"
-                          />
+                          >
+                          <Icon name="share-variant" size={24} color="#3F51B5"/>
+                          </TouchableOpacity>
                         </CardItem>
                         </Card>
                         )}

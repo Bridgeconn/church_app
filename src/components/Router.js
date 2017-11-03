@@ -261,7 +261,7 @@ export default class RoutesPage extends Component {
                   </View>
                 }
                >
-                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="account"/>
+                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite"/>
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>

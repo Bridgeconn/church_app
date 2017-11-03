@@ -3,6 +3,7 @@ import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen; // here
 import com.facebook.react.ReactActivity;
 
+
 public class MainActivity extends ReactActivity {
 
     /**
@@ -20,5 +21,6 @@ public class MainActivity extends ReactActivity {
         super.onCreate(savedInstanceState);
 
     }
+
 
 }

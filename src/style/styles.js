@@ -154,13 +154,8 @@ const styles = StyleSheet.create({
   width:width
 },
 eventImage:{
-    width:width,
-    height:height*0.33
-  },
-  eventContainer: {
-    flex : 1,
-    justifyContent:"center",
-    alignItems:"center",
+  height:height/8,
+  width:width/4
   },
   eventData:{
     fontSize:20,
@@ -182,20 +177,7 @@ eventImage:{
   textSong:{
     fontSize:18
   },
-  contactListStyle:{
-    padding:5,
-    borderRadius:5,
-    borderWidth:1,
-    margin: 5,
-    left:5,
-    width:width-20,
-    borderColor: 'rgba(0,0,0,.8)'
-  },
-  contactListItemStyle:{
-    borderBottomWidth:0,
-    marginLeft:0,
-    paddingTop:0
-  },
+  
   contactTextStyle:{
     padding:0,
     fontSize:18
@@ -280,7 +262,9 @@ width: (width / 2)-8,
 padding:4,
 
 },
-
+contactsCard:{
+  borderWidth:0,
+},
 tabBar: {
     shadowColor: 'darkgrey',
     shadowOffset: {
