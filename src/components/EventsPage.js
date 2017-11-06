@@ -5,7 +5,8 @@ import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import eventsList from './eventListDummy.json'
 import styles from '../style/styles.js'
-import Timestamp from 'react-timestamp';
+import moment from 'moment';
+
 export default class EventsPage extends Component{
 
  constructor(){
@@ -39,7 +40,7 @@ export default class EventsPage extends Component{
                           <Card key={item.id} style={{flexDirection:'row',justifyContent: 'space-between',}}>
                             <CardItem style={{flexDirection:'column'}}>
                               <Text>{item.event_name}</Text>
-                              <Timestamp time={item.event_time_start} component={Text}  utc={true} format='full' />
+                             <Text> date: {moment.utc(item.event_time_start).local().format('lll')}</Text> 
                             </CardItem>
                             <CardItem>                              
                                 <Image source={{uri:item.event_poster_url}} style={styles.eventImage} onLoadEnd={ ()=>{ this.setState({ loading: false }) }}><ActivityIndicator animating={ this.state.loading } style={{flex:1,justifyContent:'center',alignItems:'center',alignSelf:'center'}}/></Image>
