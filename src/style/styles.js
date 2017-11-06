@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize:28,
     fontWeight:"bold",
     color:"#48BEEC",
-    fontFamily:'Roboto_medium'
+    fontFamily:'Robotot'
   },
    input: {
     height: 50,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 8,
     alignSelf: 'center',
-    fontFamily:"Roboto_medium"
+    fontFamily:""
   },
   buttonText: {
     fontSize: 18,
@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
   navbarTitle:{
     fontSize:19,
     color:'#fff',
-    fontFamily:'Roboto-medium',
+    fontFamily:'roboto-medium',
     fontWeight:'400'
   },
   navbarTitleRight:{
     fontSize:19,
     color:'#fff',
-    fontFamily:'Roboto-medium',
+    fontFamily:'roboto-medium',
     fontWeight:'400',
     paddingRight:10
   },
