@@ -40,7 +40,7 @@ export default class EventsPage extends Component{
                           <Card key={item.id} style={{flexDirection:'row',justifyContent: 'space-between',}}>
                             <CardItem style={{flexDirection:'column'}}>
                               <Text>{item.event_name}</Text>
-                             <Text> date: {moment.utc(item.event_time_start).local().format('lll')}</Text> 
+                             <Text>{moment.utc(item.event_time_start).local().format('lll')}</Text> 
                             </CardItem>
                             <CardItem>                              
                                 <Image source={{uri:item.event_poster_url}} style={styles.eventImage} onLoadEnd={ ()=>{ this.setState({ loading: false }) }}><ActivityIndicator animating={ this.state.loading } style={{flex:1,justifyContent:'center',alignItems:'center',alignSelf:'center'}}/></Image>
