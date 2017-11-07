@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,AsyncStorage,ActivityIndicator, BackHandler,ListView} from 'react-native'
-import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Router, Scene, Actions} from 'react-native-router-flux'
 import EventsPage from './EventsPage'

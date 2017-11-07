@@ -10,27 +10,30 @@
   "dependencies": {
     "axios": "^0.16.2",
     "moment": "^2.19.1",
-    "native-base": "^2.3.1",
+    "native-base": "^2.3.3",
     "react": "16.0.0-alpha.12",
-    "react-native": "0.47.2",
+    "react-native": "^0.49.3",
     "react-native-add-calendar-event": "^0.2.0",
     "react-native-android-config": "0.0.1",
     "react-native-collapsible": "^0.9.0",
     "react-native-communications": "^2.2.1",
-    "react-native-contacts": "^0.9.0",
+    "react-native-contacts": "^0.9.1",
+    "react-native-drawer": "^2.5.0",
+    "react-native-easy-grid": "^0.1.15",
     "react-native-google-maps-directions": "^1.1.2",
-    "react-native-image-picker": "^0.26.4",
+    "react-native-image-picker": "^0.26.7",
+    "react-native-keyboard-aware-scroll-view": "^0.4.1",
     "react-native-linear-gradient": "^2.3.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-maps": "^0.16.4",
-    "react-native-material-bottom-navigation": "^0.5.2",
-    "react-native-router-flux": "^4.0.0-beta.21",
+    "react-native-material-bottom-navigation": "^0.5.3",
+    "react-native-router-flux": "^4.0.0-beta.22",
     "react-native-sound": "^0.10.4",
     "react-native-splash-screen": "^3.0.1",
-    "react-native-vector-icons": "^4.4.0",
-    "react-native-youtube": "^1.0.0-beta.3",
-    "react-timestamp": "^4.2.1",
-    "tcomb-form-native": "^0.6.9"
+    "react-native-vector-icons": "^4.4.2",
+    "react-native-youtube": "^1.0.1",
+    "react-timestamp": "^4.3.0",
+    "tcomb-form-native": "^0.6.11"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
@@ -41,9 +44,17 @@
   "jest": {
     "preset": "react-native"
   },
+<<<<<<< HEAD
 "rnpm": {
   "assets": [
   "./fonts"
 ]
 }
+=======
+  "rnpm": {
+    "assets": [
+      "./src/fonts"
+    ]
+  }
+>>>>>>> 6e6e599169685f4e3316c304b333a637ab98f1f4
 }

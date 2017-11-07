@@ -5,7 +5,6 @@ import styles from '../style/styles.js'
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import LinearGradient from'react-native-linear-gradient'
-import BottomNavigation, { Tab } from 'react-native-material-bottom-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 export default class HomePage extends Component{

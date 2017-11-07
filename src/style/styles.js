@@ -64,9 +64,12 @@ const styles = StyleSheet.create({
   },
   heading:{
     fontSize:28,
-    fontWeight:"bold",
     color:"#48BEEC",
+<<<<<<< HEAD
     fontFamily:'Amatic-Bold'
+=======
+    fontFamily: "Pacifico"
+>>>>>>> 6e6e599169685f4e3316c304b333a637ab98f1f4
   },
    input: {
     height: 50,
