@@ -49,6 +49,7 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
+           
           }   
           if(response.data.success == true){
             console.log(response.data)
@@ -57,7 +58,7 @@ class Login extends Component {
               AsyncStorage.getItem('token').then((auth_token) => {
               this.setState({token: auth_token!== null})
               console.log("token to home"+this.state.token)
-              Actions.home({token:this.state.token,imageUri:null,contactNum:null,username:null});
+              Actions.home2();
             })  
           }
         })

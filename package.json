@@ -26,6 +26,7 @@
     "react-native-linear-gradient": "^2.3.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-maps": "^0.16.4",
+    "react-native-material-bottom-navigation": "^0.5.3",
     "react-native-router-flux": "^4.0.0-beta.22",
     "react-native-sound": "^0.10.4",
     "react-native-splash-screen": "^3.0.1",
@@ -42,5 +43,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/fonts"
+    ]
   }
 }

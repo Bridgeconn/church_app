@@ -7,7 +7,7 @@ var height = Dimensions.get('window').height; //full height
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		margin:0
+    margin:8
 	},
 
 	avatarContainer: {
@@ -49,16 +49,12 @@ const styles = StyleSheet.create({
   	fontSize:18
   },
   imageCustom:{
-  resizeMode:"stretch",
-  width:width,
+  width:width/2,
   height:height*0.30,
   },
-  hide:{
-    opacity:0,
-    height:0
-  },
-  titleView:{
-   
+  HomeCustom:{
+  width:width/2,
+  height:height*0.30,
   },
   userContainer:{
     flex: 1,
@@ -67,9 +63,9 @@ const styles = StyleSheet.create({
     paddingTop:50,
   },
   heading:{
-    fontSize:26,
-    fontWeight:"bold",
-    color:"#48BEEC"
+    fontSize:28,
+    color:"#48BEEC",
+    fontFamily: "Pacifico"
   },
    input: {
     height: 50,
@@ -83,6 +79,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 8,
     alignSelf: 'center',
+    fontFamily:""
   },
   buttonText: {
     fontSize: 18,
@@ -158,46 +155,30 @@ const styles = StyleSheet.create({
   width:width
 },
 eventImage:{
-    width:width,
-    height:height*0.33
-  },
-  eventContainer: {
-    flex : 1,
-    justifyContent:"center",
-    alignItems:"center",
+  height:height/8,
+  width:width/4
   },
   eventData:{
     fontSize:20,
-    padding:1
+    padding:1,
+    marginLeft:8
   },
   eventCalendar:{
     fontSize:20,
     fontWeight:"700",
     color:"#3F51B5",
     marginTop:10,
-    marginBottom:20
+    marginBottom:20,
+    marginLeft:8
   },
   songText:{
     fontSize:22,
     padding:5,
-    color:"#3F51B5"
   }, 
   textSong:{
     fontSize:18
   },
-  contactListStyle:{
-    padding:5,
-    borderRadius:5,
-    borderWidth:1,
-    margin: 5,
-    width:width*0.98,
-    borderColor: 'rgba(0,0,0,.8)'
-  },
-  contactListItemStyle:{
-    borderBottomWidth:0,
-    marginLeft:0,
-    paddingTop:0
-  },
+  
   contactTextStyle:{
     padding:0,
     fontSize:18
@@ -217,6 +198,16 @@ eventImage:{
     height:height*0.33
   },
   verseListItemStyle:{
+    borderBottomWidth:0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+   contactListStyle:{
+    padding:5,
+    margin: 5,
+
+  },
+  contactListItemStyle:{
     borderBottomWidth:0,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -257,8 +248,35 @@ mapTouchable:{
   position:"absolute",
   margin:10,
   right:0,
-  bottom:0,  
-}
+    
+},
+
+listView:{
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  marginLeft:8,
+  marginRight:8,
+  marginTop:8,
+},
+card: {
+width: (width / 2)-8,
+padding:4,
+
+},
+contactsCard:{
+  borderWidth:0,
+},
+tabBar: {
+    shadowColor: 'darkgrey',
+    shadowOffset: {
+     width:width,
+     height:2
+   },
+    backgroundColor: 'ghostwhite',
+    opacity: 0.98,
+    height:56,
+    elevation:4
+  },
 })
 
 export default styles

@@ -20,7 +20,7 @@ class GuestLogin extends Component {
   }
   onGuestLogin() {
     AsyncStorage.setItem("guest", '1');
-    Actions.home({hasToken:false, guestKey:true})  
+    Actions.home2()  
   }
   
   render() {

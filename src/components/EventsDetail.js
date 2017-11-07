@@ -7,6 +7,11 @@ import MapView from 'react-native-maps'
 import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
+import moment from 'moment';
+
+const utcDateToLocalString = (momentInUTC: moment): string => {
+  return moment(momentInUTC).local().format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+};
 export default class EventsDetail extends Component{
   constructor(props){
     super(props)
@@ -26,16 +31,6 @@ export default class EventsDetail extends Component{
 
         }
   }
-//   redirectToMap() {
-//     Linking.canOpenURL('http://maps.google.com/maps?daddr=<lat>,<long>').then(supported => {
-//         if (supported) {
-//             Linking.openURL('http://maps.google.com/maps?daddr=<lat>,<long>');
-//         } else {
-//             console.log('Don\'t know how to go');
-//         }
-//     }).catch(err => console.error('An error occurred', err));
-// }
-
  openGps(longitudeMap,latitudeMap){
       var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:'
       var url = scheme +longitudeMap+ ',' +latitudeMap
@@ -57,11 +52,11 @@ export default class EventsDetail extends Component{
       }
     });
   }
-  addToCalendar(title, startDateUTC, endDateUTC) {
+  addToCalendar(title, startDateUTC: moment,endDateUTC:moment ) {
   const eventConfig = {
     title,
-    startDate: this.prettyTime(new Date(startDateUTC)),
-    endDate: this.prettyTime(new Date(endDateUTC))
+    startDate: utcDateToLocalString(startDateUTC),
+    endDate:utcDateToLocalString(endDateUTC),
   };
 
   AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
@@ -78,122 +73,25 @@ export default class EventsDetail extends Component{
       console.warn(error);
     });
   }
-  getTimezone(date) {
-    var offset = date.getTimezoneOffset();
-    var minutes = Math.abs(offset);
-    var hours = Math.floor(minutes / 60);
-    var prefix = offset < 0 ? "+" : "-";
-    var formatHours, formatMin;
-    console.log("time=" + hours + "  min=" + minutes)
-    if (hours < 10) {
-      formatHours = '0' + hours;
-    } else {
-      formatHours = '' + hours;
-    }
-    minutes = minutes%60;
-    if (minutes < 10) {
-      formatMin = '0' + minutes;
-    } else {
-      formatMin = '' + minutes;
-    }
-
-    return prefix+formatHours+''+formatMin;
-}
-
-
-  prettyTime(date) {
-var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-            var hours, minutes, seconds, milliseconds, ampm, dateofMonth, month;
-
-            // eg. 5 Nov 12, 1:37pm
-            
-            if (date.getMonth() < 9) {
-                month = '0' + (date.getMonth()+1);
-            } else {
-                month = '' + (date.getMonth()+1);
-            }
-
-            if (date.getDate() < 10) {
-                dateofMonth = '0' + date.getDate();
-            } else {
-                dateofMonth = '' + date.getDate();
-            }
-
-
-            if (date.getHours() < 10) {
-                hours = '0' + date.getHours();
-            } else {
-                hours = '' + date.getHours();
-            }
-
-            if (date.getMinutes() < 10) {
-                minutes = '0' + date.getMinutes();
-            } else {
-                minutes = '' + date.getMinutes();
-            }
-
-            if (date.getSeconds() < 10) {
-                seconds = '0' + date.getSeconds();
-            } else {
-                seconds = '' + date.getSeconds();
-            }
-
-            if (date.getMilliseconds() < 10) {
-                milliseconds = '00' + date.getMilliseconds();
-            } else if (date.getMilliseconds() < 100) {
-              milliseconds = '0' + date.getMilliseconds();
-            } else {
-                milliseconds = '' + date.getMilliseconds();
-            }            
-
-            if (date.getHours() > 11) {
-                ampm = 'pm';
-            } else {
-                ampm = 'am';
-            }
-
-            var day = this.props.includeDay ? DAYS[date.getDay()] + ', ' : '';
-
-            switch (this.props.format) {
-                case 'date':
-                    return '' + day + date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear();
-                
-                case 'time':
-                    return hours + ':' + minutes + ampm;
-                
-                case 'full':
-                  return '' + day + date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear() + ', ' + hours + ':' + minutes + ampm;
-                
-                default:
-                  return '' + dateofMonth + '-' + MONTHS[date.getMonth()] + '-' + date.getFullYear()+'  ' +  
-                    hours + ':' + minutes + ' '+ampm
-            }
-        }
-
   render(){
     return (
       
-      <View style={styles.container}>
+      <View style={{flex:1}}>
       <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
-        <Text  style={styles.eventData}>
-          Start Time: {this.prettyTime(new Date(this.state.event_time_start))}
-        </Text>
-        <Text  style={styles.eventData}>
-          End Time: {this.prettyTime(new Date(this.state.event_time_end))} 
-        </Text>
+        
         <Text  style={styles.eventData}>Event Topic: {this.state.event_topic}</Text>
         <Text  style={styles.eventData}>Event Speaker: {this.state.event_speaker}</Text>
+        <Text style={styles.eventData}>Start Date: {moment.utc(this.state.event_time_start).local().format('lll')}</Text> 
+        <Text style={styles.eventData}>End Date: {moment.utc(this.state.event_time_end).local().format('lll')}</Text>
         <TouchableOpacity onPress={() => {
             this.addToCalendar(
               this.state.title, 
-              this.state.event_time_start, 
-              this.state.event_time_end
+              this.state.event_time_start,
+              this.state.event_time_end 
               );
           }}>
-        <Text style={styles.eventCalendar}>Add event to calender</Text>
+        <Text style={styles.eventCalendar}>Add event to calender <Icon name="calendar-plus" size={24}/></Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -209,8 +107,8 @@ var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
           longitude: this.props.venue_longitude}}
         />
         </MapView>
+        <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
        </View>
-      <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
       </ScrollView>
       </View>
    
