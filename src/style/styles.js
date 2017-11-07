@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize:28,
     fontWeight:"bold",
     color:"#48BEEC",
-    fontFamily:'Robotot'
+    fontFamily:'Amatic-Bold'
   },
    input: {
     height: 50,
@@ -278,6 +278,9 @@ tabBar: {
     height:56,
     elevation:4
   },
+  liveStreamView:{
+    padding:8,
+  }
 })
 
 export default styles

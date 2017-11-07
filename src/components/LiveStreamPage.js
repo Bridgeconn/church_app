@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
+import {Header, Card, Title, Left,Button,Right,Icon,Body,Content,CardItem} from 'native-base'
 import YouTube, {  YouTubeStandaloneIOS,  YouTubeStandaloneAndroid,} from 'react-native-youtube';
 import styles from '../style/styles.js'
 
@@ -28,9 +28,11 @@ export default class LiveStreamPage extends Component{
 
 	render(){
 		return(
+		<View style={styles.container}>
 			<ScrollView>
-			
-		 		<View style={styles.eventsView}>
+			<Content>
+			<Card>
+		 		<View style={styles.liveStreamView}>
 		 			<YouTube
 		          ref={component => {
 		            this._youTubeRef = component;
@@ -68,7 +70,13 @@ export default class LiveStreamPage extends Component{
 			            </TouchableOpacity>
 			          	</View>}
 		 		</View>
+		 		
+		 		</Card>
+			
+		 	</Content>
+			
 			</ScrollView>
+		</View>
 			)
 	}
 } 

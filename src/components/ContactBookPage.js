@@ -43,7 +43,7 @@ export default class ContactPage extends Component{
             <ScrollView>
              {data.map(item =>
               <Content>
-              <Card key={item.id}>
+              <Card key={item.contact_name}>
               <CardItem>
                 <Text>{item.contact_name}</Text>
               </CardItem>
