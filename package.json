@@ -15,10 +15,8 @@
     "react-native": "^0.49.3",
     "react-native-add-calendar-event": "^0.2.0",
     "react-native-android-config": "0.0.1",
-    "react-native-collapsible": "^0.9.0",
     "react-native-communications": "^2.2.1",
     "react-native-contacts": "^0.9.1",
-    "react-native-drawer": "^2.5.0",
     "react-native-easy-grid": "^0.1.15",
     "react-native-google-maps-directions": "^1.1.2",
     "react-native-image-picker": "^0.26.7",
@@ -29,7 +27,7 @@
     "react-native-material-bottom-navigation": "^0.5.3",
     "react-native-router-flux": "^4.0.0-beta.22",
     "react-native-sound": "^0.10.4",
-    "react-native-splash-screen": "^3.0.1",
+    "react-native-splash-screen": "^3.0.6",
     "react-native-vector-icons": "^4.4.2",
     "react-native-youtube": "^1.0.1",
     "react-timestamp": "^4.3.0",
@@ -44,7 +42,6 @@
   "jest": {
     "preset": "react-native"
   },
-
   "rnpm": {
     "assets": [
       "./src/fonts"

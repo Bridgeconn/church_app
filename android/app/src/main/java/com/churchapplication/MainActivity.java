@@ -1,9 +1,7 @@
 package com.churchapplication;
 import android.os.Bundle;
-import org.devio.rn.splashscreen.SplashScreen; // here
 import com.facebook.react.ReactActivity;
-
-
+import org.devio.rn.splashscreen.SplashScreen;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -15,12 +13,8 @@ public class MainActivity extends ReactActivity {
         return "ChurchApplication";
     }
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this);  // here
+        SplashScreen.show(this);  
         super.onCreate(savedInstanceState);
-
     }
-
-
 }

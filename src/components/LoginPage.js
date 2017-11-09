@@ -12,6 +12,7 @@ import {
   NetInfo
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
+import styles from '../style/styles.js'
 
 class Login extends Component {
   constructor(props){
@@ -75,8 +76,8 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={styles.button}>
+      <View >
+        <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={styles.buttonRegister}>
           <Text style={styles.buttonText}>
             Login
           </Text>
@@ -87,22 +88,6 @@ class Login extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    padding: 5,
-  },
-  button: {
-    height: 50,
-    backgroundColor: '#48BBEC',
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
-  buttonText: {
-    fontSize: 22,
-    color: '#FFF',
-    alignSelf: 'center'
-  }
-});
+
 
 export default Login

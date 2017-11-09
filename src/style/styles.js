@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   },
   heading:{
     fontSize:28,
-    color:"#48BEEC",
-    fontFamily: "Pacifico"
+    color:"#48BBEC",
+    fontFamily: "Roboto"
 
   },
    input: {
@@ -74,17 +74,24 @@ const styles = StyleSheet.create({
     padding: 4,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: '#48bbec'
+    borderColor: '#48BBEC'
   },
   button: {
     paddingVertical: 4,
     paddingHorizontal: 8,
     alignSelf: 'center',
-    fontFamily:""
   },
+  buttonRegister: {
+    height: 50,
+    backgroundColor: '#48BBEC',
+    alignSelf: 'stretch',
+    marginTop: 10,
+    justifyContent: 'center'
+  }, 
   buttonText: {
-    fontSize: 18,
-    color: 'blue',
+    fontSize: 24,
+    color: '#FFF',
+    alignSelf: 'center'
   },
   buttonTextSmall: {
     fontSize: 15,
@@ -128,8 +135,8 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
+    backgroundColor: '#3F51B5',
+    borderColor: '#3F51B5',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,

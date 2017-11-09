@@ -11,6 +11,8 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
+import styles from '../style/styles.js'
+
 class Signup extends Component {
   constructor(props){
     super(props);
@@ -56,8 +58,8 @@ class Signup extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={styles.button}>
+      <View >
+        <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={styles.buttonRegister}>
           <Text style={styles.buttonText}>
             Signup
           </Text>
@@ -67,24 +69,6 @@ class Signup extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    padding: 5,
 
-  },
-  button: {
-    height: 50,
-    backgroundColor: '#48BBEC',
-    alignSelf: 'stretch',
-    marginTop: 10,
-    justifyContent: 'center'
-  },
-  buttonText: {
-    fontSize: 22,
-    color: '#FFF',
-    alignSelf: 'center'
-  }
-});
 
 export default Signup

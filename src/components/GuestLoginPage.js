@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
+import styles from '../style/styles.js'
 
 class GuestLogin extends Component {
   constructor(props) {
@@ -25,8 +26,8 @@ class GuestLogin extends Component {
   
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={this.onGuestLogin.bind(this)} style={styles.button}>
+      <View>
+        <TouchableOpacity onPress={this.onGuestLogin.bind(this)} style={styles.buttonRegister}>
           <Text style={styles.buttonText}>
            Guest 
           </Text>
@@ -36,23 +37,5 @@ class GuestLogin extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    padding: 5,
-  },
-  button: {
-    height: 50,
-    backgroundColor: '#48BBEC',
-    alignSelf: 'stretch',
-    marginTop: 10,
-    justifyContent: 'center'
-  },
-  buttonText: {
-    fontSize: 22,
-    color: '#FFF',
-    alignSelf: 'center'
-  }
-});
 
 export default GuestLogin

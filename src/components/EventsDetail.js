@@ -4,7 +4,7 @@ import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
-import * as AddCalendarEvent from 'react-native-add-calendar-event';
+import AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 import moment from 'moment';
