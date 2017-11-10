@@ -105,7 +105,6 @@ export default class HomePage extends Component{
 		        		</View>
 			        }
 			    /> :null}
-			    
 			    </View>
 		        {/*this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>

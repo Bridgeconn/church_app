@@ -243,7 +243,7 @@ export default class RoutesPage extends Component {
               key="home2" 
               type="reset"  
               hideNavBar={true}  
-              
+              activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.hasToken}
               showLabel={false} 
               animationEnabled={false} 
@@ -263,7 +263,7 @@ export default class RoutesPage extends Component {
                >
                 <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite"/>
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
-                    <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music"/>
+                    <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
                     <Scene key="tab5" component={LiveStreamPage} title="Livestream" icon={TabIcon} iconName="video"/>
               </Scene>
@@ -276,7 +276,7 @@ export default class RoutesPage extends Component {
 
 class TabIcon extends Component {
   render() {
-    var color = this.props.focused ? '#ce42f4':'#3F51B5'
+    var color = this.props.focused ? '#fff':'#3F51B5'
     return (
       <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
         <Icon color={color} name={this.props.iconName || "circle"} size={24}/>
