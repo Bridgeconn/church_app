@@ -243,7 +243,6 @@ export default class RoutesPage extends Component {
               key="home2" 
               type="reset"  
               hideNavBar={true}  
-              activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.hasToken}
               showLabel={false} 
               animationEnabled={false} 

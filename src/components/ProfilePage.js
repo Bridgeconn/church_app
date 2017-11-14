@@ -86,7 +86,7 @@ export default class ProfilePage extends Component{
 		        <View style={styles.profilePageContent}>
 			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
 			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                    <Image style={styles.avatarProfile} source={this.state.uri === null ? require('../images/person_dummy.png'):{uri:this.state.uri}}/>
+                    <Image style={styles.avatarProfile} source={require('../images/person_dummy.png')}/>
 		       		 		      <Icon name="create"  style={styles.editIconProfile}/>
 		        		    </TouchableOpacity>  			          
 			        </View> 
