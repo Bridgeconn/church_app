@@ -32,7 +32,7 @@ class Signup extends Component {
     }
     else{
        Actions.refresh({showProgress:true})
-       const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
+       const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded', 'Church-App-Id': 'ChurchApp_33212'} };
       axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
         .then((response) => {
           if(response.status==201){
