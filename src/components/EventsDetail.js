@@ -4,7 +4,7 @@ import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
-import AddCalendarEvent from 'react-native-add-calendar-event';
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 import moment from 'moment';
@@ -21,8 +21,8 @@ export default class EventsDetail extends Component{
             region:{
             latitude:this.props.venue_latitude,
             longitude: this.props.venue_longitude,
-            latitudeDelta: 10,
-            longitudeDelta: 5
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05
             },
             event_time_start:this.props.event_time_start,
             event_time_end:this.props.event_time_end,
@@ -32,8 +32,9 @@ export default class EventsDetail extends Component{
         }
   }
  openGps(longitudeMap,latitudeMap){
-      var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:'
-      var url = scheme +longitudeMap+ ',' +latitudeMap
+      var scheme = Platform.OS === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
+      var url = scheme +latitudeMap+ ',' +longitudeMap;
+      console.log(" url : "+ url)
       this.openExternalApp(url)
     }
   
@@ -91,7 +92,7 @@ export default class EventsDetail extends Component{
               this.state.event_time_end 
               );
           }}>
-        <Text style={styles.eventCalendar}>Add event to calender <Icon name="calendar-plus" size={24}/></Text>
+        <Text style={styles.eventCalendar}>Add event to calendar <Icon name="calendar-plus" size={24}/></Text>
         </TouchableOpacity>
        <View>
         <MapView 
@@ -103,8 +104,10 @@ export default class EventsDetail extends Component{
           onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
         >
         <MapView.Marker
-          coordinate={{latitude: this.props.venue_latitude,
-          longitude: this.props.venue_longitude}}
+          coordinate={{
+            latitude: this.props.venue_latitude,
+            longitude: this.props.venue_longitude
+          }}
         />
         </MapView>
         <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
