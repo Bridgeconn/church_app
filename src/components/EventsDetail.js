@@ -31,9 +31,9 @@ export default class EventsDetail extends Component{
 
         }
   }
- openGps(longitudeMap,latitudeMap){
+ openGps = (latitude,longitude) =>{
       // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
-      var url ='https://www.google.com/maps/search/?api=1&query=dwarka sector 10';
+      var url = 'https://www.google.com/maps/search/?api=1&query=latitude,longitude';
       this.openExternalApp(url)
     }
   

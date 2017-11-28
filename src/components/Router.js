@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
+import { Container, Header, Item, Input, Button} from 'native-base';
 import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
@@ -246,22 +247,33 @@ export default class RoutesPage extends Component {
               activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.hasToken}
               showLabel={false} 
-              animationEnabled={false} 
+              swipeEnabled={false}
+              lazyLoad={true}
+              animationEnabled={false}
               tabBarStyle={styles.tabBar} 
               tabs={true} 
               tabBarPosition="bottom" 
                 renderRightButton = {() => 
-                  <View style={{flexDirection:"row"}}>
-                    <TouchableOpacity onPress={()=>{Actions.profile()}}>
-                      <Icon name="account-circle" size={24} color="white" style={{paddingRight:20}}/>
+                  <View style={{flex:1}}>
+                  <Container>
+                  <View style={{flexDirection:"row",}}>
+                     <Header searchBar rounded style={{width:250}}>
+                     <Item>
+                      <Input placeholder="Search" />
+                     </Item>
+                     </Header>
+                    <TouchableOpacity onPress={()=>{Actions.profile()}} style={{paddingRight:16,alignSelf:'center'}}>
+                      <Icon name="account-circle" size={24} color="white" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{Actions.settings()}}>
-                      <Icon name="settings" size={24} color="white" style={{paddingRight:20}}/>
+                    <TouchableOpacity onPress={()=>{Actions.settings()}} style={{paddingRight:16,alignSelf:'center'}}>
+                      <Icon name="settings" size={24} color="white" style={{paddingRight:16}}/>
                     </TouchableOpacity>
                   </View>
+                  </Container>
+                </View>
                 }
                >
-                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite"/>
+                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" />
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
