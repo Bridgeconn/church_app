@@ -33,7 +33,7 @@ export default class EventsDetail extends Component{
   }
  openGps = (latitude,longitude) =>{
       // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
-      var url = 'https://www.google.com/maps/search/?api=1&query=latitude,longitude';
+      var url = 'https://www.google.com/maps/search/?api=1&query='+latitude+','+longitude;
       this.openExternalApp(url)
     }
   
