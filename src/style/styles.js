@@ -184,7 +184,7 @@ eventImage:{
     padding:5,
   }, 
   textSong:{
-    fontSize:18
+    fontSize:20
   },
   
   contactTextStyle:{
