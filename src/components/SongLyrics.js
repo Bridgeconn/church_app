@@ -16,8 +16,9 @@ export default class EventsDetail extends Component{
 
     return (
       <View style={styles.container}>
-      <Text style={styles.textSong}>{this.props.title}</Text>
-       <Text style={styles.textSong}>{this.props.text}</Text>       
+        <View style={{paddingTop:20}}>
+          <Text style={styles.textSong}>{this.props.text}</Text>       
+        </View>
       </View>
       )
     }

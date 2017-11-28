@@ -46,11 +46,11 @@ export default class VersePage extends Component{
                        {data.map(item =>
                         <Card key={item.book_name} style={styles.cardVerse}>
                         <CardItem style={styles.verseListItemStyle}>
-                          <Text style={styles.verseTextStyle}>{item.book_name} {item.chapter} : {item.verse_number} {item.version}</Text>
+                          <Text style={styles.tabTextSize}>{item.book_name} {item.chapter} : {item.verse_number} {item.version}</Text>
                           <Timestamp time={item.timestamp} component={Text} style={styles.verseTimestamp}/>
                         </CardItem>
                         <CardItem>
-                          <Text style={styles.verseTextStyle}>{item.verse_text}</Text>
+                          <Text style={styles.tabTextSize}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
                         <TouchableOpacity  onPress={this._shareMessage.bind(this,

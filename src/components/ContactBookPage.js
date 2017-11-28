@@ -45,12 +45,12 @@ export default class ContactPage extends Component{
               <Content>
               <Card key={item.contact_name}>
               <CardItem>
-                <Text>{item.contact_name}</Text>
+                <Text style={styles.tabTextSize}>{item.contact_name}</Text>
               </CardItem>
               <CardItem >
               <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)} style={{flexDirection:"row"}}>
-              <Icon name="call" size={24} />
-              <Text >{item.contact_number}</Text>   
+              <Icon name="call" size={24} style={{paddingRight:20}}/>
+              <Text style={styles.tabTextSize}>{item.contact_number}</Text>   
               </TouchableOpacity>
               </CardItem>
               </Card>

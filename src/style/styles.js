@@ -210,6 +210,10 @@ eventImage:{
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+   tabTextSize:{
+    padding:0,
+    fontSize:20
+  },
    contactListStyle:{
     padding:5,
     margin: 5,
@@ -224,10 +228,11 @@ eventImage:{
     
     fontSize:16
   },
-  verseTextStyle:{
-    padding:0,
-    fontSize:20
-  },
+  // songHidden:{
+  //    textOverflow: 'ellipsis',
+  //    fontSize:20
+  // },
+ 
   // eventContainerMaps: {
   //   flexDirection: 'row',
   //   justifyContent: 'space-between',

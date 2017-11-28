@@ -35,8 +35,8 @@ export default class SongPage extends Component{
                           <Card>
                             <CardItem>
                        	      <View key={item.id}>
-                                  <Text style={styles.songText}>{item.song_name}</Text>
-                                  <Text>{item.text}</Text>
+                                  <Text style={styles.tabTextSize}>{item.song_name}</Text>
+                                  <Text numberOfLines={1} ellipsizeMode='tail'>{item.text}</Text>
                               </View>
                             </CardItem>
                           </Card>

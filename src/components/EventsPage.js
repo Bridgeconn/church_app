@@ -39,8 +39,8 @@ export default class EventsPage extends Component{
                         <TouchableOpacity onPress={()=>{Actions.eventsDetails({title:item.event_name, event_name:item.event_name,event_time_start:item.event_time_start,event_time_end:item.event_time_end,event_poster:item.event_poster_url,venue_latitude:item.venue_latitude,venue_longitude:item.venue_longitude,event_speaker:item.event_speaker,event_topic:item.event_topic})}}>
                           <Card key={item.id} style={{flexDirection:'row',justifyContent: 'space-between',}}>
                             <CardItem style={{flexDirection:'column'}}>
-                              <Text>{item.event_name}</Text>
-                             <Text>{moment.utc(item.event_time_start).local().format('lll')}</Text> 
+                              <Text style={styles.tabTextSize}>{item.event_name}</Text>
+                             <Text style={styles.tabTextSize}>{moment.utc(item.event_time_start).local().format('lll')}</Text> 
                             </CardItem>
                             <CardItem>                              
                                 <Image source={{uri:item.event_poster_url}} style={styles.eventImage} onLoadEnd={ ()=>{ this.setState({ loading: false }) }}><ActivityIndicator animating={ this.state.loading } style={{flex:1,justifyContent:'center',alignItems:'center',alignSelf:'center'}}/></Image>
