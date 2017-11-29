@@ -11,6 +11,7 @@ import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.imagepicker.ImagePickerPackage;
+import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -41,7 +42,8 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeContacts(),
           new RNSoundPackage(),
           new ReactNativeYouTube(),
-          new ImagePickerPackage()
+          new ImagePickerPackage(),
+          new SQLitePluginPackage()
       );
     }
 

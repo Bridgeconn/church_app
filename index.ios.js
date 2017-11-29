@@ -6,11 +6,12 @@ import {
   View
 } from 'react-native';
 import Router from './src/components/Router'
+import DatabaseEx from './src/Login/DatabaseEx'
 
 export default class ChurchApplication extends Component {
   render() {
     return (
-     <Router/>
+     <DatabaseEx/>
     )
   }
 }
