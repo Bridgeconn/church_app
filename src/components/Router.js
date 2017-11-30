@@ -257,7 +257,7 @@ export default class RoutesPage extends Component {
                   <View style={{flex:1}}>
                   <Container>
                   <View style={{flexDirection:"row",}}>
-                     <Header searchBar rounded style={{width:250}}>
+                     <Header searchBar rounded style={{width:200}}>
                      <Item>
                       <Input placeholder="Search" />
                      </Item>
