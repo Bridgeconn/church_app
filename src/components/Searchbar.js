@@ -34,7 +34,7 @@ export default class searchBar extends Component {
   searchMatchingWords(keyWord) {
      if(keyWord.length > 0) {
       db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM SearchItem ', [], (tx, results) => {
+      tx.executeSql('SELECT * FROM SearchItem', [], (tx, results) => {
            let rows = results.rows.raw();
             rows.map(row => console.log(` Id: ${row.id}, name: ${row.name}`));
             this.setState({rows});
