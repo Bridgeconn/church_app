@@ -8,11 +8,12 @@ import {
 } from 'react-native';
  import Router from './src/components/Router'
  import DatabaseEx from './src/components/DatabaseEx'
+ import Searchbar from './src/components/Searchbar'
 
 export default class ChurchApplication extends Component {
   render() {
     return (
-      <DatabaseEx/>
+      <Searchbar/>
     );
   }
 }

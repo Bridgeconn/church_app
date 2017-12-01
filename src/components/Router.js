@@ -215,7 +215,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "live"       
                 component = {LiveStreamPage}     
-                title = "LiveStream"                 
+                title = "Live Event"                 
               />
               <Scene 
                 key = "songs"       
@@ -257,7 +257,7 @@ export default class RoutesPage extends Component {
                   <View style={{flex:1}}>
                   <Container>
                   <View style={{flexDirection:"row",}}>
-                     <Header searchBar rounded style={{width:200}}>
+                     <Header searchBar rounded style={{width:160}}>
                      <Item>
                       <Input placeholder="Search" />
                      </Item>
@@ -277,7 +277,7 @@ export default class RoutesPage extends Component {
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
-                    <Scene key="tab5" component={LiveStreamPage} title="Livestream" icon={TabIcon} iconName="video"/>
+                    <Scene key="tab5" component={LiveStreamPage} title="Live Event" icon={TabIcon} iconName="video"/>
               </Scene>
             </Scene> 
           </Router>          

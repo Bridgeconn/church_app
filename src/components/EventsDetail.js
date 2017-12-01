@@ -100,7 +100,7 @@ export default class EventsDetail extends Component{
           region={this.state.region}
           zoomEnabled={true}
           scrollEnabled={true} 
-          onPress={this.openGps.bind(this, this.props.venue_latitude , this.props.venue_longitude)}
+         
         >
         <MapView.Marker
           coordinate={{
