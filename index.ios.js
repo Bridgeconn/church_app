@@ -12,7 +12,7 @@ import Searchbar from './src/Login/Searchbar'
 export default class ChurchApplication extends Component {
   render() {
     return (
-     <Searchbar/>
+     <Router/>
     )
   }
 }

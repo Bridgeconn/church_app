@@ -2,13 +2,13 @@
     "songbooks": [
         {
             "id":1,
-            "song_name": "Song 1",
+            "song_name": "song 1",
             "text": "qwertyuiop asdfghjkl zxcvbnm \n qwertyuiop asdfghjkl zxcvbnm"
 
         },
         {   
             "id":2,
-            "song_name": "Song 2",
+            "song_name": "song 2",
             "text": "mnbvcxz lkjhgfdsa poiuytrewq \n mnbvcxz lkjhgfdsa poiuytrewq"
         }
     ],

@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions} from 'react-native';
-import {Content,Card,CardItem} from 'native-base'
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,TextInput} from 'react-native';
+import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Icon, Footer, FooterTab, Left, Right, Body } from 'native-base';
 import {Actions} from 'react-native-router-flux'
 import songList from './songbookListDummy.json'
 import styles from '../style/styles.js'
@@ -11,7 +11,8 @@ export default class SongPage extends Component{
  constructor(){
         super()
         this.state ={
-            data: []   
+            data: [],
+            search:''
           }
           this.getData =this.getData.bind(this);
     }
@@ -25,11 +26,23 @@ export default class SongPage extends Component{
         this.getData();
     }
     render() {
-      const data = this.state.data;
+      // const data = this.state.data;
+      let FilteredData = this.state.data.filter(
+          (data) =>{
+            return data.song_name.indexOf(this.state.search) !==-1;
+          }
+        )
           return (
+                    <View style={{flex:1}}>
+                    <Header searchBar rounded>
+                      <Item>
+                        <Icon active name="search" />
+                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
+                      </Item>
+                    </Header>
                     <View style={styles.container}>
                     <ScrollView>
-                       {data.map(item =>
+                       {FilteredData.map(item =>
                         <Content key={item.song_name}>
                         <TouchableOpacity  onPress={()=>{Actions.songLyrics({text:item.text,title:item.song_name})}}>
                           <Card>
@@ -45,7 +58,7 @@ export default class SongPage extends Component{
                         )}
                     </ScrollView>   
                     </View>
-                
+                  </View>
                 )
 
                                                                                                                                                                                                                                           
