@@ -3,7 +3,6 @@ package com.churchapplication;
 import android.app.Application;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.vonovak.AddCalendarEventPackage;
-import com.lugg.ReactConfig.ReactConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -13,6 +12,7 @@ import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.imagepicker.ImagePickerPackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -33,9 +33,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new ReactNativeConfigPackage(),
           new SplashScreenReactPackage(),
           new AddCalendarEventPackage(),
-          new ReactConfigPackage(),
           new VectorIconsPackage(),
           new LinearGradientPackage(),
           new MapsPackage(),

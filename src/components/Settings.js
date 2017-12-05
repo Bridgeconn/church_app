@@ -17,8 +17,6 @@ import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Card,CardItem,Body} from 'native-base';
 
-var Config = require('react-native-android-config');
-
 class Settings extends Component {
   constructor(props){
     super(props)
@@ -45,7 +43,7 @@ class Settings extends Component {
 
     _shareMessage(message) {
       if(Platform.OS=="android"){
-      let packageName = Config.API_URL;
+      let packageName = 'com.churchapplication';
       let messageText = "Hey checkout this awesome Church App  https://play.google.com/store/apps/details?id="+packageName;
       console.log("share package name")
       Share.share({

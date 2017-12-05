@@ -13,6 +13,8 @@ import {
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 
+import Config from 'react-native-config'
+
 class Signup extends Component {
   constructor(props){
     super(props);
@@ -32,16 +34,18 @@ class Signup extends Component {
     }
     else{
        Actions.refresh({showProgress:true})
-       const config = { headers: {'Church-App-Id': 'ChurchApp_33212'} };
-      axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-      axios.post('https://churchappapi.herokuapp.com/api/v1/users', data, config)
+       const config = { headers: {Config.HEADER_KEY_CHURCH_APP_ID: Config.CHURCH_APP_ID} };
+      axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+      axios.post(Config.BASE_API_URL + Config.SIGNUP_API_URL, data, config)
         .then((response) => {
           console.log(response)
           console.log("RESPONSE.STATUS == "+response.status)
           if(response.status==200){
             Actions.refresh({showProgress:false})
-            console.log(response.status)
             alert('registered')
+          } else {
+            Actions.refresh({showProgress:false})
+            alert(response.data)
           }
         })
        .catch(function (error) {

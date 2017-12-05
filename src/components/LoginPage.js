@@ -41,8 +41,9 @@ class Login extends Component {
     }
     else{
       Actions.refresh({showProgress:true})
-      const config = { headers: { 'Content-Type': ' application/x-www-form-urlencoded'} };
-        axios.post('https://churchappapi.herokuapp.com/api/v1/users/login', data, config)
+      const config = { headers: {Config.HEADER_KEY_CHURCH_APP_ID: Config.CHURCH_APP_ID} };
+      axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+        axios.post(Config.BASE_API_URL + Config.LOGIN_API_URL, data, config)
         .then((response) => { 
           console.log("loader showpregress")
           Actions.refresh({showProgress:false})
