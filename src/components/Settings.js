@@ -16,8 +16,9 @@ import {
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Card,CardItem,Body} from 'native-base';
+import styles from '../style/styles.js'
 
-class Settings extends Component {
+export default class Settings extends Component {
   constructor(props){
     super(props)
     this.state ={
@@ -84,22 +85,3 @@ _showResult(result) {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-    padding: 10,
-    paddingTop:50,
-
-  },
-  input: {
-    height: 50,
-    marginTop: 10,
-    padding: 4,
-    fontSize: 18,
-    borderWidth: 1,
-    borderColor: '#48bbec'
-  }
-});
-
-export default Settings

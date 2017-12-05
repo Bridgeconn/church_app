@@ -29,7 +29,8 @@ export default class SongPage extends Component{
       // const data = this.state.data;
       let FilteredData = this.state.data.filter(
           (data) =>{
-            return data.song_name.indexOf(this.state.search) !==-1;
+            var songData = data.song_name.toLowerCase();
+            return data.song_name.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
           }
         )
           return (
