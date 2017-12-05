@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  TextInput
 } from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen'
@@ -18,23 +19,30 @@ export default class searchBar extends Component {
      const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
     this.state = {
         record: null,
-        rows:[]
+        rows:[],
+        search:''
     }
-   
     SplashScreen.hide()
-  }
-  searchMatchingWords(keyWord) {
-     if(keyWord.length > 0) {
-      db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM SearchItem WHERE name LIKE "a%"', [], (tx, results) => {
+    let db = SQLite.openDatabase({name: 'test1.db', createFromLocation : "~example.db"}, this.openCB, this.errorCB, this.successCB);
+     db.transaction((tx) => {
+      tx.executeSql('SELECT * FROM SearchItem', [], (tx, results) => {
            let rows = results.rows.raw();
             rows.map(row => console.log(` Id: ${row.id}, name: ${row.name}`));
             this.setState({rows});
         })
       
       })
-     }
+     
+    
   }
+  // searchItem(){
+  //   // let rows = this.state.rows;
+  //   let FilteredName = this.state.rows.filter(
+  //       (rows) =>{
+  //         return rows.name.indexOf(this.state.search) !==-1;
+  //       }
+  //     )
+  //  }
   errorCB(err) {
     console.log("SQL Error: " + err);
   }
@@ -49,44 +57,32 @@ export default class searchBar extends Component {
 
   render() {
     let rows = this.state.rows;
+    let FilteredName = this.state.rows.filter(
+        (rows) =>{
+          
+          return rows.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
+        }
+      )
     return (
-      <Container style={{flex:1}}>
-        <Header>
-          <Left>
-            <Button transparent onPress={this.props.openDrawer}>
-              <Icon name="ios-menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Search Words</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Header searchBar rounded>
-          <Item>
-            <Icon active name="search" />
-            <Input placeholder="Search" onChangeText={(text) => this.searchMatchingWords(text)}/>
-            <Icon active name="bookmark" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
+      <View style={{flex: 1}}>
+       <TextInput
+          onChangeText={ (text)=> this.setState({search: text}) }
+         placeholder="search"
+          >
+         </TextInput>
+        <View>
+          {
+            FilteredName.map(row => 
+            <List key={row.id}>
+            <ListItem style={{borderBottomWidth:0}}>
+            <Text key={row.name} style={{fontSize:16}}>{row.name}</Text>
+          </ListItem>
+          </List>
+           )}
+        </View>
+        </View>
 
-        <Content>
-            <View style={{flex: 1, paddingTop: 22}}>
-              {
-                rows.map(row => 
-                <List key={row.id}>
-                <ListItem style={{borderBottomWidth:0}}>
-                <Text key={row.name} style={{fontSize:16}}>{row.name}</Text>
-              </ListItem>
-              </List>
-               )}
-            </View>
-        </Content>
-
-      </Container>
+      
     );
   }
 }

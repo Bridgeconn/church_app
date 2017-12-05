@@ -34,7 +34,7 @@ class Signup extends Component {
     }
     else{
        Actions.refresh({showProgress:true})
-       const config = { headers: {Config.HEADER_KEY_CHURCH_APP_ID: Config.CHURCH_APP_ID} };
+       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.SIGNUP_API_URL, data, config)
         .then((response) => {
@@ -49,6 +49,7 @@ class Signup extends Component {
           }
         })
        .catch(function (error) {
+        console.log("in catch error"+error)
         Actions.refresh({showProgress:false})
           const errors = error.response.data
           if(errors.email) {

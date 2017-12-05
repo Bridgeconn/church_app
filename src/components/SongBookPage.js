@@ -26,7 +26,6 @@ export default class SongPage extends Component{
         this.getData();
     }
     render() {
-      // const data = this.state.data;
       let FilteredData = this.state.data.filter(
           (data) =>{
             var songData = data.song_name.toLowerCase();

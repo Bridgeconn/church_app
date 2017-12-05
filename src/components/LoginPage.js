@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
-
+import Config from 'react-native-config'
+import Utilities from './Utilities'
 class Login extends Component {
   constructor(props){
     super(props);
@@ -36,16 +37,15 @@ class Login extends Component {
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
-    if(this.props.email=="" || this.props.password==""){
-      alert("please fill the fields properly")
-    }
-    else{
-      Actions.refresh({showProgress:true})
-      const config = { headers: {Config.HEADER_KEY_CHURCH_APP_ID: Config.CHURCH_APP_ID} };
+    Utilities.validateEmailAndPassword(this.props.email,this.props.password);
+    switch (Utilities.validateEmailAndPassword(this.props.email,this.props.password)) {
+      case 0:{
+        Actions.refresh({showProgress:true})
+      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-        axios.post(Config.BASE_API_URL + Config.LOGIN_API_URL, data, config)
+      axios.post(Config.BASE_API_URL + Config.LOGIN_API_URL, data, config)
         .then((response) => { 
-          console.log("loader showpregress")
+          console.log("loader showpregress"+response.data)
           Actions.refresh({showProgress:false})
           this.setState({showProgress:false})
           if (response.data.auth_token) {
@@ -54,6 +54,7 @@ class Login extends Component {
            
           }   
           if(response.data.success == true){
+            console.log("success login")
             console.log(response.data)
               console.log('check token'+response.data.auth_token)
               console.log('enjoy')
@@ -69,8 +70,21 @@ class Login extends Component {
           console.log(error)
           console.log("something went wrong")
           alert('something went wrong')    
-        }) 
-    }       
+        })      
+       }
+      case 1:{
+        alert("Email or Password is empty")
+        break;
+      }
+      case 2:{
+        alert("Password length is too short. Minimum Password length should be 6 characters")
+        break;
+      }
+      case 3:{
+        alert("Invalid Email")
+        break;
+      }
+    }               
   }
 
   

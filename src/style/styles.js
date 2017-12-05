@@ -7,11 +7,12 @@ const titleColor = '#48BBEC';
 const navBarColor = "#3F51B5"
 const centerAlign = 'center';
 const profileMargin = 12;
+const octaValue = 8;
 
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-    margin:8
+    margin:octaValue
 	},
   navigationBarColor:{
     backgroundColor: navBarColor
@@ -44,13 +45,13 @@ const styles = StyleSheet.create({
   },
   editIcon:{
   	position: 'absolute',
-    bottom: 8,
+    bottom: octaValue,
     right:20 
    
   },
   editIconProfile:{
     position: 'absolute',
-    bottom: 8,
+    bottom: octaValue,
     right:20,
     
   },
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   instructions: {
     textAlign:centerAlign,
     color: '#333333',
-    marginBottom: 8,
+    marginBottom: octaValue,
   },
   player: {
     height: PixelRatio.roundToNearestPixel(
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
   titlePage:{
     fontSize:22,
     position: 'absolute',
-    bottom: 8,
+    bottom: octaValue,
     left:0,
     color:'#fff',
     fontWeight:'900',
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: navBarColor,
     borderColor: navBarColor,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: octaValue,
     marginBottom: 12,
     alignSelf: 'stretch',
     justifyContent: centerAlign
@@ -172,24 +173,24 @@ const styles = StyleSheet.create({
   width:width
 },
 eventImage:{
-  height:height/8,
+  height:height/octaValue,
   width:width/4
   },
   eventData:{
     fontSize:20,
     padding:1,
-    marginLeft:8
+    marginLeft:octaValue
   },
   eventCalendar:{
     fontSize:20,
     color:navBarColor,
     marginTop:12,
     marginBottom:20,
-    marginLeft:8
+    marginLeft:octaValue
   },
   songText:{
     fontSize:22,
-    padding:8,
+    padding:octaValue,
   }, 
   textSong:{
     fontSize:20
@@ -208,8 +209,8 @@ eventImage:{
     fontSize: 32,
   },
   verseListStyle:{
-    padding:8,
-    margin: 8,
+    padding:octaValue,
+    margin: octaValue,
     width:width*0.98,
     height:height*0.33
   },
@@ -223,8 +224,8 @@ eventImage:{
     fontSize:20
   },
    contactListStyle:{
-    padding:8,
-    margin: 8,
+    padding:octaValue,
+    margin: octaValue,
 
   },
   contactListItemStyle:{
@@ -250,7 +251,7 @@ eventMapButton:{
   fontSize:20,
   fontWeight:"bold",
   color:"#000",
-  padding:8
+  padding:octaValue
 },
 mapTouchable:{
   width:width*0.40,
@@ -262,12 +263,12 @@ mapTouchable:{
 listView:{
   flexDirection: 'row',
   flexWrap: 'wrap',
-  marginLeft:8,
-  marginRight:8,
-  marginTop:8,
+  marginLeft:octaValue,
+  marginRight:octaValue,
+  marginTop:octaValue,
 },
 card: {
-width: (width / 2)-8,
+width: (width / 2)-octaValue,
 padding:4,
 
 },
@@ -286,7 +287,7 @@ tabBar: {
   elevation:4
 },
   liveStreamView:{
-    padding:8,
+    padding:octaValue,
   }
 })
 

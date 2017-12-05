@@ -27,13 +27,15 @@ export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     console.log("router"+ this.props.hasToken)
-    this.state = { hasToken:false, isLoaded: false, guestKey:false, imageUri:null,username:null,contactNum:null};
+    this.state = { hasToken:false, isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null};
   }
 
   async componentDidMount() {
     console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
+      this.setState({tokenValue:auth_token})
+      console.log("tokenValue"+this.state.tokenValue)
       this.setState({ hasToken: auth_token !== null})
       console.log('loader when token'+this.state.isLoaded)
       console.log("hasToken "+this.state.hasToken)
@@ -208,7 +210,8 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "events"     
-                component = {EventsPage}         
+                component = {EventsPage}     
+                token = {this.state.tokenValue}    
                 title = "Events" 
               />
               <Scene 
@@ -250,6 +253,7 @@ export default class RoutesPage extends Component {
               key="home2" 
               type="reset"  
               hideNavBar={true}  
+              token ={this.state.tokenValue}
               activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.hasToken}
               showLabel={false} 

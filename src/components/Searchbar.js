@@ -59,7 +59,8 @@ export default class searchBar extends Component {
     let rows = this.state.rows;
     let FilteredName = this.state.rows.filter(
         (rows) =>{
-          return rows.name.indexOf(this.state.search) !==-1;
+          
+          return rows.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
         }
       )
     return (
