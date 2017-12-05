@@ -3,23 +3,33 @@
 import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
+const titleColor = '#48BBEC';
+const navBarColor = "#3F51B5"
+const centerAlign = 'center';
+const profileMargin = 12;
 
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
     margin:8
 	},
-
+  navigationBarColor:{
+    backgroundColor: navBarColor
+  },
 	avatarContainer: {
   borderColor: '#9B9B9B',
   borderWidth: 1 / PixelRatio.get(),
   },
+  spinnerCustom:{
+    justifyContent:centerAlign,
+    alignItems:centerAlign
+  },
   profileContent:{
   	flexDirection:"row",
-  	margin:10
+  	margin:profileMargin
   },
   ProfilePageContent:{
-    margin:10
+    margin:profileMargin
   },
   profileView:{
   	margin:20,
@@ -44,7 +54,6 @@ const styles = StyleSheet.create({
     right:20,
     
   },
-
   customText:{
   	fontSize:18
   },
@@ -59,54 +68,54 @@ const styles = StyleSheet.create({
   userContainer:{
     flex: 1,
     backgroundColor: '#F5FCFF',
-    padding: 10,
-    paddingTop:50,
+    padding: 12,
+    paddingTop:48,
   },
   heading:{
     fontSize:28,
-    color:"#48BBEC",
+    color:titleColor,
     fontFamily: "Roboto"
 
   },
    input: {
     height: 50,
-    marginTop: 10,
+    marginTop: 12,
     padding: 4,
     fontSize: 18,
     borderWidth: 1,
-    borderColor: '#48BBEC'
+    borderColor:titleColor
   },
+
   button: {
     paddingVertical: 4,
     paddingHorizontal: 8,
-    alignSelf: 'center',
+    alignSelf: centerAlign,
   },
   buttonRegister: {
     height: 50,
-    backgroundColor: '#48BBEC',
+    backgroundColor: titleColor,
     alignSelf: 'stretch',
-    marginTop: 10,
-    justifyContent: 'center'
+    marginTop: 12,
+    justifyContent:centerAlign
   }, 
   buttonText: {
     fontSize: 24,
-    color: '#FFF',
-    alignSelf: 'center'
+    alignSelf:centerAlign
   },
   buttonTextSmall: {
     fontSize: 15,
   },
   instructions: {
-    textAlign: 'center',
+    textAlign:centerAlign,
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 8,
   },
   player: {
     height: PixelRatio.roundToNearestPixel(
       Dimensions.get('window').width / (16 / 9),
     ),
     alignSelf: 'stretch',
-    marginVertical: 10,
+    marginVertical: 12,
   },
   titlePage:{
     fontSize:22,
@@ -115,7 +124,7 @@ const styles = StyleSheet.create({
     left:0,
     color:'#fff',
     fontWeight:'900',
-    padding:10
+    padding:12
   },
   NavBarCustom:{
     backgroundColor:'blue'
@@ -131,26 +140,26 @@ const styles = StyleSheet.create({
     color:'#fff',
     fontFamily:'roboto-medium',
     fontWeight:'400',
-    paddingRight:10
+    paddingRight:12
   },
   button: {
     height: 36,
-    backgroundColor: '#3F51B5',
-    borderColor: '#3F51B5',
+    backgroundColor: navBarColor,
+    borderColor: navBarColor,
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 12,
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: centerAlign
   },
   buttonText: {
     fontSize: 18,
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: centerAlign
   },
   title: {
     fontSize: 30,
-    alignSelf: 'center',
+    alignSelf: centerAlign,
     marginBottom: 30
   },
   eventDetailImage:{
@@ -173,15 +182,14 @@ eventImage:{
   },
   eventCalendar:{
     fontSize:20,
-    fontWeight:"700",
-    color:"#3F51B5",
-    marginTop:10,
+    color:navBarColor,
+    marginTop:12,
     marginBottom:20,
     marginLeft:8
   },
   songText:{
     fontSize:22,
-    padding:5,
+    padding:8,
   }, 
   textSong:{
     fontSize:20
@@ -194,14 +202,14 @@ eventImage:{
   },
   contactHolder: {
     flex: 0.25,
-    justifyContent: 'center',
+    justifyContent: centerAlign
   },
   contactText: {
     fontSize: 32,
   },
   verseListStyle:{
-    padding:5,
-    margin: 5,
+    padding:8,
+    margin: 8,
     width:width*0.98,
     height:height*0.33
   },
@@ -215,8 +223,8 @@ eventImage:{
     fontSize:20
   },
    contactListStyle:{
-    padding:5,
-    margin: 5,
+    padding:8,
+    margin: 8,
 
   },
   contactListItemStyle:{
@@ -225,43 +233,30 @@ eventImage:{
     justifyContent: 'space-between',
   },
   verseTimestamp:{
-    
     fontSize:16
   },
-  // songHidden:{
-  //    textOverflow: 'ellipsis',
-  //    fontSize:20
-  // },
- 
-  // eventContainerMaps: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   padding: 30,
-  //   flex: 1,
-  //   alignItems: 'center'
-  // },
-  linearGradient: {
-    width: width,
-    height:height*0.3,
-        backgroundColor: "transparent",
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
+  
+linearGradient: {
+  width: width,
+  height:height*0.3,
+      backgroundColor: "transparent",
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
 },
 eventMapButton:{
   fontSize:20,
   fontWeight:"bold",
   color:"#000",
-  padding:5
+  padding:8
 },
 mapTouchable:{
   width:width*0.40,
   position:"absolute",
   margin:10,
-  right:0,
-    
+  right:0, 
 },
 
 listView:{
@@ -280,16 +275,16 @@ contactsCard:{
   borderWidth:0,
 },
 tabBar: {
-    shadowColor: 'darkgrey',
-    shadowOffset: {
-     width:width,
-     height:2
-   },
-    backgroundColor: 'ghostwhite',
-    opacity: 0.98,
-    height:56,
-    elevation:4
-  },
+  shadowColor: 'darkgrey',
+  shadowOffset: {
+   width:width,
+   height:2
+ },
+  backgroundColor: 'ghostwhite',
+  opacity: 0.98,
+  height:56,
+  elevation:4
+},
   liveStreamView:{
     padding:8,
   }

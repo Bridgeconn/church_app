@@ -131,7 +131,7 @@ export default class RoutesPage extends Component {
         return(
           // SplashScreen.hide()
           <Router  
-          navigationBarStyle={{backgroundColor: '#3F51B5'}} 
+          navigationBarStyle={styles.navigationBarColor} 
           leftButtonIconSize={30} 
           leftButtonColor={"white"} 
           tintColor={'white'} 

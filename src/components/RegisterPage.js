@@ -35,7 +35,7 @@ class Register extends Component {
   render() {
     return (
       <View style={styles.userContainer}>
-      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
+      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
         <Text style={styles.heading}>
           Church App
         </Text>
