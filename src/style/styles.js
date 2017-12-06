@@ -68,20 +68,21 @@ const styles = StyleSheet.create({
   },
   userContainer:{
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    padding: 12,
-    paddingTop:48,
+    backgroundColor: 'white',
+    paddingTop: 56,
+    paddingLeft:24,
+    paddingRight:24
   },
   heading:{
     fontSize:28,
     color:titleColor,
-    fontFamily: "Roboto"
-
+    fontFamily: "Roboto",
+    alignSelf: centerAlign,
   },
    input: {
     height: 50,
-    marginTop: 12,
-    padding: 4,
+    marginTop: 8,
+    marginBottom:8,
     fontSize: 18,
     borderWidth: 1,
     borderColor:titleColor
@@ -96,7 +97,9 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: titleColor,
     alignSelf: 'stretch',
-    marginTop: 12,
+    marginTop: 24,
+    marginBottom: 24,
+    padding:12,
     justifyContent:centerAlign
   }, 
   buttonText: {

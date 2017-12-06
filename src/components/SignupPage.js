@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
-
 import Config from 'react-native-config'
+import Utilities from './Utilities'
 
 class Signup extends Component {
   constructor(props){
@@ -29,10 +29,9 @@ class Signup extends Component {
     let data = new FormData();
     data.append("user[email]", this.props.email);
     data.append("user[password]", this.props.password);
-    if(this.props.email=="" || this.props.password==""){
-      alert("please fill the fields properly")
-    }
-    else{
+
+    var validationResult = Utilities.validateEmailAndPassword(this.props.email,this.props.password);
+    if (validationResult == 0) {
        Actions.refresh({showProgress:true})
        const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
@@ -61,6 +60,8 @@ class Signup extends Component {
             alert("password : " +errors.password)
           }   
         })        
+    } else {
+      alert(Utilities.formValidationAlerts(validationResult));
     }
    
   }

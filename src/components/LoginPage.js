@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
+
 class Login extends Component {
   constructor(props){
     super(props);
@@ -37,9 +38,10 @@ class Login extends Component {
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
-    Utilities.validateEmailAndPassword(this.props.email,this.props.password);
-    switch (Utilities.validateEmailAndPassword(this.props.email,this.props.password)) {
-      case 0:{
+    var validationResult = Utilities.validateEmailAndPassword(this.props.email,this.props.password);
+    if (validationResult == 0) {
+    // switch (Utilities.validateEmailAndPassword(this.props.email,this.props.password)) {
+      // case 0:{
         Actions.refresh({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
@@ -51,40 +53,30 @@ class Login extends Component {
           if (response.data.auth_token) {
             var token = response.data.auth_token;
             this.saveItem('token', token)
-           
           }   
           if(response.data.success == true){
             console.log("success login")
             console.log(response.data)
-              console.log('check token'+response.data.auth_token)
+              console.log('check token'+response.data.user.auth_token)
               console.log('enjoy')
-              AsyncStorage.getItem('token').then((auth_token) => {
-              this.setState({token: auth_token!== null})
-              console.log("token to home"+this.state.token)
-              Actions.home2();
-            })  
+              AsyncStorage.setItem("token", response.data.user.auth_token);
+              // AsyncStorage.setItem('token').then((auth_token) => {
+              // this.setState({token: auth_token!== null})
+              // console.log("token to home"+this.state.token)
+              Actions.home2({token:response.data.user.auth_token});
+            // })  
           }
         })
         .catch(function (error) {
           Actions.refresh({showProgress:false})
           console.log(error)
           console.log("something went wrong")
-          alert('something went wrong')    
+          alert('Something went wrong'); 
         })      
+       } else {
+          alert(Utilities.formValidationAlerts(validationResult));
        }
-      case 1:{
-        alert("Email or Password is empty")
-        break;
-      }
-      case 2:{
-        alert("Password length is too short. Minimum Password length should be 6 characters")
-        break;
-      }
-      case 3:{
-        alert("Invalid Email")
-        break;
-      }
-    }               
+    // }               
   }
 
   

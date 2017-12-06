@@ -49,15 +49,24 @@ class Register extends Component {
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
-        <Signup 
-        email={this.state.email}
-        password={this.state.password}
-        />
+        {
+        // <Signup 
+        // email={this.state.email}
+        // password={this.state.password}
+        // />
+        // <GuestLogin/>
+      }
         <Login 
         email={this.state.email}
         password={this.state.password}
         />
-        <GuestLogin/>
+        <Text >
+            No account yet? Create one
+        </Text>
+
+        <Text >
+            Try as Guest
+        </Text>
 
       </View>
     );

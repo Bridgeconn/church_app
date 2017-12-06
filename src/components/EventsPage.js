@@ -65,13 +65,15 @@ import eventsList from './eventListDummy.json'
 import styles from '../style/styles.js'
 import moment from 'moment';
 import axios from 'axios';
-
+import Config from 'react-native-config'
 
 export default class EventsPage extends Component{
 
  constructor(props){
         super(props)
         console.log("props value of token on event page"+this.props.token)
+        console.log("props value of token on event page val "+this.props.tokenVal)
+        
         this.state ={
             // data: [],
              loading:true,  
@@ -80,14 +82,26 @@ export default class EventsPage extends Component{
     }
 
     getData(){
-      // const data = eventsList.events
-      // this.setState({data: data})  
-      // console.log("data"+data)
-     //  const config = { headers: {'Church-App-Id': 'ChurchApp_33212','AUTH-TOKEN':this.props.token} };
+      const data = eventsList.events
+      this.setState({data: data})  
+      console.log("data"+data)
 
-     // axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
-     //    axios.get('https://churchappapi.herokuapp.com/api/v1/events',config)
-     //    .then(response =>{console.log("reponse event data"+response)})
+        if(this.props.tokenVal !== null){
+     console.log("token value"+this.props.tokenVal)
+
+     const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenVal} }
+      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+      axios.get(Config.BASE_API_URL + Config.EVENTS_API_URL, config)
+        .then((response) => { 
+       console.log("response "+JSON.stringify(response.data.events))
+     })
+     .catch(function (error) {
+          console.log(error)
+          console.log("something went wrong")
+          alert('Something went wrong'); 
+        })      
+    } 
+   
 
     }
   componentDidMount() {
