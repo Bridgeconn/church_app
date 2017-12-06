@@ -23,7 +23,6 @@ export default class VersePage extends Component{
     getData(){
       const data = verse.verses
       this.setState({data: data})  
-      console.log("data"+data)
     }
     _showResult(result) {
     this.setState({result});

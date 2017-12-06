@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
-
+import Utilities from './Utilities'
 import Config from 'react-native-config'
 
 class Signup extends Component {
@@ -29,11 +29,10 @@ class Signup extends Component {
     let data = new FormData();
     data.append("user[email]", this.props.email);
     data.append("user[password]", this.props.password);
-    if(this.props.email=="" || this.props.password==""){
-      alert("please fill the fields properly")
-    }
-    else{
-       Actions.refresh({showProgress:true})
+    Utilities.validateEmailAndPassword(this.props.email,this.props.password);
+    switch (Utilities.validateEmailAndPassword(this.props.email,this.props.password)) {
+      case 0:{
+        Actions.refresh({showProgress:true})
        const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.SIGNUP_API_URL, data, config)
@@ -60,9 +59,22 @@ class Signup extends Component {
             console.log("password : " +errors.password)
             alert("password : " +errors.password)
           }   
-        })        
-    }
-   
+        })
+        break;  
+       } 
+      case 1:{
+        alert("Email or Password is empty")
+        break;
+      }
+      case 2:{
+        alert("Password length is too short. Minimum Password length should be 6 characters")
+        break;
+      }
+      case 3:{
+        alert("Invalid Email")
+        break;
+      }
+    }                 
   }
   render() {
     return (

@@ -21,6 +21,7 @@ class Login extends Component {
     this.state = {
       error: "",
       token:false,
+      tokenValue:null,
       showProgress: true,
       status:true
     }
@@ -45,22 +46,24 @@ class Login extends Component {
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.LOGIN_API_URL, data, config)
         .then((response) => { 
-          console.log("loader showpregress"+response.data)
+          console.log("loader showpregress"+JSON.stringify(response))
           Actions.refresh({showProgress:false})
           this.setState({showProgress:false})
-          if (response.data.auth_token) {
-            var token = response.data.auth_token;
-            this.saveItem('token', token)
+          console.log("auth data token"+JSON.stringify(response.data.user.auth_token))
+          if (JSON.stringify(response.data.user.auth_token)) {
+            var tokenValue = JSON.stringify(response.data.user.auth_token);
+            this.setState({tokenValue:tokenValue})
+            this.saveItem('token', tokenValue)
            
           }   
-          if(response.data.success == true){
+          if(JSON.stringify(response.data.success)){
             console.log("success login")
             console.log(response.data)
-              console.log('check token'+response.data.auth_token)
+              console.log('check token'+response.data.user.auth_token)
               console.log('enjoy')
               AsyncStorage.getItem('token').then((auth_token) => {
               this.setState({token: auth_token!== null})
-              console.log("token to home"+this.state.token)
+              console.log("token to home"+this.state.tokenValue)
               Actions.home2();
             })  
           }
@@ -70,7 +73,8 @@ class Login extends Component {
           console.log(error)
           console.log("something went wrong")
           alert('something went wrong')    
-        })      
+        })  
+        break;    
        }
       case 1:{
         alert("Email or Password is empty")

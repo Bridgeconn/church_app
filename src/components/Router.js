@@ -26,7 +26,7 @@ import SplashScreen from 'react-native-splash-screen'
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
-    console.log("router"+ this.props.hasToken)
+    console.log("router tokenValue"+ this.props.tokenValue)
     this.state = { hasToken:false, isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null};
   }
 
@@ -211,7 +211,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "events"     
                 component = {EventsPage}     
-                token = {this.state.tokenValue}    
+                tokenValue = {this.state.tokenValue}    
                 title = "Events" 
               />
               <Scene 
@@ -253,9 +253,9 @@ export default class RoutesPage extends Component {
               key="home2" 
               type="reset"  
               hideNavBar={true}  
-              token ={this.state.tokenValue}
+              tokenValue={this.state.tokenValue}
               activeBackgroundColor='#3F51B5'
-              initial={this.state.guestKey || this.state.hasToken}
+              initial={this.state.guestKey || this.state.tokenValue}
               showLabel={false} 
               swipeEnabled={false}
               lazyLoad={true}
@@ -275,7 +275,7 @@ export default class RoutesPage extends Component {
                   
                 }
                >
-                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" />
+                    <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" />
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
