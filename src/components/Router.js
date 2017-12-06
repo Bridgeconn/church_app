@@ -12,6 +12,7 @@ import Settings from './Settings'
 import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
 import Signup from './SignupPage'
+import NewSignup from './NewSignupPage'
 import EventsPage from './EventsPage'
 import EventsDetail from './EventsDetail'
 import LiveStreamPage from './LiveStreamPage'
@@ -26,52 +27,34 @@ import SplashScreen from 'react-native-splash-screen'
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
-    console.log("router"+ this.props.hasToken)
-    this.state = { hasToken:false, isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null};
+    this.state = {
+      isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null
+    };
   }
 
   async componentDidMount() {
-    console.log('initial token '+this.state.hasToken)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       this.setState({tokenValue:auth_token})
-      console.log("tokenValue"+this.state.tokenValue)
-      this.setState({ hasToken: auth_token !== null})
-      console.log('loader when token'+this.state.isLoaded)
-      console.log("hasToken "+this.state.hasToken)
-      console.log("token "+auth_token)
     })
-    if(this.state.hasToken==false){
-      console.log('initial key '+this.state.guestKey)
-      await AsyncStorage.getItem('guest').then((value) => {
-      console.log('key1 '+value)
-      this.setState({ guestKey: value !== null, isLoaded: value !==null })
-      console.log("guestKey "+this.state.guestKey)
-      console.log("key "+value)
-      
-    })
-      
-     }
-      else{  
-      await AsyncStorage.getItem('uri').then((uri) => {
-        console.log("uri"+uri)
-        console.log('uri '+this.state.imageUri)
-        this.setState({ imageUri:uri})
-        console.log("hasUri"+this.state.imageUri)
-      })
-      await AsyncStorage.getItem('user').then((user) => {
-        console.log("user"+user)
-        console.log('user '+this.state.username)
-        this.setState({ username:user})
-        console.log("hasUser"+this.state.username)
-      })
-      await AsyncStorage.getItem('contact').then((contact) => {
-        console.log("contact"+contact)
-        console.log('contact '+this.state.contactNum)
-        this.setState({contactNum:contact})
-        console.log("contact"+this.state.contactNum)
-      })
-      
+    if(this.state.tokenValue==null){
+        await AsyncStorage.getItem('guest').then((value) => {
+          console.log('key1 '+value)
+          this.setState({ guestKey: value !== null })
+        })
+     } else {  
+        await AsyncStorage.getItem('uri').then((uri) => {
+          console.log("uri"+uri)
+          this.setState({ imageUri:uri})
+        })
+        await AsyncStorage.getItem('user').then((user) => {
+          console.log("user"+user)
+          this.setState({ username:user})
+        })
+        await AsyncStorage.getItem('contact').then((contact) => {
+          console.log("contact"+contact)
+          this.setState({contactNum:contact})
+        })
      }
     
     this.setState({isLoaded:true}) 
@@ -83,7 +66,7 @@ export default class RoutesPage extends Component {
   }
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
-    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1") {
+    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {
         console.log("home2")
       BackHandler.exitApp();
       return true;
@@ -99,25 +82,10 @@ export default class RoutesPage extends Component {
          500
       )
   }
+
   handleSave = () =>{
     this.child.handlePress()
   }
-//     async checkUserSignedIn(){
-//     try {
-//       let value = await AsyncStorage.getItem('user_type');
-       
-//       if(value == 1){
-//         Actions.home()
-          
-//       }
-//       else if (value == 2){
-//           Actions.register()
-//        }
-
-//     } catch (error) {
-//       // Error retrieving data
-//     }
-// }
   
       render() {
 
@@ -125,13 +93,11 @@ export default class RoutesPage extends Component {
         console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
           return (
-          //   <ActivityIndicator />
           null
           )
          }
         else{
         return(
-          // SplashScreen.hide()
           <Router  
           navigationBarStyle={styles.navigationBarColor} 
           leftButtonIconSize={30} 
@@ -143,8 +109,16 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "register"       
                 component = {Register}   
-                initial = {!this.state.guestKey && !this.state.hasToken}     
-                hasToken={this.state.hasToken}
+                initial = {!this.state.guestKey && this.state.tokenValue == null}     
+                tokenValue={this.state.tokenValue}
+                guestKey={this.state.guestKey}
+                hideNavBar={true}  
+                type="reset"
+              />
+              <Scene 
+                key = "newsignup"       
+                component = {NewSignup}   
+                tokenValue={this.state.tokenValue}
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
                 type="reset"
@@ -155,7 +129,7 @@ export default class RoutesPage extends Component {
                 title = "Church App" 
                 type="reset"
                 initial={false}
-                hasToken ={this.state.hasToken}
+                tokenValue ={this.state.tokenValue}
                 guestKey ={this.state.guestKey}
                 imageUri={this.state.imageUri}
                 contactNum={this.state.contactNum} 
@@ -208,12 +182,14 @@ export default class RoutesPage extends Component {
                 </TouchableOpacity>
                 }
               />
-              <Scene 
-                key = "events"     
-                component = {EventsPage}     
-                token = {this.state.tokenValue}    
-                title = "Events" 
-              />
+              {
+              // <Scene 
+              //   key = "events"     
+              //   component = {EventsPage}     
+              //   tokenValue = {this.state.tokenValue}    
+              //   title = "Events" 
+              // />
+            }
               <Scene 
                 key = "eventsDetails"   
                 title = "Events"    
@@ -241,7 +217,7 @@ export default class RoutesPage extends Component {
                 key = "contacts"   
                 component = {ContactBookPage}    
                 title = "Contact"                 
-                hasToken={this.state.hasToken}
+                tokenValue={this.state.tokenValue}
               />
               <Scene 
                 key = "verse"      
@@ -252,10 +228,10 @@ export default class RoutesPage extends Component {
               <Scene 
               key="home2" 
               type="reset"  
-              hideNavBar={true}  
-              token ={this.state.tokenValue}
+              hideNavBar={true}
+              tokenValue={this.state.tokenValue}
               activeBackgroundColor='#3F51B5'
-              initial={this.state.guestKey || this.state.hasToken}
+              initial={this.state.guestKey || this.state.tokenValue}
               showLabel={false} 
               swipeEnabled={false}
               lazyLoad={true}
@@ -275,7 +251,7 @@ export default class RoutesPage extends Component {
                   
                 }
                >
-                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" tokenVal={this.state.tokenValue} />
+                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" />
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>

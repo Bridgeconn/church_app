@@ -5,18 +5,13 @@ export default class Utilities {
 		if(email=="" || password==""){
 	     return 1;
 	    }
-	    var minPass = true;
-	    if(password.length < 6){
-	    	minPass = false;
-	    }
+	    
 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 		if (!re.test(email)) {
-			if (!minPass) {
-				return 2;
-			}
 			return 3;
 		}
-		if (!minPass) {
+
+	    if(password.length < 6){
 			return 4;
 		}
 
@@ -35,7 +30,7 @@ export default class Utilities {
 		        return "Please enter a valid email";
 	      	}
 	      	case 4: {
-		        return "Password length is too short. Minimum Password length should be 6 characters";
+		        return "You have entered less than 6 characters for password";
 	      	}
   		}
 	}

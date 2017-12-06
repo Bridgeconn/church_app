@@ -9,7 +9,7 @@ import {
   Text,
   Alert,
   View,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -38,12 +38,13 @@ var GuestLogin = React.createClass({
   }
 });
 
-class Register extends Component {
+class NewSignup extends Component {
   constructor(props){
     super(props);
     this.state = {
       email: "",
       password: "",
+      name: "",
       showProgress:false,
       guestVisible:true
     }
@@ -69,14 +70,14 @@ class Register extends Component {
     console.log("keyboard will hide");
     this.setState({guestVisible:true});
   }
-  
+
   componentWillReceiveProps(props) {
       console.log("componentWillReceivePropscallback : userPage=" + props.showProgress)
       this.setState({showProgress:props.showProgress})
-    }
+  }
 
-  onOpenSignupPage() {
-    Actions.newsignup();
+  onOpenLoginPage() {
+    Actions.register();
   }
 
   render() {
@@ -87,24 +88,32 @@ class Register extends Component {
           Church App
         </Text>
         <TextInput
+          onChangeText={ (text)=> this.setState({name: text}) }
+          style={styles.input} placeholder="Name">
+        </TextInput>
+
+        <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
           style={styles.input} placeholder="Email">
         </TextInput>
+
         <TextInput
           onChangeText={ (text)=> this.setState({password: text}) }
           style={styles.input}
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
-        <Login 
-        email={this.state.email}
-        password={this.state.password}
-        />
 
-        <Text style={styles.noAccountText} onPress={this.onOpenSignupPage.bind(this) }>
-            No account yet? Create one
-        </Text>
+        <Signup 
+          name={this.state.name}
+          email={this.state.email}
+          password={this.state.password}
+        />
         
+        <Text style={styles.noAccountText} onPress={this.onOpenLoginPage.bind(this) }>
+            Already have an account? Login here
+        </Text>
+
         <GuestLogin visible={this.state.guestVisible}/>
         
       </View>
@@ -114,4 +123,4 @@ class Register extends Component {
 }
 
 
-export default Register
+export default NewSignup

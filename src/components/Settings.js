@@ -34,7 +34,7 @@ export default class Settings extends Component {
     await   AsyncStorage.removeItem('user')
     await   AsyncStorage.removeItem('contact')
     Actions.refresh({showProgress:false})
-    Actions.reset("register", {hasToken:false, guestKey:false})
+    Actions.reset("register", {tokenValue:null, guestKey:false})
     // alert('Logout Success!');
 
     } catch (error) {

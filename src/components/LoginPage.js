@@ -21,9 +21,8 @@ class Login extends Component {
     super(props);
     this.state = {
       error: "",
-      token:false,
-      showProgress: true,
-      status:true
+      tokenValue:null,
+      showProgress: true
     }
   }
   async saveItem(item, selectedValue) {
@@ -34,58 +33,46 @@ class Login extends Component {
     }
   }
   onLoginPressed(){
-    console.log('hi')
     let data = new FormData();
     data.append("email", this.props.email);
     data.append("password", this.props.password);
     var validationResult = Utilities.validateEmailAndPassword(this.props.email,this.props.password);
     if (validationResult == 0) {
-    // switch (Utilities.validateEmailAndPassword(this.props.email,this.props.password)) {
-      // case 0:{
         Actions.refresh({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.LOGIN_API_URL, data, config)
         .then((response) => { 
-          console.log("loader showpregress"+response.data)
+          console.log("loader showpregress"+JSON.stringify(response))
           Actions.refresh({showProgress:false})
           this.setState({showProgress:false})
-          if (response.data.auth_token) {
-            var token = response.data.auth_token;
-            this.saveItem('token', token)
-          }   
-          if(response.data.success == true){
+
+          if (response.data.success) {
             console.log("success login")
-            console.log(response.data)
-              console.log('check token'+response.data.user.auth_token)
-              console.log('enjoy')
-              AsyncStorage.setItem("token", response.data.user.auth_token);
-              // AsyncStorage.setItem('token').then((auth_token) => {
-              // this.setState({token: auth_token!== null})
-              // console.log("token to home"+this.state.token)
-              Actions.home2({token:response.data.user.auth_token});
-            // })  
+            var tokenValue = response.data.user.auth_token;
+          console.log("auth data token"+tokenValue)
+            this.setState({tokenValue:tokenValue})
+            this.saveItem('token', tokenValue)
+              Actions.home2({tokenValue:'1234567'});
+          } else {
+            alert(response.data.message);
           }
         })
         .catch(function (error) {
           Actions.refresh({showProgress:false})
-          console.log(error)
-          console.log("something went wrong")
-          alert('Something went wrong'); 
+          console.log("ERROR == "+error)
+          alert('There is some problem with email or password'); 
         })      
        } else {
           alert(Utilities.formValidationAlerts(validationResult));
        }
-    // }               
   }
-
-  
 
   render() {
     return (
       <View >
         <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={styles.buttonRegister}>
-          <Text style={styles.buttonText}>
+          <Text style={styles.loginButtonText}>
             Login
           </Text>
         </TouchableOpacity>
@@ -94,7 +81,5 @@ class Login extends Component {
   
   }
 }
-
-
 
 export default Login

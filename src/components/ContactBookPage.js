@@ -21,7 +21,7 @@ export default class ContactPage extends Component{
     getData(){
       const data = contactList.contacts
       this.setState({data: data})  
-      console.log("data"+data)
+      
     }
         componentDidMount() {
         this.getData();

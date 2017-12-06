@@ -29,6 +29,7 @@ class Signup extends Component {
     let data = new FormData();
     data.append("user[email]", this.props.email);
     data.append("user[password]", this.props.password);
+    data.append("user[first_name]", this.props.name);
 
     var validationResult = Utilities.validateEmailAndPassword(this.props.email,this.props.password);
     if (validationResult == 0) {
@@ -63,7 +64,6 @@ class Signup extends Component {
     } else {
       alert(Utilities.formValidationAlerts(validationResult));
     }
-   
   }
   render() {
     return (

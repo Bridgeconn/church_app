@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   userContainer:{
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 56,
+    paddingTop: 64,
     paddingLeft:24,
     paddingRight:24
   },
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     color:titleColor,
     fontFamily: "Roboto",
     alignSelf: centerAlign,
+    marginBottom:16
   },
    input: {
     height: 50,
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: titleColor,
     alignSelf: 'stretch',
     marginTop: 24,
-    marginBottom: 24,
+    marginBottom: 48,
     padding:12,
     justifyContent:centerAlign
   }, 
@@ -291,7 +292,26 @@ tabBar: {
 },
   liveStreamView:{
     padding:octaValue,
+  },
+  loginButtonText: {
+    fontSize: 20,
+    color: 'white',
+    alignSelf: centerAlign
+  },
+  noAccountText: {
+    fontSize: 16,
+    alignSelf: centerAlign,
+    marginBottom:24,
+  },
+  tryGuestText: {
+    fontSize: 16,
+    alignSelf: centerAlign,
+    marginBottom:36,
+    position: 'absolute',
+    bottom: 0,
+    
   }
+  
 })
 
 export default styles

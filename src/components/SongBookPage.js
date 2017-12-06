@@ -20,7 +20,6 @@ export default class SongPage extends Component{
     getData(){
       const data = songList.songbooks
       this.setState({data: data})  
-      console.log("data"+data)
     }
         componentDidMount() {
         this.getData();

@@ -37,6 +37,12 @@ export default class EventsDetail extends Component{
       this.openExternalApp(url)
     }
   
+  openGpsFromName = (venue) =>{
+      // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
+      var url = 'https://www.google.com/maps/search/?api=1&query='+venue;
+      this.openExternalApp(url)
+    }
+
   openExternalApp = (url) => {
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
@@ -80,7 +86,7 @@ export default class EventsDetail extends Component{
       <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
         
-        <Text  style={styles.eventData}>Event Topic: {this.state.event_topic}</Text>
+        <Text  style={styles.eventData}>Event Venue: {this.state.event_topic}</Text>
         <Text  style={styles.eventData}>Event Speaker: {this.state.event_speaker}</Text>
         <Text style={styles.eventData}>Start Date: {moment.utc(this.state.event_time_start).local().format('lll')}</Text> 
         <Text style={styles.eventData}>End Date: {moment.utc(this.state.event_time_end).local().format('lll')}</Text>
@@ -109,7 +115,7 @@ export default class EventsDetail extends Component{
           }}
         />
         </MapView>
-        <View style={styles.mapTouchable}><Button onPress={this.openGps.bind(this, this.props.venue_latitude, this.props.venue_longitude)} title="directions" color="#3F51B5"/></View>
+        <View style={styles.mapTouchable}><Button onPress={this.openGpsFromName.bind(this, this.props.event_topic)} title="directions" color="#3F51B5"/></View>
        </View>
       </ScrollView>
       </View>

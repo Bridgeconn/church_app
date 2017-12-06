@@ -26,13 +26,11 @@ class GuestLogin extends Component {
   
   render() {
     return (
-      <View>
-        <TouchableOpacity onPress={this.onGuestLogin.bind(this)} style={styles.buttonRegister}>
-          <Text style={styles.buttonText}>
-           Guest 
-          </Text>
-        </TouchableOpacity>
-      </View>
+      
+        <Text style={styles.tryGuestText} onPress={this.onGuestLogin.bind(this) }>
+            Explore as Guest
+        </Text>
+      
     )
   }
 }

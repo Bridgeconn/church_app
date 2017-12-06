@@ -12,7 +12,7 @@ export default class HomePage extends Component{
 		super(props)
 		console.log("props contact"+this.props.contactNum)
 		console.log("props image uri "+ this.props.imageUri)
-		console.log("props value hastoken home"+ this.props.hasToken)
+		console.log("props value token home"+ this.props.tokenValue)
 		console.log("props value token home"+ this.props.token)
 		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		const ds2 = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -90,7 +90,7 @@ export default class HomePage extends Component{
 		        		</View>
 			        }
 			    />
-			    { this.props.token || this.props.hasToken==true? 
+			    { this.props.token || this.props.tokenValue!==null? 
 			    <ListView
 			        contentContainerStyle={styles.listView}
 			        dataSource={this.state.dataSource2}
@@ -106,7 +106,7 @@ export default class HomePage extends Component{
 			        }
 			    /> :null}
 			    </View>
-		        {/*this.props.token || this.props.hasToken==true? <View style={styles.profileContent}>
+		        {/*this.props.token || this.props.tokenValue !==null? <View style={styles.profileContent}>
 			        <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
 			          	<TouchableOpacity   onPress={()=>{Actions.profile({uri:this.state.imageUri,user:this.state.username,contact:this.state.contactNum})}}>
 			          	<Image style={styles.avatar} source={this.state.imageUri==null?require('../images/person_dummy.png'):{uri:this.state.imageUri}}/>
