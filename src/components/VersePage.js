@@ -49,7 +49,7 @@ export default class VersePage extends Component{
                           <Timestamp time={item.timestamp} component={Text} style={styles.verseTimestamp}/>
                         </CardItem>
                         <CardItem>
-                          <Text style={styles.tabTextSize}>{item.verse_text}</Text>
+                          <Text style={styles.tabTextVerseSize}>{item.verse_text}</Text>
                         </CardItem>
                         <CardItem>
                         <TouchableOpacity  onPress={this._shareMessage.bind(this,

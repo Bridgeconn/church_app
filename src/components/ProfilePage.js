@@ -15,9 +15,10 @@ export default class ProfilePage extends Component{
 		    setImage:'',
 		    isReady: false,
 		    status: null,
-	      	user: this.props.user,
+	      	user: this.props.username,
       		uri:this.props.uri, 
-          contact:this.props.contact 	
+          contact:this.props.contactNum,
+          token: this.props.tokenValue
 	  	};
 	}
 	
@@ -40,6 +41,15 @@ export default class ProfilePage extends Component{
       this.setState({contact})
       await AsyncStorage.setItem('user',user);
       await AsyncStorage.setItem('contact',contact);
+
+      let data = new FormData();
+    data.append("first_name", this.state.user);
+    data.append("contact_number", this.state.contact);
+      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
+      axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+      axios.post(Config.BASE_API_URL + Config.CONTACT_UPDATE_API_URL, data, config)
+        .then((response) => { });
+
     }
   selectPhotoTapped() {
     const options = {

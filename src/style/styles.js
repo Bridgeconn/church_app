@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   width:width
 },
 eventImage:{
-  height:height/octaValue,
+  height:width/4,
   width:width/4
   },
   eventData:{
@@ -225,7 +225,12 @@ eventImage:{
   },
    tabTextSize:{
     padding:0,
-    fontSize:20
+    fontSize:18,
+    width:width/2
+  },
+  tabTextVerseSize: {
+    padding:0,
+    fontSize:18,
   },
    contactListStyle:{
     padding:octaValue,

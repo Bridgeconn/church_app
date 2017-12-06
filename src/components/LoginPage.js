@@ -53,7 +53,9 @@ class Login extends Component {
           console.log("auth data token"+tokenValue)
             this.setState({tokenValue:tokenValue})
             this.saveItem('token', tokenValue)
-              Actions.home2({tokenValue:'1234567'});
+            this.saveItem('user', response.data.user.first_name)
+            this.saveItem('contact', response.data.user.user_contact)
+              Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact, username:response.data.user.first_name});
           } else {
             alert(response.data.message);
           }

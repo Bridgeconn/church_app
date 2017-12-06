@@ -58,11 +58,11 @@ export default class EventsDetail extends Component{
       }
     });
   }
-  addToCalendar(title, startDateUTC: moment,endDateUTC:moment ) {
+  addToCalendar(title, startDateUTC: string,endDateUTC:string ) {
   const eventConfig = {
     title,
-    startDate: utcDateToLocalString(startDateUTC),
-    endDate:utcDateToLocalString(endDateUTC),
+    startDate: utcDateToLocalString(1507631844000),
+    endDate:utcDateToLocalString(1507631844000),
   };
 
   AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
@@ -88,8 +88,8 @@ export default class EventsDetail extends Component{
         
         <Text  style={styles.eventData}>Event Venue: {this.state.event_topic}</Text>
         <Text  style={styles.eventData}>Event Speaker: {this.state.event_speaker}</Text>
-        <Text style={styles.eventData}>Start Date: {moment.utc(this.state.event_time_start).local().format('lll')}</Text> 
-        <Text style={styles.eventData}>End Date: {moment.utc(this.state.event_time_end).local().format('lll')}</Text>
+        <Text style={styles.eventData}>Start Date: {this.state.event_time_start}</Text> 
+        <Text style={styles.eventData}>End Date: {this.state.event_time_end}</Text>
         <TouchableOpacity onPress={() => {
             this.addToCalendar(
               this.state.title, 
@@ -123,6 +123,3 @@ export default class EventsDetail extends Component{
       )
     }
   }
-
- 
-

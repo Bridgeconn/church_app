@@ -128,7 +128,7 @@ export default class EventsPage extends Component{
                             event_topic:item.event_venue_name
                           })
                         }}>
-                          <Card key={item.id} style={{flexDirection:'row',justifyContent: 'space-between',}}>
+                          <Card key={item.id} style={{flexDirection:'row'}}>
                             <CardItem style={{flexDirection:'column'}}>
                               <Text style={styles.tabTextSize}>{item.name}</Text>
                               <Text style={styles.tabTextSize}>

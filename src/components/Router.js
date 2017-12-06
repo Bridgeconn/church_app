@@ -230,6 +230,8 @@ export default class RoutesPage extends Component {
               type="reset"  
               hideNavBar={true}
               tokenValue={this.state.tokenValue}
+              contactNum={this.state.contactNum} 
+              username={this.state.username}
               activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.tokenValue}
               showLabel={false} 
