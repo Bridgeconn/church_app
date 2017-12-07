@@ -315,8 +315,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     
+  },
+  infoText: {
+    fontSize:12,
+    marginLeft:8,
+    marginRight:16
+  },
+  infoContainer: {
+    flexDirection:"row",
+    marginTop:16
   }
-  
 })
 
 export default styles
