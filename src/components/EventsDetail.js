@@ -106,7 +106,6 @@ export default class EventsDetail extends Component{
           region={this.state.region}
           zoomEnabled={true}
           scrollEnabled={true} 
-         
         >
         <MapView.Marker
           coordinate={{

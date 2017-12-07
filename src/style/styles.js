@@ -175,11 +175,11 @@ const styles = StyleSheet.create({
   EventMap: {
   height:height*0.35,
   width:width
-},
-eventImage:{
-  height:width/4,
-  width:width/4
   },
+  eventImage:{
+    height:width/4,
+    width:width/4
+    },
   eventData:{
     fontSize:20,
     padding:1,
@@ -199,7 +199,7 @@ eventImage:{
   textSong:{
     fontSize:20
   },
-  
+
   contactTextStyle:{
     padding:0,
     fontSize:18
@@ -245,56 +245,56 @@ eventImage:{
   verseTimestamp:{
     fontSize:16
   },
-  
-linearGradient: {
-  width: width,
-  height:height*0.3,
-      backgroundColor: "transparent",
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-},
-eventMapButton:{
-  fontSize:20,
-  fontWeight:"bold",
-  color:"#000",
-  padding:octaValue
-},
-mapTouchable:{
-  width:width*0.40,
-  position:"absolute",
-  margin:10,
-  right:0, 
-},
 
-listView:{
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  marginLeft:octaValue,
-  marginRight:octaValue,
-  marginTop:octaValue,
-},
-card: {
-width: (width / 2)-octaValue,
-padding:4,
+  linearGradient: {
+    width: width,
+    height:height*0.3,
+        backgroundColor: "transparent",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+  },
+  eventMapButton:{
+    fontSize:20,
+    fontWeight:"bold",
+    color:"#000",
+    padding:octaValue
+  },
+  mapTouchable:{
+    width:width*0.40,
+    position:"absolute",
+    margin:10,
+    right:0, 
+  },
 
-},
-contactsCard:{
-  borderWidth:0,
-},
-tabBar: {
-  shadowColor: 'darkgrey',
-  shadowOffset: {
-   width:width,
-   height:2
- },
-  backgroundColor: 'ghostwhite',
-  opacity: 0.98,
-  height:56,
-  elevation:4
-},
+  listView:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft:octaValue,
+    marginRight:octaValue,
+    marginTop:octaValue,
+  },
+  card: {
+  width: (width / 2)-octaValue,
+  padding:4,
+
+  },
+  contactsCard:{
+    borderWidth:0,
+  },
+  tabBar: {
+    shadowColor: 'darkgrey',
+    shadowOffset: {
+     width:width,
+     height:2
+   },
+    backgroundColor: 'ghostwhite',
+    opacity: 0.98,
+    height:56,
+    elevation:4
+  },
   liveStreamView:{
     padding:octaValue,
   },

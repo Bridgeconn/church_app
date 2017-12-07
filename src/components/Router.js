@@ -16,6 +16,7 @@ import NewSignup from './NewSignupPage'
 import EventsPage from './EventsPage'
 import EventsDetail from './EventsDetail'
 import LiveStreamPage from './LiveStreamPage'
+import StartLiveStream from './StartLiveStream'
 import SongBookPage from './SongBookPage'
 import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
@@ -203,6 +204,11 @@ export default class RoutesPage extends Component {
                 title = "Live Event"                 
               />
               <Scene 
+                key = "startLive"       
+                component = {StartLiveStream}     
+                title = "Live Event"                 
+              />
+              <Scene 
                 key = "songs"       
                 component = {SongBookPage}       
                 title = "SongBook"                
@@ -257,7 +263,7 @@ export default class RoutesPage extends Component {
                     <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
                     <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
                     <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
-                    <Scene key="tab5" component={LiveStreamPage} title="Live Event" icon={TabIcon} iconName="video"/>
+                    <Scene key="tab5" component={StartLiveStream} title="Live Event" icon={TabIcon} iconName="video"/>
               </Scene>
             </Scene> 
           </Router>          
