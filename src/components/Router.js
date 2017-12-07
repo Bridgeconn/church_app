@@ -243,7 +243,7 @@ export default class RoutesPage extends Component {
               tabBarPosition="bottom" 
                 renderRightButton = {() => 
                   <View style={{flexDirection:"row",paddingRight:16}}>
-                    <TouchableOpacity onPress={()=>{Actions.profile()}} style={{paddingRight:16}}>
+                    <TouchableOpacity onPress={()=>{Actions.profile({tokenValue:this.state.tokenValue,contactNum:this.state.contactNum,username:this.state.username})}} style={{paddingRight:16}}>
                       <Icon name="account-circle" size={24} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{Actions.settings()}} style={{paddingRight:16}}>

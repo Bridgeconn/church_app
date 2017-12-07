@@ -4,11 +4,14 @@ import {Header, Card, Title, Left,Button,Right,Icon,Body} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
 import styles from '../style/styles.js'
+import Config from 'react-native-config'
+import axios from 'axios';
 
 export default class ProfilePage extends Component{
 	
 	constructor(props){
 		super(props)
+    console.log("props=" + this.props.username + "  " + this.props.contactNum + "  "+ this.props.tokenValue);
 		this.state = {
 		    avatarSource: null,
 		    videoSource: null,
@@ -34,6 +37,7 @@ export default class ProfilePage extends Component{
     console.log("hello handle press")
       console.log(this.state.user);
       console.log(this.state.contact);
+      console.log(this.state.token);
       Actions.pop({refresh:{username:this.state.user,imageUri:this.state.uri,contactNum:this.state.contact}})
       const user = this.state.user
       const contact = this.state.contact
@@ -45,10 +49,17 @@ export default class ProfilePage extends Component{
       let data = new FormData();
     data.append("first_name", this.state.user);
     data.append("contact_number", this.state.contact);
+    data.append("contact_show", true);
+    data.append("last_name", "");
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.CONTACT_UPDATE_API_URL, data, config)
-        .then((response) => { });
+        .then((response) => { 
+            console.log(response);
+        })
+        .catch(function (error) {
+          console.log("ERROR == "+error)
+        });
 
     }
   selectPhotoTapped() {
@@ -83,8 +94,28 @@ export default class ProfilePage extends Component{
     });
     
   }
-  componentDidMount() {
+
+
+  async componentDidMount() {
     this.props.onRefSave(this)
+    await AsyncStorage.getItem('token').then((auth_token) => {
+      console.log('token1 '+auth_token)
+      if (auth_token !== null) {
+        this.setState({token:auth_token})
+      }
+    });
+    await AsyncStorage.getItem('user').then((user_name) => {
+      console.log('user1 '+user_name)
+      if (user_name !== null) {
+        this.setState({user:user_name})
+      }
+    });
+    await AsyncStorage.getItem('contact').then((contact_num) => {
+      console.log('contact1 '+contact_num)
+      if (contact_num !== null) {
+        this.setState({contact:contact_num})
+      }
+    });
   }
   componentWillUnmount() {
     this.props.onRefSave(null)
@@ -122,6 +153,11 @@ export default class ProfilePage extends Component{
                   value={this.state.contact}
                   keyboardType="numeric"
 				        />
+
+                <View style={styles.infoContainer}>
+                    <Icon name="information-circle" />
+                    <Text style={styles.infoText}>This contact information will be shared with other members of the church</Text>
+                </View>
 					</View>
 				</View>
 			</ScrollView>
