@@ -55,7 +55,7 @@ class Login extends Component {
             this.saveItem('token', tokenValue)
             this.saveItem('user', response.data.user.first_name)
             this.saveItem('contact', response.data.user.user_contact)
-              Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact, username:response.data.user.first_name});
+              Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact, username:response.data.user.first_name,showpregress:this.state.showProgress});
           } else {
             alert(response.data.message);
           }

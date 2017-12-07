@@ -24,7 +24,7 @@ import VersePage from './VersePage'
 import Searchbar from './Searchbar'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
-
+import Spinner from 'react-native-loading-spinner-overlay';
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
@@ -94,12 +94,12 @@ export default class RoutesPage extends Component {
         console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
           return (
-          null
+          <Spinner visible={!this.state.isLoaded} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
           )
          }
         else{
         return(
-          <Router  
+          <Router
           navigationBarStyle={styles.navigationBarColor} 
           leftButtonIconSize={30} 
           leftButtonColor={"white"} 
@@ -183,14 +183,12 @@ export default class RoutesPage extends Component {
                 </TouchableOpacity>
                 }
               />
-              {
-              // <Scene 
-              //   key = "events"     
-              //   component = {EventsPage}     
-              //   tokenValue = {this.state.tokenValue}    
-              //   title = "Events" 
-              // />
-            }
+              <Scene 
+                key = "events"     
+                component = {EventsPage}     
+                tokenValue = {this.state.tokenValue}    
+                title = "Events" 
+              />
               <Scene 
                 key = "eventsDetails"   
                 title = "Events"    
@@ -210,8 +208,8 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "songs"       
-                component = {SongBookPage}       
-                title = "SongBook"                
+                component = {SongBookPage}    
+                title = "Song Book"                
                 titleStyle={styles.navbarTitle}
               />
               <Scene 
@@ -222,13 +220,13 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "contacts"   
                 component = {ContactBookPage}    
-                title = "Contact"                 
+                title = "Contact Book"                 
                 tokenValue={this.state.tokenValue}
               />
               <Scene 
                 key = "verse"      
                 component = {VersePage}          
-                title = "Verse" 
+                title = "Verse of the Day" 
               />
               
               <Scene 
@@ -256,14 +254,65 @@ export default class RoutesPage extends Component {
                       <Icon name="settings" size={24} color="white"/>
                     </TouchableOpacity>
                   </View>
-                  
                 }
                >
-                <Scene key="tab1" component={EventsPage} title="Events" icon={TabIcon} iconName="eventbrite" />
-                    <Scene key="tab2" component={ContactBookPage} title="Contact" icon={TabIcon} iconName="phone"/>
-                    <Scene key="tab3" component={SongBookPage} title="SongBook" icon={TabIcon} iconName="music-note"/>
-                    <Scene key="tab4" component={VersePage} title="Verse" icon={TabIcon}  iconName="book-open-page-variant"/>
-                    <Scene key="tab5" component={StartLiveStream} title="Live Event" icon={TabIcon} iconName="video"/>
+                <Scene
+                  key="tab1"
+                  title="Events"
+                  icon={TabIcon}
+                  iconName="eventbrite"
+                  component={EventsPage}
+                />
+                <Scene 
+                key="tab2" 
+                title="Contact" 
+                icon={TabIcon} 
+                iconName="phone"
+                >
+                <Scene
+                key="contact"
+                component={ContactBookPage}
+                title="Contact Book"
+                />
+                </Scene>
+                <Scene 
+                key="tab3" 
+                
+                title="Song" 
+                icon={TabIcon} 
+                iconName="music-note"
+                >
+                <Scene
+                key="songs"
+                component={SongBookPage}
+                title="Song Book" 
+                />
+                </Scene>
+                <Scene 
+                key="tab4"  
+                title="Verse" 
+                icon={TabIcon}  
+                iconName="book-open-page-variant"
+                >
+                <Scene
+                key="verse"
+                component={VersePage}
+                title="Verse of the Day"
+                />
+                </Scene>
+                <Scene 
+                key="tab5" 
+                
+                title="Video" 
+                icon={TabIcon} 
+                iconName="video"
+                >
+                <Scene
+                key="live"
+                component={StartLiveStream} 
+                title="Live Stream"
+                />
+                </Scene>
               </Scene>
             </Scene> 
           </Router>          

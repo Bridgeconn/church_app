@@ -66,7 +66,7 @@ import styles from '../style/styles.js'
 import moment from 'moment';
 import axios from 'axios';
 import Config from 'react-native-config'
-
+import Spinner from 'react-native-loading-spinner-overlay';
 export default class EventsPage extends Component{
 
  constructor(props){
@@ -74,17 +74,20 @@ export default class EventsPage extends Component{
         console.log('props value of token on event page '+this.props.tokenValue)
         this.state = {
           tokenValue: this.props.tokenValue,
-          data: []
+          data: [],
+          showProgress:true
         }
     }
 
     DataEvents(){
+      this.setState({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.EVENTS_API_URL, config)
         .then((response) => { 
        console.log("response "+JSON.stringify(response.data.events))
        this.setState({data:response.data.events})
+       this.setState({showProgress:false})
      })
      .catch(function (error) {
           console.log(error)
@@ -94,11 +97,13 @@ export default class EventsPage extends Component{
     }
 
   async componentDidMount() {
+    this.setState({showProgress:true})
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
         this.setState({tokenValue:auth_token})
         this.DataEvents();
+        this.setState({showProgress:false})
       }
     })
   }
@@ -107,10 +112,11 @@ export default class EventsPage extends Component{
       let data = this.state.data;
       console.log("render "+data)
       if (data.length == 0) {
-        return null;
+       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
       }
           return (  
             <View style={styles.container}>
+             <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
               <ScrollView>
                        {data.map(item =>
                         <Content key={item.name}>
@@ -128,7 +134,7 @@ export default class EventsPage extends Component{
                             event_topic:item.event_venue_name
                           })
                         }}>
-                          <Card key={item.id} style={{flexDirection:'row'}}>
+                          <Card style={{flexDirection:'row'}}>
                             <CardItem style={{flexDirection:'column'}}>
                               <Text style={styles.tabTextSize}>{item.name}</Text>
                               <Text style={styles.tabTextSize}>

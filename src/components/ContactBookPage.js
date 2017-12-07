@@ -75,13 +75,15 @@ import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Config from 'react-native-config'
 import axios from 'axios';
+import Spinner from 'react-native-loading-spinner-overlay';
 export default class ContactPage extends Component{
 
  constructor(props){
         super(props)
         this.state ={
           tokenValue:this.props.tokenValue,
-            data: []   
+            data: [],
+            showProgress:true,   
           }
          
     }
@@ -94,11 +96,13 @@ export default class ContactPage extends Component{
        console.log("response contacts"+JSON.stringify(response.data.contacts))
        console.log("response contact_name"+JSON.stringify(response.data.contacts.name))
        this.setState({data:response.data.contacts})
+       this.setState({showProgress:false})
      })
      .catch(function (error) {
           console.log(error)
           console.log("something went wrong")
           alert('Some error occurred. Please try again later'); 
+          this.setState({showProgress:false})
         })     
     }
   async componentDidMount() {
@@ -107,6 +111,7 @@ export default class ContactPage extends Component{
       if (auth_token !== null) {
         this.setState({tokenValue:auth_token})
         this.DataContacts();
+        this.setState({showProgress:false})
       }
     })
   }
@@ -124,14 +129,15 @@ export default class ContactPage extends Component{
       let data = this.state.data;
       console.log("render "+data)
       if (data.length == 0) {
-        return null;
+        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
       }
           return (
             <View style={styles.container}>
+            <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
             <ScrollView>
              {data.map(item =>
-              <Content>
-              <Card key={item.name}>
+              <Content key={item.name}>
+              <Card>
               <CardItem>
                 <Text style={styles.tabTextSize}>{item.name}</Text>
               </CardItem>
