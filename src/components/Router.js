@@ -89,12 +89,11 @@ export default class RoutesPage extends Component {
   }
   
       render() {
-
         console.log("loader"+this.state.isLoaded)
         console.log("render image uri  "+this.state.imageUri)
         if (!this.state.isLoaded) {
           return (
-          <Spinner visible={!this.state.isLoaded} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+            null
           )
          }
         else{
