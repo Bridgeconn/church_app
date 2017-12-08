@@ -82,20 +82,20 @@ export default class ContactPage extends Component{
         super(props)
         this.state ={
           tokenValue:this.props.tokenValue,
-            data: [],
+            dataContactDetail: [],
             showProgress:true,   
           }
          
     }
 
-    DataContacts(){
+    dataContacts(){
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-      axios.get(Config.BASE_API_URL + Config.CONTACTS_API_URL, config)
+      axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
         .then((response) => { 
        console.log("response contacts"+JSON.stringify(response.data.contacts))
        console.log("response contact_name"+JSON.stringify(response.data.contacts.name))
-       this.setState({data:response.data.contacts})
+       this.setState({dataContactDetail:response.data.contacts})
        this.setState({showProgress:false})
      })
      .catch(function (error) {
@@ -110,7 +110,7 @@ export default class ContactPage extends Component{
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
         this.setState({tokenValue:auth_token})
-        this.DataContacts();
+        this.dataContacts();
         this.setState({showProgress:false})
       }
     })
@@ -126,7 +126,7 @@ export default class ContactPage extends Component{
       });
 }
     render() {
-      let data = this.state.data;
+      let data = this.state.dataContactDetail;
       console.log("render "+data)
       if (data.length == 0) {
         <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
