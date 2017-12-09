@@ -236,7 +236,7 @@ export default class RoutesPage extends Component {
               contactNum={this.state.contactNum} 
               username={this.state.username}
               activeBackgroundColor='#3F51B5'
-              initial={this.state.guestKey || this.state.tokenValue}
+              initial={this.state.guestKey || this.state.tokenValue!==null}
               showLabel={false} 
               swipeEnabled={false}
               lazyLoad={true}
