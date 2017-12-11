@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "333941069654",
+    "firebase_url": "https://fcm-project-fc6b9.firebaseio.com",
+    "project_id": "fcm-project-fc6b9",
+    "storage_bucket": "fcm-project-fc6b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333941069654:android:5dbe7171aecfc41f",
+        "android_client_info": {
+          "package_name": "com.churchapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333941069654-m0c3iaku1j94edekpjvjm22nic0lvlva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFC7W2jHt4Ff4ILLJ45LeZJOUjkQknd8c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -47,10 +47,10 @@ export default class ProfilePage extends Component{
       await AsyncStorage.setItem('contact',contact);
 
       let data = new FormData();
-    data.append("first_name", this.state.user);
-    data.append("contact_number", this.state.contact);
-    data.append("contact_show", true);
-    data.append("last_name", "");
+      data.append("first_name", this.state.user);
+      data.append("contact_number", this.state.contact);
+      data.append("contact_show", true);
+      data.append("last_name", "");
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.CONTACT_UPDATE_API_URL, data, config)
