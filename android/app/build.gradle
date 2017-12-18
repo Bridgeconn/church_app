@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
+
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
@@ -150,7 +150,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-fcm')
     compile project(':react-native-splash-screen')
     compile project(':react-native-add-calendar-event')
     compile project(':react-native-vector-icons')
@@ -162,8 +161,6 @@ dependencies {
     compile project(':react-native-youtube')
     compile project(':react-native-image-picker')
     compile project(':react-native-sqlite-storage')
-    compile project(':react-native-fcm')
-    compile 'com.google.firebase:firebase-core:11.6.2' //this decides your firebase SDK version
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:26.0.2"
     compile "com.facebook.react:react-native:+"  // From node_modules

@@ -7,8 +7,7 @@ import {
   View
 } from 'react-native';
  import Router from './src/components/Router'
- // import DatabaseEx from './src/components/DatabaseEx'
- import NotificationEx from './src/components/NotificationEx'
+ 
 export default class ChurchApplication extends Component {
   render() {
     return (

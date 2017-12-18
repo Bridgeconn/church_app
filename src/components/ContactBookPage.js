@@ -76,6 +76,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Config from 'react-native-config'
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay';
+
 export default class ContactPage extends Component{
 
  constructor(props){
@@ -110,7 +111,9 @@ export default class ContactPage extends Component{
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
         this.setState({tokenValue:auth_token})
-        this.dataContacts();
+        // this.dataContacts();
+       this.setState({dataContactDetail:contactList.contacts})
+
         this.setState({showProgress:false})
       }
     })

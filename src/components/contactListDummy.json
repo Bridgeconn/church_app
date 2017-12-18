@@ -2,13 +2,13 @@
     "contacts": [
         {
             "id":1,
-            "contact_name": "Contact 1",
+            "name": "Aman",
             "contact_number": "1234567890"
 
         },
         {
             "id":2,
-            "contact_name": "Contact 2",
+            "name": "Contact 2",
             "contact_number": "9087654321"
         }
     ],

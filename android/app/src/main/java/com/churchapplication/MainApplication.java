@@ -1,5 +1,4 @@
 package com.churchapplication;
-import com.evollu.react.fcm.FIRMessagingPackage;
 import android.app.Application;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.vonovak.AddCalendarEventPackage;
@@ -12,7 +11,6 @@ import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.imagepicker.ImagePickerPackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
-import com.evollu.react.fcm.FIRMessagingPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -34,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new FIRMessagingPackage(),
           new ReactNativeConfigPackage(),
           new SplashScreenReactPackage(),
           new AddCalendarEventPackage(),
@@ -45,9 +42,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNSoundPackage(),
           new ReactNativeYouTube(),
           new ImagePickerPackage(),
-          new SQLitePluginPackage(),
-          new FIRMessagingPackage()
-      );
+          new SQLitePluginPackage()      
+          );
     }
 
     @Override

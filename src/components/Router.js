@@ -231,7 +231,7 @@ export default class RoutesPage extends Component {
               <Scene 
               key="home2" 
               type="reset"  
-              hideNavBar={true}
+              hideNavBar={false}
               tokenValue={this.state.tokenValue}
               contactNum={this.state.contactNum} 
               username={this.state.username}
@@ -267,51 +267,30 @@ export default class RoutesPage extends Component {
                 title="Contact" 
                 icon={TabIcon} 
                 iconName="phone"
-                >
-                <Scene
-                key="contact"
                 component={ContactBookPage}
-                title="Contact Book"
                 />
-                </Scene>
                 <Scene 
                 key="tab3" 
-                
                 title="Song" 
                 icon={TabIcon} 
                 iconName="music-note"
-                >
-                <Scene
-                key="songs"
                 component={SongBookPage}
-                title="Song Book" 
                 />
-                </Scene>
                 <Scene 
                 key="tab4"  
                 title="Verse" 
                 icon={TabIcon}  
                 iconName="book-open-page-variant"
-                >
-                <Scene
-                key="verse"
                 component={VersePage}
-                title="Verse of the Day"
                 />
-                </Scene>
                 <Scene 
                 key="tab5" 
                 
                 title="Video" 
                 icon={TabIcon} 
                 iconName="video"
-                >
-                <Scene
-                key="live"
                 component={StartLiveStream} 
-                title="Live Stream"
                 />
-                </Scene>
               </Scene>
             </Scene> 
           </Router>          
