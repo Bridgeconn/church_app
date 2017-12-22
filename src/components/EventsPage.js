@@ -80,7 +80,6 @@ export default class EventsPage extends Component{
     }
 
     DataEvents(){
-      this.setState({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.EVENTS_API_URL, config)
@@ -93,11 +92,11 @@ export default class EventsPage extends Component{
           console.log(error)
           console.log("something went wrong")
           alert('Some error occurred. Please try again later'); 
+          this.setState({showProgress:false})
         })      
     }
 
   async componentDidMount() {
-    this.setState({showProgress:true})
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -112,11 +111,13 @@ export default class EventsPage extends Component{
       let data = this.state.data;
       console.log("render "+data)
       if (data.length == 0) {
-       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+        return(
+       <Spinner visible={this.state.showProgress == true} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+      )
       }
+
           return (  
             <View style={styles.container}>
-             <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
               <ScrollView>
                        {data.map(item =>
                         <Content key={item.name}>

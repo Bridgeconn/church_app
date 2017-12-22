@@ -75,6 +75,8 @@ import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Config from 'react-native-config'
 import axios from 'axios';
+let SQLite = require('react-native-sqlite-storage')
+
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class ContactPage extends Component{
@@ -84,9 +86,17 @@ export default class ContactPage extends Component{
         this.state ={
           tokenValue:this.props.tokenValue,
             dataContactDetail: [],
-            showProgress:true,   
+            showProgress:true   
           }
-         
+        let db = SQLite.openDatabase({name: 'test.db', createFromLocation : "~contactDB.db"}, this.openCB, this.errorCB, this.successCB); 
+        db.transaction((tx) => {
+      tx.executeSql('SELECT * FROM contactDetail', [], (tx, results) => {
+           let rows = results.rows.raw();
+            rows.map(row => console.log(` email: ${row.email}, name: ${row.name}`));
+            this.setState({rows});
+        })
+      
+      })
     }
 
     dataContacts(){
@@ -97,13 +107,13 @@ export default class ContactPage extends Component{
        console.log("response contacts"+JSON.stringify(response.data.contacts))
        console.log("response contact_name"+JSON.stringify(response.data.contacts.name))
        this.setState({dataContactDetail:response.data.contacts})
-       this.setState({showProgress:false})
+        this.setState({showProgress:false})
      })
      .catch(function (error) {
           console.log(error)
           console.log("something went wrong")
           alert('Some error occurred. Please try again later'); 
-          this.setState({showProgress:false})
+           this.setState({showProgress:false})
         })     
     }
   async componentDidMount() {
@@ -131,12 +141,13 @@ export default class ContactPage extends Component{
     render() {
       let data = this.state.dataContactDetail;
       console.log("render "+data)
-      if (data.length == 0) {
-        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+       if (data.length == 0) {
+        return(
+       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+      )
       }
           return (
             <View style={styles.container}>
-            <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
             <ScrollView>
              {data.map(item =>
               <Content key={item.name}>

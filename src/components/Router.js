@@ -56,6 +56,10 @@ export default class RoutesPage extends Component {
           console.log("contact"+contact)
           this.setState({contactNum:contact})
         })
+        await AsyncStorage.getItem('email').then((email) => {
+          console.log("email"+email)
+          this.setState({email:email})
+        })
      }
     
     this.setState({isLoaded:true}) 
@@ -235,6 +239,7 @@ export default class RoutesPage extends Component {
               tokenValue={this.state.tokenValue}
               contactNum={this.state.contactNum} 
               username={this.state.username}
+              email={this.state.email}
               activeBackgroundColor='#3F51B5'
               initial={this.state.guestKey || this.state.tokenValue!==null}
               showLabel={false} 

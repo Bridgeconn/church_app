@@ -316,14 +316,28 @@ const styles = StyleSheet.create({
     bottom: 0,
     
   },
+  checkboxContainer:{
+    fontSize:16,
+    flexDirection:"row",
+    marginBottom:4
+  },
   infoText: {
     fontSize:12,
+    marginLeft:8,
+    marginRight:16
+  },
+  infoTextEmail:{
+    fontSize:16,
     marginLeft:8,
     marginRight:16
   },
   infoContainer: {
     flexDirection:"row",
     marginTop:16
+  },
+  checkboxText:{
+    alignSelf:'flex-start',
+    marginLeft:24
   }
 })
 
