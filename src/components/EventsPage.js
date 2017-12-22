@@ -115,7 +115,6 @@ export default class EventsPage extends Component{
        <Spinner visible={this.state.showProgress == true} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
       )
       }
-
           return (  
             <View style={styles.container}>
               <ScrollView>

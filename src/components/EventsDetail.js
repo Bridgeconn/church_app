@@ -86,19 +86,21 @@ export default class EventsDetail extends Component{
       <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
         
-        <Text  style={styles.eventData}>Event Venue: {this.state.event_topic}</Text>
-        <Text  style={styles.eventData}>Event Speaker: {this.state.event_speaker}</Text>
-        <Text style={styles.eventData}>Start Date: {this.state.event_time_start}</Text> 
-        <Text style={styles.eventData}>End Date: {this.state.event_time_end}</Text>
-        <TouchableOpacity onPress={() => {
+        <Text  style={styles.eventData}><Icon name="map-marker" size={24}/> {this.state.event_topic}</Text>
+
+        <Text  style={styles.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
+        <Text style={styles.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
+        <View style={{flexDirection:"row", alignItems:'center', justifyContent:"center"}}>
+        <Icon name="calendar-clock" size={48} color="#3F51B5" style={{margin:16}} onPress={() => {
             this.addToCalendar(
               this.state.title, 
               this.state.event_time_start,
               this.state.event_time_end 
               );
-          }}>
-        <Text style={styles.eventCalendar}>Add event to calendar <Icon name="calendar-plus" size={24}/></Text>
-        </TouchableOpacity>
+          }}/>
+        <Icon name="navigation" onPress={this.openGpsFromName.bind(this, this.props.event_topic)} size={48}  color="#3F51B5" style={{margin:24}}/>
+        </View>
+        
        <View>
         <MapView 
           style={ styles.EventMap }
@@ -114,7 +116,7 @@ export default class EventsDetail extends Component{
           }}
         />
         </MapView>
-        <View style={styles.mapTouchable}><Button onPress={this.openGpsFromName.bind(this, this.props.event_topic)} title="directions" color="#3F51B5"/></View>
+
        </View>
       </ScrollView>
       </View>

@@ -6,7 +6,7 @@ var height = Dimensions.get('window').height; //full height
 const titleColor = '#48BBEC';
 const navBarColor = "#3F51B5"
 const centerAlign = 'center';
-const profileMargin = 12;
+const profileMargin = 8;
 const octaValue = 8;
 
 const styles = StyleSheet.create({
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   	margin:profileMargin
   },
   ProfilePageContent:{
-    margin:profileMargin
+    margin:16,
+    padding:8
   },
   profileView:{
   	margin:20,
@@ -317,9 +318,10 @@ const styles = StyleSheet.create({
     
   },
   checkboxContainer:{
-    fontSize:16,
     flexDirection:"row",
-    marginBottom:4
+    marginBottom:4,
+    marginTop:20,
+    alignSelf:'flex-start'
   },
   infoText: {
     fontSize:12,
@@ -336,8 +338,17 @@ const styles = StyleSheet.create({
     marginTop:16
   },
   checkboxText:{
-    alignSelf:'flex-start',
-    marginLeft:24
+    marginTop:-8,
+    marginLeft:30,
+    fontSize:14
+  },
+  shareContainer:{
+    marginTop:28
+  },
+  customEmail:{
+    color:'#000',
+    fontSize:16,
+    marginTop:8
   }
 })
 

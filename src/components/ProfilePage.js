@@ -136,49 +136,40 @@ export default class ProfilePage extends Component{
 		return(
 			<ScrollView>
 		        <View style={styles.profilePageContent}>
-			        <View style={[styles.avatarProfile, styles.avatarContainer, {marginBottom: 20}]}>
-			          	  <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                    <Image style={styles.avatarProfile} source={require('../images/person_dummy.png')}/>
-		       		 		      <Icon name="create"  style={styles.editIconProfile}/>
-		        		    </TouchableOpacity>  			          
-			        </View> 
 			        <View style={styles.profileView}>
 		        		<Text>
 				          Name
 				        </Text>
 				        <TextInput
-				          style={styles.textInputStyle}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({user:user})}
                   value={this.state.user}
 				        />
-				        <Text>
+				        <Text style={{marginTop:12}}>
 				          Contact Number
 				        </Text>
 				        <TextInput
-				          style={styles.textInputStyle}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({contact:user})}
                   value={this.state.contact}
                   keyboardType="numeric"
 				        />
+                <Text style={{marginTop:12}}>Email</Text>
+                <Text style={styles.customEmail}>{this.state.email}</Text>
+                <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
-                <CheckBox onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1}/>
-                <Body>
-                  <Text style={styles.checkboxText}>{this.state.email}</Text>
-                </Body>
+                <CheckBox onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                
+                  <Text style={styles.checkboxText}>Share email with church members</Text>
+                
                 </View>
                 <View style={styles.checkboxContainer}>
-                <CheckBox  onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2}/>
-                <Body>
-                  <Text style={styles.checkboxText}>{this.state.contact}</Text>
-                </Body>
+                <CheckBox  onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                  <Text style={styles.checkboxText}>Share contact with church members</Text>
+              
                 </View>
-                <View style={styles.infoContainer}>
-                    <Icon name="information-circle"/>
-                    <Text style={styles.infoText}>This contact information will be shared with other members of the church</Text>
                 </View>
 					</View>
 				</View>

@@ -90,7 +90,7 @@ export default class ContactPage extends Component{
           }
         let db = SQLite.openDatabase({name: 'test.db', createFromLocation : "~contactDB.db"}, this.openCB, this.errorCB, this.successCB); 
         db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM contactDetail', [], (tx, results) => {
+        tx.executeSql('SELECT * FROM contactDetail', [], (tx, results) => {
            let rows = results.rows.raw();
             rows.map(row => console.log(` email: ${row.email}, name: ${row.name}`));
             this.setState({rows});
