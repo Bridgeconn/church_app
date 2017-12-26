@@ -1,10 +1,11 @@
 
 import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,TextInput} from 'react-native';
-import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Icon, Footer, FooterTab, Left, Right, Body } from 'native-base';
+import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Footer, FooterTab, Left, Right, Body } from 'native-base';
 import {Actions} from 'react-native-router-flux'
 import songList from './songbookListDummy.json'
 import styles from '../style/styles.js'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 export default class SongPage extends Component{
 
@@ -35,7 +36,7 @@ export default class SongPage extends Component{
                     <View style={{flex:1}}>
                     <Header searchBar rounded>
                       <Item>
-                        <Icon active name="search" />
+                        <Icon active name="search" size={24} style={{paddingLeft:4}}/>
                         <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
                       </Item>
                     </Header>

@@ -22,14 +22,16 @@ import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
+// import RightButton from './RightButton'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
+
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null
+      isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null,email:null
     };
   }
 
@@ -91,6 +93,18 @@ export default class RoutesPage extends Component {
   handleSave = () =>{
     this.child.handlePress()
   }
+  rightButton = () =>{
+    return(
+        <View style={{flexDirection:"row"}}>
+                  <TouchableOpacity onPress={()=>{Actions.profile({onBack: () => console.log('custom back callback') })}}>
+                    <Icon name="account-circle" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{Actions.settings()}}>
+                    <Icon name="settings" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
+                  </TouchableOpacity>
+              </View>
+            )
+  }
   
       render() {
         console.log("loader"+this.state.isLoaded)
@@ -138,16 +152,7 @@ export default class RoutesPage extends Component {
                 imageUri={this.state.imageUri}
                 contactNum={this.state.contactNum} 
                 username={this.state.username}
-                renderRightButton = {() => 
-                  <View style={{flexDirection:"row"}}>
-                <TouchableOpacity onPress={()=>{Actions.profile()}}>
-                  <Icon name="account-circle" size={26} color="white" style={{paddingRight:20}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{Actions.settings()}}>
-                  <Icon name="settings" size={26} color="white" style={{paddingRight:20}}/>
-                </TouchableOpacity>
-                </View>
-                }
+                renderRightButton={this.rightButton}
               />
               <Scene 
                 key = "settings"  
@@ -178,6 +183,10 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
+                tokenValue={this.state.tokenValue}
+                contactNum={this.state.contactNum}
+                email={this.state.email}
+                username={this.state.username}
                 onRefSave={ref => (this.child = ref)}                
                 titleStyle={styles.navbarTitle}
                 renderRightButton = {() => 
@@ -226,6 +235,7 @@ export default class RoutesPage extends Component {
                 title = "Contact Book"                 
                 tokenValue={this.state.tokenValue}
               />
+
               <Scene 
                 key = "verse"      
                 component = {VersePage}          
@@ -249,16 +259,7 @@ export default class RoutesPage extends Component {
               tabBarStyle={styles.tabBar} 
               tabs={true} 
               tabBarPosition="bottom" 
-                renderRightButton = {() => 
-                  <View style={{flexDirection:"row",paddingRight:16}}>
-                    <TouchableOpacity onPress={()=>{Actions.profile({tokenValue:this.state.tokenValue,contactNum:this.state.contactNum,username:this.state.username})}} style={{paddingRight:16}}>
-                      <Icon name="account-circle" size={24} color="white" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{Actions.settings()}} style={{paddingRight:16}}>
-                      <Icon name="settings" size={24} color="white"/>
-                    </TouchableOpacity>
-                  </View>
-                }
+                renderRightButton={this.rightButton}
                >
                 <Scene
                   key="tab1"
@@ -267,12 +268,14 @@ export default class RoutesPage extends Component {
                   iconName="eventbrite"
                   component={EventsPage}
                 />
+              
                 <Scene 
                 key="tab2" 
                 title="Contact" 
                 icon={TabIcon} 
                 iconName="phone"
                 component={ContactBookPage}
+                hideNavBar={true}
                 />
                 <Scene 
                 key="tab3" 
@@ -280,6 +283,7 @@ export default class RoutesPage extends Component {
                 icon={TabIcon} 
                 iconName="music-note"
                 component={SongBookPage}
+                hideNavBar={true}
                 />
                 <Scene 
                 key="tab4"  
@@ -290,7 +294,6 @@ export default class RoutesPage extends Component {
                 />
                 <Scene 
                 key="tab5" 
-                
                 title="Video" 
                 icon={TabIcon} 
                 iconName="video"

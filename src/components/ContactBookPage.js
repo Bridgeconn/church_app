@@ -67,7 +67,7 @@
 
 import React, {Component} from 'react'
 import {View,Text,ScrollView,AsyncStorage,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
-import {Card,CardItem,Content} from 'native-base'
+import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Footer, FooterTab, Left, Right, Body } from 'native-base';
 import {Actions} from 'react-native-router-flux'
 import contactList from './contactListDummy.json'
 import styles from '../style/styles.js'
@@ -147,6 +147,13 @@ export default class ContactPage extends Component{
       )
       }
           return (
+          <View style={{flex:1}}>
+                    <Header searchBar rounded>
+                      <Item>
+                        <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
+                      </Item>
+                    </Header>
             <View style={styles.container}>
             <ScrollView>
              {data.map(item =>
@@ -165,6 +172,7 @@ export default class ContactPage extends Component{
               </Content>
               )}
             </ScrollView>
+          </View>
           </View>
                 )
 

@@ -24,7 +24,8 @@ export default class ProfilePage extends Component{
       		uri:this.props.uri, 
           contact:this.props.contactNum,
           token: this.props.tokenValue,
-          email: this.props.email
+          email: this.props.email,
+
 	  	};
 	}
 	
@@ -41,20 +42,20 @@ export default class ProfilePage extends Component{
       console.log(this.state.user);
       console.log(this.state.contact);
       console.log(this.state.token);
-      Actions.pop({refresh:{username:this.state.user,imageUri:this.state.uri,contactNum:this.state.contact,email:this.state.email}})
+      Actions.pop({refresh:{username:this.state.user,imageUri:this.state.uri,contactNum:this.state.contact}})
       const user = this.state.user
       const contact = this.state.contact
       this.setState({user})
       this.setState({contact})
       await AsyncStorage.setItem('user',user);
       await AsyncStorage.setItem('contact',contact);
-      await AsyncStorage.setItem('email',email);
-
       let data = new FormData();
       data.append("first_name", this.state.user);
       data.append("contact_number", this.state.contact);
-      data.append("email_address", this.state.email);
-      data.append("contact_show", true);
+      data.append("contact_show",false)
+      if(this.state.checkbox1==true || this.state.checkbox2==true){
+        data.append("contact_show",true)
+      }
       data.append("last_name", "");
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
@@ -119,12 +120,6 @@ export default class ProfilePage extends Component{
       console.log('contact1 '+contact_num)
       if (contact_num !== null) {
         this.setState({contact:contact_num})
-      }
-    });
-    await AsyncStorage.getItem('email').then((email) => {
-      console.log('email '+email)
-      if (email !== null) {
-        this.setState({email:email})
       }
     });
   }
