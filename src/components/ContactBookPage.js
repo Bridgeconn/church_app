@@ -66,12 +66,11 @@
 
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,AsyncStorage,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
+import {View,Text,ScrollView,Linking,AsyncStorage,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
 import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Footer, FooterTab, Left, Right, Body } from 'native-base';
 import {Actions} from 'react-native-router-flux'
 import contactList from './contactListDummy.json'
 import styles from '../style/styles.js'
-import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Config from 'react-native-config'
 import axios from 'axios';
@@ -128,16 +127,16 @@ export default class ContactPage extends Component{
       }
     })
   }
-    onPressCall() {
-    const url = 'telprompt:5551231234';
-    Linking.canOpenURL(url)
-      .then((supported) => {
-        if (supported) {
-          return Linking.openURL(url)
-            .catch(() => null);
-        }
-      });
-}
+
+    callNumber = (url) =>{
+       Linking.canOpenURL(url).then(supported => {
+       if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+       } else {
+        return Linking.openURL(url);
+       }
+     }).catch(err => console.error('An error occurred', err));
+    }
     render() {
       let data = this.state.dataContactDetail;
       console.log("render "+data)
@@ -163,7 +162,7 @@ export default class ContactPage extends Component{
                 <Text style={styles.tabTextSize}>{item.name}</Text>
               </CardItem>
               <CardItem >
-              <TouchableOpacity onPress={() => Communications.phonecall(item.contact_number, true)} style={{flexDirection:"row"}}>
+              <TouchableOpacity onPress={()=> this.callNumber(`tel:+91${item.contact_number}`)} style={{flexDirection:"row"}}>
               <Icon name="call" size={24} style={{paddingRight:20}}/>
               <Text style={styles.tabTextSize}>{item.contact_number}</Text>   
               </TouchableOpacity>
