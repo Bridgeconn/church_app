@@ -92,11 +92,14 @@ export default class RoutesPage extends Component {
 
   handleSave = () =>{
     this.child.handlePress()
+    this.refs.renderCancel
   }
+
+
   rightButton = () =>{
     return(
         <View style={{flexDirection:"row"}}>
-                  <TouchableOpacity onPress={()=>{Actions.profile({onBack: () => console.log('custom back callback') })}}>
+                  <TouchableOpacity onPress={()=>{Actions.profile()}}>
                     <Icon name="account-circle" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Actions.settings()}}>
@@ -189,11 +192,7 @@ export default class RoutesPage extends Component {
                 username={this.state.username}
                 onRefSave={ref => (this.child = ref)}                
                 titleStyle={styles.navbarTitle}
-                renderRightButton = {() => 
-                <TouchableOpacity onPress={this.handleSave}>
-                  <Text style={styles.navbarTitleRight}>Save</Text>
-                </TouchableOpacity>
-                }
+                renderRightButton = {ref => (this.refs = ref)}
               />
               <Scene 
                 key = "events"     

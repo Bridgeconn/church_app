@@ -25,6 +25,7 @@ export default class ProfilePage extends Component{
           contact:this.props.contactNum,
           token: this.props.tokenValue,
           email: this.props.email,
+          showCancel:false
 
 	  	};
 	}
@@ -104,6 +105,7 @@ export default class ProfilePage extends Component{
 
   async componentDidMount() {
     this.props.onRefSave(this)
+
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -125,8 +127,29 @@ export default class ProfilePage extends Component{
   }
   componentWillUnmount() {
     this.props.onRefSave(null)
+    
   }
-  
+   toggleCancel = () =>{
+        this.setState({
+            showCancel: !this.state.showCancel
+        });
+    }
+    
+  renderCancel = () =>{
+        if (this.state.showCancel) {
+            return (
+                <TouchableHighlight 
+                    onPress={this.toggleCancel()}>
+                    <View>
+                        <Text style={styles.cancelButtonText}>Cancel</Text>
+                    </View>
+                </TouchableHighlight>
+            )
+        } else {
+            return null
+        }
+    }
+
 	render(){
 		return(
 			<ScrollView>
@@ -136,6 +159,7 @@ export default class ProfilePage extends Component{
 				          Name
 				        </Text>
 				        <TextInput
+                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({user:user})}
@@ -145,6 +169,7 @@ export default class ProfilePage extends Component{
 				          Contact Number
 				        </Text>
 				        <TextInput
+                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
 				          onChangeText={(user) => this.setState({contact:user})}
@@ -155,13 +180,11 @@ export default class ProfilePage extends Component{
                 <Text style={styles.customEmail}>{this.state.email}</Text>
                 <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
-                <CheckBox onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1} style={{margin:-8,padding:0,flexDirection:"row"}}/>
-                
+                <CheckBox onFocus={this.toggleCancel()} onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share email with church members</Text>
-                
                 </View>
                 <View style={styles.checkboxContainer}>
-                <CheckBox  onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                <CheckBox   onFocus={this.toggleCancel()} onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
               
                 </View>
