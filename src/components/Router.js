@@ -31,7 +31,9 @@ export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null,email:null
+      isLoaded: false, guestKey:false, tokenValue:null,
+      imageUri:null,username:null,contactNum:null,email:null,
+      showSaveProfile:false
     };
   }
 
@@ -68,34 +70,56 @@ export default class RoutesPage extends Component {
     this.hideSplashScreen()
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
   }
+
   componentWillUnmount(){
   BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
+
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {
         console.log("home2")
       BackHandler.exitApp();
       return true;
+    } else {
+      Actions.pop()
+      return true
     }
-    return false;
   }
-   ComponentWillMount(){
-    Actions.refresh({key: 'eventsDetails', title: 'hi'});
 
-  }
+  //  componentWillMount(){
+  //   Actions.refresh({key: 'eventsDetails', title: 'hi'});
+
+  // }
+
   hideSplashScreen(){
     setTimeout(()=>{SplashScreen.hide()},
          500
       )
   }
 
-  handleSave = () =>{
+  handleSave =()=>{
     this.child.handlePress()
-    this.refs.renderCancel
   }
 
+  renderSaveButton = ()=>{
+    if(this.state.showSaveProfile){
+      return(
+     <TouchableOpacity onPress={this.handleSave}>    
+                   <Text  style={styles.navbarTitleRight}>Save</Text>   
+                 </TouchableOpacity>   
+    )
+    }
+    else{
+      return(null)
+    }
+  }
 
+  setSaveVisibility =(value) =>{
+    console.log("setSaveVisibility"+value)
+    this.setState({showSaveProfile:value})
+  }
+  
   rightButton = () =>{
     return(
         <View style={{flexDirection:"row"}}>
@@ -192,7 +216,9 @@ export default class RoutesPage extends Component {
                 username={this.state.username}
                 onRefSave={ref => (this.child = ref)}                
                 titleStyle={styles.navbarTitle}
-                renderRightButton = {ref => (this.refs = ref)}
+                renderRightButton ={this.renderSaveButton} 
+                checkSaveVisible = {this.setSaveVisibility}
+
               />
               <Scene 
                 key = "events"     

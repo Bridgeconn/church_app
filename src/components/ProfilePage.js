@@ -16,16 +16,20 @@ export default class ProfilePage extends Component{
 		    avatarSource: null,
 		    videoSource: null,
 		    setImage:'',
-        checkbox1:false,
-        checkbox2:false,
+        checkboxEmail:false,
+        checkboxContact:false,
 		    isReady: false,
 		    status: null,
-	      	user: this.props.username,
-      		uri:this.props.uri, 
-          contact:this.props.contactNum,
-          token: this.props.tokenValue,
-          email: this.props.email,
-          showCancel:false
+      	user: this.props.username,
+    		uri:this.props.uri, 
+        contact:this.props.contactNum,
+        token: this.props.tokenValue,
+        email: this.props.email,
+        show:false,
+        newUser:this.props.username,
+        newContact:this.props.contactNum,
+        newcheckboxEmail:false,
+        newcheckboxContact:false
 
 	  	};
 	}
@@ -38,8 +42,10 @@ export default class ProfilePage extends Component{
       console.error('AsyncStorage error: ' + error);
     }
   }
+
   async handlePress(){
     console.log("hello handle press")
+    this.renderCancel()
       console.log(this.state.user);
       console.log(this.state.contact);
       console.log(this.state.token);
@@ -105,7 +111,6 @@ export default class ProfilePage extends Component{
 
   async componentDidMount() {
     this.props.onRefSave(this)
-
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -126,29 +131,34 @@ export default class ProfilePage extends Component{
     });
   }
   componentWillUnmount() {
-    this.props.onRefSave(null)
-    
+    this.props.onRefSave(null)  
   }
-   toggleCancel = () =>{
-        this.setState({
-            showCancel: !this.state.showCancel
-        });
+
+  checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
+    if (valueName !== null) {
+      this.setState({newUser:valueName})
     }
-    
-  renderCancel = () =>{
-        if (this.state.showCancel) {
-            return (
-                <TouchableHighlight 
-                    onPress={this.toggleCancel()}>
-                    <View>
-                        <Text style={styles.cancelButtonText}>Cancel</Text>
-                    </View>
-                </TouchableHighlight>
-            )
-        } else {
-            return null
-        }
+    if (valueContact !== null) {
+      this.setState({newContact:valueContact})
     }
+    if (valueCheckEmail !== null) {
+      this.setState({newcheckboxEmail:valueCheckEmail})
+    }
+    if (valueCheckContact !== null) {
+      this.setState({newcheckboxContact:valueCheckContact})
+    }
+    if(this.state.user !==valueName || 
+      this.state.contact !==valueContact || 
+      this.state.checkboxEmail !==valueCheckEmail ||
+      this.state.checkboxContact !==valueCheckContact ){
+        this.setState({show:true})
+        this.props.checkSaveVisible(true)
+    } else{
+        this.setState({show:false})
+        this.props.checkSaveVisible(false)
+    }
+  }
+  
 
 	render(){
 		return(
@@ -159,36 +169,40 @@ export default class ProfilePage extends Component{
 				          Name
 				        </Text>
 				        <TextInput
-                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(user) => this.setState({user:user})}
-                  value={this.state.user}
+				          onChangeText={(changeValue) => this.checkSaveVisibility(changeValue,null,null,null)}
+                  value={this.state.newUser}
 				        />
 				        <Text style={{marginTop:12}}>
 				          Contact Number
 				        </Text>
 				        <TextInput
-                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(user) => this.setState({contact:user})}
-                  value={this.state.contact}
+				          onChangeText={(changeValue) => this.checkSaveVisibility(null,changeValue,null,null)}
+                  value={this.state.newContact}
                   keyboardType="numeric"
 				        />
+                
                 <Text style={{marginTop:12}}>Email</Text>
                 <Text style={styles.customEmail}>{this.state.email}</Text>
                 <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
-                <CheckBox onFocus={this.toggleCancel()} onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                <CheckBox onPress={()=> {
+                  this.checkSaveVisibility(null,null,!this.state.newcheckboxEmail,null)
+                }} 
+                  checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share email with church members</Text>
                 </View>
                 <View style={styles.checkboxContainer}>
-                <CheckBox   onFocus={this.toggleCancel()} onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                <CheckBox onPress={()=>{ 
+                  this.checkSaveVisibility(null,null,null,!this.state.newcheckboxContact)
+                }} checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
-              
                 </View>
                 </View>
+                <TouchableOpacity onPress={()=>{this.setState({show:!this.state.show})}}>{!this.state.show?<Text>Save</Text>:null}</TouchableOpacity>
 					</View>
 				</View>
 			</ScrollView>
