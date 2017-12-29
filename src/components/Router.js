@@ -162,14 +162,12 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "login"  
-                component = {Login} 
-                hideNavBar={true}
+                component = {Login}   
               />
               <Scene 
                 key = "signup"  
                 component = {Signup}
                 title = "Signup" 
-                hideNavBar={true}
               />
               <Scene 
                 key = "guest"  
@@ -269,9 +267,8 @@ export default class RoutesPage extends Component {
                 key="tab2" 
                 title="Contact" 
                 icon={TabIcon} 
-                iconName="phone"
+                iconName="contacts"
                 component={ContactBookPage}
-                hideNavBar={true}
                 />
                 <Scene 
                 key="tab3" 
@@ -279,7 +276,6 @@ export default class RoutesPage extends Component {
                 icon={TabIcon} 
                 iconName="music-note"
                 component={SongBookPage}
-                hideNavBar={true}
                 />
                 <Scene 
                 key="tab4"  

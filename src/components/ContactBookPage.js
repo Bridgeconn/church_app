@@ -146,13 +146,6 @@ export default class ContactPage extends Component{
       )
       }
           return (
-          <View style={{flex:1}}>
-                    <Header searchBar rounded>
-                      <Item>
-                        <Icon active name="search" size={24} style={{paddingLeft:4}}/>
-                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
-                      </Item>
-                    </Header>
             <View style={styles.container}>
             <ScrollView>
              {data.map(item =>
@@ -171,7 +164,6 @@ export default class ContactPage extends Component{
               </Content>
               )}
             </ScrollView>
-          </View>
           </View>
                 )
 
