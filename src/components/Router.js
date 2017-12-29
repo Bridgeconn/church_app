@@ -33,7 +33,7 @@ export default class RoutesPage extends Component {
     this.state = {
       isLoaded: false, guestKey:false, tokenValue:null,
       imageUri:null,username:null,contactNum:null,email:null,
-      showSaveProfile:false
+      
     };
   }
 
@@ -87,10 +87,6 @@ export default class RoutesPage extends Component {
     }
   }
 
-  //  componentWillMount(){
-  //   Actions.refresh({key: 'eventsDetails', title: 'hi'});
-
-  // }
 
   hideSplashScreen(){
     setTimeout(()=>{SplashScreen.hide()},
@@ -98,28 +94,6 @@ export default class RoutesPage extends Component {
       )
   }
 
-  handleSave =()=>{
-    this.child.handlePress()
-  }
-
-  renderSaveButton = ()=>{
-    if(this.state.showSaveProfile){
-      return(
-     <TouchableOpacity onPress={this.handleSave}>    
-                   <Text  style={styles.navbarTitleRight}>Save</Text>   
-                 </TouchableOpacity>   
-    )
-    }
-    else{
-      return(null)
-    }
-  }
-
-  setSaveVisibility =(value) =>{
-    console.log("setSaveVisibility"+value)
-    this.setState({showSaveProfile:value})
-  }
-  
   rightButton = () =>{
     return(
         <View style={{flexDirection:"row"}}>
@@ -210,15 +184,12 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
+                hideNavBar={true}
                 tokenValue={this.state.tokenValue}
                 contactNum={this.state.contactNum}
                 email={this.state.email}
-                username={this.state.username}
-                onRefSave={ref => (this.child = ref)}                
+                username={this.state.username}               
                 titleStyle={styles.navbarTitle}
-                renderRightButton ={this.renderSaveButton} 
-                checkSaveVisible = {this.setSaveVisibility}
-
               />
               <Scene 
                 key = "events"     

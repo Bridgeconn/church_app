@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Icon,Body,CheckBox} from 'native-base'
+import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
 import styles from '../style/styles.js'
@@ -25,12 +25,11 @@ export default class ProfilePage extends Component{
         contact:this.props.contactNum,
         token: this.props.tokenValue,
         email: this.props.email,
-        show:false,
         newUser:this.props.username,
         newContact:this.props.contactNum,
         newcheckboxEmail:false,
-        newcheckboxContact:false
-
+        newcheckboxContact:false,
+        showSaveProfile:false
 	  	};
 	}
 	
@@ -45,7 +44,6 @@ export default class ProfilePage extends Component{
 
   async handlePress(){
     console.log("hello handle press")
-    this.renderCancel()
       console.log(this.state.user);
       console.log(this.state.contact);
       console.log(this.state.token);
@@ -110,7 +108,6 @@ export default class ProfilePage extends Component{
 
 
   async componentDidMount() {
-    this.props.onRefSave(this)
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -130,9 +127,9 @@ export default class ProfilePage extends Component{
       }
     });
   }
-  componentWillUnmount() {
-    this.props.onRefSave(null)  
-  }
+  // componentWillUnmount() {
+  //   this.props.onRefSave(null)  
+  // }
 
   checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
     if (valueName !== null) {
@@ -152,17 +149,36 @@ export default class ProfilePage extends Component{
       this.state.checkboxEmail !==valueCheckEmail ||
       this.state.checkboxContact !==valueCheckContact ){
         this.setState({show:true})
-        this.props.checkSaveVisible(true)
+        this.checkSaveVisible(true)
     } else{
         this.setState({show:false})
-        this.props.checkSaveVisible(false)
+        this.checkSaveVisible(false)
     }
   }
   
-
+checkSaveVisible =(value) =>{
+    console.log("setSaveVisibility"+value)
+    this.setState({showSaveProfile:value})
+  }
 	render(){
 		return(
-			<ScrollView>
+      <View style={{flex:1}}>
+                    <Header>
+                      <Left>
+                        <Button transparent onPress={()=>{Actions.pop()}}>
+                          <Icon name='arrow-back'/>
+                        </Button>
+                      </Left>
+                      <Body>
+                        <Title style={{textAlign:"left"}}>Profile</Title>
+                      </Body>
+                      <Right>
+                      {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
+                          <Title>Save</Title>
+                        </TouchableOpacity>:null}
+                       
+                      </Right>                      
+                    </Header>
 		        <View style={styles.profilePageContent}>
 			        <View style={styles.profileView}>
 		        		<Text>
@@ -202,10 +218,9 @@ export default class ProfilePage extends Component{
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
                 </View>
                 </View>
-                <TouchableOpacity onPress={()=>{this.setState({show:!this.state.show})}}>{!this.state.show?<Text>Save</Text>:null}</TouchableOpacity>
 					</View>
-				</View>
-			</ScrollView>
+		  	</View>
+		</View>
 			)
 	}
 } 
