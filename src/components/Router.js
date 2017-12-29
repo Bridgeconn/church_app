@@ -22,11 +22,33 @@ import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
+import TabsEx from './TabsEx'
 // import RightButton from './RightButton'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 
+// const scene = [{
+//     name: 'Events',
+//     scene: 'events'
+//   }, 
+//   {
+//     name: 'Contact', 
+//     scene: 'contacts'
+//   },
+//   {
+//     name: 'Verse',
+//     scene: 'verse'
+//   }, 
+//   {
+//     name: 'Songs',
+//     scene: 'songs'
+//   },
+//   {
+//     name: 'Video',
+//     scene: 'video'
+//   }
+//   ];
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
@@ -134,6 +156,8 @@ export default class RoutesPage extends Component {
                 hideNavBar={true}  
                 type="reset"
               />
+               
+              
               <Scene 
                 key = "newsignup"       
                 component = {NewSignup}   
@@ -235,7 +259,6 @@ export default class RoutesPage extends Component {
                 component = {VersePage}          
                 title = "Verse of the Day" 
               />
-              
               <Scene 
               key="home2" 
               type="reset"  
@@ -255,6 +278,7 @@ export default class RoutesPage extends Component {
               tabBarPosition="bottom" 
                 renderRightButton={this.rightButton}
                >
+
                 <Scene
                   key="tab1"
                   title="Events"
@@ -270,20 +294,32 @@ export default class RoutesPage extends Component {
                 iconName="contacts"
                 component={ContactBookPage}
                 />
-                <Scene 
-                key="tab3" 
-                title="Song" 
+                <Scene
+                hideNavBar={true}
+                key="third"
                 icon={TabIcon} 
                 iconName="music-note"
+                title="Song"
+                >
+                <Scene 
+                key="tab3" 
+                title="Song Book"
                 component={SongBookPage}
                 />
-                <Scene 
-                key="tab4"  
-                title="Verse" 
+                </Scene>
+                <Scene
+                key="forth"
+                hideNavBar={true}
                 icon={TabIcon}  
                 iconName="book-open-page-variant"
+                title="Verse"
+                >
+                <Scene 
+                key="tab4"  
+                title="Verse of the day" 
                 component={VersePage}
                 />
+                </Scene>
                 <Scene 
                 key="tab5" 
                 title="Video" 
@@ -310,3 +346,4 @@ class TabIcon extends Component {
     );
   }
 }
+
