@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
-
+import axios from 'axios';
 import SplashScreen from 'react-native-splash-screen'
 // import { Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Icon, Footer, FooterTab, Left, Right, Body } from 'native-base';
 // let SQLite = require('react-native-sqlite-storage')
@@ -90,38 +90,46 @@ import SplashScreen from 'react-native-splash-screen'
 // }
 
 
-export default class searchBar extends Component{
-  
-  constructor(){
-    SplashScreen.hide()
-    super()
-    this.state  = {
-    isHidden: true
+// const API_KEY = 'AIzaSyCUZhV7DAv0GQcKayL7KkN2PMa6ZycFj2U';
 
-   }
-   }
-  
-    toggleHidden () {
-    this.setState({
-      isHidden: !this.state.isHidden
-    })
+import React, { Component } from 'react';
+var google = require('googleapis');
+var googleAuth = require('google-auth-library');
+export default class SearchBar extends Component {
+  constructor(){
+    super()
+    SplashScreen.hide()
+    
+  }
+searchListByKeyword(auth, requestData) {
+  var service = google.youtube('v3');
+  var parameters = removeEmptyParameters(requestData['params']);
+  parameters['auth'] = auth;
+  service.search.list(parameters, function(err, response) {
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    console.log(response);
+  });
+}
+
+//See full code sample for authorize() function code.
+authorize(JSON.parse(content), {'params': {'maxResults': '25',
+                 'part': 'snippet',
+                 'q': 'surfing',
+                 'type': 'keyword'}}, searchListByKeyword);
+
+  componentDidMount() {
+    // this.loadYoutubeApi();
+    this.searchExecute();
   }
 
-    
-    render() {
-        return (
-            <View style={{flex:1}}>
-            <View>
-            <TouchableOpacity onClick={this.toggleHidden.bind(this)} >
-	          <Text>Click to show modal</Text>
-	          {this.state.isHidden==false ? <Text>hello</Text>:null}
-	        </TouchableOpacity>
-	        </View>
-	        <View>{this.state.isHidden==false ? <Text>hello</Text>:null}</View>
-            </View>
-        )
-
-
-    }
-
+  render() {
+     return (
+       <View style={{flex:1}}>
+       <Text>Hi</Text>
+       </View>
+     )
+}
 }

@@ -11,7 +11,7 @@ import SearchBar from './src/components/Searchbar'
 export default class ChurchApplication extends Component {
   render() {
     return (
-      <Router/>
+      <SearchBar/>
     );
   }
 }

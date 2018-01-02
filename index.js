@@ -11,7 +11,7 @@ import {
 export default class ChurchApplication extends Component {
   render() {
     return (
-      <Router/>
+      <SearchBar/>
     );
   }
 }

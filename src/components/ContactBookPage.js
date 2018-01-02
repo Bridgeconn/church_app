@@ -53,8 +53,8 @@
 //       console.log('token1 '+auth_token)
 //       if (auth_token !== null) {
 //         this.setState({tokenValue:auth_token})
-//         // this.dataContacts();
-//        this.setState({dataContactDetail:contactList.contacts})
+//         this.dataContacts();
+//        // this.setState({dataContactDetail:dataContactDetail})
 
 //         this.setState({showProgress:false})
 //       }
@@ -107,12 +107,16 @@
 
 
 
+
+
+
 import React, { Component } from 'react';
 import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    ScrollView
 } from 'react-native';
 import AtoZList from 'react-native-atoz-list';
 let names = require('./names');
@@ -201,3 +205,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
+
+
+

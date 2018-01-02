@@ -176,7 +176,6 @@ checkSaveVisible =(value) =>{
                       {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
                           <Title>Save</Title>
                         </TouchableOpacity>:null}
-                       
                       </Right>                      
                     </Header>
 		        <View style={styles.profilePageContent}>

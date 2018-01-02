@@ -303,7 +303,7 @@ export default class RoutesPage extends Component {
                 hideNavBar={true}
                 key="third"
                 icon={TabIcon} 
-                iconName="music-note"
+                iconName="music"
                 title="Song"
                 >
                 <Scene 
