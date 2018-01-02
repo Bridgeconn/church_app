@@ -5,7 +5,6 @@ import com.vonovak.AddCalendarEventPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.imagepicker.ImagePickerPackage;
@@ -38,7 +37,6 @@ public class MainApplication extends Application implements ReactApplication {
           new VectorIconsPackage(),
           new LinearGradientPackage(),
           new MapsPackage(),
-          new ReactNativeContacts(),
           new RNSoundPackage(),
           new ReactNativeYouTube(),
           new ImagePickerPackage(),

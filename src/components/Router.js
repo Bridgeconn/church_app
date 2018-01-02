@@ -287,12 +287,18 @@ export default class RoutesPage extends Component {
                 />
               
                 <Scene 
-                key="tab2" 
-                title="Contact" 
+                hideNavBar={true}
+                key="second"
+                title="Contacts" 
                 icon={TabIcon} 
                 iconName="contacts"
+                >
+                <Scene
+                key="tab2"
+                title="Contact Book"  
                 component={ContactBookPage}
                 />
+                </Scene>
                 <Scene
                 hideNavBar={true}
                 key="third"
