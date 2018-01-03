@@ -1,5 +1,6 @@
 package com.churchapplication;
 import android.os.Bundle;
+import android.content.Intent;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
 public class MainActivity extends ReactActivity {
@@ -13,6 +14,12 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "ChurchApplication";
     }
+    @Override
+   public void onNewIntent (Intent intent) {
+     super.onNewIntent(intent);
+       setIntent(intent);
+    }       
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this);  
