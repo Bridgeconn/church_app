@@ -1,15 +1,16 @@
 // import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ListView,
-  TextInput,
-  TouchableOpacity,
-  TouchableHighlight
-} from 'react-native';
-import axios from 'axios';
+// import {
+//   AppRegistry,
+//   StyleSheet,
+//   Text,
+//   View,
+//   ListView,
+//   TextInput,
+//   Platform,
+//   TouchableOpacity,
+//   TouchableHighlight
+// } from 'react-native';
+// import axios from 'axios';
 import SplashScreen from 'react-native-splash-screen'
 // import { Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Icon, Footer, FooterTab, Left, Right, Body } from 'native-base';
 // let SQLite = require('react-native-sqlite-storage')
@@ -92,44 +93,159 @@ import SplashScreen from 'react-native-splash-screen'
 
 // const API_KEY = 'AIzaSyCUZhV7DAv0GQcKayL7KkN2PMa6ZycFj2U';
 
+
 import React, { Component } from 'react';
-var google = require('googleapis');
-var googleAuth = require('google-auth-library');
-export default class SearchBar extends Component {
-  constructor(){
-    super()
-    SplashScreen.hide()
-    
-  }
-searchListByKeyword(auth, requestData) {
-  var service = google.youtube('v3');
-  var parameters = removeEmptyParameters(requestData['params']);
-  parameters['auth'] = auth;
-  service.search.list(parameters, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Clipboard,
+  Platform
+} from 'react-native';
+
+import FCM from "react-native-fcm";
+
+import {registerKilledListener, registerAppListener} from "./Listeners";
+// import firebaseClient from  "./FirebaseClient";
+
+registerKilledListener();
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+  SplashScreen.hide()
+    this.state = {
+      token: "",
+      tokenCopyFeedback: ""
     }
-    console.log(response);
-  });
-}
-
-//See full code sample for authorize() function code.
-authorize(JSON.parse(content), {'params': {'maxResults': '25',
-                 'part': 'snippet',
-                 'q': 'surfing',
-                 'type': 'keyword'}}, searchListByKeyword);
-
-  componentDidMount() {
-    // this.loadYoutubeApi();
-    this.searchExecute();
   }
 
+  async componentDidMount(){
+     SplashScreen.hide()
+    registerAppListener();
+    FCM.getInitialNotification().then(notif => {
+      this.setState({
+        initNotif: notif
+      })
+    });
+
+    try{
+      let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
+    } catch(e){
+      console.error(e);
+    }
+
+    FCM.getFCMToken().then(token => {
+      console.log("TOKEN (getFCMToken)", token);
+      this.setState({token: token || ""})
+    });
+
+    if(Platform.OS === 'android'){
+      FCM.getAPNSToken().then(token => {
+        console.log("APNS TOKEN (getFCMToken)", token);
+      });
+    }
+  }
+
+  showLocalNotification() {
+    FCM.presentLocalNotification({
+      vibrate: 500,
+      title: 'Hello',
+      body: 'Test Notification',
+      big_text: 'i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large',
+      priority: "high",
+      sound: "bell.mp3",
+      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
+      show_in_foreground: true,
+      group: 'test',
+      number: 10
+    });
+  }
+
+  scheduleLocalNotification() {
+    FCM.scheduleLocalNotification({
+      id: 'testnotif',
+      fire_date: new Date().getTime()+5000,
+      vibrate: 500,
+      title: 'Hello',
+      body: 'Test Scheduled Notification',
+      sub_text: 'sub text',
+      priority: "high",
+      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
+      show_in_foreground: true,
+      picture: 'https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png'
+    });
+  }
+  setClipboardContent(text) {
+    Clipboard.setString(text);
+    this.setState({tokenCopyFeedback: "Token copied to clipboard."});
+    setTimeout(() => {this.clearTokenCopyFeedback()}, 2000);
+  }
+  clearTokenCopyFeedback() {
+    this.setState({tokenCopyFeedback: ""});
+  }
   render() {
-     return (
-       <View style={{flex:1}}>
-       <Text>Hi</Text>
-       </View>
-     )
+    let { token, tokenCopyFeedback } = this.state;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Simple Fcm Client!
+        </Text>
+
+        <Text>
+          Init notif: {JSON.stringify(this.state.initNotif)}
+
+        </Text>
+
+        <Text selectable={true} onPress={() => this.setClipboardContent(this.state.token)} style={styles.instructions}>
+          Token: {this.state.token}
+        </Text>
+        <Text style={styles.feedback}>
+          {this.state.tokenCopyFeedback}
+        </Text>        
+        <TouchableOpacity onPress={() => this.showLocalNotification()} style={styles.button}>
+          <Text style={styles.buttonText}>Send Local Notification</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.scheduleLocalNotification()} style={styles.button}>
+          <Text style={styles.buttonText}>Schedule Notification in 5s</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 2,
+  },
+  feedback: {
+    textAlign: 'center',
+    color: '#996633',
+    marginBottom: 3,
+  },
+  button: {
+    backgroundColor: "teal",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 15,
+    borderRadius: 10
+  },
+  buttonText: {
+    color: "white",
+    backgroundColor: "transparent"
 }
+})

@@ -13,6 +13,7 @@ import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
@@ -40,7 +41,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNSoundPackage(),
           new ReactNativeYouTube(),
           new ImagePickerPackage(),
-          new SQLitePluginPackage()      
+          new SQLitePluginPackage(),
+          new FIRMessagingPackage()      
           );
     }
 
