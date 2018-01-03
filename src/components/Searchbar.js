@@ -62,7 +62,6 @@ export default class App extends Component {
       big_text: 'i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large, i am large',
       priority: "high",
       sound: "bell.mp3",
-      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
       show_in_foreground: true,
       group: 'test',
       number: 10
@@ -78,9 +77,7 @@ export default class App extends Component {
       body: 'Test Scheduled Notification',
       sub_text: 'sub text',
       priority: "high",
-      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
       show_in_foreground: true,
-      picture: 'https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png'
     });
   }
   setClipboardContent(text) {

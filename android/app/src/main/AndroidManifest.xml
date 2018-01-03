@@ -36,7 +36,6 @@
        <meta-data
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyDpNw4tlq6xDL6nmVh1qZFCJeKcE4YCDzA"/>
-     <!--  <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_notif"/> -->
       <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="false" />
       <receiver android:name="com.evollu.react.fcm.FIRLocalMessagingPublisher"/>
       <receiver android:enabled="true" android:exported="true"  android:name="com.evollu.react.fcm.FIRSystemBootEventReceiver">

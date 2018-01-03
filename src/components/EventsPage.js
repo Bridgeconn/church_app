@@ -147,7 +147,7 @@ export default class EventsPage extends Component{
                                   style={styles.eventImage} 
                                   onLoadEnd={ ()=>{ this.setState({ loading: false }) }}>
                                   <ActivityIndicator animating={ this.state.loading } 
-                                  style={{flex:1,justifyContent:'center',alignItems:'center',alignSelf:'center'}}/>
+                                  />
                                 </Image>
                             </CardItem>
                           </Card>

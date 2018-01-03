@@ -303,7 +303,7 @@ export default class RoutesPage extends Component {
                 hideNavBar={true}
                 key="third"
                 icon={TabIcon} 
-                iconName="music"
+                iconName="itunes"
                 title="Song"
                 >
                 <Scene 
@@ -345,7 +345,7 @@ class TabIcon extends Component {
     var color = this.props.focused ? '#fff':'#3F51B5'
     return (
       <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
-        <Icon color={color} name={this.props.iconName || "circle"} size={24}/>
+        <Icon color={color} name={this.props.iconName || "circle"} size={28}/>
         {this.props.focused?<Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>:null}
       </View>
     );

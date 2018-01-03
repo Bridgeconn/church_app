@@ -1,19 +1,25 @@
 
 import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
-import {ListItem,List,Card,CardItem,Body} from 'native-base'
+import {ListItem,List,Card,CardItem,Body,Right} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
 import styles from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FCM from "react-native-fcm";
+import {registerKilledListener, registerAppListener} from "./Listeners";
+
+registerKilledListener();
 export default class VersePage extends Component{
 
  constructor(){
         super()
         this.state ={
             data: [],
-            result:""   
+            result:"",
+            token: "",
+            tokenCopyFeedback: ""   
           }
           this.getData =this.getData.bind(this);
           this._shareMessage = this._shareMessage.bind(this);
@@ -34,9 +40,54 @@ export default class VersePage extends Component{
       message: messageText
     }).then(this._showResult);
   }
-  componentDidMount() {
-  this.getData();
+  showLocalNotification() {
+    FCM.presentLocalNotification({
+      vibrate: 500,
+      title: 'Notification',
+      body: 'Verse of the day',
+      priority: "high",
+      show_in_foreground: true,
+      group: 'test',
+      number: 10
+    });
+  }
+  
+  async componentDidMount(){
+    this.getData();
+     SplashScreen.hide()
+    registerAppListener();
+    FCM.getInitialNotification().then(notif => {
+      this.setState({
+        initNotif: notif
+      })
+    });
+
+    try{
+      let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
+    } catch(e){
+      console.error(e);
     }
+
+    FCM.getFCMToken().then(token => {
+      console.log("TOKEN (getFCMToken)", token);
+      this.setState({token: token || ""})
+    });
+
+    if(Platform.OS === 'android'){
+      FCM.getAPNSToken().then(token => {
+        console.log("APNS TOKEN (getFCMToken)", token);
+      });
+    }
+    }
+  //   setClipboardContent(text) {
+  //   Clipboard.setString(text);
+  //   this.setState({tokenCopyFeedback: "Token copied to clipboard."});
+  //   setTimeout(() => {this.clearTokenCopyFeedback()}, 2000);
+  // }
+  // clearTokenCopyFeedback() {
+  //   this.setState({tokenCopyFeedback: ""});
+  // }
+
     render() {
       const data = this.state.data;
           return (
@@ -51,7 +102,7 @@ export default class VersePage extends Component{
                         <CardItem>
                           <Text style={styles.tabTextVerseSize}>{item.verse_text}</Text>
                         </CardItem>
-                        <CardItem>
+                        <CardItem style={styles.contactListItemStyle}>
                         <TouchableOpacity  onPress={this._shareMessage.bind(this,
                           item.verse_text,
                           item.book_name,
@@ -63,6 +114,10 @@ export default class VersePage extends Component{
                           >
                           <Icon name="share-variant" size={24} color="#3F51B5"/>
                           </TouchableOpacity>
+                          <TouchableOpacity onPress={() => this.showLocalNotification()} >
+                            <Text>Notification</Text>
+                          </TouchableOpacity>
+                          
                         </CardItem>
                         </Card>
                         )}
