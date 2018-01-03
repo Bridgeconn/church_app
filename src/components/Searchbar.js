@@ -1,99 +1,5 @@
-// import React, { Component } from 'react';
-// import {
-//   AppRegistry,
-//   StyleSheet,
-//   Text,
-//   View,
-//   ListView,
-//   TextInput,
-//   Platform,
-//   TouchableOpacity,
-//   TouchableHighlight
-// } from 'react-native';
-// import axios from 'axios';
+
 import SplashScreen from 'react-native-splash-screen'
-// import { Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Icon, Footer, FooterTab, Left, Right, Body } from 'native-base';
-// let SQLite = require('react-native-sqlite-storage')
-// let db = SQLite.openDatabase({name: 'test1.db', createFromLocation : "~example.db"}, this.openCB, this.errorCB, this.successCB);
-// export default class searchBar extends Component {
-
-//   constructor(props) {
-//     super(props);
-//      const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-//     this.state = {
-//         record: null,
-//         rows:[],
-//         search:''
-//     }
-//     SplashScreen.hide()
-//     let db = SQLite.openDatabase({name: 'test1.db', createFromLocation : "~example.db"}, this.openCB, this.errorCB, this.successCB);
-//      db.transaction((tx) => {
-//       tx.executeSql('SELECT * FROM SearchItem', [], (tx, results) => {
-//            let rows = results.rows.raw();
-//             rows.map(row => console.log(` Id: ${row.id}, name: ${row.name}`));
-//             this.setState({rows});
-//         })
-      
-//       })
-     
-    
-//   }
-//   // searchItem(){
-//   //   // let rows = this.state.rows;
-//   //   let FilteredName = this.state.rows.filter(
-//   //       (rows) =>{
-//   //         return rows.name.indexOf(this.state.search) !==-1;
-//   //       }
-//   //     )
-//   //  }
-//   errorCB(err) {
-//     console.log("SQL Error: " + err);
-//   }
-
-//   successCB() {
-//     console.log("SQL executed fine");
-//   }
-
-//   openCB() {
-//     console.log("Database OPENED");
-//   }
-
-//   render() {
-//     let rows = this.state.rows;
-//     let FilteredName = this.state.rows.filter(
-//         (rows) =>{
-          
-//           return rows.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
-//         }
-//       )
-//     return (
-//       <View style={{flex: 1}}>
-//        <TextInput
-//           onChangeText={ (text)=> this.setState({search: text}) }
-//          placeholder="search"
-//           >
-//          </TextInput>
-//         <View>
-//           {
-//             FilteredName.map(row => 
-//             <List key={row.id}>
-//             <ListItem style={{borderBottomWidth:0}}>
-//             <Text key={row.name} style={{fontSize:16}}>{row.name}</Text>
-//           </ListItem>
-//           </List>
-//            )}
-//         </View>
-//         </View>
-
-      
-//     );
-//   }
-// }
-
-
-// const API_KEY = 'AIzaSyCUZhV7DAv0GQcKayL7KkN2PMa6ZycFj2U';
-
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -186,24 +92,11 @@ export default class App extends Component {
     this.setState({tokenCopyFeedback: ""});
   }
   render() {
-    let { token, tokenCopyFeedback } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to Simple Fcm Client!
         </Text>
-
-        <Text>
-          Init notif: {JSON.stringify(this.state.initNotif)}
-
-        </Text>
-
-        <Text selectable={true} onPress={() => this.setClipboardContent(this.state.token)} style={styles.instructions}>
-          Token: {this.state.token}
-        </Text>
-        <Text style={styles.feedback}>
-          {this.state.tokenCopyFeedback}
-        </Text>        
         <TouchableOpacity onPress={() => this.showLocalNotification()} style={styles.button}>
           <Text style={styles.buttonText}>Send Local Notification</Text>
         </TouchableOpacity>
