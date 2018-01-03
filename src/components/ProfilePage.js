@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Icon,Body,CheckBox} from 'native-base'
+import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
 import styles from '../style/styles.js'
@@ -16,17 +16,20 @@ export default class ProfilePage extends Component{
 		    avatarSource: null,
 		    videoSource: null,
 		    setImage:'',
-        checkbox1:false,
-        checkbox2:false,
+        checkboxEmail:false,
+        checkboxContact:false,
 		    isReady: false,
 		    status: null,
-	      	user: this.props.username,
-      		uri:this.props.uri, 
-          contact:this.props.contactNum,
-          token: this.props.tokenValue,
-          email: this.props.email,
-          showCancel:false
-
+      	user: this.props.username,
+    		uri:this.props.uri, 
+        contact:this.props.contactNum,
+        token: this.props.tokenValue,
+        email: this.props.email,
+        newUser:this.props.username,
+        newContact:this.props.contactNum,
+        newcheckboxEmail:false,
+        newcheckboxContact:false,
+        showSaveProfile:false
 	  	};
 	}
 	
@@ -38,6 +41,7 @@ export default class ProfilePage extends Component{
       console.error('AsyncStorage error: ' + error);
     }
   }
+
   async handlePress(){
     console.log("hello handle press")
       console.log(this.state.user);
@@ -104,8 +108,6 @@ export default class ProfilePage extends Component{
 
 
   async componentDidMount() {
-    this.props.onRefSave(this)
-
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -125,73 +127,99 @@ export default class ProfilePage extends Component{
       }
     });
   }
-  componentWillUnmount() {
-    this.props.onRefSave(null)
-    
-  }
-   toggleCancel = () =>{
-        this.setState({
-            showCancel: !this.state.showCancel
-        });
-    }
-    
-  renderCancel = () =>{
-        if (this.state.showCancel) {
-            return (
-                <TouchableHighlight 
-                    onPress={this.toggleCancel()}>
-                    <View>
-                        <Text style={styles.cancelButtonText}>Cancel</Text>
-                    </View>
-                </TouchableHighlight>
-            )
-        } else {
-            return null
-        }
-    }
+  // componentWillUnmount() {
+  //   this.props.onRefSave(null)  
+  // }
 
+  checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
+    if (valueName !== null) {
+      this.setState({newUser:valueName})
+    }
+    if (valueContact !== null) {
+      this.setState({newContact:valueContact})
+    }
+    if (valueCheckEmail !== null) {
+      this.setState({newcheckboxEmail:valueCheckEmail})
+    }
+    if (valueCheckContact !== null) {
+      this.setState({newcheckboxContact:valueCheckContact})
+    }
+    if(this.state.user !==valueName || 
+      this.state.contact !==valueContact || 
+      this.state.checkboxEmail !==valueCheckEmail ||
+      this.state.checkboxContact !==valueCheckContact ){
+        this.setState({show:true})
+        this.checkSaveVisible(true)
+    } else{
+        this.setState({show:false})
+        this.checkSaveVisible(false)
+    }
+  }
+  
+checkSaveVisible =(value) =>{
+    console.log("setSaveVisibility"+value)
+    this.setState({showSaveProfile:value})
+  }
 	render(){
 		return(
-			<ScrollView>
+      <View style={{flex:1}}>
+                    <Header>
+                      <Left>
+                        <Button transparent onPress={()=>{Actions.pop()}}>
+                          <Icon name='arrow-back'/>
+                        </Button>
+                      </Left>
+                      <Body>
+                        <Title style={{textAlign:"left"}}>Profile</Title>
+                      </Body>
+                      <Right>
+                      {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
+                          <Title>Save</Title>
+                        </TouchableOpacity>:null}
+                      </Right>                      
+                    </Header>
 		        <View style={styles.profilePageContent}>
 			        <View style={styles.profileView}>
 		        		<Text>
 				          Name
 				        </Text>
 				        <TextInput
-                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(user) => this.setState({user:user})}
-                  value={this.state.user}
+				          onChangeText={(changeValue) => this.checkSaveVisibility(changeValue,null,null,null)}
+                  value={this.state.newUser}
 				        />
 				        <Text style={{marginTop:12}}>
 				          Contact Number
 				        </Text>
 				        <TextInput
-                  onFocus={this.toggleCancel()}
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(user) => this.setState({contact:user})}
-                  value={this.state.contact}
+				          onChangeText={(changeValue) => this.checkSaveVisibility(null,changeValue,null,null)}
+                  value={this.state.newContact}
                   keyboardType="numeric"
 				        />
+                
                 <Text style={{marginTop:12}}>Email</Text>
                 <Text style={styles.customEmail}>{this.state.email}</Text>
                 <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
-                <CheckBox onFocus={this.toggleCancel()} onPress={()=> {this.setState({checkbox1: !this.state.checkbox1})}} checked={this.state.checkbox1} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                <CheckBox onPress={()=> {
+                  this.checkSaveVisibility(null,null,!this.state.newcheckboxEmail,null)
+                }} 
+                  checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share email with church members</Text>
                 </View>
                 <View style={styles.checkboxContainer}>
-                <CheckBox   onFocus={this.toggleCancel()} onPress={()=>{ this.setState({checkbox2: !this.state.checkbox2})}} checked={this.state.checkbox2} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                <CheckBox onPress={()=>{ 
+                  this.checkSaveVisibility(null,null,null,!this.state.newcheckboxContact)
+                }} checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
-              
                 </View>
                 </View>
 					</View>
-				</View>
-			</ScrollView>
+		  	</View>
+		</View>
 			)
 	}
 } 

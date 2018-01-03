@@ -6,12 +6,12 @@ import {
   Text,
   View
 } from 'react-native';
- import Router from './src/components/Router'
-
+import Router from './src/components/Router'
+import SearchBar from './src/components/Searchbar'
 export default class ChurchApplication extends Component {
   render() {
     return (
-      <Router/>
+      <SearchBar/>
     );
   }
 }

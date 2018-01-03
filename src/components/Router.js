@@ -27,11 +27,34 @@ import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 
+// const scene = [{
+//     name: 'Events',
+//     scene: 'events'
+//   }, 
+//   {
+//     name: 'Contact', 
+//     scene: 'contacts'
+//   },
+//   {
+//     name: 'Verse',
+//     scene: 'verse'
+//   }, 
+//   {
+//     name: 'Songs',
+//     scene: 'songs'
+//   },
+//   {
+//     name: 'Video',
+//     scene: 'video'
+//   }
+//   ];
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: false, guestKey:false, tokenValue:null,imageUri:null,username:null,contactNum:null,email:null
+      isLoaded: false, guestKey:false, tokenValue:null,
+      imageUri:null,username:null,contactNum:null,email:null,
+      
     };
   }
 
@@ -68,33 +91,29 @@ export default class RoutesPage extends Component {
     this.hideSplashScreen()
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
   }
+
   componentWillUnmount(){
   BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
+
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {
         console.log("home2")
       BackHandler.exitApp();
       return true;
+    } else {
+      Actions.pop()
+      return true
     }
-    return false;
   }
-   ComponentWillMount(){
-    Actions.refresh({key: 'eventsDetails', title: 'hi'});
 
-  }
+
   hideSplashScreen(){
     setTimeout(()=>{SplashScreen.hide()},
          500
       )
   }
-
-  handleSave = () =>{
-    this.child.handlePress()
-    this.refs.renderCancel
-  }
-
 
   rightButton = () =>{
     return(
@@ -136,6 +155,8 @@ export default class RoutesPage extends Component {
                 hideNavBar={true}  
                 type="reset"
               />
+               
+              
               <Scene 
                 key = "newsignup"       
                 component = {NewSignup}   
@@ -164,14 +185,12 @@ export default class RoutesPage extends Component {
               />
               <Scene 
                 key = "login"  
-                component = {Login} 
-                hideNavBar={true}
+                component = {Login}   
               />
               <Scene 
                 key = "signup"  
                 component = {Signup}
                 title = "Signup" 
-                hideNavBar={true}
               />
               <Scene 
                 key = "guest"  
@@ -186,13 +205,12 @@ export default class RoutesPage extends Component {
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
+                hideNavBar={true}
                 tokenValue={this.state.tokenValue}
                 contactNum={this.state.contactNum}
                 email={this.state.email}
-                username={this.state.username}
-                onRefSave={ref => (this.child = ref)}                
+                username={this.state.username}               
                 titleStyle={styles.navbarTitle}
-                renderRightButton = {ref => (this.refs = ref)}
               />
               <Scene 
                 key = "events"     
@@ -240,7 +258,6 @@ export default class RoutesPage extends Component {
                 component = {VersePage}          
                 title = "Verse of the Day" 
               />
-              
               <Scene 
               key="home2" 
               type="reset"  
@@ -260,6 +277,7 @@ export default class RoutesPage extends Component {
               tabBarPosition="bottom" 
                 renderRightButton={this.rightButton}
                >
+
                 <Scene
                   key="tab1"
                   title="Events"
@@ -269,28 +287,44 @@ export default class RoutesPage extends Component {
                 />
               
                 <Scene 
-                key="tab2" 
-                title="Contact" 
-                icon={TabIcon} 
-                iconName="phone"
-                component={ContactBookPage}
                 hideNavBar={true}
+                key="second"
+                title="Contacts" 
+                icon={TabIcon} 
+                iconName="contacts"
+                >
+                <Scene
+                key="tab2"
+                title="Contact Book"  
+                component={ContactBookPage}
                 />
+                </Scene>
+                <Scene
+                hideNavBar={true}
+                key="third"
+                icon={TabIcon} 
+                iconName="music"
+                title="Song"
+                >
                 <Scene 
                 key="tab3" 
-                title="Song" 
-                icon={TabIcon} 
-                iconName="music-note"
+                title="Song Book"
                 component={SongBookPage}
-                hideNavBar={true}
                 />
-                <Scene 
-                key="tab4"  
-                title="Verse" 
+                </Scene>
+                <Scene
+                key="forth"
+                hideNavBar={true}
                 icon={TabIcon}  
                 iconName="book-open-page-variant"
+                title="Verse"
+                >
+                <Scene 
+                key="tab4"  
+                title="Verse of the day" 
                 component={VersePage}
                 />
+                </Scene>
                 <Scene 
                 key="tab5" 
                 title="Video" 
@@ -317,3 +351,4 @@ class TabIcon extends Component {
     );
   }
 }
+

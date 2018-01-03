@@ -33,13 +33,13 @@ export default class SongPage extends Component{
           }
         )
           return (
-                    <View style={{flex:1}}>
-                    <Header searchBar rounded>
-                      <Item>
-                        <Icon active name="search" size={24} style={{paddingLeft:4}}/>
-                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
-                      </Item>
-                    </Header>
+                    // <View style={{flex:1}}>
+                    // <Header searchBar rounded>
+                    //   <Item>
+                    //     <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                    //     <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
+                    //   </Item>
+                    // </Header>
                     <View style={styles.container}>
                     <ScrollView>
                        {FilteredData.map(item =>
@@ -49,7 +49,7 @@ export default class SongPage extends Component{
                             <CardItem>
                        	      <View key={item.id}>
                                   <Text style={styles.tabTextSize}>{item.song_name}</Text>
-                                  <Text numberOfLines={1} ellipsizeMode='tail' style={styles.tabTextSize}>{item.text}</Text>
+                                  <Text numberOfLines={2} ellipsizeMode='tail' style={styles.tabTextSize}>{item.text}</Text>
                               </View>
                             </CardItem>
                           </Card>
@@ -58,7 +58,6 @@ export default class SongPage extends Component{
                         )}
                     </ScrollView>   
                     </View>
-                  </View>
                 )
 
                                                                                                                                                                                                                                           
