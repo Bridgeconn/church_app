@@ -19,6 +19,7 @@ import LiveStreamPage from './LiveStreamPage'
 import StartLiveStream from './StartLiveStream'
 import SongBookPage from './SongBookPage'
 import SongLyrics from './SongLyrics'
+import NotificationVerse from './NotificationVerse'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
@@ -193,6 +194,11 @@ export default class RoutesPage extends Component {
                 title = "Signup" 
               />
               <Scene 
+                key = "noti"  
+                component = {NotificationVerse}
+                title = "Notification" 
+              />
+              <Scene 
                 key = "guest"  
                 component = {GuestLogin}  
                 hideNavBar={true}
@@ -254,7 +260,8 @@ export default class RoutesPage extends Component {
               />
 
               <Scene 
-                key = "verse"      
+                key = "verse"  
+                hideNavBar={true}    
                 component = {VersePage}          
                 title = "Verse of the Day" 
               />

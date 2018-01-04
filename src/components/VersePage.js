@@ -1,13 +1,13 @@
 
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Platform} from 'react-native';
 import {ListItem,List,Card,CardItem,Body,Right} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
 import styles from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FCM from "react-native-fcm";
+import FCM  from "react-native-fcm";
 import {registerKilledListener, registerAppListener} from "./Listeners";
 
 registerKilledListener();
@@ -19,7 +19,8 @@ export default class VersePage extends Component{
             data: [],
             result:"",
             token: "",
-            tokenCopyFeedback: ""   
+            tokenCopyFeedback: "",
+            initNotif:null  
           }
           this.getData =this.getData.bind(this);
           this._shareMessage = this._shareMessage.bind(this);
@@ -43,25 +44,24 @@ export default class VersePage extends Component{
   showLocalNotification() {
     FCM.presentLocalNotification({
       vibrate: 500,
-      title: 'Notification',
-      body: 'Verse of the day',
+      title: 'Notification for verse of the day',
+      body: 'Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day',
       priority: "high",
       show_in_foreground: true,
       group: 'test',
-      number: 10
+      number: 10,
+      picture: "https://google.png",
     });
   }
-  
   async componentDidMount(){
     this.getData();
-     SplashScreen.hide()
     registerAppListener();
     FCM.getInitialNotification().then(notif => {
       this.setState({
         initNotif: notif
       })
+      console.log("ye h notification", JSON.stringify(this.state.initNotif))
     });
-
     try{
       let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
     } catch(e){
@@ -72,22 +72,7 @@ export default class VersePage extends Component{
       console.log("TOKEN (getFCMToken)", token);
       this.setState({token: token || ""})
     });
-
-    if(Platform.OS === 'android'){
-      FCM.getAPNSToken().then(token => {
-        console.log("APNS TOKEN (getFCMToken)", token);
-      });
     }
-    }
-  //   setClipboardContent(text) {
-  //   Clipboard.setString(text);
-  //   this.setState({tokenCopyFeedback: "Token copied to clipboard."});
-  //   setTimeout(() => {this.clearTokenCopyFeedback()}, 2000);
-  // }
-  // clearTokenCopyFeedback() {
-  //   this.setState({tokenCopyFeedback: ""});
-  // }
-
     render() {
       const data = this.state.data;
           return (
@@ -117,7 +102,6 @@ export default class VersePage extends Component{
                           <TouchableOpacity onPress={() => this.showLocalNotification()} >
                             <Text>Notification</Text>
                           </TouchableOpacity>
-                          
                         </CardItem>
                         </Card>
                         )}
