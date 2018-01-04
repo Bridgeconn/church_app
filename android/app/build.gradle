@@ -183,6 +183,10 @@ dependencies {
     compile ('com.google.firebase:firebase-messaging:10.0.1') {
         force = true;
     }
+    compile(project(":react-native-google-signin")){         
+        exclude group: "com.google.android.gms" // very important
+    }
+    compile 'com.google.android.gms:play-services-auth:10.0.1' // should be at least 9.0.0
      
 }
 
