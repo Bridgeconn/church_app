@@ -4,16 +4,25 @@ import {Button}  from 'native-base'
 import styles from '../style/styles.js'
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 
-const apirequest_1 = require("googleapis/lib/apirequest");
+// const apirequest_1 = require("googleapis/lib/apirequest");
 // var googleAuth = require('google-auth-library');
+// var google = require('googleapis');
+Object.defineProperty(exports, "__esModule", { value: true });
+// const transporters_1 = require("google-auth-library/lib/transporters");
+// const stream = require("stream");
+const parseString = require("string-template");
+const apiKey="AIzaSyBsUeJYvXWnxUDhd0GX03D5jknGPaV41Tw";
 
 export default class EventsDetail extends Component{
+
   constructor(props){
     super(props);
     console.log("title_name "+this.props.song_name)
     this.state = {
         title:this.props.song_name,
-        user: null
+        user: null,
+        isLoading: true,
+        data: []
     }
    console.log('name'+this.props.name)
   }
@@ -49,8 +58,8 @@ export default class EventsDetail extends Component{
             </View>
           </TouchableOpacity>
 
-          <Button onPress={() =>{this.callAuthorize(this.state.user.accessToken);}}>
-            <Text>Search ! </Text>
+          <Button onPress={() =>{this.callFetchLib();}}>
+            <Text>Search FETCH !</Text>
           </Button>
 
           <Text style={styles.textSong}>{this.props.text}</Text>
@@ -59,96 +68,24 @@ export default class EventsDetail extends Component{
     }
   }
 
-  callAuthorize(accessToken) {
-    this.authorize({'params': {'maxResults': '25',
-                 'part': 'snippet',
-                 'q': 'surfing',
-                 'type': ''}}, 
-                 this.searchListByKeyword, accessToken);
+  callFetchLib() {
+    fetch('https://www.googleapis.com/youtube/v3/search?key='+apiKey+
+      '&channelId=UC3XTzVzaHQEd30rQbuvCtTQ&part=snippet,id&order=date&maxResults=10'
+
+      https://www.googleapis.com/youtube/v3/search?key=AIzaSyBsUeJYvXWnxUDhd0GX03D5jknGPaV41Tw&part=snippet,id&order=date&maxResults=8&q=arijitsingh
+
+     // /movies.json')
+    fetch('https://facebook.github.io/react-native/movies.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log("response in fetch : " + JSON.stringify(responseJson));
+      })
+      .catch((error) => {
+        console.log("error in fetch : "+error);
+      });
   }
 
-  /**
- * Create an OAuth2 client with the given credentials, and then execute the
- * given callback function.
- *
- * @param {Object} credentials The authorization client credentials.
- * @param {function} callback The callback to call with the authorized client.
- */
- authorize(requestData, callback, accessToken) {
-  var clientSecret = 'tCYHIRKVk1PnwZzwlW_Vf8ow';
-  var clientId = '990724325288-bjhcievn7a5n06ml26no6a4v9jm5oknp.apps.googleusercontent.com';
-  var redirectUrl = 'urn:ietf:wg:oauth:2.0:oob';
-  // var auth = new googleAuth();
-  // var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-
-  // Check if we have previously stored a token.
-  // fs.readFile(TOKEN_PATH, function(err, token) {
-  //   if (err) {
-  //     getNewToken(oauth2Client, requestData, callback);
-  //   } else {
-    var authObject = new Object();
-    authObject.clientSecret = clientSecret;
-    authObject.clientId = clientId;
-    authObject.redirectUrl = redirectUrl;
-    authObject.credentials = accessToken;
-    
-      // oauth2Client.credentials = accessToken; //JSON.parse(token);
-      callback(authObject, requestData);
-    // }
-  // });
-}
-
-/**
- * Remove parameters that do not have values.
- *
- * @param {Object} params A list of key-value pairs representing request
- *                        parameters and their values.
- * @return {Object} The params object minus parameters with no values set.
- */
- removeEmptyParameters(params) {
-  for (var p in params) {
-    if (!params[p] || params[p] == 'undefined') {
-      delete params[p];
-    }
-  }
-  return params;
-}
-
- searchListByKeyword(auth, requestData) {
-  // var service = google.youtube('v3');
-  var parameters = this.removeEmptyParameters(requestData['params']);
-  parameters['auth'] = auth;
-  // service.search.list(parameters, function(err, response) {
-    this.searchDirectAPI(parameters, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
-    }
-    console.log(response);
-  });
-}
-
-  searchDirectAPI(params, options, callback) {
-            if (typeof options === 'function') {
-                callback = options;
-                options = {};
-            }
-            options || (options = {});
-            const rootUrl = 'https://www.googleapis.com/';
-            const parameters = {
-                options: Object.assign({
-                    url: (rootUrl + '/youtube/v3/search').replace(/([^:]\/)\/+/g, '$1'),
-                    method: 'GET'
-                }, options),
-                params: params,
-                requiredParams: ['part'],
-                pathParams: [],
-                context: self
-            };
-            return apirequest_1.createAPIRequest(parameters, callback);
-  }
-
-async _setupGoogleSignin() {
+  async _setupGoogleSignin() {
     try {
       await GoogleSignin.hasPlayServices({ autoResolve: true });
       await GoogleSignin.configure({
@@ -157,7 +94,7 @@ async _setupGoogleSignin() {
       });
 
       const user = await GoogleSignin.currentUserAsync();
-      console.log(user);
+      console.log("_setupGoogleSignin "+user);
       this.setState({user});
     }
     catch(err) {
@@ -168,7 +105,7 @@ async _setupGoogleSignin() {
   _signIn() {
     GoogleSignin.signIn()
     .then((user) => {
-      console.log(user);
+      console.log("_signIn "+user);
       this.setState({user: user});
     })
     .catch((err) => {
@@ -183,7 +120,271 @@ async _setupGoogleSignin() {
     })
     .done();
   }
+
+  callAuthorize(accessToken) {
+    var clientSecret = 'tCYHIRKVk1PnwZzwlW_Vf8ow';
+    var clientId = '990724325288-bjhcievn7a5n06ml26no6a4v9jm5oknp.apps.googleusercontent.com';
+    var redirectUrl = 'urn:ietf:wg:oauth:2.0:oob';
+
+    // var auth = new googleAuth();
+    // var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+    // oauth2Client.credentials = accessToken;
+
+    // this.searchListByKeyword(oauth2Client, {'params': {'maxResults': '25',
+    //              'part': 'snippet',
+    //              'q': 'surfing',
+    //              'type': ''} });
+
+    // this.searchListByKeyword({'params': {'maxResults': '25',
+    //              'part': 'snippet',
+    //              'q': 'surfing',
+    //              'type': ''}, 
+    //              'auth': {'clientSecret': 'tCYHIRKVk1PnwZzwlW_Vf8ow', 
+    //              'clientId': '990724325288-bjhcievn7a5n06ml26no6a4v9jm5oknp.apps.googleusercontent.com', 
+    //              'redirectUrl': 'urn:ietf:wg:oauth:2.0:oob', 'credentials': accessToken }});
+  }
+
+  searchListByKeyword(auth, requestData) {
+    // var service = google.youtube('v3');
+    var parameters = requestData['params'];//this.removeEmptyParameters(requestData['params']);
+    parameters['auth'] = auth;
+    this.searchDirectAPI(parameters, function(err, response) {
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    console.log('api success ===  '+response);
+  });
 }
+
+searchDirectAPI(params, callback) {
+            // if (typeof options === 'function') {
+            //     callback = options;
+            //     options = {};
+            // }
+            // options || (options = {});
+            const self = this;
+            self._options = callback || {};
+
+            const rootUrl = 'https://www.googleapis.com/';
+            const parameters = {
+                options: Object.assign({
+                    url: (rootUrl + '/youtube/v3/search').replace(/([^:]\/)\/+/g, '$1'),
+                    method: 'GET'
+                }, callback),
+                params: params,
+                requiredParams: ['part'],
+                pathParams: [],
+                context: self
+            };
+            return this.createAPIRequest(parameters, callback);
+  }
+
+// function isReadableStream(obj) {
+//     return obj instanceof stream.Stream &&
+//         typeof obj._read === 'function' &&
+//         typeof obj._readableState === 'object';
+// }
+logError(err) {
+    if (err) {
+        console.log("loggin error = "+err);
+    }
+}
+createCallback(callback) {
+    return typeof callback === 'function' ? callback : this.logError;
+}
+getMissingParams(params, required) {
+    const missing = [];
+    required.forEach(param => {
+        // Is the required param in the params object?
+        if (params[param] === undefined) {
+            missing.push(param);
+        }
+    });
+    // If there are any required params missing, return their names in array,
+    // otherwise return null
+    return missing.length > 0 ? missing : null;
+}
+}
+/**
+ * Create and send request to Google API
+ * @param  {object}   parameters Parameters used to form request
+ * @param  {Function} callback   Callback when request finished or error found
+ * @return {Request}             Returns Request object or null
+ */
+ /*
+createAPIRequest(parameters, callback) {
+    let req, body, missingParams;
+    let params = parameters.params;
+    let options = Object.assign({}, parameters.options);
+    // If the params are not present, and callback was passed instead,
+    // use params as the callback and create empty params.
+    if (typeof params === 'function') {
+        callback = params;
+        params = {};
+    }
+    // Create a new params object so it can no longer be modified from outside
+    // code Also support global and per-client params, but allow them to be
+    // overriden per-request
+    // params = Object.assign({}, // New base object
+    //                         parameters.context.google._options.params, // Global params
+    //                         parameters.context._options.params, // Per-client params
+    //                         params // API call params
+    // );
+    const media = params.media || {};
+    const resource = params.resource;
+    let authClient = params.auth 
+    // || parameters.context._options.auth ||
+    //     parameters.context.google._options.auth;
+    const defaultMime = typeof media.body === 'string' ?
+        'text/plain' :
+        'application/octet-stream';
+    delete params.media;
+    delete params.resource;
+    delete params.auth;
+    // Grab headers from user provided options
+    const headers = params.headers || {};
+    delete params.headers;
+    // Un-alias parameters that were modified due to conflicts with reserved names
+    Object.keys(params).forEach(key => {
+        if (key.slice(-1) === '_') {
+            const newKey = key.slice(0, -1);
+            params[newKey] = params[key];
+            delete params[key];
+        }
+    });
+    // Normalize callback
+    callback = this.createCallback(callback);
+    // Check for missing required parameters in the API request
+    missingParams = this.getMissingParams(params.params, parameters.requiredParams);
+    if (missingParams) {
+        // Some params are missing - stop further operations and inform the
+        // developer which required params are not included in the request
+        callback(new Error('Missing required parameters: ' + missingParams.join(', ')));
+        return null;
+    }
+    // Parse urls
+    if (options.url) {
+        options.url = parseString(options.url, params);
+    }
+    if (parameters.mediaUrl) {
+        parameters.mediaUrl = parseString(parameters.mediaUrl, params);
+    }
+    // delete path parameters from the params object so they do not end up in
+    // query
+    parameters.pathParams.forEach(param => {
+        delete params[param];
+    });
+    // if authClient is actually a string, use it as an API KEY
+    if (typeof authClient === 'string') {
+        params.key = params.key || authClient;
+        authClient = null;
+    }
+    // if (parameters.mediaUrl && media.body) {
+    //     options.url = parameters.mediaUrl;
+    //     if (resource) {
+    //         params.uploadType = 'multipart';
+    //         options.multipart = [
+    //             { 'Content-Type': 'application/json', body: JSON.stringify(resource) }, {
+    //                 'Content-Type': media.mimeType || (resource && resource.mimeType) || defaultMime,
+    //                 body: media.body // can be a readable stream or raw string!
+    //             }
+    //         ];
+    //     }
+    //     else {
+    //         params.uploadType = 'media';
+    //         Object.assign(headers, { 'Content-Type': media.mimeType || defaultMime });
+    //         if (isReadableStream(media.body)) {
+    //             body = media.body;
+    //         }
+    //         else {
+    //             options.body = media.body;
+    //         }
+    //     }
+    // }
+    // else {
+        options.json = resource ||
+            ((options.method === 'GET' || options.method === 'DELETE') ? true : {});
+    // }
+    options.headers = headers;
+    options.qs = params;
+    options.useQuerystring = true;
+    // options = Object.assign({}, 
+    //                           parameters.context.google._options, 
+    //                           parameters.context._options, 
+    //                           options
+    //   );
+    delete options.auth; // is overridden by our auth code
+    delete options.params; // We handle params ourselves and Request does not
+    // recognise 'params'
+    // create request (using authClient or otherwise and return request obj)
+    // if (authClient) {
+        req = authClient.request(options, callback);
+    // }
+    // else {
+    //     req = new transporters_1.DefaultTransporter().request(options, callback);
+    // }
+    if (body) {
+        body.pipe(req);
+    }
+    return req;
+}
+}
+*/
+// exports.createAPIRequest = createAPIRequest;
+//# sourceMappingURL=apirequest.js.map
+
+
+
+
+
+
+  /**
+ * Create an OAuth2 client with the given credentials, and then execute the
+ * given callback function.
+ *
+ * @param {Object} credentials The authorization client credentials.
+ * @param {function} callback The callback to call with the authorized client.
+ */
+//  authorize(requestData, callback, accessToken) {
+//   var clientSecret = 'tCYHIRKVk1PnwZzwlW_Vf8ow';
+//   var clientId = '990724325288-bjhcievn7a5n06ml26no6a4v9jm5oknp.apps.googleusercontent.com';
+//   var redirectUrl = 'urn:ietf:wg:oauth:2.0:oob';
+//   // var auth = new googleAuth();
+//   // var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+
+//   // Check if we have previously stored a token.
+//   // fs.readFile(TOKEN_PATH, function(err, token) {
+//   //   if (err) {
+//   //     getNewToken(oauth2Client, requestData, callback);
+//   //   } else {
+//     var authObject = new Object();
+//     authObject.clientSecret = clientSecret;
+//     authObject.clientId = clientId;
+//     authObject.redirectUrl = redirectUrl;
+//     authObject.credentials = accessToken;
+    
+//       // oauth2Client.credentials = accessToken; //JSON.parse(token);
+//       callback(authObject, requestData);
+//     // }
+//   // });
+// }
+
+/**
+ * Remove parameters that do not have values.
+ *
+ * @param {Object} params A list of key-value pairs representing request
+ *                        parameters and their values.
+ * @return {Object} The params object minus parameters with no values set.
+ */
+//  removeEmptyParameters(params) {
+//   for (var p in params) {
+//     if (!params[p] || params[p] == 'undefined') {
+//       delete params[p];
+//     }
+//   }
+//   return params;
+// }
 
 /**
  * Get and store new token after prompting for user authorization, and then
