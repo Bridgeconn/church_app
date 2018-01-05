@@ -1,27 +1,43 @@
 {
   "project_info": {
-    "project_number": "137531391247",
-    "firebase_url": "https://my-project-fcm-ad864.firebaseio.com",
-    "project_id": "my-project-fcm-ad864",
-    "storage_bucket": "my-project-fcm-ad864.appspot.com"
+    "project_number": "990724325288",
+    "firebase_url": "https://church-app-a31ca.firebaseio.com",
+    "project_id": "church-app-a31ca",
+    "storage_bucket": "church-app-a31ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:137531391247:android:5dbe7171aecfc41f",
+        "mobilesdk_app_id": "1:990724325288:android:5dbe7171aecfc41f",
         "android_client_info": {
           "package_name": "com.churchapplication"
         }
       },
       "oauth_client": [
         {
-          "client_id": "137531391247-7oiru25l0h4ahao099mui4fc3o7b8pfg.apps.googleusercontent.com",
+          "client_id": "990724325288-u79lbsgmp079rcpheoe7s3b1v41ss8fp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.churchapplication",
+            "certificate_hash": "09488dbc6253dbcd68fa8243cc24178f48ce765b"
+          }
+        },
+        {
+          "client_id": "990724325288-fg1semfpu78rourtrkgfh4om6ro90qpv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.churchapplication",
+            "certificate_hash": "58a45580fefe24b2593d0f5497429468e8b3b19a"
+          }
+        },
+        {
+          "client_id": "990724325288-0db4mkhlddbl9904k6831n831cihg2do.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCQVtTonJXdTPMfftpkz-pl-JaqFGqnKRg"
+          "current_key": "AIzaSyAlOw8976jVmhtywyhy3w4wcOX9anitpls"
         }
       ],
       "services": {
@@ -29,8 +45,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990724325288-0db4mkhlddbl9904k6831n831cihg2do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

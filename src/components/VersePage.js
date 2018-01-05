@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM  from "react-native-fcm";
 import {registerKilledListener, registerAppListener} from "./Listeners";
 
+
 registerKilledListener();
 export default class VersePage extends Component{
 
@@ -47,10 +48,11 @@ export default class VersePage extends Component{
       title: 'Notification for verse of the day',
       body: 'Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day',
       priority: "high",
+      sub_text: "Bible Book", 
       show_in_foreground: true,
       group: 'test',
       number: 10,
-      picture: "https://google.png",
+      large_icon: "http://clipart-library.com/img/690984.png",
     });
   }
   async componentDidMount(){
@@ -60,7 +62,6 @@ export default class VersePage extends Component{
       this.setState({
         initNotif: notif
       })
-      console.log("ye h notification", JSON.stringify(this.state.initNotif))
     });
     try{
       let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});

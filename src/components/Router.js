@@ -197,6 +197,7 @@ export default class RoutesPage extends Component {
                 key = "noti"  
                 component = {NotificationVerse}
                 title = "Notification" 
+                hideNavBar={true}
               />
               <Scene 
                 key = "guest"  

@@ -85,9 +85,7 @@ export default class EventsDetail extends Component{
       <View style={{flex:1}}>
       <ScrollView>
       <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
-        
         <Text  style={styles.eventData}><Icon name="map-marker" size={24}/> {this.state.event_topic}</Text>
-
         <Text  style={styles.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
         <Text style={styles.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
         <View style={{flexDirection:"row", alignItems:'center', justifyContent:"center"}}>

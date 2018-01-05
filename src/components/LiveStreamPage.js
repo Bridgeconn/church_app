@@ -26,6 +26,7 @@ export default class LiveStreamPage extends Component{
 	  	
 	}
 
+
 	render(){
 		return(
 		<View style={styles.container}>
@@ -72,12 +73,15 @@ export default class LiveStreamPage extends Component{
 		 		</View>
 		 		
 		 		</Card>
-			
+		 		<Card>
+				
+		 		</Card>
 		 	</Content>
 			
 			</ScrollView>
 		</View>
 			)
 	}
+	
 } 
 
