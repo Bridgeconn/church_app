@@ -42,7 +42,7 @@ export default class ProfilePage extends Component{
     }
   }
 
-  async handlePress(){
+  async handlePress( ){
     console.log("hello handle press")
       console.log(this.state.user);
       console.log(this.state.contact);
@@ -134,32 +134,47 @@ export default class ProfilePage extends Component{
   checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
     if (valueName !== null) {
       this.setState({newUser:valueName})
+      if (this.state.user !== valueName) {
+        this.setState({showSaveProfile:true})
+        return;
+      }
     }
     if (valueContact !== null) {
       this.setState({newContact:valueContact})
+      if (this.state.contact !== valueContact) {
+        this.setState({showSaveProfile:true})
+        return;
+      }
     }
     if (valueCheckEmail !== null) {
       this.setState({newcheckboxEmail:valueCheckEmail})
+      if (this.state.checkboxEmail !== valueCheckEmail) {
+        this.setState({showSaveProfile:true})
+        return;
+      }
     }
     if (valueCheckContact !== null) {
       this.setState({newcheckboxContact:valueCheckContact})
+      if (this.state.checkboxContact !== valueCheckContact) {
+        this.setState({showSaveProfile:true})
+        return;
+      }
     }
-    if(this.state.user !==valueName || 
+
+    this.setState({showSaveProfile:false});
+    
+    if(this.state.user !== valueName || 
       this.state.contact !==valueContact || 
-      this.state.checkboxEmail !==valueCheckEmail ||
+      this.state.checkboxEmail  !==valueCheckEmail ||
       this.state.checkboxContact !==valueCheckContact ){
-        this.setState({show:true})
+        this.setState({showSaveProfile:true})
         this.checkSaveVisible(true)
     } else{
-        this.setState({show:false})
+        this.setState({showSaveProfile:false})
         this.checkSaveVisible(false)
     }
   }
   
-checkSaveVisible =(value) =>{
-    console.log("setSaveVisibility"+value)
-    this.setState({showSaveProfile:value})
-  }
 	render(){
 		return(
       <View style={{flex:1}}>
@@ -175,7 +190,7 @@ checkSaveVisible =(value) =>{
                       <Right>
                       {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
                           <Title>Save</Title>
-                        </TouchableOpacity>:null}
+                        </TouchableOpacity>: null}
                       </Right>                      
                     </Header>
 		        <View style={styles.profilePageContent}>

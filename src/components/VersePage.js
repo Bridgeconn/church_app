@@ -55,6 +55,38 @@ export default class VersePage extends Component{
       large_icon: "http://clipart-library.com/img/690984.png",
     });
   }
+  // sendRemoteNotification(token) {
+  //   let body;
+
+  //   if(Platform.OS === 'android'){
+  //     body = {
+  //       "to": token,
+  //       "data":{
+  //         "custom_notification": {
+  //           "title": "Simple FCM Client",
+  //           "body": "This is a notification with only NOTIFICATION.",
+  //           "sound": "default",
+  //           "priority": "high",
+  //           "show_in_foreground": true
+  //         }
+  //       },
+  //       "priority": 10
+  //     }
+  //   } else {
+  //     body = {
+  //       "to": token,
+  //       "notification":{
+  //         "title": "Simple FCM Client",
+  //         "body": "This is a notification with only NOTIFICATION.",
+  //         "sound": "default"
+  //       },
+  //       "priority": 10
+  //     }
+  //   }
+  // }
+  createTable(){
+  console.log("heelllllllllooooooo")
+ }
   async componentDidMount(){
     this.getData();
     registerAppListener();
@@ -62,6 +94,7 @@ export default class VersePage extends Component{
       this.setState({
         initNotif: notif
       })
+      console.log("notif from verse", JSON.stringify(notif))
     });
     try{
       let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
@@ -103,6 +136,7 @@ export default class VersePage extends Component{
                           <TouchableOpacity onPress={() => this.showLocalNotification()} >
                             <Text>Notification</Text>
                           </TouchableOpacity>
+
                         </CardItem>
                         </Card>
                         )}

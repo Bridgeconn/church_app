@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 import Router from './src/components/Router'
-import SearchBar from './src/components/Searchbar'
+import App from './src/Login/App'
 export default class ChurchApplication extends Component {
   render() {
     return (

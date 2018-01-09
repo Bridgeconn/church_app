@@ -46,14 +46,14 @@
               <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
       </receiver>
-      <service android:name="com.evollu.react.fcm.MessagingService" 
+      <service android:name=".MyFirebaseMessagingService"
         android:enabled="true" android:exported="true">
      <intent-filter>
        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
      </intent-filter>
    </service>
 
-   <service android:name="com.evollu.react.fcm.InstanceIdService" 
+   <service android:name=".MyFirebaseInstanceIdService"
     android:exported="false">
      <intent-filter>
        <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>

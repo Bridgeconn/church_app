@@ -20,7 +20,7 @@ export default class NotificationVerse extends Component {
     super(props)
     console.log("props body"+this.props.notif.title)
     this.state ={
-     data:this.props.notif
+    		data:this.props.notif
     }
   }
  
@@ -97,6 +97,7 @@ export default class NotificationVerse extends Component {
           <View style={{flexDirection:"row"}}> 
             <Icon name='book-multiple' size={28} color="#fff"/>
             <Text style={{margin:5,fontSize:18,color:"#fff"}}>{this.state.data.title}</Text>
+
       </View>
         </View>
         <View

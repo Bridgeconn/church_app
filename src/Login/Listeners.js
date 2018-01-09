@@ -1,5 +1,5 @@
-import { Platform, AsyncStorage} from 'react-native';
-import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
+import { Platform, AsyncStorage } from 'react-native';
+
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from "react-native-fcm";
 
 AsyncStorage.getItem('lastNotification').then(data=>{
@@ -20,15 +20,12 @@ export function registerKilledListener(){
 // these callback will be triggered only when app is foreground or background
 export function registerAppListener(){
   FCM.on(FCMEvent.Notification, notif => {
-    // console.log("Notificatiooooooooooooon", JSON.stringify(notif));
+    console.log("Notification", notif);
     if(notif.local_notification){
-      // Actions.noti({notif:notif});
-       console.log("hey, it opened from there!!!!!");
-      return
+      return;
     }
     if(notif.opened_from_tray){
-      console.log("hi it opened from here");
-      return
+      return;
     }
 
     if(Platform.OS ==='android'){
@@ -62,6 +59,4 @@ export function registerAppListener(){
   setTimeout(function() {
     FCM.isDirectChannelEstablished().then(d => console.log(d));
   }, 1000);
-
 }
-
