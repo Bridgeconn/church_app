@@ -4,7 +4,7 @@
 // import {Actions} from 'react-native-router-flux'
 // import contactList from './contactListDummy.json'
 // import styles from '../style/styles.js'
-// import Icon from 'react-native-vector-icons/MaterialIcons'
+
 // import Config from 'react-native-config'
 // import axios from 'axios';
 // let SQLite = require('react-native-sqlite-storage')
@@ -119,8 +119,9 @@ import {
     ScrollView
 } from 'react-native';
 import AtoZList from 'react-native-atoz-list';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 let names = require('./names');
-names = _.groupBy(require('./names'), (name) => name[0].toUpperCase());
+names = _.groupBy(require('./names'), (name) => name.contact_name[0].toUpperCase());
 
 export default class App extends Component {
     constructor(props, context) {
@@ -143,9 +144,19 @@ export default class App extends Component {
         return (
             <View style={styles.cell}>
                 <View style={styles.placeholderCircle} />
+                <View>
                 <Text style={styles.name}>
-                    {data} {data.split('').reverse().join('')}
+                    {data.contact_name} 
                 </Text>
+                <Text style={styles.name}>
+                    {data.contact_num}
+                </Text>
+                <View style={{flexDirection:"row",margin:5}}>
+                <Icon name="phone" size={20} style={{margin:10}}/>
+                <Icon name="email" size={20} style={{margin:10}}/>
+                <Icon name="message" size={20} style={{margin:10}}/>
+                </View>
+                </View>
             </View>
         );
     }

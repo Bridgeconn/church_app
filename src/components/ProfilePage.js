@@ -162,25 +162,28 @@ export default class ProfilePage extends Component{
     }
 
     this.setState({showSaveProfile:false});
-    
-    if(this.state.user !== valueName || 
-      this.state.contact !==valueContact || 
-      this.state.checkboxEmail  !==valueCheckEmail ||
-      this.state.checkboxContact !==valueCheckContact ){
-        this.setState({showSaveProfile:true})
-        this.checkSaveVisible(true)
-    } else{
-        this.setState({showSaveProfile:false})
-        this.checkSaveVisible(false)
-    }
+
   }
-  
+  onBackButton(){
+    if(this.state.newUser!==this.state.user || 
+      this.state.newContact !==this.state.contact || 
+      this.state.newcheckboxEmail !==this.state.checkboxEmail || 
+      this.state.newcheckboxContact  !==this.state.checkboxContact ){
+      alert("please save changes")
+
+    }
+    else{
+      
+      Actions.pop()
+    }
+    }
+
 	render(){
 		return(
       <View style={{flex:1}}>
                     <Header>
                       <Left>
-                        <Button transparent onPress={()=>{Actions.pop()}}>
+                        <Button transparent onPress={()=>{this.onBackButton()}}>
                           <Icon name='arrow-back'/>
                         </Button>
                       </Left>
