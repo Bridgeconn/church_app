@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     padding:octaValue,
   }, 
   textSong:{
-    fontSize:20
+    fontSize:16
   },
 
   contactTextStyle:{
@@ -349,7 +349,33 @@ const styles = StyleSheet.create({
     color:'#000',
     fontSize:16,
     marginTop:8
+  },
+  TouchableOpacityFloatingButtonStyle:{
+    position: 'absolute',
+    width: 52,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 16,
+    bottom: 0,
+  },
+  songLyricsScrollView: {
+    marginBottom: 52
+  },
+  youtubeButton: {
+    marginTop:8, 
+    marginBottom:8
+  },
+  loaderYoutubeSearch: {
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    alignSelf:'center',
+    position: 'absolute',
+    bottom: 0,
+    marginBottom:16
   }
+  
 })
 
 export default styles
