@@ -23,4 +23,4 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         //and usually new token is only generated when the app is reinstalled or the data is cleared
         Log.d("MyRefreshedToken", token);
     }
-}
+                                            }

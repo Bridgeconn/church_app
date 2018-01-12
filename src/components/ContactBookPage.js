@@ -1,114 +1,3 @@
-// import React, {Component} from 'react'
-// import {View,Text,ScrollView,Linking,AsyncStorage,TouchableHighlight,Image,Dimensions,TouchableOpacity} from 'react-native';
-// import { Card,CardItem,Container, Header, Title, Content, H3,Item,Input, List, ListItem, Button, Footer, FooterTab, Left, Right, Body } from 'native-base';
-// import {Actions} from 'react-native-router-flux'
-// import contactList from './contactListDummy.json'
-// import styles from '../style/styles.js'
-
-// import Config from 'react-native-config'
-// import axios from 'axios';
-// let SQLite = require('react-native-sqlite-storage')
-
-// import Spinner from 'react-native-loading-spinner-overlay';
-
-// export default class ContactPage extends Component{
-
-//  constructor(props){
-//         super(props)
-//         this.state ={
-//           tokenValue:this.props.tokenValue,
-//             dataContactDetail: [],
-//             showProgress:true   
-//           }
-//         let db = SQLite.openDatabase({name: 'test.db', createFromLocation : "~contactDB.db"}, this.openCB, this.errorCB, this.successCB); 
-//         db.transaction((tx) => {
-//         tx.executeSql('SELECT * FROM contactDetail', [], (tx, results) => {
-//            let rows = results.rows.raw();
-//             rows.map(row => console.log(` email: ${row.email}, name: ${row.name}`));
-//             this.setState({rows});
-//         })
-      
-//       })
-//     }
-
-//     dataContacts(){
-//       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
-//       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-//       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
-//         .then((response) => { 
-//        console.log("response contacts"+JSON.stringify(response.data.contacts))
-//        console.log("response contact_name"+JSON.stringify(response.data.contacts.name))
-//        this.setState({dataContactDetail:response.data.contacts})
-//         this.setState({showProgress:false})
-//      })
-//      .catch(function (error) {
-//           console.log(error)
-//           console.log("something went wrong")
-//           alert('Some error occurred. Please try again later'); 
-//            this.setState({showProgress:false})
-//         })     
-//     }
-//   async componentDidMount() {
-//     await AsyncStorage.getItem('token').then((auth_token) => {
-//       console.log('token1 '+auth_token)
-//       if (auth_token !== null) {
-//         this.setState({tokenValue:auth_token})
-//         this.dataContacts();
-//        // this.setState({dataContactDetail:dataContactDetail})
-
-//         this.setState({showProgress:false})
-//       }
-//     })
-//   }
-
-//     callNumber = (url) =>{
-//        Linking.canOpenURL(url).then(supported => {
-//        if (!supported) {
-//         console.log('Can\'t handle url: ' + url);
-//        } else {
-//         return Linking.openURL(url);
-//        }
-//      }).catch(err => console.error('An error occurred', err));
-//     }
-//     render() {
-//       let data = this.state.dataContactDetail;
-//       console.log("render "+data)
-//        if (data.length == 0) {
-//         return(
-//        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
-//       )
-//       }
-//           return (
-//             <View style={styles.container}>
-//             <ScrollView>
-//              {data.map(item =>
-//               <Content key={item.name}>
-//               <Card>
-//               <CardItem>
-//                 <Text style={styles.tabTextSize}>{item.name}</Text>
-//               </CardItem>
-//               <CardItem >
-//               <TouchableOpacity onPress={()=> this.callNumber(`tel:+91${item.contact_number}`)} style={{flexDirection:"row"}}>
-//               <Icon name="call" size={24} style={{paddingRight:20}}/>
-//               <Text style={styles.tabTextSize}>{item.contact_number}</Text>   
-//               </TouchableOpacity>
-//               </CardItem>
-//               </Card>
-//               </Content>
-//               )}
-//             </ScrollView>
-//           </View>
-//                 )
-
-                                                                                                                                                                                                                                          
-// }
-// }
-
-
-
-
-
-
 
 import React, { Component } from 'react';
 import {
@@ -116,61 +5,143 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    AsyncStorage,
+    TouchableOpacity
 } from 'react-native';
+import { 
+  Header, 
+  Title,
+  Item,
+  Input, 
+ 
+} from 'native-base';
+import Config from 'react-native-config'
+import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-let names = require('./names');
-names = _.groupBy(require('./names'), (name) => name.contact_name[0].toUpperCase());
+let SQLite = require('react-native-sqlite-storage')
+var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 export default class App extends Component {
     constructor(props, context) {
         super(props, context);
-
+        this.state ={
+          tokenValue:this.props.tokenValue,
+            dataContactDetail: [],
+            showProgress:true   
+          }
         this._renderCell = this._renderCell.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
     }
 
+
+ dataContacts(){
+      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+      axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
+        .then((response) => { 
+       console.log("response contacts"+JSON.stringify(response.data.contacts))
+       console.log("response name"+JSON.stringify(response.data.contacts[0].name))
+       this.setState({dataContactDetail:response.data.contacts})
+       let newnames = _.groupBy(this.state.dataContactDetail, (name) => name.name[0].toUpperCase());
+       console.log("new name "+newnames)
+       this.setState({dataContactDetail:newnames})
+
+        this.setState({showProgress:false})
+     })
+     .catch(function (error) {
+          console.log(error)
+          console.log("something went wrong")
+          alert('Some error occurred. Please try again later'); 
+           this.setState({showProgress:false})
+        })     
+    }
+
+search(){
+  
+}
+  async componentDidMount() {
+    await AsyncStorage.getItem('token').then((auth_token) => {
+      console.log('token1 '+auth_token)
+      if (auth_token !== null) {
+        this.setState({tokenValue:auth_token})
+        this.dataContacts();
+        this.setState({showProgress:false})
+      }
+    })
+  }
+
+
+
     _renderHeader(data) {
+      console.log("data in renderCell"+JSON.stringify(data))
         return (
             <View style={{ height: 35, justifyContent: 'center', backgroundColor: '#eee', paddingLeft: 10 }}>
                 <Text>{data.sectionId}</Text>
             </View>
         )
     }
+     redirectToApp = (url) =>{
+       Linking.canOpenURL(url).then(supported => {
+       if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+       } else {
+        return Linking.openURL(url);
+       }
+     }).catch(err => console.error('An error occurred', err));
+    }
 
-
-    _renderCell(data) {
+     _renderCell(data) {
+        console.log("dataaaaaaaaaa "+JSON.stringify(data))
         return (
+         
             <View style={styles.cell}>
-                <View style={styles.placeholderCircle} />
-                <View>
+                <View style={{margin:10}}>
                 <Text style={styles.name}>
-                    {data.contact_name} 
+                    {data.name} 
                 </Text>
                 <Text style={styles.name}>
-                    {data.contact_num}
+                    {data.contact_number}
                 </Text>
-                <View style={{flexDirection:"row",margin:5}}>
-                <Icon name="phone" size={20} style={{margin:10}}/>
-                <Icon name="email" size={20} style={{margin:10}}/>
-                <Icon name="message" size={20} style={{margin:10}}/>
+                
+                <View style={{flexDirection:"row"}}>
+                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:+91${data.contact_num')}}><Icon name="phone" size={20} style={{margin:10,marginLeft:0}}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp(`mailto:somethingemail@gmail.com?subject=abcdefg&body=body`)}}><Icon name="email" size={20} style={{margin:10}}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp(`sms:number?body=yourMessage`)}}><Icon name="message" size={20} style={{margin:10}}/></TouchableOpacity>
                 </View>
+              
                 </View>
-            </View>
+              </View>
         );
     }
 
     render() {
+      if (this.state.dataContactDetail.length == 0) {
+        console.log("render a to z list in if part")
+        return null;
+      } else {
+        console.log("render a to z list in else part")
         return (
-            <AtoZList
+           <View style={{flex:1}}>
+                    <Header searchBar rounded>
+                      <Item>
+                        <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
+                      </Item>
+                    </Header>
+            <View style={{flex:1}}>
+              <AtoZList
                 sectionHeaderHeight={35}
                 cellHeight={95}
-                data={names}
+                data={this.state.dataContactDetail}
                 renderCell={this._renderCell}
                 renderSection={this._renderHeader}
                 />
+            </View>
+            </View>
         );
+      }
     }
 }
 
@@ -216,6 +187,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
-
-

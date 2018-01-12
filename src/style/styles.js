@@ -141,6 +141,15 @@ const styles = StyleSheet.create({
     fontFamily:'roboto-medium',
     fontWeight:'400'
   },
+  cell: {
+        margin:10,
+        height: 95,
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
   navbarTitleRight:{
     fontSize:19,
     color:'#fff',
