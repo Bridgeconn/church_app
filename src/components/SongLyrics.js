@@ -51,26 +51,20 @@ export default class EventsDetail extends Component{
             actions={[
               <DialogButton
                 text="CANCEL"
-                align="center"
+                align="left"
                 onPress={() => {
                   this.popupDialog.dismiss();
                 }}
                 key="button-cancel"
               />,
-              <DialogButton
-                text="SAVE"
-                align="right"
-                onPress={() => {
-                  this.popupDialog.dismiss();
-                  this.saveVideo();
-                }}
-                key="button-save"
-              />
+              
             ]}
             ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
 
               {this.state.startPlay &&
-                <View style={{margin:StyleSheet.hairlineWidth}}>
+                <View style={{margin:StyleSheet.hairlineWidth, height:300, backgroundColor:'black',flexDirection:'column'}}>
+
+                  <Icon onPress={() => {this.stopPlay();}} color={'white'} name="close-circle" size={24} style={{justifyContent:'flex-end',alignSelf:'flex-end'}}/>
                   <YouTube
                     apiKey={Config.YOUTUBE_API_KEY}
                     videoId={this.state.playVideoId}   // The YouTube video ID

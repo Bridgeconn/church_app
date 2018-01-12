@@ -11,36 +11,25 @@ export default class ProfilePage extends Component{
 	
 	constructor(props){
 		super(props)
-    console.log("props=" + this.props.username + "  " + this.props.contactNum + "  "+ this.props.tokenValue+ " "+this.props.email);
 		this.state = {
-		    avatarSource: null,
-		    videoSource: null,
-		    setImage:'',
-        checkboxEmail:false,
-        checkboxContact:false,
-		    isReady: false,
+        isReady: false,
 		    status: null,
-      	user: this.props.username,
-    		uri:this.props.uri, 
-        contact:this.props.contactNum,
-        token: this.props.tokenValue,
-        email: this.props.email,
-        newUser:this.props.username,
-        newContact:this.props.contactNum,
-        newcheckboxEmail:false,
-        newcheckboxContact:false,
-        showSaveProfile:false
+        token: props.tokenValue,
+        email: props.email,
+
+        contact: props.contactNum,
+        user: props.username,
+        checkboxEmail: false,
+        checkboxContact: false,
+        
+        newUser: props.username,
+        newContact: props.contactNum,
+        newcheckboxEmail: false,
+        newcheckboxContact: false,
+
+        showSaveProfile: false
 	  	};
 	}
-	
-  	saveUrl(item, selectedValue) {
-    try {
-     AsyncStorage.setItem(item, selectedValue);
-      console.log("saved")
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error);
-    }
-  }
 
   async handlePress(){
     console.log("hello handle press")
@@ -73,39 +62,6 @@ export default class ProfilePage extends Component{
         });
 
     }
-  selectPhotoTapped() {
-    const options = {
-      title: 'Select Profile Picture',
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-     }
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = '+JSON.stringify({options}))
-      if (response.didCancel) {
-        console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-        console.log("source"+source)
-        let uri = source.uri;
-        this.setState({
-          avatarSource: source,
-          uri: uri
-        }) 
-       this.saveUrl('uri', uri)
-        console.log(uri+"uri")
-      }
-    });
-    
-  }
-
 
   async componentDidMount() {
     await AsyncStorage.getItem('token').then((auth_token) => {
@@ -127,39 +83,24 @@ export default class ProfilePage extends Component{
       }
     });
   }
-  // componentWillUnmount() {
-  //   this.props.onRefSave(null)  
-  // }
 
-  checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
-    if (valueName !== null) {
-      this.setState({newUser:valueName})
-    }
-    if (valueContact !== null) {
-      this.setState({newContact:valueContact})
-    }
-    if (valueCheckEmail !== null) {
-      this.setState({newcheckboxEmail:valueCheckEmail})
-    }
-    if (valueCheckContact !== null) {
-      this.setState({newcheckboxContact:valueCheckContact})
-    }
-    if(this.state.user !==valueName || 
-      this.state.contact !==valueContact || 
-      this.state.checkboxEmail !==valueCheckEmail ||
-      this.state.checkboxContact !==valueCheckContact ){
-        this.setState({show:true})
-        this.checkSaveVisible(true)
-    } else{
-        this.setState({show:false})
-        this.checkSaveVisible(false)
+  checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
+
+    console.log('old values');
+    console.log('user= '+this.state.user + '  contact= '+this.state.contact + '  check1= ' + this.state.checkboxEmail+'  check2= '+this.state.checkboxContact);    
+    console.log('new values')
+    console.log('user= '+this.state.newUser + '  contact= '+this.state.newContact + '  check1= ' + this.state.newcheckboxEmail+'  check2= '+this.state.newcheckboxContact);
+
+
+    if (this.state.user!== newUser || this.state.contact !== newContact || 
+        this.state.checkboxContact !== newCheckContact || this.state.checkboxEmail !== newCheckEmail) {
+      
+      this.setState({showSaveProfile:true});
+    } else {
+      this.setState({showSaveProfile:false});
     }
   }
   
-checkSaveVisible =(value) =>{
-    console.log("setSaveVisibility"+value)
-    this.setState({showSaveProfile:value})
-  }
 	render(){
 		return(
       <View style={{flex:1}}>
@@ -173,7 +114,7 @@ checkSaveVisible =(value) =>{
                         <Title style={{textAlign:"left"}}>Profile</Title>
                       </Body>
                       <Right>
-                      {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
+                      {this.state.showSaveProfile ?  <TouchableOpacity onPress={()=>this.handlePress()}>
                           <Title>Save</Title>
                         </TouchableOpacity>:null}
                       </Right>                      
@@ -186,7 +127,10 @@ checkSaveVisible =(value) =>{
 				        <TextInput
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(changeValue) => this.checkSaveVisibility(changeValue,null,null,null)}
+				          onChangeText={(changeValue) => {
+                    this.checkSaveButtonVisibility(changeValue, this.state.newContact, this.state.newcheckboxEmail, this.state.newcheckboxContact);
+                    this.setState({newUser:changeValue});
+                  }}
                   value={this.state.newUser}
 				        />
 				        <Text style={{marginTop:12}}>
@@ -195,7 +139,10 @@ checkSaveVisible =(value) =>{
 				        <TextInput
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(changeValue) => this.checkSaveVisibility(null,changeValue,null,null)}
+				          onChangeText={(changeValue) => {
+                    this.checkSaveButtonVisibility(this.state.newUser, changeValue, this.state.newcheckboxEmail, this.state.newcheckboxContact)
+                    this.setState({newContact: changeValue})
+                  }}
                   value={this.state.newContact}
                   keyboardType="numeric"
 				        />
@@ -205,15 +152,18 @@ checkSaveVisible =(value) =>{
                 <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
                 <CheckBox onPress={()=> {
-                  this.checkSaveVisibility(null,null,!this.state.newcheckboxEmail,null)
+                  this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, !this.state.newcheckboxEmail, this.state.newcheckboxContact)
+                  this.setState({newcheckboxEmail: !this.state.newcheckboxEmail})
                 }} 
                   checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share email with church members</Text>
                 </View>
                 <View style={styles.checkboxContainer}>
                 <CheckBox onPress={()=>{ 
-                  this.checkSaveVisibility(null,null,null,!this.state.newcheckboxContact)
-                }} checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                  this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, this.state.newcheckboxEmail, !this.state.newcheckboxContact);
+                  this.setState({newcheckboxContact:!this.state.newcheckboxContact})
+                }} 
+                checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
                 </View>
                 </View>
