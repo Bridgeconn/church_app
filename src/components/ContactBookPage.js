@@ -27,9 +27,11 @@ export default class App extends Component {
     constructor(props, context) {
         super(props, context);
         this.state ={
-          tokenValue:this.props.tokenValue,
+            tokenValue:this.props.tokenValue,
             dataContactDetail: [],
-            showProgress:true   
+            showProgress:true,
+            searchedData:'',
+            text:''
           }
         this._renderCell = this._renderCell.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
@@ -58,10 +60,32 @@ export default class App extends Component {
         })     
     }
 
-search(){
-  
+
+   SearchFilterFunction(text){
+    console.log("text ................"+text)
+      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+      axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL +'?search='+text , config)
+      .then((response) =>{
+        const newData = response.data.contacts.filter(function(item){
+          console.log("item   newData"+item.name)
+          const itemData = item.name.toUpperCase()
+          const textData = text.toUpperCase()
+          console.log("textData  "+textData)
+          console.log("itemData  "+itemData)
+          console.log("search text " +this.state.searchedData)
+          // return itemData.indexOf(textData) > -1
+        
+     })
+          this.setState({searchedData:newData})
+          console.log("searchedData   "+this.state.searchedData)
+        
+        
+  })
+
 }
-  async componentDidMount() {
+
+   async componentDidMount() {
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
@@ -71,9 +95,6 @@ search(){
       }
     })
   }
-
-
-
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
         return (
@@ -127,7 +148,7 @@ search(){
                     <Header searchBar rounded>
                       <Item>
                         <Icon active name="search" size={24} style={{paddingLeft:4}}/>
-                        <Input placeholder="Search" onChangeText={ (text)=> this.setState({search: text})}/>
+                        <Input placeholder="Search" onChangeText={(text) => this.SearchFilterFunction(text)} />
                       </Item>
                     </Header>
             <View style={{flex:1}}>
