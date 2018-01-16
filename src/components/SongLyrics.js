@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Text,View,Image,TouchableOpacity, ScrollView, ActivityIndicator,Dimensions, StyleSheet} from 'react-native';
-import {Button}  from 'native-base'
+import {Button, Content}  from 'native-base'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -51,7 +51,7 @@ export default class EventsDetail extends Component{
             actions={[
               <DialogButton
                 text="CANCEL"
-                align="left"
+                align="right"
                 onPress={() => {
                   this.popupDialog.dismiss();
                 }}
@@ -83,18 +83,19 @@ export default class EventsDetail extends Component{
 
               <ScrollView>
                 {this.state.data.map(item =>
-                  <View style={{flexDirection:'row', marginBottom:8}} >
-                    <TouchableOpacity onPress={() => {this.setStartPlay(item.id.videoId);}}>
-                      <Image style={{width:120, height:90}}
-                          source={{uri:item.snippet.thumbnails.default.url}} >
-                        <Icon color={'white'} name="play" size={24} style={{alignItems:'center',justifyContent:'center',position:'absolute',right:0,bottom:0}}/>
-                      </Image>
-                    </TouchableOpacity>
-                    <View style={{height:90, width:Dimensions.get('window').width-160, marginLeft:8}}>
-                      <Text numberOfLines={2} ellipsizeMode='tail' style={{marginBottom:8, fontSize:14}}>{item.snippet.title}</Text>
-                      <Text numberOfLines={3} ellipsizeMode='tail' style={{fontSize:12}}>{item.snippet.description}</Text>
-                    </View>
-                  </View>
+                  <Content key={item.id.videoId}>
+                      <TouchableOpacity style={{flexDirection:'row', marginBottom:8}}  onPress={() => {this.setStartPlay(item.id.videoId);}}>
+                        <Image style={{width:120, height:90}}
+                            source={{uri:item.snippet.thumbnails.default.url}} >
+                          <Icon color={'white'} name="play" size={24} style={{alignItems:'center',justifyContent:'center',position:'absolute',right:0,bottom:0}}/>
+                        </Image>
+                        
+                        <View style={{height:90, width:Dimensions.get('window').width-160, marginLeft:8}}>
+                          <Text numberOfLines={2} ellipsizeMode='tail' style={{marginBottom:8, fontSize:14}}>{item.snippet.title}</Text>
+                          <Text numberOfLines={3} ellipsizeMode='tail' style={{fontSize:12}}>{item.snippet.description}</Text>
+                        </View>
+                        </TouchableOpacity>
+                  </Content>
                 )}
               </ScrollView>
           </PopupDialog>
