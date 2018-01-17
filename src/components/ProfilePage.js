@@ -181,6 +181,7 @@ export default class ProfilePage extends Component{
 	render(){
 		return(
       <View style={{flex:1}}>
+
                     <Header>
                       <Left>
                         <Button transparent onPress={()=>{this.onBackButton()}}>
@@ -196,6 +197,7 @@ export default class ProfilePage extends Component{
                         </TouchableOpacity>: null}
                       </Right>                      
                     </Header>
+        <ScrollView>
 		        <View style={styles.profilePageContent}>
 			        <View style={styles.profileView}>
 		        		<Text>
@@ -237,6 +239,7 @@ export default class ProfilePage extends Component{
                 </View>
 					</View>
 		  	</View>
+      </ScrollView>
 		</View>
 			)
 	}
