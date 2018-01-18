@@ -49,7 +49,7 @@ export default class App extends Component {
 
 
  dataContacts(){
-      this.setState({showProgress:true})
+      this.setState({showProgress:true,isRefreshing:false})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
@@ -63,7 +63,7 @@ export default class App extends Component {
          .catch(function (error) {
             console.log(error)
             console.log("something went wrong")
-             this.refs.toast.show('hello world!');
+             // this.refs.toast.show('hello world!');
              this.setState({showProgress:false,isRefreshing:false})
           })     
     }
@@ -74,7 +74,7 @@ export default class App extends Component {
       if(text == ""){
         return
       }
-      this.setState({showProgress:true})
+      this.setState({showProgress:true,isRefreshing:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL +'?search='+text , config)
@@ -86,11 +86,11 @@ export default class App extends Component {
           console.log("new data list = " + JSON.stringify(this.state.searchedData));
           console.log("new data = " + this.state.searchedData.length);
           console.log("new data len = " + (this.state.searchedData==''));
-          this.setState({showProgress:false})
+          this.setState({showProgress:false,isRefreshing:false})
       })
      .catch(function (error) {
         console.log("")
-        this.setState({showProgress:false})
+        this.setState({showProgress:false,isRefreshing:false})
       })
 
   }
@@ -194,7 +194,6 @@ export default class App extends Component {
                               renderCell={this._renderCell}
                               renderSection={this._renderHeader}
                               />
-                               <Toast ref="toast"/>
                           </View>
                 }
               </ScrollView>
