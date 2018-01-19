@@ -79,7 +79,8 @@ import {
     TouchableOpacity,
     TextInput,
     Dimensions,
-    RefreshControl
+    RefreshControl,
+    NetInfo
 } from 'react-native';
 import { 
   Header, 
@@ -118,23 +119,41 @@ export default class App extends Component {
 
 
  dataContacts(){
-      this.setState({showProgress:true,isRefreshing:true})
-      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
-      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-      axios.get(Config.BASE_API_URL + Config.GET_SONGS_API_URL, config)
-        .then((response) => { 
-           console.log("response contacts"+JSON.stringify(response.data.songs))
-           this.setState({dataContactDetail:response.data.songs})
-           let newnames = _.groupBy(this.state.dataContactDetail, (title) => title.title[0].toUpperCase());
-           this.setState({dataContactDetail:newnames})
-            this.setState({showProgress:false,isRefreshing:false})
-         })
-         .catch(function (error) {
-            console.log(error)
-            console.log("something went wrong")
-             //this.refs.toast.show('hello world!');
-             this.setState({showProgress:false,isRefreshing:false})
-          })     
+  NetInfo.getConnectionInfo()
+              .then((connectionInfo) => {
+                console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+                console.log('type of connection info type -- ' + typeof connectionInfo.type)
+                switch(connectionInfo.type) {
+                  case 'cellular': {
+                  }
+                  case 'wifi': {
+                    this.setState({showProgress:true,isRefreshing:true})
+                      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+                      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+                      axios.get(Config.BASE_API_URL + Config.GET_SONGS_API_URL, config)
+                        .then((response) => { 
+                           console.log("response contacts"+JSON.stringify(response.data.songs))
+                           this.setState({dataContactDetail:response.data.songs})
+                           let newnames = _.groupBy(this.state.dataContactDetail, (title) => title.title[0].toUpperCase());
+                           this.setState({dataContactDetail:newnames})
+                            this.setState({showProgress:false,isRefreshing:false})
+                         })
+                         .catch(function (error) {
+                            console.log(error)
+                            console.log("something went wrong")
+                             this.setState({showProgress:false,isRefreshing:false})
+                          })  
+                          break;   
+                        }
+                    default : {
+                    console.log("conenction none or unknoisw")
+                    this.setState({isRefreshing:false})
+
+                    break;
+                  }
+                  }
+                })
+      
     }
 
    SearchFilterFunction(param){
@@ -253,7 +272,7 @@ export default class App extends Component {
               {this.state.showProgress ? 
                 <Spinner size={"large"} visible={this.state.isRefreshing ? false :true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
                   (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() == "") ? 
-                    <View><Text>Network Error</Text></View> :
+                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}><Icon name="wifi-off" size={48}/><Text>Network Error</Text></View> :
                       (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() ==! "" && this.state.searchedData == '') ?
                         <View><Text>Network Error</Text></View> :
                           <View style={{flex:1}}>

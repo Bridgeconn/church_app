@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     TextInput,
     Dimensions,
-    RefreshControl
+    RefreshControl,
+    NetInfo
 } from 'react-native';
 import { 
   Header, 
@@ -23,7 +24,7 @@ import {
 import Config from 'react-native-config'
 import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../style/styles.js'
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -36,36 +37,54 @@ export default class App extends Component {
         super(props, context);
         this.state ={
             tokenValue:this.props.tokenValue,
-            dataContactDetail: [],
+            dataContactDetail: null,
             showProgress:false,
-            searchedData:[],
+            searchedData:null,
             searchQuery:"",
-            isRefreshing:false
+            isRefreshing:false,
             
           }
         this._renderCell = this._renderCell.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
     }
 
-
  dataContacts(){
-      this.setState({showProgress:true})
-      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
-      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-      axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
-        .then((response) => { 
-           console.log("response contacts"+JSON.stringify(response.data.contacts))
-           this.setState({dataContactDetail:response.data.contacts})
-           let newnames = _.groupBy(this.state.dataContactDetail, (name) => name.name[0].toUpperCase());
-           this.setState({dataContactDetail:newnames})
-            this.setState({showProgress:false,isRefreshing:false})
-         })
-         .catch(function (error) {
-            console.log(error)
-            console.log("something went wrong")
-             // this.refs.toast.show('hello world!');
-             this.setState({showProgress:false,isRefreshing:false})
-          })     
+      NetInfo.getConnectionInfo()
+              .then((connectionInfo) => {
+                console.log('Initial, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+                console.log('type of connection info type -- ' + typeof connectionInfo.type)
+                switch(connectionInfo.type) {
+                  case 'cellular': {
+                  }
+                  case 'wifi': {
+                    this.setState({showProgress:true})
+                  const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+                  axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+                  axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
+                    .then((response) => { 
+                       console.log("response contacts"+JSON.stringify(response.data.contacts))
+                       let newnames = _.groupBy(response.data.contacts, (name) => name.name[0].toUpperCase());
+                       this.setState({dataContactDetail:newnames})
+                        this.setState({showProgress:false,isRefreshing:false})
+                     })
+                     .catch((error) =>{
+                        console.log(error)
+                        console.log("something went wrong")
+                               this.setState({showProgress:false})
+                               this.setState({isRefreshing:false})
+                      })
+
+                    break;
+                  }
+                  default : {
+                    console.log("conenction none or unknoisw")
+                    this.setState({isRefreshing:false})
+
+                    break;
+                  }
+                }
+
+            })
     }
 
    SearchFilterFunction(param){
@@ -80,12 +99,10 @@ export default class App extends Component {
       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL +'?search='+text , config)
       .then((response) =>{
           console.log("response "+JSON.stringify(response.data))
-          this.setState({searchedData:response.data.contacts})
-          let newnames = _.groupBy(this.state.searchedData, (name) => name.name[0].toUpperCase());
-          this.setState({searchedData:newnames})
-          console.log("new data list = " + JSON.stringify(this.state.searchedData));
-          console.log("new data = " + this.state.searchedData.length);
-          console.log("new data len = " + (this.state.searchedData==''));
+          if (response.data.contacts.length >0) {
+            let newnames = _.groupBy(response.data.contacts, (item) => item.name[0].toUpperCase());
+            this.setState({searchedData:newnames})
+          }
           this.setState({showProgress:false})
       })
      .catch(function (error) {
@@ -122,28 +139,10 @@ export default class App extends Component {
      }).catch(err => console.error('An error occurred', err));
     }
       onRefreshFunction(){
-        // this.setState({isRefreshing:true})
-        // const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
-        // axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-        // axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
-        // .then((response) => { 
-        //    console.log("response contacts"+JSON.stringify(response.data.contacts))
-        //    this.setState({dataContactDetail:response.data.contacts})
-        //    let newnames = _.groupBy(this.state.dataContactDetail, (name) => name.name[0].toUpperCase());
-        //    this.setState({dataContactDetail:newnames})
-        //     this.setState({isRefreshing:false})
-        //  })
-        //  .catch(function (error) {
-        //     console.log(error)
-        //     console.log("something went wrong")
-        //      // this.refs.toast.show('hello world!');
-        //      this.setState({isRefreshing:false})
-        //   })     
-        if(this.state.showProgress){
-          return
-        }
         this.setState({isRefreshing:true})
         this.dataContacts()
+       
+
       }
      _renderCell(data) {
         console.log("dataaaaaaaaaa "+JSON.stringify(data))
@@ -171,20 +170,23 @@ export default class App extends Component {
       this.setState({searchQuery:text})
       if (text.trim() == "") {
         console.log("empty search data");
-        this.setState({searchedData:[]})
+        this.setState({searchedData:null})
       }
     }
     clearInput = () => {
     this.textInputRef.clear();
   }
     render() {
-      console.log("refreshing   "+this.state.isRefreshing)
+      console.log("refreshing "+this.state.isRefreshing)
+      console.log('contact detail empty = '+(this.state.dataContactDetail == null ? true:false) + '  query notempty= ' +
+        (this.state.searchQuery.trim() !== "" ? true:false) + '  search data empty= ' + (this.state.searchedData == null ? true:false)); 
+
       console.log("show loader progress "+this.state.showProgress)
         return (
            <View style={{flex:1}}>
              <Header searchBar rounded>
                 <Item>
-                  <Icon active name="search-web" size={24} style={{paddingLeft:4}}/>
+                  <Icon active name="search" size={24} style={{paddingLeft:4}}/>
                   <TextInput 
                     style={{width:Dimensions.get('window').width-80}}  
                     placeholder="Enter name or contact" 
@@ -197,31 +199,38 @@ export default class App extends Component {
                   </Item>
               </Header>
               <ScrollView 
-              showsVerticalScrollIndicator={false}
-              refreshControl={
-                    <RefreshControl
-                        onRefresh={this.onRefreshFunction.bind(this)}
-                        refreshing={this.state.isRefreshing}
-                    />
-                }
-              >
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                      <RefreshControl
+                          onRefresh={() => this.onRefreshFunction()}
+                          refreshing={this.state.isRefreshing}
+                      />
+                  }
+                >
               {this.state.showProgress ? 
-                <Spinner size={"large"} visible={ this.state.isRefreshing ? false :true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
-                  (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() == "") ? 
-                    <View><Text>Network Error</Text></View> :
-                      (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() ==! "" && this.state.searchedData == '') ?
-                        <View><Text>Network Error</Text></View> :
+                <Spinner size={"large"} visible={ this.state.isRefreshing ? false :true } color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                  (this.state.dataContactDetail == null  && this.state.searchQuery.trim() == "") ? 
+                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center',alignContent:"center",alignSelf:"center"}}>
+                      <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
+                    </View>
+                    :
+                      (this.state.searchQuery.trim() !== "" && this.state.searchedData == null) ?
+                        <View style={{flex:1,justifyContent: 'center',alignItems: 'center',alignContent:"center",alignSelf:"center"}}>
+                          <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
+                        </View>:
+                          
                           <View style={{flex:1}}>
                             <AtoZList
                               sectionHeaderHeight={35}
                               cellHeight={95}
-                              data={(this.state.searchedData == '') ? this.state.dataContactDetail : this.state.searchedData}
+                              data={(this.state.searchedData == null) ? this.state.dataContactDetail : this.state.searchedData}
                               renderCell={this._renderCell}
                               renderSection={this._renderHeader}
                               />
                           </View>
                 }
-              </ScrollView>
+                </ScrollView>
+
               </View>
         )
     }
