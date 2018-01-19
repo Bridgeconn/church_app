@@ -23,7 +23,7 @@ import {
 import Config from 'react-native-config'
 import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import styles from '../style/styles.js'
 import Toast, {DURATION} from 'react-native-easy-toast'
@@ -157,19 +157,25 @@ export default class App extends Component {
         this.setState({searchedData:[]})
       }
     }
-
+    clearInput = () => {
+    this.textInputRef.clear();
+  }
     render() {
         return (
            <View style={{flex:1}}>
              <Header searchBar rounded>
                 <Item>
-                  <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                  <Icon active name="search-web" size={24} style={{paddingLeft:4}}/>
                   <TextInput 
-                    style={{width:Dimensions.get('window').width}}  
+                    style={{width:Dimensions.get('window').width-80}}  
                     placeholder="Enter name or contact" 
                     onChangeText ={(text) => this.refreshResults(text)}
+                    ref={ref => this.textInputRef = ref}
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={(event) => this.SearchFilterFunction(event.nativeEvent.text)} />
-                </Item>
+                    <Icon name="close" size={24} onPress={()=>this.clearInput()}/>
+
+                  </Item>
               </Header>
               <ScrollView 
               showsVerticalScrollIndicator={false}
