@@ -49,7 +49,7 @@ export default class App extends Component {
 
 
  dataContacts(){
-      this.setState({showProgress:true,isRefreshing:false})
+      this.setState({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
@@ -74,7 +74,7 @@ export default class App extends Component {
       if(text == ""){
         return
       }
-      this.setState({showProgress:true,isRefreshing:true})
+      this.setState({showProgress:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL +'?search='+text , config)
@@ -86,11 +86,11 @@ export default class App extends Component {
           console.log("new data list = " + JSON.stringify(this.state.searchedData));
           console.log("new data = " + this.state.searchedData.length);
           console.log("new data len = " + (this.state.searchedData==''));
-          this.setState({showProgress:false,isRefreshing:false})
+          this.setState({showProgress:false})
       })
      .catch(function (error) {
         console.log("")
-        this.setState({showProgress:false,isRefreshing:false})
+        this.setState({showProgress:false})
       })
 
   }
@@ -122,6 +122,23 @@ export default class App extends Component {
      }).catch(err => console.error('An error occurred', err));
     }
       onRefreshFunction(){
+        // this.setState({isRefreshing:true})
+        // const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+        // axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+        // axios.get(Config.BASE_API_URL + Config.GET_CONTACTS_API_URL, config)
+        // .then((response) => { 
+        //    console.log("response contacts"+JSON.stringify(response.data.contacts))
+        //    this.setState({dataContactDetail:response.data.contacts})
+        //    let newnames = _.groupBy(this.state.dataContactDetail, (name) => name.name[0].toUpperCase());
+        //    this.setState({dataContactDetail:newnames})
+        //     this.setState({isRefreshing:false})
+        //  })
+        //  .catch(function (error) {
+        //     console.log(error)
+        //     console.log("something went wrong")
+        //      // this.refs.toast.show('hello world!');
+        //      this.setState({isRefreshing:false})
+        //   })     
         if(this.state.showProgress){
           return
         }
@@ -161,6 +178,8 @@ export default class App extends Component {
     this.textInputRef.clear();
   }
     render() {
+      console.log("refreshing   "+this.state.isRefreshing)
+      console.log("show loader progress "+this.state.showProgress)
         return (
            <View style={{flex:1}}>
              <Header searchBar rounded>
@@ -181,13 +200,13 @@ export default class App extends Component {
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
-                        onRefresh={() => this.onRefreshFunction()}
+                        onRefresh={this.onRefreshFunction.bind(this)}
                         refreshing={this.state.isRefreshing}
                     />
                 }
               >
               {this.state.showProgress ? 
-                <Spinner size={"large"} visible={true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                <Spinner size={"large"} visible={ this.state.isRefreshing ? false :true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
                   (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() == "") ? 
                     <View><Text>Network Error</Text></View> :
                       (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() ==! "" && this.state.searchedData == '') ?

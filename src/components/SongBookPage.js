@@ -251,7 +251,7 @@ export default class App extends Component {
                 }
               >
               {this.state.showProgress ? 
-                <Spinner size={"large"} visible={true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                <Spinner size={"large"} visible={this.state.isRefreshing ? false :true} color={"#3F51B5"} style={styles.spinnerCustom}/> : 
                   (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() == "") ? 
                     <View><Text>Network Error</Text></View> :
                       (this.state.dataContactDetail == ''  && this.state.searchQuery.trim() ==! "" && this.state.searchedData == '') ?
