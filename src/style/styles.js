@@ -142,8 +142,7 @@ const styles = StyleSheet.create({
     fontWeight:'400'
   },
   cell: {
-        margin:10,
-        height: 95,
+        margin:8,
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
         backgroundColor: '#fff',
@@ -358,6 +357,12 @@ const styles = StyleSheet.create({
     color:'#000',
     fontSize:16,
     marginTop:8
+  },
+  songTitleText:{
+    fontSize:18
+  },
+  songLyricsText:{
+    fontSize:14
   }
 })
 
