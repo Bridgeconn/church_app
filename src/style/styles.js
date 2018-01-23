@@ -360,12 +360,10 @@ const styles = StyleSheet.create({
   },
   songTitleText:{
     fontSize:18,
-    paddingRight: 5 
   },
   songLyricsText:{
     fontSize:16,
     lineHeight: 26,
-    paddingRight: 5
   }
 })
 

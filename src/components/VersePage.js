@@ -7,11 +7,11 @@ import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
 import styles from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FCM  from "react-native-fcm";
-import {registerKilledListener, registerAppListener} from "./Listeners";
+import FCM, {FCMEvent} from "react-native-fcm"
+let SQLite = require('react-native-sqlite-storage')
 
+var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
-registerKilledListener();
 export default class VersePage extends Component{
 
  constructor(){
@@ -42,70 +42,54 @@ export default class VersePage extends Component{
       message: messageText
     }).then(this._showResult);
   }
-  showLocalNotification() {
-    FCM.presentLocalNotification({
-      vibrate: 500,
-      title: 'Notification for verse of the day',
-      body: 'Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day Verse of the day',
-      priority: "high",
-      sub_text: "Bible Book", 
-      show_in_foreground: true,
-      group: 'test',
-      number: 10,
-      large_icon: "http://clipart-library.com/img/690984.png",
-    });
-  }
-  // sendRemoteNotification(token) {
-  //   let body;
-
-  //   if(Platform.OS === 'android'){
-  //     body = {
-  //       "to": token,
-  //       "data":{
-  //         "custom_notification": {
-  //           "title": "Simple FCM Client",
-  //           "body": "This is a notification with only NOTIFICATION.",
-  //           "sound": "default",
-  //           "priority": "high",
-  //           "show_in_foreground": true
-  //         }
-  //       },
-  //       "priority": 10
-  //     }
-  //   } else {
-  //     body = {
-  //       "to": token,
-  //       "notification":{
-  //         "title": "Simple FCM Client",
-  //         "body": "This is a notification with only NOTIFICATION.",
-  //         "sound": "default"
-  //       },
-  //       "priority": 10
-  //     }
-  //   }
-  // }
-  createTable(){
-  console.log("heelllllllllooooooo")
- }
+  
+  
   async componentDidMount(){
     this.getData();
-    registerAppListener();
+    FCM.on(FCMEvent.Notification, notif => {
+      console.log("Notification  "+JSON.stringify(notif));
+
+      if(notif.local_notification){
+      return
+    }
+    if(notif.opened_from_tray){
+      console.log("Notification  data"+JSON.stringify(notif.fcm));
+      fcm: {
+        action: null,
+        body: "New data received",
+        color: null,
+        icon: null,
+        tag: null,
+        title: "New Document"
+      },
+    }
+    })
+
+     FCM.on(FCMEvent.RefreshToken, token => {
+      console.log("TOKEN (refreshUnsubscribe)", token);
+      this.props.onChangeToken(token);
+    })
+
     FCM.getInitialNotification().then(notif => {
       this.setState({
         initNotif: notif
       })
-      console.log("notif from verse", JSON.stringify(notif))
-    });
-    try{
-      let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
-    } catch(e){
-      console.error(e);
-    }
-
+    })
     FCM.getFCMToken().then(token => {
       console.log("TOKEN (getFCMToken)", token);
       this.setState({token: token || ""})
     });
+    }
+    notificationToDb(){
+        db.transaction((tx)=>{
+        tx.executeSql('CREATE TABLE IF NOT EXISTS verseOfTheDay (data text, data_num integer)',[],(tx, res)=>{
+        console.log("Table created",JSON.stringify(res))
+        })
+        tx.executeSql("INSERT INTO verseOfTheDay (data, data_num) VALUES (?,?)", ["test", 100], function(tx, res) {
+            console.log("insertId: " + res.insertId + " -- probably 1");
+            console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+       })
+     })
     }
     render() {
       const data = this.state.data;
@@ -133,10 +117,6 @@ export default class VersePage extends Component{
                           >
                           <Icon name="share-variant" size={24} color="#3F51B5"/>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={() => this.showLocalNotification()} >
-                            <Text>Notification</Text>
-                          </TouchableOpacity>
-
                         </CardItem>
                         </Card>
                         )}
