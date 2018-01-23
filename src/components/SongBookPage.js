@@ -36,12 +36,12 @@ export default class SongBookPage extends Component {
     constructor(props, context) {
         super(props, context);
         this.state ={
-            tokenValue:this.props.tokenValue,
             songsList: [],
             isLoading:false,
             searchedSongsList:[],
             searchQuery:"",
-            isRefreshing:false
+            isRefreshing:false,
+            searchBoxText:""
             
           }
     }
@@ -54,8 +54,8 @@ export default class SongBookPage extends Component {
                   case 'cellular': {
                   }
                   case 'wifi': {
-                    this.setState({isLoading:true,isRefreshing:true})
-                      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+                    this.setState({isLoading:true})
+                      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue,} }
                       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                       var url = Config.BASE_API_URL + Config.GET_SONGS_API_URL + (searchText == null ? '' : '?search='+searchText);
                       axios.get(url, config)
@@ -65,6 +65,7 @@ export default class SongBookPage extends Component {
                               this.setState({songsList:response.data.songs})
                            } else {
                               this.setState({searchedSongsList:response.data.songs})
+                              console.log("searched data"+this.state.searchedSongsList)
                            }
                             this.setState({isLoading:false,isRefreshing:false})
                          })
@@ -97,14 +98,8 @@ export default class SongBookPage extends Component {
   }
   
    async componentDidMount() {
-    await AsyncStorage.getItem('token').then((auth_token) => {
-      console.log('token1 '+auth_token)
-      if (auth_token !== null) {
-        this.setState({tokenValue:auth_token})
         this.fetchSongBooks(null);
-      }
-    })
-  }
+     }
 
        onRefreshFunction(){
         if(this.state.isLoading){
@@ -116,6 +111,7 @@ export default class SongBookPage extends Component {
       }
 
     refreshResults(text) {
+      this.setState({searchBoxText:text});
       console.log("refress called  : "+text)
       // this.setState({searchQuery:text})
       if (text.trim() == "") {
@@ -129,10 +125,12 @@ export default class SongBookPage extends Component {
 
     clearInput = () => {
       this.textInputRef.clear();
+      this.refreshResults("");
+  
     }
 
     render() {
-      
+      console.log("searched data render"+this.state.searchedSongsList.length == 0 ? true :false)
           return (
            <View style={{flex:1}}>
              <Header searchBar rounded>
@@ -145,7 +143,7 @@ export default class SongBookPage extends Component {
                     ref={ref => this.textInputRef = ref}
                     underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={(event) => this.doSearchSongBooks(event.nativeEvent.text)} />
-                    <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>
+                    {this.state.searchBoxText =="" ? null : <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>}  
                 </Item>
               </Header>
               <ScrollView 
@@ -160,7 +158,7 @@ export default class SongBookPage extends Component {
               >
 
               {this.state.isLoading ? 
-                <Spinner size={"large"} visible={ this.state.isRefreshing ? false :true } color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                <Spinner size={"large"} visible={ this.state.isRefreshing ? false : true } color={"#3F51B5"} style={styles.spinnerCustom}/> : 
                   (this.state.songsList.length == 0  && this.state.searchQuery.trim() == "") ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>

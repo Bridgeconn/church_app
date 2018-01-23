@@ -247,6 +247,7 @@ export default class RoutesPage extends Component {
                 component = {SongBookPage}    
                 title = "Song Book"                
                 titleStyle={styles.navbarTitle}
+                tokenValue={this.state.tokenValue}
               />
               <Scene 
                 key = "songLyrics"       

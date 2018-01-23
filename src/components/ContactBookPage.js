@@ -33,10 +33,10 @@ let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 export default class App extends Component {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props ) {
+        super(props);
+
         this.state ={
-            tokenValue:this.props.tokenValue,
             dataContactDetail: null,
             showProgress:false,
             searchedData:null,
@@ -56,7 +56,7 @@ export default class App extends Component {
                   }
                   case 'wifi': {
                     this.setState({showProgress:true})
-                  const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
+                  const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
                   axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                   let url = Config.BASE_API_URL + Config.GET_CONTACTS_API_URL + (searchText == null ? '' : '?search='+searchText);
                   axios.get(url, config)
@@ -103,13 +103,7 @@ export default class App extends Component {
   }
   
    async componentDidMount() {
-    await AsyncStorage.getItem('token').then((auth_token) => {
-      console.log('token1 '+auth_token)
-      if (auth_token !== null) {
-        this.setState({tokenValue:auth_token})
         this.fetchContacts(null);
-      }
-    })
   }
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
@@ -129,6 +123,9 @@ export default class App extends Component {
      }).catch(err => console.error('An error occurred', err));
     }
       onRefreshFunction(){
+         if(this.state.isLoading){
+          return
+        }
         this.setState({isRefreshing:true})
         this.fetchContacts(this.state.searchQuery.trim() == "" ? null : this.state.searchQuery.trim())
        
