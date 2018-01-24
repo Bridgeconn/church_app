@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import { Container, Header, Item, Input, Button} from 'native-base';
-import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View,DeviceEventEmitter} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
@@ -94,9 +94,16 @@ export default class RoutesPage extends Component {
   }
 
   componentWillUnmount(){
-  BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
+    BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
 
+  componentWillMount(){
+    DeviceEventEmitter.addListener('notificationReceived', function(e: Event) {
+      console.log("you are in componentWillMount function")
+      console.log("Evemt = " + JSON.stringify(e))
+      
+    });
+  }
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {

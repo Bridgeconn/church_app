@@ -54,14 +54,7 @@ export default class VersePage extends Component{
     }
     if(notif.opened_from_tray){
       console.log("Notification  data"+JSON.stringify(notif.fcm));
-      fcm: {
-        action: null,
-        body: "New data received",
-        color: null,
-        icon: null,
-        tag: null,
-        title: "New Document"
-      },
+      
     }
     })
 

@@ -42,7 +42,8 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeYouTube(),
           new ImagePickerPackage(),
           new SQLitePluginPackage(),
-          new FIRMessagingPackage()      
+          new FIRMessagingPackage(),
+          new NotificationPackage()      
           );
     }
 
