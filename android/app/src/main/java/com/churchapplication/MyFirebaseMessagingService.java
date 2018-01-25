@@ -17,37 +17,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        Log.i("tag1","on message recieve : "+ remoteMessage.toString());
+
+        WritableMap params = Arguments.createMap();
+
+        if (remoteMessage.getNotification() != null) {
+            if (remoteMessage.getNotification().getTitle() != null) {
+                params.putString("notification_title", remoteMessage.getNotification().getTitle());
+            }
+            if (remoteMessage.getNotification().getBody() != null) {
+                params.putString("notification_body", remoteMessage.getNotification().getBody());
+            }
+        }
 
         if (remoteMessage.getData() != null) {
-            Log.i("tag1", "remote data = " + remoteMessage.getData().toString());
+            if(remoteMessage.getData().size() > 0){
+                 Log.d("tag", "Message data payload: " + remoteMessage.getData().toString());
+                 for (String key : remoteMessage.getData().keySet()) {
+                    params.putString(key, remoteMessage.getData().get(key));
+                }
+
+            }
         }
-        if (remoteMessage.getNotification() != null) {
-            Log.i("tag1", "remote notification = " + remoteMessage.getNotification().getBody());        
-            Log.i("tag1", "remote notification = " + remoteMessage.getNotification().getTitle());
-        }
-        WritableMap params = Arguments.createMap();
-        params.putInt("notification_title", remoteMessage.getNotification().getTitle());
-        params.putString("book_name", "Proverbs");
-        param.putLong("timestamp", System.currentTimeInmillis());
+
+        params.putDouble("notification_timestamp", (double)System.currentTimeMillis());
 
         NotificationModule.sendEvent("notificationReceived", params);
 
-        //if the message contains data payload
-        //It is a map of custom keyvalues
-        //we can read it easily
-        if(remoteMessage.getData().size() > 0){
-            //handle the data message here
-
-        }
-
-        //getting the title and the body
-        String title = remoteMessage.getNotification().getTitle();
-        String body = remoteMessage.getNotification().getBody();
-
         //then here we can use the title and body to build a notification
-
-        MyNotificationManager.getInstance(this).displayNotification(title,body);
+        // MyNotificationManager.getInstance(this).displayNotification(title,body);
 
     }
 }

@@ -27,6 +27,8 @@ import Searchbar from './Searchbar'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
+import FCM from "react-native-fcm"
+
 
 // const scene = [{
 //     name: 'Events',
@@ -99,11 +101,22 @@ export default class RoutesPage extends Component {
 
   componentWillMount(){
     DeviceEventEmitter.addListener('notificationReceived', function(e: Event) {
-      console.log("you are in componentWillMount function")
-      console.log("Evemt = " + JSON.stringify(e))
-      
+      console.log("Event = " + JSON.stringify(e))
+      console.log("Event = TITLE" + e.notification_title)
+      console.log("Event = body" + e.notification_body)
+      // add to db here
+
+
+      FCM.presentLocalNotification({
+            title: e.notification_body,                     // as FCM payload
+            body: e.notification_title,                    // as FCM payload (required)
+            show_in_foreground: true,
+            click_action:Actions.home2(),                             // as FCM payload
+            big_text: e.notification_title     // Android only
+        });
     });
   }
+
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {

@@ -75,7 +75,7 @@ export default class VersePage extends Component{
     }
     notificationToDb(){
         db.transaction((tx)=>{
-        tx.executeSql('CREATE TABLE IF NOT EXISTS verseOfTheDay (data text, data_num integer)',[],(tx, res)=>{
+        tx.executeSql('CREATE TABLE IF NOT EXISTS verseOfTheDay (time_stamp integer, book_name  text, chapter_num integer, verse_text text )',[],(tx, res)=>{
         console.log("Table created",JSON.stringify(res))
         })
         tx.executeSql("INSERT INTO verseOfTheDay (data, data_num) VALUES (?,?)", ["test", 100], function(tx, res) {
