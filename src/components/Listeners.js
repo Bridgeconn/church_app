@@ -12,22 +12,28 @@ AsyncStorage.getItem('lastNotification').then(data=>{
 
 export function registerKilledListener(){
   // these callback will be triggered even when app is killed
+      console.log('in registerKilledListener');
   FCM.on(FCMEvent.Notification, notif => {
+        console.log(' in registerKilledListener, fcm = ' + JSON.stringify(notif));
     AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
   });
 }
 
 // these callback will be triggered only when app is foreground or background
 export function registerAppListener(){
+      console.log('in registerAppListener');
+  
   FCM.on(FCMEvent.Notification, notif => {
     // console.log("Notificatiooooooooooooon", JSON.stringify(notif));
-    if(notif.local_notification){
-      // Actions.noti({notif:notif});
-       console.log("hey, it opened from there!!!!!");
-      return
-    }
+    console.log('in registerAppListener fcm==== ' + JSON.stringify(notif));
+    // if(notif.local_notification){
+    //   // Actions.noti({notif:notif});
+    //    console.log("hey, it opened from there!!!!!");
+    //   return
+    // }
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
+      Actions.jump("tab_verses");
       return
     }
 

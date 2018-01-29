@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Platform} from 'react-native';
 import {ListItem,List,Card,CardItem,Body,Right} from 'native-base'

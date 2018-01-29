@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import { Container, Header, Item, Input, Button} from 'native-base';
-import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View,DeviceEventEmitter} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View, DeviceEventEmitter, NativeModules, NativeEventEmitter} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
@@ -19,7 +19,6 @@ import LiveStreamPage from './LiveStreamPage'
 import StartLiveStream from './StartLiveStream'
 import SongBookPage from './SongBookPage'
 import SongLyrics from './SongLyrics'
-import NotificationVerse from './NotificationVerse'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
@@ -28,40 +27,30 @@ import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 import FCM from "react-native-fcm"
+import SQLite from 'react-native-sqlite-storage'
 
+const NotificationModule = NativeModules.NotificationModule;
 
-// const scene = [{
-//     name: 'Events',
-//     scene: 'events'
-//   }, 
-//   {
-//     name: 'Contact', 
-//     scene: 'contacts'
-//   },
-//   {
-//     name: 'Verse',
-//     scene: 'verse'
-//   }, 
-//   {
-//     name: 'Songs',
-//     scene: 'songs'
-//   },
-//   {
-//     name: 'Video',
-//     scene: 'video'
-//   }
-//   ];
+import {registerKilledListener, registerAppListener} from "./Listeners";
+
+var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
+
+registerKilledListener();
+
 export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isLoaded: false, guestKey:false, tokenValue:null,
       imageUri:null,username:null,contactNum:null,email:null,
-      
+      verseData:[]
     };
   }
 
   async componentDidMount() {
+    
+    registerAppListener();
+
     await AsyncStorage.getItem('token').then((auth_token) => {
       console.log('token1 '+auth_token)
       this.setState({tokenValue:auth_token})
@@ -92,37 +81,59 @@ export default class RoutesPage extends Component {
     
     this.setState({isLoaded:true}) 
     this.hideSplashScreen()
+     
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
+
+     db.transaction((tx)=>{
+      tx.executeSql('SELECT * FROM Verse', [], function(tx,res){
+          console.log("Query completed");
+          console.log("data response"+  JSON.stringify(res))
+          let rows = res.rows.raw();
+          this.setState({rows: verseData})
+            rows.map(row => console.log(`verse_title: ${row.verse_title}`));
+        })
+    })
   }
 
   componentWillUnmount(){
     BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
-
+ 
   componentWillMount(){
     DeviceEventEmitter.addListener('notificationReceived', function(e: Event) {
       console.log("Event = " + JSON.stringify(e))
       console.log("Event = TITLE" + e.notification_title)
       console.log("Event = body" + e.notification_body)
       // add to db here
-
-
+        db.transaction((tx)=>{
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (verse_title text , verse_body text)',[],(tx, res)=>{
+        console.log("Table created",JSON.stringify(res))
+        })
+        tx.executeSql("INSERT INTO Verse (verse_title, verse_body) VALUES (?,?)", [e.notification_title, e.notification_body], function(tx, res) {
+            console.log("insertId: " + res.insertId + " -- probably 1");
+            console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+       })
+        
+     })
       FCM.presentLocalNotification({
-            title: e.notification_body,                     // as FCM payload
-            body: e.notification_title,                    // as FCM payload (required)
+            title: e.notification_body,                 
+            body: e.notification_title,                
             show_in_foreground: true,
-            click_action:Actions.home2(),                             // as FCM payload
-            big_text: e.notification_title     // Android only
-        });
-    });
+            click_action:Actions.profile(),        
+            big_text: e.notification_title     
+        })
+
+   
+    })
+
   }
 
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
-    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab1" || Actions.currentScene == "newsignup") {
+    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "tab_events" || Actions.currentScene == "newsignup") {
         console.log("home2")
-      BackHandler.exitApp();
-      return true;
+        BackHandler.exitApp();
+        return true;
     } else {
       Actions.pop()
       return true
@@ -136,10 +147,30 @@ export default class RoutesPage extends Component {
       )
   }
 
+  generateNotif() {
+    FCM.presentLocalNotification({
+            title: "hello title",                 
+            body: "hello i ma bnody",                
+            show_in_foreground: true,
+            click_action: "Actions.profile()",        
+            big_text: "hello i ma bnody"
+        })
+
+    // NotificationModule.generateNotification('Awesome', {
+    //         title: "hello title",        
+    //         show_in_foreground: true,         
+    //         body: "hello i ma bnody",                
+    //         click_action: "Actions.settings()"
+
+
+
+
+  }
+
   rightButton = () =>{
     return(
         <View style={{flexDirection:"row"}}>
-                  <TouchableOpacity onPress={()=>{Actions.profile()}}>
+                  <TouchableOpacity onPress={()=>{this.generateNotif()}}>
                     <Icon name="account-circle" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Actions.settings()}}>
@@ -187,48 +218,17 @@ export default class RoutesPage extends Component {
                 type="reset"
               />
               <Scene 
-                key = "home"  
-                component = {HomePage}
-                title = "Church App" 
-                type="reset"
-                initial={false}
-                tokenValue ={this.state.tokenValue}
-                guestKey ={this.state.guestKey}
-                imageUri={this.state.imageUri}
-                contactNum={this.state.contactNum} 
-                username={this.state.username}
-                renderRightButton={this.rightButton}
-              />
-              <Scene 
                 key = "settings"  
                 component = {Settings} 
                 title="Settings"
               />
-              <Scene 
-                key = "login"  
-                component = {Login}   
-              />
-              <Scene 
-                key = "signup"  
-                component = {Signup}
-                title = "Signup" 
-              />
-              <Scene 
-                key = "noti"  
-                component = {NotificationVerse}
-                title = "Notification" 
-                hideNavBar={true}
-              />
+             
               <Scene 
                 key = "guest"  
                 component = {GuestLogin}  
                 hideNavBar={true}
               />
-              <Scene 
-                key = "searchbar"  
-                component = {Searchbar}  
-                hideNavBar={true}
-              />
+              
               <Scene key = "profile"    
                 component = {ProfilePage}        
                 title = "Profile" 
@@ -239,12 +239,7 @@ export default class RoutesPage extends Component {
                 username={this.state.username}               
                 titleStyle={styles.navbarTitle}
               />
-              <Scene 
-                key = "events"     
-                component = {EventsPage}     
-                tokenValue = {this.state.tokenValue}    
-                title = "Events" 
-              />
+              
               <Scene 
                 key = "eventsDetails"   
                 title = "Events"    
@@ -257,36 +252,13 @@ export default class RoutesPage extends Component {
                 component = {LiveStreamPage}     
                 title = "Live Event"                 
               />
-              <Scene 
-                key = "startLive"       
-                component = {StartLiveStream}     
-                title = "Live Event"                 
-              />
-              <Scene 
-                key = "songs"       
-                component = {SongBookPage}    
-                title = "Song Book"                
-                titleStyle={styles.navbarTitle}
-                tokenValue={this.state.tokenValue}
-              />
+              
               <Scene 
                 key = "songLyrics"       
                 component = {SongLyrics}       
                 title = "SongLyrics"                 
               />
-              <Scene 
-                key = "contacts"   
-                component = {ContactBookPage}    
-                title = "Contact Book"                 
-                tokenValue={this.state.tokenValue}
-              />
-
-              <Scene 
-                key = "verse"  
-                hideNavBar={true}    
-                component = {VersePage}          
-                title = "Verse of the Day" 
-              />
+             
               <Scene 
               key="home2" 
               type="reset"  
@@ -308,7 +280,7 @@ export default class RoutesPage extends Component {
                >
 
                 <Scene
-                  key="tab1"
+                  key="tab_events"
                   title="Events"
                   icon={TabIcon}
                   iconName="eventbrite"
@@ -317,45 +289,45 @@ export default class RoutesPage extends Component {
               
                 <Scene 
                 hideNavBar={true}
-                key="second"
+                key="tab_contacts"
                 title="Contacts" 
                 icon={TabIcon} 
                 iconName="contacts"
                 >
                 <Scene
-                key="tab2"
+                key="tab_contacts_header"
                 title="Contact Book"  
                 component={ContactBookPage}
                 />
                 </Scene>
                 <Scene
                 hideNavBar={true}
-                key="third"
+                key="tab_songbook"
                 icon={TabIcon} 
                 iconName="itunes"
                 title="Song"
                 >
                 <Scene 
-                key="tab3" 
+                key="tab_songbook_header" 
                 title="Song Book"
                 component={SongBookPage}
                 />
                 </Scene>
                 <Scene
-                key="forth"
+                key="tab_verses"
                 hideNavBar={true}
                 icon={TabIcon}  
                 iconName="book-open-page-variant"
                 title="Verse"
                 >
                 <Scene 
-                key="tab4"  
+                key="tab_verses_header"  
                 title="Verse of the day" 
                 component={VersePage}
                 />
                 </Scene>
                 <Scene 
-                key="tab5" 
+                key="tab_livestream" 
                 title="Video" 
                 icon={TabIcon} 
                 iconName="video"
