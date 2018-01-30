@@ -34,6 +34,8 @@ export function registerAppListener(){
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
       Actions.jump("tab_verses");
+
+
       return
     }
 

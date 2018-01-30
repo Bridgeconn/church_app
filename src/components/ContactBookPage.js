@@ -37,6 +37,7 @@ export default class App extends Component {
         super(props);
 
         this.state ={
+            // title:"contact book",
             dataContactDetail: null,
             showProgress:false,
             searchedData:null,

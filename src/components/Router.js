@@ -119,7 +119,6 @@ export default class RoutesPage extends Component {
             title: e.notification_body,                 
             body: e.notification_title,                
             show_in_foreground: true,
-            click_action:Actions.profile(),        
             big_text: e.notification_title     
         })
 
@@ -152,7 +151,7 @@ export default class RoutesPage extends Component {
             title: "hello title",                 
             body: "hello i ma bnody",                
             show_in_foreground: true,
-            click_action: "Actions.profile()",        
+            // click_action: "Actions.profile()",        
             big_text: "hello i ma bnody"
         })
 
@@ -286,46 +285,31 @@ export default class RoutesPage extends Component {
                   iconName="eventbrite"
                   component={EventsPage}
                 />
-              
-                <Scene 
-                hideNavBar={true}
+                <Scene
                 key="tab_contacts"
-                title="Contacts" 
+                title="Contacts"  
+                component={ContactBookPage}
                 icon={TabIcon} 
                 iconName="contacts"
-                >
-                <Scene
-                key="tab_contacts_header"
-                title="Contact Book"  
-                component={ContactBookPage}
+                renderTitle="Contacts Book"
                 />
-                </Scene>
-                <Scene
-                hideNavBar={true}
-                key="tab_songbook"
+                <Scene 
+                key="tab_songbook" 
+                title="Songs"
                 icon={TabIcon} 
                 iconName="itunes"
-                title="Song"
-                >
-                <Scene 
-                key="tab_songbook_header" 
-                title="Song Book"
                 component={SongBookPage}
+                renderTitle="Songs Book"
+
                 />
-                </Scene>
-                <Scene
-                key="tab_verses"
-                hideNavBar={true}
+                <Scene 
+                key="tab_verses"  
+                title="Verse" 
                 icon={TabIcon}  
                 iconName="book-open-page-variant"
-                title="Verse"
-                >
-                <Scene 
-                key="tab_verses_header"  
-                title="Verse of the day" 
                 component={VersePage}
+                renderTitle="Verse of the day"
                 />
-                </Scene>
                 <Scene 
                 key="tab_livestream" 
                 title="Video" 
