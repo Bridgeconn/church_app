@@ -13,10 +13,10 @@ var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 export default class VersePage extends Component{
 
- constructor(){
-        super()
+ constructor(props){
+        super(props)
         this.state ={
-            data: [],
+            data :[],
             result:"",
             token: "",
             tokenCopyFeedback: "",
@@ -84,11 +84,10 @@ export default class VersePage extends Component{
      })
     }
     render() {
-      const data = this.state.data;
           return (
                     <View style={styles.container}>
                     <ScrollView>
-                       {data.map(item =>
+                       {/*data.map(item =>
                         <Card key={item.book_name} style={styles.cardVerse}>
                         <CardItem style={styles.verseListItemStyle}>
                           <Text style={styles.tabTextSize}>{item.book_name} {item.chapter} : {item.verse_number} {item.version}</Text>
@@ -109,6 +108,17 @@ export default class VersePage extends Component{
                           >
                           <Icon name="share-variant" size={24} color="#3F51B5"/>
                           </TouchableOpacity>
+                        </CardItem>
+                        </Card>
+                        )*/}
+                        {this.props.verseData == null ? null :
+                        this.props.verseData.map(item =>
+                        <Card key={item.verse_title} style={styles.cardVerse}>
+                        <CardItem>
+                          <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
+                        </CardItem>
+                        <CardItem>
+                          <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
                         </CardItem>
                         </Card>
                         )}

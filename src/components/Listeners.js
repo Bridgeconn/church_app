@@ -1,6 +1,8 @@
 import { Platform, AsyncStorage} from 'react-native';
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from "react-native-fcm";
+import SQLite from 'react-native-sqlite-storage'
+var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 AsyncStorage.getItem('lastNotification').then(data=>{
   if(data){
@@ -33,9 +35,17 @@ export function registerAppListener(){
     // }
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
-      Actions.jump("tab_verses");
-
-
+      // Actions.jump("tab_verses");
+      db.transaction((tx)=>{
+      tx.executeSql('SELECT * FROM Verse', [], function(tx,res){
+          console.log("Query completed");
+          console.log("data response"+  JSON.stringify(res))
+          let rows = res.rows.raw();
+          // this.setState({rows: verseData})
+            rows.map(row => console.log(`verse_title: ${row.verse_title}`));
+            Actions.tab_verses({verseData: rows})
+        })
+    })
       return
     }
 

@@ -43,7 +43,7 @@ export default class RoutesPage extends Component {
     this.state = {
       isLoaded: false, guestKey:false, tokenValue:null,
       imageUri:null,username:null,contactNum:null,email:null,
-      verseData:[]
+      // verseData:[]
     };
   }
 
@@ -83,16 +83,7 @@ export default class RoutesPage extends Component {
     this.hideSplashScreen()
      
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
-
-     db.transaction((tx)=>{
-      tx.executeSql('SELECT * FROM Verse', [], function(tx,res){
-          console.log("Query completed");
-          console.log("data response"+  JSON.stringify(res))
-          let rows = res.rows.raw();
-          this.setState({rows: verseData})
-            rows.map(row => console.log(`verse_title: ${row.verse_title}`));
-        })
-    })
+    
   }
 
   componentWillUnmount(){
