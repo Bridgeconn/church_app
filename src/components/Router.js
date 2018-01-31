@@ -31,11 +31,12 @@ import SQLite from 'react-native-sqlite-storage'
 
 const NotificationModule = NativeModules.NotificationModule;
 
-import {registerKilledListener, registerAppListener} from "./Listeners";
+import {registerKilledListener, registerAppListener, registerTopicListener} from "./Listeners";
 
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 registerKilledListener();
+registerTopicListener();
 
 export default class RoutesPage extends Component {
   constructor(props) {
@@ -97,20 +98,23 @@ export default class RoutesPage extends Component {
       console.log("Event = body" + e.notification_body)
       // add to db here
         db.transaction((tx)=>{
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (verse_title text , verse_body text)',[],(tx, res)=>{
-        console.log("Table created",JSON.stringify(res))
-        })
-        tx.executeSql("INSERT INTO Verse (verse_title, verse_body) VALUES (?,?)", [e.notification_title, e.notification_body], function(tx, res) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
+          [],
+          (tx, res)=>{
+            console.log("Table created",JSON.stringify(res))
+          }
+        )
+        tx.executeSql("INSERT INTO Verse (timestamp, chapter_num, verse_num, book_name, verse_body) VALUES (?,?,?,?,?)", [e.notification_timestamp, e.chapter_num, e.verse_num, e.book_name, e.notification_body], 
+          function(tx, res) {
             console.log("insertId: " + res.insertId + " -- probably 1");
             console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
        })
-        
      })
       FCM.presentLocalNotification({
-            title: e.notification_body,                 
-            body: e.notification_title,                
+            title: e.notification_title,                 
+            body: e.notification_body,                
             show_in_foreground: true,
-            big_text: e.notification_title     
+            big_text: e.notification_body,
         })
 
    
@@ -120,7 +124,7 @@ export default class RoutesPage extends Component {
 
   handleAndroidBack(){
     console.log('back press'+Actions.currentScene)
-    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "tab_events" || Actions.currentScene == "newsignup") {
+    if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab_events" || Actions.currentScene == "newsignup") {
         console.log("home2")
         BackHandler.exitApp();
         return true;

@@ -11,44 +11,6 @@ export default class LiveStreamPage extends Component{
 		super()
 	}
 
-	createTable(){
-		console.log("createTable")
-		 db.transaction((tx)=>{
-			tx.executeSql('CREATE TABLE IF NOT EXISTS verseOfTheDay (data text, data_num integer)',[],(tx, res)=>{
-				console.log("Table created",JSON.stringify(res))
-			})
-		 })
-
-	}
-	addRow(){
-		db.transaction((tx)=>{
-			 tx.executeSql("INSERT INTO verseOfTheDay (data, data_num) VALUES (?,?)", ["test", 100], function(tx, res) {
-			 	    console.log("insertId: " + res.insertId + " -- probably 1");
-                	console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
-			 })
-
-		})
-
-	}
-	showTable(){
-	db.transaction((tx) => {
-      tx.executeSql('SELECT * FROM verseOfTheDay', [], function(tx,res){
-          console.log("Query completed");
-          console.log("data response",JSON.stringify(res))
-          let rows = res.rows.raw();
-            rows.map(row => console.log(`data_num: ${row.data_num}`));
-          
-        })
-    })
-
-	
-}
-	deleteRow(){
-		db.transaction((tx) => {
-      		tx.executeSql('DROP TABLE IF EXISTS  verseOfTheDay')
-      		console.log("deleted table")
-    	})
-	}
 	
 	render(){
 		return(
@@ -62,10 +24,6 @@ export default class LiveStreamPage extends Component{
 	              			</TouchableOpacity>
 	              		</CardItem>
 	              	</Card>
-	            <Button onPress={()=>this.createTable()} style={{margin:5}}><Text>Create Table</Text></Button>
-				<Button onPress={()=>this.addRow()} style={{margin:5}}><Text>Add Row</Text></Button>
-				<Button onPress={()=>this.showTable()} style={{margin:5}}><Text>Show Table</Text></Button>
-				<Button onPress={()=>this.deleteRow()} style={{margin:5}}><Text>Delete Row</Text></Button>
               	</Content>        
             </ScrollView>
           </View>

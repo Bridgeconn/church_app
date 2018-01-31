@@ -21,6 +21,7 @@ import {
   Button
  
 } from 'native-base';
+import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
@@ -175,6 +176,7 @@ export default class SongBookPage extends Component {
                               data={(this.state.searchedSongsList.length == 0) ? this.state.songsList : this.state.searchedSongsList}
                               renderItem={({item})=>
                                <View style={styles.cell}>
+                               <TouchableOpacity onPress={()=>{Actions.songLyrics({songTitle:item.title,songLyrics:item.lyrics})}}>
                                 <View style={{margin:10}}>
                                   <Text style={styles.songTitleText}>
                                       {item.title}  
@@ -183,6 +185,7 @@ export default class SongBookPage extends Component {
                                       {item.lyrics}
                                   </Text>
                                 </View>
+                                </TouchableOpacity>
                               </View>
                               }
                               />

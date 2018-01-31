@@ -2,6 +2,7 @@ import { Platform, AsyncStorage} from 'react-native';
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType} from "react-native-fcm";
 import SQLite from 'react-native-sqlite-storage'
+import Config from 'react-native-config'
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 AsyncStorage.getItem('lastNotification').then(data=>{
@@ -11,6 +12,10 @@ AsyncStorage.getItem('lastNotification').then(data=>{
     AsyncStorage.removeItem('lastNotification');
   }
 })
+
+export function registerTopicListener() {
+  FCM.subscribeToTopic('notification_'+Config.CHURCH_APP_ID)
+}
 
 export function registerKilledListener(){
   // these callback will be triggered even when app is killed
@@ -26,26 +31,11 @@ export function registerAppListener(){
       console.log('in registerAppListener');
   
   FCM.on(FCMEvent.Notification, notif => {
-    // console.log("Notificatiooooooooooooon", JSON.stringify(notif));
-    console.log('in registerAppListener fcm==== ' + JSON.stringify(notif));
-    // if(notif.local_notification){
-    //   // Actions.noti({notif:notif});
-    //    console.log("hey, it opened from there!!!!!");
-    //   return
-    // }
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
       // Actions.jump("tab_verses");
-      db.transaction((tx)=>{
-      tx.executeSql('SELECT * FROM Verse', [], function(tx,res){
-          console.log("Query completed");
-          console.log("data response"+  JSON.stringify(res))
-          let rows = res.rows.raw();
-          // this.setState({rows: verseData})
-            rows.map(row => console.log(`verse_title: ${row.verse_title}`));
-            Actions.tab_verses({verseData: rows})
-        })
-    })
+      Actions.tab_verses()
+     
       return
     }
 
