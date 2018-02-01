@@ -17,31 +17,23 @@ export default class VersePage extends Component{
         super(props)
       
         this.state ={
-             verseData :[],
-    //         result:"",
-    //         token: "",
-    //         tokenCopyFeedback: "",
+            verseData: [],
+            result:"",
           }
-        }
-    //       this.getData =this.getData.bind(this);
-    //       this._shareMessage = this._shareMessage.bind(this);
-    //       this._showResult = this._showResult.bind(this);
-    // }
+          this._shareMessage = this._shareMessage.bind(this);
+          this._showResult = this._showResult.bind(this);
+}
+  
+    _showResult(result) {
+    this.setState({result});
+  }
 
-  //   getData(){
-  //     const data = verse.verses
-  //     this.setState({data: data})  
-  //   }
-  //   _showResult(result) {
-  //   this.setState({result});
-  // }
-
-  // _shareMessage(message, book_name, chapter, verse_number) {
-  //   let messageText = book_name+" " +chapter+ ":" +verse_number+ " " +version+ "\n" +message;
-  //   Share.share({
-  //     message: messageText
-  //   }).then(this._showResult);
-  // }
+  _shareMessage(message, book_name, chapter, verse_number) {
+    let messageText = book_name+" " +chapter+ ":" +verse_number+ "\n" +message;
+    Share.share({
+      message: messageText
+    }).then(this._showResult);
+  }
   
   
   componentDidMount(){
@@ -49,18 +41,13 @@ export default class VersePage extends Component{
   }
     getVersesFromDb(){
       db.transaction((tx)=>{
-        tx.executeSql('SELECT * FROM Verse', [], function(tx,res){
+        tx.executeSql('SELECT * FROM Verse', [], (tx,res) => {
           console.log("Query completed");
           console.log("data response"+  JSON.stringify(res.rows.raw()))
-            this.setState({verseData: res.rows.raw()})
-          // let rows = res.rows.raw();
-          //   console.log("rows"+JSON.stringify(rows))
-          //   rows.map(row => console.log(`chapter_num: ${row.chapter_num}`));
-          //   rows.map(row => console.log(`verse_num: ${row.verse_num}`));
-            
-        },function(e) {
-                console.log("ERROR: " + e);
-            })
+          let rows = res.rows.raw();
+            this.setState({verseData: rows})
+        
+        })
       })
     }
 
@@ -73,36 +60,32 @@ export default class VersePage extends Component{
       console.log("state data = " + JSON.stringify(this.state.verseData))
           return (
                     <View style={styles.container}>
-                    <Button onPress={()=>this.rerender()}><Text>HELLO CHECK</Text></Button>
                     <ScrollView>
                        {this.state.verseData.map(item =>
-                          <Text style={{color:'black'}}>hello</Text>
+                         <Card key={item.timestamp} style={styles.cardVerse}>
+                         <CardItem style={styles.verseListItemStyle}>
+                          <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
+                          <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='ago' style={styles.verseTimestamp}/>
+                        </CardItem>
+                        <CardItem>
+                          <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
+                        </CardItem>
+                        <CardItem style={styles.contactListItemStyle}>
+                        <TouchableOpacity  onPress={this._shareMessage.bind(this,
+                          item.verse_body,
+                          item.book_name,
+                          item.chapter_num,
+                          item.verse_num)}
+                          title="Share"
+                          color="#3F51B5"
+                          >
+                          <Icon name="share-variant" size={24} color="#3F51B5"/>
+                          </TouchableOpacity>
+                        </CardItem>
+                        </Card>
                         )}
-                        
                     </ScrollView>
                     </View>
                 )                                                                                                                                                                                                                                        
 }
 }
-// / {this.state.verseData.map(item =>
-// <Card key={item.timestamp} style={styles.cardVerse}>
-//                          <CardItem style={styles.verseListItemStyle}>
-//                           <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
-//                           <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='date' style={styles.verseTimestamp}/>
-//                         </CardItem>
-//                         <CardItem>
-//                           <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
-//                         </CardItem>
-//                         <CardItem style={styles.contactListItemStyle}>
-//                         <TouchableOpacity  onPress={this._shareMessage.bind(this,
-//                           item.verse_body,
-//                           item.book_name,
-//                           item.chapter_num,
-//                           item.verse_num)}
-//                           title="Share"
-//                           color="#3F51B5"
-//                           >
-//                           <Icon name="share-variant" size={24} color="#3F51B5"/>
-//                           </TouchableOpacity>
-//                         </CardItem>
-//                         </Card>

@@ -104,7 +104,7 @@ export default class RoutesPage extends Component {
             console.log("Table created",JSON.stringify(res))
           }
         )
-        tx.executeSql("INSERT INTO Verse (timestamp, chapter_num, verse_num, book_name, verse_body) VALUES (?,?,?,?,?)", [e.notification_timestamp, e.chapter_num, e.verse_num, e.book_name, e.notification_body], 
+        tx.executeSql("INSERT INTO Verse (timestamp, chapter_num, verse_num, book_name, verse_body) VALUES (?,?,?,?,?)", [e.notification_timestamp, e.chapter_num, e.verse_num, e.book_name, e.notification_title], 
           function(tx, res) {
             console.log("insertId: " + res.insertId + " -- probably 1");
             console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
@@ -141,30 +141,10 @@ export default class RoutesPage extends Component {
       )
   }
 
-  generateNotif() {
-    FCM.presentLocalNotification({
-            title: "hello title",                 
-            body: "hello i ma bnody",                
-            show_in_foreground: true,
-            // click_action: "Actions.profile()",        
-            big_text: "hello i ma bnody"
-        })
-
-    // NotificationModule.generateNotification('Awesome', {
-    //         title: "hello title",        
-    //         show_in_foreground: true,         
-    //         body: "hello i ma bnody",                
-    //         click_action: "Actions.settings()"
-
-
-
-
-  }
-
   rightButton = () =>{
     return(
         <View style={{flexDirection:"row"}}>
-                  <TouchableOpacity onPress={()=>{this.generateNotif()}}>
+                  <TouchableOpacity onPress={()=>{Actions.profile()}}>
                     <Icon name="account-circle" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Actions.settings()}}>

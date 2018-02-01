@@ -33,8 +33,7 @@ export function registerAppListener(){
   FCM.on(FCMEvent.Notification, notif => {
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
-      // Actions.jump("tab_verses");
-      Actions.tab_verses()
+      Actions.jump("tab_verses");
      
       return
     }
