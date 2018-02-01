@@ -183,7 +183,6 @@ dependencies {
     compile ('com.google.firebase:firebase-messaging:10.0.1') {
         force = true;
     }
-     
 }
 
 // Run this once to be able to run the application with BUCK

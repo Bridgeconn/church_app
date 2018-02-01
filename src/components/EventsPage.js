@@ -53,7 +53,7 @@ export default class EventsPage extends Component{
       console.log("render "+data)
       if (data.length == 0) {
         return(
-       <Spinner visible={this.state.showProgress == true} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
       )
       }
           return (  

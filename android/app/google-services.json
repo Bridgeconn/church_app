@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:990724325288:android:5dbe7171aecfc41f",
         "android_client_info": {
-          "package_name": "com.churchapplication"
+          "package_name": "com.demo_app"
         }
       },
       "oauth_client": [
@@ -22,6 +22,50 @@
             "certificate_hash": "09488dbc6253dbcd68fa8243cc24178f48ce765b"
           }
         },
+        {
+          "client_id": "990724325288-fg1semfpu78rourtrkgfh4om6ro90qpv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.churchapplication",
+            "certificate_hash": "58a45580fefe24b2593d0f5497429468e8b3b19a"
+          }
+        },
+        {
+          "client_id": "990724325288-0db4mkhlddbl9904k6831n831cihg2do.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlOw8976jVmhtywyhy3w4wcOX9anitpls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990724325288-0db4mkhlddbl9904k6831n831cihg2do.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990724325288:android:5dbe7171aecfc41f",
+        "android_client_info": {
+          "package_name": "com.churchapplication"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "990724325288-fg1semfpu78rourtrkgfh4om6ro90qpv.apps.googleusercontent.com",
           "client_type": 1,

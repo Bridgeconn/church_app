@@ -176,7 +176,7 @@ export default class SongBookPage extends Component {
                               data={(this.state.searchedSongsList.length == 0) ? this.state.songsList : this.state.searchedSongsList}
                               renderItem={({item})=>
                                <View style={styles.cell}>
-                               <TouchableOpacity onPress={()=>{Actions.songLyrics({songTitle:item.title,songLyrics:item.lyrics})}}>
+                               <TouchableOpacity onPress={()=>{Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                                 <View style={{margin:10}}>
                                   <Text style={styles.songTitleText}>
                                       {item.title}  

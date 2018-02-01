@@ -22,6 +22,7 @@ import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
+import YoutubeSongSearch from './YoutubeSongSearch'
 // import RightButton from './RightButton'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
@@ -230,7 +231,13 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "songLyrics"       
                 component = {SongLyrics}       
-                title = "SongLyrics"                 
+                title = "Song Lyrics"            
+              />
+
+              <Scene 
+                key = "youtubeSongSearch"       
+                component = {YoutubeSongSearch}       
+                title = "Search Results"            
               />
              
               <Scene 

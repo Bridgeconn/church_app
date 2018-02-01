@@ -11,36 +11,25 @@ export default class ProfilePage extends Component{
 	
 	constructor(props){
 		super(props)
-    console.log("props=" + this.props.username + "  " + this.props.contactNum + "  "+ this.props.tokenValue+ " "+this.props.email);
 		this.state = {
-		    avatarSource: null,
-		    videoSource: null,
-		    setImage:'',
-        checkboxEmail:false,
-        checkboxContact:false,
-		    isReady: false,
+        isReady: false,
 		    status: null,
-      	user: this.props.username,
-    		uri:this.props.uri, 
-        contact:this.props.contactNum,
-        token: this.props.tokenValue,
-        email: this.props.email,
-        newUser:this.props.username,
-        newContact:this.props.contactNum,
-        newcheckboxEmail:false,
-        newcheckboxContact:false,
-        showSaveProfile:false
+        token: props.tokenValue,
+        email: props.email,
+
+        contact: props.contactNum,
+        user: props.username,
+        checkboxEmail: false,
+        checkboxContact: false,
+        
+        newUser: props.username,
+        newContact: props.contactNum,
+        newcheckboxEmail: false,
+        newcheckboxContact: false,
+
+        showSaveProfile: false
 	  	};
 	}
-	
-  	saveUrl(item, selectedValue) {
-    try {
-     AsyncStorage.setItem(item, selectedValue);
-      console.log("saved")
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error);
-    }
-  }
 
   async handlePress( ){
     console.log("hello handle press")
@@ -73,39 +62,6 @@ export default class ProfilePage extends Component{
         });
 
     }
-  selectPhotoTapped() {
-    const options = {
-      title: 'Select Profile Picture',
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-     }
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = '+JSON.stringify({options}))
-      if (response.didCancel) {
-        console.log('User cancelled photo picker');
-      }
-      else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        let source = { uri: response.uri };
-        console.log("source"+source)
-        let uri = source.uri;
-        this.setState({
-          avatarSource: source,
-          uri: uri
-        }) 
-       this.saveUrl('uri', uri)
-        console.log(uri+"uri")
-      }
-    });
-    
-  }
-
 
   async componentDidMount() {
     await AsyncStorage.getItem('token').then((auth_token) => {
@@ -127,57 +83,27 @@ export default class ProfilePage extends Component{
       }
     });
   }
-  // componentWillUnmount() {
-  //   this.props.onRefSave(null)  
-  // }
 
-  checkSaveVisibility=(valueName, valueContact, valueCheckEmail, valueCheckContact)=>{
-    if (valueName !== null) {
-      this.setState({newUser:valueName})
-      if (this.state.user !== valueName) {
-        this.setState({showSaveProfile:true})
-        return;
-      }
-    }
-    if (valueContact !== null) {
-      this.setState({newContact:valueContact})
-      if (this.state.contact !== valueContact) {
-        this.setState({showSaveProfile:true})
-        return;
-      }
-    }
-    if (valueCheckEmail !== null) {
-      this.setState({newcheckboxEmail:valueCheckEmail})
-      if (this.state.checkboxEmail !== valueCheckEmail) {
-        this.setState({showSaveProfile:true})
-        return;
-      }
-    }
-    if (valueCheckContact !== null) {
-      this.setState({newcheckboxContact:valueCheckContact})
-      if (this.state.checkboxContact !== valueCheckContact) {
-        this.setState({showSaveProfile:true})
-        return;
-      }
-    }
-
-    this.setState({showSaveProfile:false});
-
-  }
   onBackButton(){
-    if(this.state.newUser!==this.state.user || 
-      this.state.newContact !==this.state.contact || 
-      this.state.newcheckboxEmail !==this.state.checkboxEmail || 
-      this.state.newcheckboxContact  !==this.state.checkboxContact ){
-      alert("please save changes")
-
+      if(this.state.showSaveProfile){
+        alert("please save changes")
+      }
+      else{
+        Actions.pop()
+      }
     }
-    else{
+
+  checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
+
+    if (this.state.user!== newUser || this.state.contact !== newContact || 
+        this.state.checkboxContact !== newCheckContact || this.state.checkboxEmail !== newCheckEmail) {
       
-      Actions.pop()
+      this.setState({showSaveProfile:true});
+    } else {
+      this.setState({showSaveProfile:false});
     }
-    }
-
+  }
+  
 	render(){
 		return(
       <View style={{flex:1}}>
@@ -192,7 +118,7 @@ export default class ProfilePage extends Component{
                         <Title style={{textAlign:"left"}}>Profile</Title>
                       </Body>
                       <Right>
-                      {this.state.showSaveProfile==true ?  <TouchableOpacity onPress={()=>this.handlePress()}>
+                      {this.state.showSaveProfile ?  <TouchableOpacity onPress={()=>this.handlePress()}>
                           <Title>Save</Title>
                         </TouchableOpacity>: null}
                       </Right>                      
@@ -206,7 +132,10 @@ export default class ProfilePage extends Component{
 				        <TextInput
 				          placeholder="Enter Name"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(changeValue) => this.checkSaveVisibility(changeValue,null,null,null)}
+				          onChangeText={(changeValue) => {
+                    this.checkSaveButtonVisibility(changeValue, this.state.newContact, this.state.newcheckboxEmail, this.state.newcheckboxContact);
+                    this.setState({newUser:changeValue});
+                  }}
                   value={this.state.newUser}
 				        />
 				        <Text style={{marginTop:12}}>
@@ -215,7 +144,10 @@ export default class ProfilePage extends Component{
 				        <TextInput
 				          placeholder="Enter Contact"
 				          returnKeyLabel = {"next"}
-				          onChangeText={(changeValue) => this.checkSaveVisibility(null,changeValue,null,null)}
+				          onChangeText={(changeValue) => {
+                    this.checkSaveButtonVisibility(this.state.newUser, changeValue, this.state.newcheckboxEmail, this.state.newcheckboxContact)
+                    this.setState({newContact: changeValue})
+                  }}
                   value={this.state.newContact}
                   keyboardType="numeric"
 				        />
@@ -225,15 +157,18 @@ export default class ProfilePage extends Component{
                 <View style={styles.shareContainer}>
                 <View style={styles.checkboxContainer}>
                 <CheckBox onPress={()=> {
-                  this.checkSaveVisibility(null,null,!this.state.newcheckboxEmail,null)
+                  this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, !this.state.newcheckboxEmail, this.state.newcheckboxContact)
+                  this.setState({newcheckboxEmail: !this.state.newcheckboxEmail})
                 }} 
                   checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share email with church members</Text>
                 </View>
                 <View style={styles.checkboxContainer}>
                 <CheckBox onPress={()=>{ 
-                  this.checkSaveVisibility(null,null,null,!this.state.newcheckboxContact)
-                }} checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                  this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, this.state.newcheckboxEmail, !this.state.newcheckboxContact);
+                  this.setState({newcheckboxContact:!this.state.newcheckboxContact})
+                }} 
+                checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
                   <Text style={styles.checkboxText}>Share contact with church members</Text>
                 </View>
                 </View>
