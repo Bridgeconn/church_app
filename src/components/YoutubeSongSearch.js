@@ -4,7 +4,8 @@ import {Button, Content, List, ListItem}  from 'native-base'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import PopupDialog, { DialogTitle, DialogButton } from 'react-native-popup-dialog';
+
+import Modal from 'react-native-simple-modal';
 import YouTube from 'react-native-youtube';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -18,7 +19,8 @@ export default class YoutubeSongSearch extends Component{
         isLoading: false,
         data: [],
         startPlay: false,
-        playVideoId:""
+        playVideoId:"",
+        open: false
     }
   }
 
@@ -35,54 +37,7 @@ export default class YoutubeSongSearch extends Component{
   	} else {
       return (
         <View style={styles.container}>
-
-        	<PopupDialog 
-            dialogTitle={<DialogTitle title="Search Results" />}
-            haveOverlay={false}
-            width={1}
-            height={0.7}
-            dismissOnTouchOutside={false}
-            actions={[
-              <DialogButton
-                text="CANCEL"
-                align="left"
-                onPress={() => {
-                  this.popupDialog.dismiss();
-                }}
-                key="button-cancel"
-              />,
-              <DialogButton
-                text="SAVE"
-                align="right"
-                onPress={() => {
-                  Actions.pop()
-                }}
-                key="button-save"
-              />
-              
-            ]}
-            ref={(popupDialog) => { this.popupDialog = popupDialog; }}>
-
-              {
-                <View style={{margin:StyleSheet.hairlineWidth, height:300, backgroundColor:'black',flexDirection:'column'}}>
-
-                  <YouTube
-                    apiKey={Config.YOUTUBE_API_KEY}
-                    videoId={this.state.playVideoId}   // The YouTube video ID
-                    play={true}             // control playback of video with true/false
-                    fullscreen={false}       // control whether the video should play in fullscreen or inline
-                    onReady={e => this.setState({ isReady: true })}
-                    controls={2}
-                    onChangeState={e => console.log('onChangeState'+e.state)}
-                    onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
-                    onError={e => console.log('onError'+e.error)}
-                    style={{ alignSelf: 'stretch', height: 250, margin:4 }} />
-                </View>
-
-              }
-              </PopupDialog>
-
-              <ScrollView>
+         <ScrollView>
                 {this.state.data.map(item =>
                   <Content key={item.id.videoId}>
                       <TouchableOpacity style={{flexDirection:'row', marginBottom:8}}  onPress={() => {this.setStartPlay(item.id.videoId);}}>
@@ -98,16 +53,50 @@ export default class YoutubeSongSearch extends Component{
                         </TouchableOpacity>
                   </Content>
                 )}
-              </ScrollView>
-
+             </ScrollView>
+        	    <Modal
+    				overlayBackground={'rgba(0, 0, 0, 0)'}
+			        open={this.state.open}
+			        modalDidOpen={() => console.log('modal did open')}
+			        modalDidClose={() => this.setState({open: false})}
+			        style={{alignItems: 'center'}}>
+	         		<View>
+	                  <YouTube
+	                    apiKey={Config.YOUTUBE_API_KEY}
+	                    videoId={this.state.playVideoId}   // The YouTube video ID
+	                    play={true}             // control playback of video with true/false
+	                    fullscreen={false}       // control whether the video should play in fullscreen or inline
+	                    onReady={e => this.setState({ isReady: true })}
+	                    controls={2}
+	                    onChangeState={e => console.log('onChangeState'+e.state)}
+	                    onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
+	                    onError={e => console.log('onError'+e.error)}
+	                    style={{ alignSelf: 'stretch', height: 300, margin:4 }} />
+	                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+	                <TouchableOpacity
+			            style={{margin: 5}}
+			            onPress={() => this.setState({open: false})}
+			            >
+			            <Text style={{fontSize:20}}>Cancel</Text>
+		          	</TouchableOpacity>
+		          	<TouchableOpacity
+			            style={{margin: 5}}
+			             onPress={() => Actions.pop()}
+			            >
+			            <Text style={{fontSize:20,right:0}}>Save</Text>
+		          	</TouchableOpacity>
+		          	</View>
+	                </View>	
+				</Modal>
+                
         </View>
       );
   	}
   }
 
   setStartPlay(videoId) {
-    this.setState({playVideoId:videoId, startPlay:true});
-    this.popupDialog.show();
+    this.setState({playVideoId:videoId, startPlay:true,open:true});
+
   }
 
   stopPlay() {
@@ -136,7 +125,6 @@ export default class YoutubeSongSearch extends Component{
         this.setState({isLoading:false})
         console.log("response in fetch : " + JSON.stringify(responseJson));
         this.setState({data:responseJson.items})
-        // this.popupDialog.show();
       })
       .catch((error) => {
         this.setState({isLoading:false})
