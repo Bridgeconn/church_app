@@ -369,6 +369,7 @@ const styles = StyleSheet.create({
     
   },
   songLyricsScrollView: {
+    margin: octaValue
     // marginBottom: 52
   },
   youtubeButton: {
@@ -388,7 +389,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     marginBottom:16
-  }
+  },
+  songLyricsContainer:{
+    flex:1,
+  },
   
 })
 

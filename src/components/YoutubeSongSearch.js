@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text,View,Image,TouchableOpacity, ScrollView, ActivityIndicator,Dimensions, StyleSheet} from 'react-native';
+import {Text,View,Image,TouchableOpacity, ScrollView, ActivityIndicator,Dimensions, StyleSheet,AsyncStorage} from 'react-native';
 import {Button, Content, List, ListItem}  from 'native-base'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
@@ -19,7 +19,7 @@ export default class YoutubeSongSearch extends Component{
         isLoading: false,
         data: [],
         startPlay: false,
-        playVideoId:"",
+        playVideoId:null,
         open: false
     }
   }
@@ -60,7 +60,7 @@ export default class YoutubeSongSearch extends Component{
 			        modalDidOpen={() => console.log('modal did open')}
 			        modalDidClose={() => this.setState({open: false})}
 			        style={{alignItems: 'center'}}>
-	         		<View>
+	         		<View style={{flexDirection:"column"}}>
 	                  <YouTube
 	                    apiKey={Config.YOUTUBE_API_KEY}
 	                    videoId={this.state.playVideoId}   // The YouTube video ID
@@ -71,7 +71,7 @@ export default class YoutubeSongSearch extends Component{
 	                    onChangeState={e => console.log('onChangeState'+e.state)}
 	                    onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
 	                    onError={e => console.log('onError'+e.error)}
-	                    style={{ alignSelf: 'stretch', height: 300, margin:4 }} />
+	                    style={{ height: (Dimensions.get("window").width) * 0.5625}} />
 	                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
 	                <TouchableOpacity
 			            style={{margin: 5}}
@@ -81,7 +81,7 @@ export default class YoutubeSongSearch extends Component{
 		          	</TouchableOpacity>
 		          	<TouchableOpacity
 			            style={{margin: 5}}
-			             onPress={() => Actions.pop()}
+			            onPress={()=>{this.refreshOnSave()}} 
 			            >
 			            <Text style={{fontSize:20,right:0}}>Save</Text>
 		          	</TouchableOpacity>
@@ -93,7 +93,11 @@ export default class YoutubeSongSearch extends Component{
       );
   	}
   }
+refreshOnSave(){
+	this.saveVideo();
+ 	Actions.pop({refresh:{videoId: this.state.playVideoId} }) 
 
+}
   setStartPlay(videoId) {
     this.setState({playVideoId:videoId, startPlay:true,open:true});
 
@@ -103,10 +107,9 @@ export default class YoutubeSongSearch extends Component{
    this.setState({playVideoId:"", startPlay:false}); 
   }
 
-  async saveVideo(item, selectedValue) {
-    this.saveItem('token', tokenValue)
+  async saveVideo() {
     try {
-      AsyncStorage.setItem('song_video_id', this.props.song_id+' '+this.state.playVideoId);
+      AsyncStorage.setItem('song_id_' + this.props.songId, this.state.playVideoId);
     } catch (error) {
       console.error('AsyncStorage error: ' + error);
     }
@@ -125,6 +128,7 @@ export default class YoutubeSongSearch extends Component{
         this.setState({isLoading:false})
         console.log("response in fetch : " + JSON.stringify(responseJson));
         this.setState({data:responseJson.items})
+        
       })
       .catch((error) => {
         this.setState({isLoading:false})

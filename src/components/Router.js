@@ -231,7 +231,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "songLyrics"       
                 component = {SongLyrics}       
-                title = "Song Lyrics"            
+                title = "Song Lyrics"       
               />
 
               <Scene 
