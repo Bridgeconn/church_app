@@ -11,7 +11,8 @@ import {
     Dimensions,
     RefreshControl,
     NetInfo,
-    FlatList
+    FlatList,
+    ActivityIndicator
 } from 'react-native';
 import { 
   Header, 
@@ -159,7 +160,9 @@ export default class SongBookPage extends Component {
               >
 
               {this.state.isLoading ? 
-                <Spinner size={"large"} visible={ this.state.isRefreshing ? false : true } color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
+                </View> : 
                   (this.state.songsList.length == 0  && this.state.searchQuery.trim() == "") ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>

@@ -3,11 +3,13 @@ import {View,Text,TouchableOpacity,Image,ScrollView, Platform,} from 'react-nati
 import {Header, Card, Title, Left,Button,Right,Icon,Body,Content,CardItem} from 'native-base'
 import YouTube, {  YouTubeStandaloneIOS,  YouTubeStandaloneAndroid,} from 'react-native-youtube';
 import styles from '../style/styles.js'
+import Config from 'react-native-config'
 
 
 export default class LiveStreamPage extends Component{
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
+		
 		this.state = {
 		    avatarSource: null,
 		    videoSource: null,
@@ -25,8 +27,7 @@ export default class LiveStreamPage extends Component{
 	  	};
 	  	
 	}
-
-
+	
 	render(){
 		return(
 		<View style={styles.container}>
@@ -39,7 +40,7 @@ export default class LiveStreamPage extends Component{
 		            this._youTubeRef = component;
 		          }}
 		          apiKey="AIzaSyBsUeJYvXWnxUDhd0GX03D5jknGPaV41Tw"
-		          videoId="EKyirtVHsK0"
+		          videoId={this.props.watchId}
 		          play={this.state.isVideoPlaying}
 		          loop={this.state.isLooping}
 		          fullscreen={this.state.fullscreen}

@@ -40,12 +40,11 @@ export default class YoutubeSongSearch extends Component{
          <ScrollView>
                 {this.state.data.map(item =>
                   <Content key={item.id.videoId}>
-                      <TouchableOpacity style={{flexDirection:'row', marginBottom:8}}  onPress={() => {this.setStartPlay(item.id.videoId);}}>
+                      <TouchableOpacity style={{flexDirection:'row', marginBottom:8}}  onPress={() => {this.setStartPlay(item.id.videoId,item.snippet.title);}}>
                         <Image style={{width:120, height:90}}
                             source={{uri:item.snippet.thumbnails.default.url}} >
                           <Icon color={'white'} name="play" size={24} style={{alignItems:'center',justifyContent:'center',position:'absolute',right:0,bottom:0}}/>
                         </Image>
-                        
                         <View style={{height:90, width:Dimensions.get('window').width-160, marginLeft:8}}>
                           <Text numberOfLines={2} ellipsizeMode='tail' style={{marginBottom:8, fontSize:14}}>{item.snippet.title}</Text>
                           <Text numberOfLines={3} ellipsizeMode='tail' style={{fontSize:12}}>{item.snippet.description}</Text>
@@ -59,31 +58,42 @@ export default class YoutubeSongSearch extends Component{
 			        open={this.state.open}
 			        modalDidOpen={() => console.log('modal did open')}
 			        modalDidClose={() => this.setState({open: false})}
-			        style={{alignItems: 'center'}}>
+			        closeOnTouchOutside={true}
+					containerStyle={{
+					   justifyContent: 'center'
+					}}
+					modalStyle={{
+					   borderRadius: 2,
+					   margin:5,
+					   padding: 5,paddingTop:0,
+					   backgroundColor: '#F5F5F5'
+					}}
+			        >
 	         		<View style={{flexDirection:"column"}}>
+	         		<Text numberOfLines={1} ellipsizeMode='tail' style={{fontSize:18,margin:10}}>{this.state.title}</Text>
 	                  <YouTube
 	                    apiKey={Config.YOUTUBE_API_KEY}
-	                    videoId={this.state.playVideoId}   // The YouTube video ID
-	                    play={true}             // control playback of video with true/false
-	                    fullscreen={false}       // control whether the video should play in fullscreen or inline
+	                    videoId={this.state.playVideoId}   
+	                    play={true}             
+	                    fullscreen={false}       
 	                    onReady={e => this.setState({ isReady: true })}
 	                    controls={2}
 	                    onChangeState={e => console.log('onChangeState'+e.state)}
 	                    onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
 	                    onError={e => console.log('onError'+e.error)}
 	                    style={{ height: (Dimensions.get("window").width) * 0.5625}} />
-	                <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+	                <View style={{flexDirection:"row",justifyContent:"flex-end"}}>
 	                <TouchableOpacity
-			            style={{margin: 5}}
+			            style={{margin: 5,marginRight:20,alignItems:"flex-end",}}
 			            onPress={() => this.setState({open: false})}
 			            >
 			            <Text style={{fontSize:20}}>Cancel</Text>
 		          	</TouchableOpacity>
 		          	<TouchableOpacity
-			            style={{margin: 5}}
+			            style={{margin: 5,alignItems:"flex-end"}}
 			            onPress={()=>{this.refreshOnSave()}} 
 			            >
-			            <Text style={{fontSize:20,right:0}}>Save</Text>
+			            <Text style={{fontSize:20}}>Save</Text>
 		          	</TouchableOpacity>
 		          	</View>
 	                </View>	
@@ -93,13 +103,13 @@ export default class YoutubeSongSearch extends Component{
       );
   	}
   }
-refreshOnSave(){
+ refreshOnSave(){
 	this.saveVideo();
  	Actions.pop({refresh:{videoId: this.state.playVideoId} }) 
 
-}
-  setStartPlay(videoId) {
-    this.setState({playVideoId:videoId, startPlay:true,open:true});
+ }
+  setStartPlay(videoId,searchTitle) {
+    this.setState({playVideoId:videoId, startPlay:true,open:true,title:searchTitle});
 
   }
 
@@ -128,7 +138,6 @@ refreshOnSave(){
         this.setState({isLoading:false})
         console.log("response in fetch : " + JSON.stringify(responseJson));
         this.setState({data:responseJson.items})
-        
       })
       .catch((error) => {
         this.setState({isLoading:false})

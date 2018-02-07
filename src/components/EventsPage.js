@@ -7,7 +7,6 @@ import styles from '../style/styles.js'
 import moment from 'moment';
 import axios from 'axios';
 import Config from 'react-native-config'
-import Spinner from 'react-native-loading-spinner-overlay';
 export default class EventsPage extends Component{
 
  constructor(props){
@@ -16,7 +15,7 @@ export default class EventsPage extends Component{
         this.state = {
           tokenValue: this.props.tokenValue,
           data: [],
-          showProgress:true
+          showProgress:false
         }
     }
 
@@ -42,8 +41,8 @@ export default class EventsPage extends Component{
       console.log('token1 '+auth_token)
       if (auth_token !== null) {
         this.setState({tokenValue:auth_token})
+        this.setState({showProgress:true})
         this.DataEvents();
-        this.setState({showProgress:false})
       }
     })
   }
@@ -51,9 +50,11 @@ export default class EventsPage extends Component{
     render() {
       let data = this.state.data;
       console.log("render "+data)
-      if (data.length == 0) {
+      if (this.state.showProgress) {
         return(
-       <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+           <View style={{flex:1,justifyContent:"center"}}>
+       <ActivityIndicator animating={true} style={{alignItems:"center"}} color="#3F51B5" size="large"/>
+        </View>
       )
       }
           return (  

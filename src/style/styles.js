@@ -12,7 +12,7 @@ const octaValue = 8;
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-    margin:octaValue
+    margin:octaValue,
 	},
   navigationBarColor:{
     backgroundColor: navBarColor
@@ -379,6 +379,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     right: 0,
+    backgroundColor:"#E9E9EF",
     bottom: 0,
   },
   loaderYoutubeSearch: {

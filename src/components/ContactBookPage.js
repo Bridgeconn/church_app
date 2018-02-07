@@ -11,7 +11,8 @@ import {
     TextInput,
     Dimensions,
     RefreshControl,
-    NetInfo
+    NetInfo,
+    ActivityIndicator
 } from 'react-native';
 import { 
   Header, 
@@ -71,7 +72,7 @@ export default class App extends Component {
                           this.setState({searchedData:newnames})
                         }
                       }
-                          this.setState({showProgress:false,isRefreshing:false})
+                          this.setState({showProgress:true,isRefreshing:false})
                      })
                      .catch((error) =>{
                         console.log(error)
@@ -194,7 +195,9 @@ export default class App extends Component {
                   }
                 >
               {this.state.showProgress ? 
-                <Spinner size={"large"} visible={ this.state.isRefreshing ? false :true } color={"#3F51B5"} style={styles.spinnerCustom}/> : 
+                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/><
+                /View> : 
                   (this.state.dataContactDetail == null  && this.state.searchQuery.trim() == "") ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>

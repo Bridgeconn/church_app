@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Platform} from 'react-native';
 import {ListItem,List,Card,CardItem,Body,Right, Button} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import verse from './verseOfTheDayListDummy.json'
+// import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
 import styles from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -58,34 +58,41 @@ export default class VersePage extends Component{
 
     render() {
       console.log("state data = " + JSON.stringify(this.state.verseData))
-          return (
-                    <View style={styles.container}>
-                    <ScrollView>
-                       {this.state.verseData.map(item =>
-                         <Card key={item.timestamp} style={styles.cardVerse}>
-                         <CardItem style={styles.verseListItemStyle}>
-                          <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
-                          <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='ago' style={styles.verseTimestamp}/>
-                        </CardItem>
-                        <CardItem>
-                          <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
-                        </CardItem>
-                        <CardItem style={styles.contactListItemStyle}>
-                        <TouchableOpacity  onPress={this._shareMessage.bind(this,
-                          item.verse_body,
-                          item.book_name,
-                          item.chapter_num,
-                          item.verse_num)}
-                          title="Share"
-                          color="#3F51B5"
-                          >
-                          <Icon name="share-variant" size={24} color="#3F51B5"/>
-                          </TouchableOpacity>
-                        </CardItem>
-                        </Card>
-                        )}
-                    </ScrollView>
-                    </View>
-                )                                                                                                                                                                                                                                        
+      
+      if(this.state.verseData.length == 0){
+        return null;
+      }
+      else{
+        return (
+          <View style={styles.container}>
+          <ScrollView>
+             {this.state.verseData.map(item =>
+               <Card key={item.timestamp} style={styles.cardVerse}>
+               <CardItem style={styles.verseListItemStyle}>
+                <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
+                <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='ago' style={styles.verseTimestamp}/>
+              </CardItem>
+              <CardItem>
+                <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
+              </CardItem>
+              <CardItem style={styles.contactListItemStyle}>
+              <TouchableOpacity  onPress={this._shareMessage.bind(this,
+                item.verse_body,
+                item.book_name,
+                item.chapter_num,
+                item.verse_num)}
+                title="Share"
+                color="#3F51B5"
+                >
+                <Icon name="share-variant" size={24} color="#3F51B5"/>
+                </TouchableOpacity>
+              </CardItem>
+              </Card>
+              )}
+          </ScrollView>
+          </View>
+                )                         
+      }
+                                                                                                                                                                                                                         
 }
 }

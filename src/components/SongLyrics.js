@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Text,View, ScrollView,AsyncStorage,Dimensions} from 'react-native';
+import {Text,View, ScrollView,AsyncStorage,Dimensions,Alert} from 'react-native';
 import styles from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Actions} from 'react-native-router-flux'
@@ -51,29 +51,29 @@ export default class EventsDetail extends Component{
                 onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
                 onError={e => console.log('onError'+e.error)}
                 style={{height: (Dimensions.get("window").width) * 0.5625}} />
-
-                <Icon color={'#3F51B5'} 
+                <View style={{backgroundColor:"#000"}}>
+                <Icon color={'#fff'} 
                   onPress={() => {
                     this.removeVideo()
                   }}
                   name="delete" 
-                  size={36} />
+                  size={32}
+                  style={{alignSelf:"flex-end"}} />
+                </View>
           </View>
           : 
           ( this.state.videoId !==null && !this.state.playVideo) ? 
-          <View style={{backgroundColor:'black', height:(Dimensions.get("window").width) * 0.5625}}>
-              <Icon color={'#3F51B5'} 
+          <View style={{backgroundColor:'black', height:(Dimensions.get("window").width) * 0.5625,justifyContent:"center",}}>
+              <Icon color={'#fff'} 
                   onPress={() => {
                     this.playVideoMethod()
                   }}
+                  style={{alignSelf:'center'}}
                   name="play" 
-                  size={36} />
+                  size={48} />
           </View>
           : null
-          
-           
         }
-
           <ScrollView style={styles.songLyricsScrollView} showsVerticalScrollIndicator={false}>
 
             <View>
@@ -94,13 +94,30 @@ export default class EventsDetail extends Component{
   }
 
   removeVideo() {
-    try{
-     AsyncStorage.removeItem('song_id_' + this.props.songId);
-     this.setState({videoId:null})
+    Alert.alert(
+  'Delete',
+  'Are you sure !',
+  [
+    {text: 'Cancel', onPress: () => this.state.videoId},
+    {text: 'OK', onPress: () =>   { 
+      try{
+        AsyncStorage.removeItem('song_id_' + this.props.songId); this.setState({videoId:null}) 
+      }
+      catch(error){
+        console.log("AsyncStorage")
+      } 
+      } 
+    },
+  ]
+
+)
+    // try{
+    // 
+    //  this.setState({videoId:null})
     
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error);
-    }
+    // } catch (error) {
+    //   console.error('AsyncStorage error: ' + error);
+    // }
   }
 
   playVideoMethod() {

@@ -15,6 +15,8 @@ import {Actions} from 'react-native-router-flux'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
+import * as AsyncStorageConstants from './AsyncStorageConstants';
+
 
 class Login extends Component {
   constructor(props){
@@ -52,11 +54,14 @@ class Login extends Component {
             var tokenValue = response.data.user.auth_token;
           console.log("auth data token"+tokenValue)
           console.log("auth data email"+response.data.user.email)
+          console.log(" USER DATA STATUS "+ response.data.user.user_status)
             this.setState({tokenValue:tokenValue})
-            this.saveItem('token', tokenValue)
-            this.saveItem('user', response.data.user.first_name)
-            this.saveItem('contact', response.data.user.user_contact)
+            this.saveItem(AsyncStorageConstants.UserToken, tokenValue)
+            this.saveItem('user_name', response.data.user.first_name)
+            this.saveItem('user_contact_number', response.data.user.user_contact)
             this.saveItem('email', response.data.user.email)
+            this.saveItem('user_show_email', response.data.user.user_status)
+            this.saveItem('user_show_contact_number', response.data.user.user_status)
               Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact,email:response.data.user.email, username:response.data.user.first_name,showpregress:this.state.showProgress});
           } else {
             alert(response.data.message);

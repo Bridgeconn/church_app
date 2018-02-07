@@ -23,12 +23,13 @@ import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import Searchbar from './Searchbar'
 import YoutubeSongSearch from './YoutubeSongSearch'
-// import RightButton from './RightButton'
 import styles from '../style/styles.js'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 import FCM from "react-native-fcm"
 import SQLite from 'react-native-sqlite-storage'
+import * as AsyncStorageConstants from './AsyncStorageConstants';
+
 
 const NotificationModule = NativeModules.NotificationModule;
 
@@ -53,7 +54,7 @@ export default class RoutesPage extends Component {
     
     registerAppListener();
 
-    await AsyncStorage.getItem('token').then((auth_token) => {
+    await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((auth_token) => {
       console.log('token1 '+auth_token)
       this.setState({tokenValue:auth_token})
     })
@@ -63,18 +64,6 @@ export default class RoutesPage extends Component {
           this.setState({ guestKey: value !== null })
         })
      } else {  
-        await AsyncStorage.getItem('uri').then((uri) => {
-          console.log("uri"+uri)
-          this.setState({ imageUri:uri})
-        })
-        await AsyncStorage.getItem('user').then((user) => {
-          console.log("user"+user)
-          this.setState({ username:user})
-        })
-        await AsyncStorage.getItem('contact').then((contact) => {
-          console.log("contact"+contact)
-          this.setState({contactNum:contact})
-        })
         await AsyncStorage.getItem('email').then((email) => {
           console.log("email"+email)
           this.setState({email:email})
@@ -99,6 +88,7 @@ export default class RoutesPage extends Component {
       console.log("Event = body" + e.notification_body)
       // add to db here
         db.transaction((tx)=>{
+        tx.executeSql(  'DROP TABLE IF EXISTS Verse')
         tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
           [],
           (tx, res)=>{
@@ -252,7 +242,7 @@ export default class RoutesPage extends Component {
               initial={this.state.guestKey || this.state.tokenValue!==null}
               showLabel={false} 
               swipeEnabled={false}
-              lazyLoad={true}
+              lazyLoad={false}
               animationEnabled={false}
               tabBarStyle={styles.tabBar} 
               tabs={true} 
