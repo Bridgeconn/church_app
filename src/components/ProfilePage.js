@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux'
 import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import axios from 'axios';
+import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class ProfilePage extends Component{
 	
@@ -29,24 +30,19 @@ export default class ProfilePage extends Component{
 
 
   async saveToAsyncStorage(){
-
-      await AsyncStorage.setItem('user_name',this.state.newUser);
-      await AsyncStorage.setItem('user_contact_number',this.state.newContact);
-      await AsyncStorage.setItem('user_show_email',this.state.newcheckboxEmail);
-      await AsyncStorage.setItem('user_show_contact_number',this.state.newcheckboxContact);
+      await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
+      await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
+      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,this.state.newcheckboxEmail);
+      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxContact,this.state.newcheckboxContact);
 
       Actions.pop()
   }
-
-
   async saveProfileData(){
-      
       let data = new FormData();
       data.append("first_name", this.state.newUser);
       data.append("contact_number", this.state.newContact);
       data.append("contact_show",this.state.newcheckboxContact)
       data.append("show_email", this.state.newcheckboxEmail);
-
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.CONTACT_UPDATE_API_URL, data, config)
@@ -65,24 +61,24 @@ export default class ProfilePage extends Component{
     }
 
      componentDidMount() {
-       AsyncStorage.getItem('token').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
         this.setState({ token: value})
       })
-       AsyncStorage.getItem('email').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
         this.setState({email: value})
       })
-       AsyncStorage.getItem('user_name').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
         console.log("value "+value)
         this.setState({ user: value, newUser: value})
       })
-       AsyncStorage.getItem('user_contact_number').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
         this.setState({contact: value, newContact: value})
       })
-       AsyncStorage.getItem('user_show_email').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
         console.log("email_value "+value)
         this.setState({ checkboxEmail: value, newcheckboxEmail: value})
       })
-       AsyncStorage.getItem('user_show_contact_number').then((value) => {
+       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
         this.setState({checkboxContact: value, newcheckboxContact: value})
       })
       console.log("newUser" +this.state.newUser)

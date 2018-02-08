@@ -46,7 +46,6 @@ export default class VersePage extends Component{
           console.log("data response"+  JSON.stringify(res.rows.raw()))
           let rows = res.rows.raw();
             this.setState({verseData: rows})
-        
         })
       })
     }
@@ -64,9 +63,10 @@ export default class VersePage extends Component{
       }
       else{
         return (
-          <View style={styles.container}>
+          <View style={[styles.container,{justifyContent:"center"} ]}>
           <ScrollView>
-             {this.state.verseData.map(item =>
+             {this.state.verseData.length == 0 ? <View style={{flex:1}}><Text style={{alignItems:center}}>No Verse</Text></View> 
+             : this.state.verseData.map(item =>
                <Card key={item.timestamp} style={styles.cardVerse}>
                <CardItem style={styles.verseListItemStyle}>
                 <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>

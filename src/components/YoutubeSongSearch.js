@@ -9,6 +9,7 @@ import Modal from 'react-native-simple-modal';
 import YouTube from 'react-native-youtube';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
+import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class YoutubeSongSearch extends Component{
 
@@ -119,7 +120,7 @@ export default class YoutubeSongSearch extends Component{
 
   async saveVideo() {
     try {
-      AsyncStorage.setItem('song_id_' + this.props.songId, this.state.playVideoId);
+      AsyncStorage.setItem(AsyncStorageConstants.SONG_ID+ this.props.songId, this.state.playVideoId);
     } catch (error) {
       console.error('AsyncStorage error: ' + error);
     }

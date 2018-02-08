@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, AsyncStorage} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, AsyncStorage,RefreshControl} from 'react-native';
 import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import eventsList from './eventListDummy.json'
 import styles from '../style/styles.js'
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Config from 'react-native-config'
+import * as AsyncStorageConstants from './AsyncStorageConstants';
+
 export default class EventsPage extends Component{
 
  constructor(props){
@@ -15,52 +18,72 @@ export default class EventsPage extends Component{
         this.state = {
           tokenValue: this.props.tokenValue,
           data: [],
-          showProgress:false
+          isloading:false,
+          isRefreshing:false
         }
     }
 
-    DataEvents(){
+    fetchEventsData(){
+      this.setState({isloading:true})
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.EVENTS_API_URL, config)
         .then((response) => { 
        console.log("response "+JSON.stringify(response.data.events))
        this.setState({data:response.data.events})
-       this.setState({showProgress:false})
+       this.setState({isloading:false,isRefreshing:false})
      })
-     .catch(function (error) {
-          console.log(error)
-          console.log("something went wrong")
-          alert('Some error occurred. Please try again later'); 
-          this.setState({showProgress:false})
-        })      
+      .catch((error) => { 
+        console.log("something went wrong")
+       this.setState({isloading:false,isRefreshing:false})
+     })
     }
 
-  async componentDidMount() {
-    await AsyncStorage.getItem('token').then((auth_token) => {
-      console.log('token1 '+auth_token)
-      if (auth_token !== null) {
-        this.setState({tokenValue:auth_token})
-        this.setState({showProgress:true})
-        this.DataEvents();
+     onRefreshFunction(){
+        // if(this.state.isloading){
+        //   return
+        // }
+        this.setState({isRefreshing:true})
+        this.fetchEventsData()
       }
-    })
+   componentDidMount() {
+        // this.setState({tokenValue:auth_token})
+        this.fetchEventsData();
   }
 
     render() {
       let data = this.state.data;
-      console.log("render "+data)
-      if (this.state.showProgress) {
-        return(
-           <View style={{flex:1,justifyContent:"center"}}>
-       <ActivityIndicator animating={true} style={{alignItems:"center"}} color="#3F51B5" size="large"/>
-        </View>
-      )
-      }
+      // console.log("render "+data)
+      // if (this.state.showProgress) {
+      //   return(
+      //   <View style={{flex:1,justifyContent:"center"}}>
+      //     <ActivityIndicator animating={this.state.isRefreshing ? false : true} style={{alignItems:"center"}} color="#3F51B5" size="large"/>
+      //   </View>
+      // )
+      // }
           return (  
-            <View style={styles.container}>
-              <ScrollView>
-                       {data.map(item =>
+           <View style={styles.container}>
+              <ScrollView 
+              // contentContainerStyle={styles.container}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                    <RefreshControl
+                        onRefresh={() => this.onRefreshFunction()}
+                        refreshing={this.state.isRefreshing}
+                    />
+                }
+              >
+
+              {this.state.isLoading ? 
+                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
+                </View> : 
+                  (this.state.data.length == 0) ? 
+                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                      <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
+                    </View>
+                    :
+                    data.map(item =>
                         <Content key={item.name}>
                         <TouchableOpacity 
                         onPress={()=>{
@@ -94,12 +117,18 @@ export default class EventsPage extends Component{
                             </CardItem>
                           </Card>
                         </TouchableOpacity>
+
                         </Content>
                         )}
               </ScrollView>
-            </View>    
+              </View>
                 )
                                                                                                                                                                                                                                        
 }
 }
 
+
+
+
+
+              

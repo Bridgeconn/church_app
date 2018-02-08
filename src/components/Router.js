@@ -64,7 +64,7 @@ export default class RoutesPage extends Component {
           this.setState({ guestKey: value !== null })
         })
      } else {  
-        await AsyncStorage.getItem('email').then((email) => {
+        await AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((email) => {
           console.log("email"+email)
           this.setState({email:email})
         })
@@ -72,7 +72,6 @@ export default class RoutesPage extends Component {
     
     this.setState({isLoaded:true}) 
     this.hideSplashScreen()
-     
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
     
   }
@@ -134,12 +133,12 @@ export default class RoutesPage extends Component {
 
   rightButton = () =>{
     return(
-        <View style={{flexDirection:"row"}}>
-                  <TouchableOpacity onPress={()=>{Actions.profile()}}>
-                    <Icon name="account-circle" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
+        <View style={{flexDirection:"row",justifyContent:"center"}}>
+                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={{alignItems:"center",marginLeft:10,marginRight:10}}>
+                    <Icon name="account-circle" size={26} color="white"/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>{Actions.settings()}}>
-                    <Icon name="settings" size={26} color="white" style={{paddingRight:20,marginTop:12}}/>
+                  <TouchableOpacity onPress={()=>{Actions.settings()}} style={{alignItems:"center",marginLeft:10,marginRight:10}}>
+                    <Icon name="settings" size={26} color="white" />
                   </TouchableOpacity>
               </View>
             )

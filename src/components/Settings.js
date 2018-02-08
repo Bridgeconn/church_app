@@ -17,6 +17,7 @@ import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Card,CardItem,Body} from 'native-base';
 import styles from '../style/styles.js'
+import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class Settings extends Component {
   constructor(props){
@@ -25,14 +26,17 @@ export default class Settings extends Component {
      showProgress: false
     }
   }
-  async userLogout(){
+
+   userLogout(){
     try {
     Actions.refresh({showProgress:true})
-    await   AsyncStorage.removeItem('token');
-    await   AsyncStorage.removeItem('guest');
-    await   AsyncStorage.removeItem('uri')
-    await   AsyncStorage.removeItem('user')
-    await   AsyncStorage.removeItem('contact')
+      AsyncStorage.removeItem(AsyncStorageConstants.UserToken);
+      AsyncStorage.removeItem('guest');
+      AsyncStorage.removeItem(AsyncStorageConstants.UserName)
+      AsyncStorage.removeItem(AsyncStorageConstants.UserContactNumber)
+      AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxEmail)
+      AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxContact)
+      AsyncStorage.removeItem(AsyncStorageConstants.UserEmail)
     Actions.refresh({showProgress:false})
     Actions.reset("register", {tokenValue:null, guestKey:false})
     // alert('Logout Success!');

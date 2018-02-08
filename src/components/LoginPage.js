@@ -52,17 +52,19 @@ class Login extends Component {
           if (response.data.success) {
             console.log("success login")
             var tokenValue = response.data.user.auth_token;
-          console.log("auth data token"+tokenValue)
-          console.log("auth data email"+response.data.user.email)
-          console.log(" USER DATA STATUS "+ response.data.user.user_status)
+            var email = response.data.user.email;
+            console.log("auth data token"+tokenValue)
+            console.log("auth data email"+response.data.user.email)
+            console.log(" USER DATA STATUS "+ response.data.user.user_status)
             this.setState({tokenValue:tokenValue})
+            this.setState({email:response.data.user.email})
             this.saveItem(AsyncStorageConstants.UserToken, tokenValue)
-            this.saveItem('user_name', response.data.user.first_name)
-            this.saveItem('user_contact_number', response.data.user.user_contact)
-            this.saveItem('email', response.data.user.email)
-            this.saveItem('user_show_email', response.data.user.user_status)
-            this.saveItem('user_show_contact_number', response.data.user.user_status)
-              Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact,email:response.data.user.email, username:response.data.user.first_name,showpregress:this.state.showProgress});
+            this.saveItem(AsyncStorageConstants.UserName, response.data.user.first_name)
+            this.saveItem(AsyncStorageConstants.UserContactNumber, response.data.user.user_contact)
+            this.saveItem(AsyncStorageConstants.UserEmail, response.data.user.email)
+            this.saveItem(AsyncStorageConstants.UserCheckBoxEmail, response.data.user.user_status)
+            this.saveItem(AsyncStorageConstants.UserCheckBoxContact, response.data.user.user_status)
+              Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact,email:email, username:response.data.user.first_name,showpregress:this.state.showProgress});
           } else {
             alert(response.data.message);
           }

@@ -39,7 +39,7 @@ export default class App extends Component {
 
         this.state ={
             dataContactDetail: null,
-            showProgress:false,
+            isLoading:false,
             searchedData:null,
             searchQuery:"",
             isRefreshing:false,
@@ -56,7 +56,7 @@ export default class App extends Component {
                   case 'cellular': {
                   }
                   case 'wifi': {
-                    this.setState({showProgress:true})
+                    this.setState({isLoading:true,isRefreshing:true})
                   const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
                   axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                   let url = Config.BASE_API_URL + Config.GET_CONTACTS_API_URL + (searchText == null ? '' : '?search='+searchText);
@@ -72,11 +72,11 @@ export default class App extends Component {
                           this.setState({searchedData:newnames})
                         }
                       }
-                          this.setState({showProgress:true,isRefreshing:false})
+                          this.setState({isLoading:false,isRefreshing:false})
                      })
                      .catch((error) =>{
                         console.log(error)
-                       this.setState({showProgress:false})
+                       this.setState({isLoading:false})
                        this.setState({isRefreshing:false})
                       })
 
@@ -103,7 +103,7 @@ export default class App extends Component {
       this.fetchContacts(param);
   }
   
-   async componentDidMount() {
+    componentDidMount() {
         this.fetchContacts(null);
   }
     _renderHeader(data) {
@@ -184,8 +184,8 @@ export default class App extends Component {
                     {this.state.searchBoxText =="" ? null : <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>}  
                   </Item>
               </Header>
+              <View style={styles.container}>
               <ScrollView 
-              contentContainerStyle={{flex:1}}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                       <RefreshControl
@@ -194,10 +194,10 @@ export default class App extends Component {
                       />
                   }
                 >
-              {this.state.showProgress ? 
+              {this.state.isLoading ? 
                 <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/><
-                /View> : 
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
+                  </View> : 
                   (this.state.dataContactDetail == null  && this.state.searchQuery.trim() == "") ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
@@ -219,7 +219,7 @@ export default class App extends Component {
                           </View>
                 }
                 </ScrollView>
-
+                </View>
               </View>
         )
     }

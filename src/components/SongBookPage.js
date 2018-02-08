@@ -5,7 +5,6 @@ import {
     Text,
     View,
     ScrollView,
-    AsyncStorage,
     TouchableOpacity,
     TextInput,
     Dimensions,
@@ -19,7 +18,10 @@ import {
   Title,
   Item,
   Input, 
-  Button
+  Button,
+  Content,
+  Card,
+  CardItem
  
 } from 'native-base';
 import {Actions} from 'react-native-router-flux'
@@ -38,7 +40,7 @@ export default class SongBookPage extends Component {
     constructor(props, context) {
         super(props, context);
         this.state ={
-            songsList: [],
+            songsListData: [],
             isLoading:false,
             searchedSongsList:[],
             searchQuery:"",
@@ -56,7 +58,7 @@ export default class SongBookPage extends Component {
                   case 'cellular': {
                   }
                   case 'wifi': {
-                    this.setState({isLoading:true})
+                    this.setState({isLoading:true,isRefreshing:true})
                       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue,} }
                       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                       var url = Config.BASE_API_URL + Config.GET_SONGS_API_URL + (searchText == null ? '' : '?search='+searchText);
@@ -64,14 +66,14 @@ export default class SongBookPage extends Component {
                         .then((response) => { 
                            console.log("response contacts"+JSON.stringify(response.data.songs))
                            if (searchText == null) {
-                              this.setState({songsList:response.data.songs})
+                              this.setState({songsListData:response.data.songs})
                            } else {
                               this.setState({searchedSongsList:response.data.songs})
                               console.log("searched data"+this.state.searchedSongsList)
                            }
                             this.setState({isLoading:false,isRefreshing:false})
                          })
-                         .catch(function (error) {
+                         .catch((error) =>{
                             console.log(error)
                             console.log("something went wrong")
                              this.setState({isLoading:false,isRefreshing:false})
@@ -99,8 +101,9 @@ export default class SongBookPage extends Component {
       this.fetchSongBooks(text);
   }
   
-   async componentDidMount() {
+    componentDidMount() {
         this.fetchSongBooks(null);
+
      }
 
        onRefreshFunction(){
@@ -149,7 +152,6 @@ export default class SongBookPage extends Component {
                 </Item>
               </Header>
               <ScrollView 
-              contentContainerStyle={{flex:1}}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -158,12 +160,11 @@ export default class SongBookPage extends Component {
                     />
                 }
               >
-
               {this.state.isLoading ? 
                 <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
                 </View> : 
-                  (this.state.songsList.length == 0  && this.state.searchQuery.trim() == "") ? 
+                  (this.state.songsListData.length == 0  && this.state.searchQuery.trim() == "") ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
                     </View>
@@ -172,27 +173,40 @@ export default class SongBookPage extends Component {
                         <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
-                        :
-                          <View style={{flex:1}}>
-                           
-                              <FlatList
-                              data={(this.state.searchedSongsList.length == 0) ? this.state.songsList : this.state.searchedSongsList}
-                              renderItem={({item})=>
-                               <View style={styles.cell}>
+                        :(this.state.searchedSongsList.length == 0) ? this.state.songsListData.map(item =>
+                          <Content key={item.added_date}>
+                             <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
+                              <Card>
+                              <CardItem>
+                                <Text style={styles.songTitleText}>
+                                    {item.title}  
+                                </Text>
+                                </CardItem>
+                                <CardItem>
+                                <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
+                                    {item.lyrics}
+                                </Text>
+                              </CardItem>
+                              </Card>
+                              </TouchableOpacity>
+                          </Content>
+                          ): this.state.searchedSongsList.map(item =>
+                          <Content key={item.added_date}>
                                <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
-                                <View style={{margin:10}}>
+                                <Card>
+                                <CardItem>
                                   <Text style={styles.songTitleText}>
                                       {item.title}  
                                   </Text>
+                                  </CardItem>
+                                  <CardItem>
                                   <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
                                       {item.lyrics}
                                   </Text>
-                                </View>
+                                </CardItem>
+                                </Card>
                                 </TouchableOpacity>
-                              </View>
-                              }
-                              />
-                          </View>
+                                </Content>)
                 }
               </ScrollView>
               </View>

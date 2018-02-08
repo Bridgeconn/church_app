@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import YouTube from 'react-native-youtube';
+import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class EventsDetail extends Component{
 
@@ -28,7 +29,7 @@ export default class EventsDetail extends Component{
     }
   }
   componentDidMount(){
-     AsyncStorage.getItem('song_id_' + this.props.songId).then((value)=>{
+     AsyncStorage.getItem(AsyncStorageConstants.SONG_ID + this.props.songId).then((value)=>{
       console.log("videoId"+value)
       if (value !== null) {
        this.setState({videoId:value})
@@ -101,7 +102,7 @@ export default class EventsDetail extends Component{
     {text: 'Cancel', onPress: () => this.state.videoId},
     {text: 'OK', onPress: () =>   { 
       try{
-        AsyncStorage.removeItem('song_id_' + this.props.songId); this.setState({videoId:null}) 
+        AsyncStorage.removeItem(AsyncStorageConstants.SONG_ID + this.props.songId); this.setState({videoId:null}) 
       }
       catch(error){
         console.log("AsyncStorage")
