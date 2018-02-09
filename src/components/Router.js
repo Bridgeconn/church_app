@@ -35,7 +35,7 @@ const NotificationModule = NativeModules.NotificationModule;
 
 import {registerKilledListener, registerAppListener, registerTopicListener} from "./Listeners";
 
-var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
+var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err),)
 
 registerKilledListener();
 registerTopicListener();
@@ -87,7 +87,6 @@ export default class RoutesPage extends Component {
       console.log("Event = body" + e.notification_body)
       // add to db here
         db.transaction((tx)=>{
-        tx.executeSql(  'DROP TABLE IF EXISTS Verse')
         tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
           [],
           (tx, res)=>{

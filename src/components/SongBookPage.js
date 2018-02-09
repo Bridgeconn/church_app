@@ -58,7 +58,7 @@ export default class SongBookPage extends Component {
                   case 'cellular': {
                   }
                   case 'wifi': {
-                    this.setState({isLoading:true,isRefreshing:true})
+                    this.setState({isLoading:true})
                       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue,} }
                       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                       var url = Config.BASE_API_URL + Config.GET_SONGS_API_URL + (searchText == null ? '' : '?search='+searchText);
@@ -102,7 +102,7 @@ export default class SongBookPage extends Component {
   }
   
     componentDidMount() {
-        this.fetchSongBooks(null);
+        this.fetchSongBooks();
 
      }
 
@@ -152,6 +152,7 @@ export default class SongBookPage extends Component {
                 </Item>
               </Header>
               <ScrollView 
+              contentContainerStyle={{flexGrow:1}}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -173,7 +174,8 @@ export default class SongBookPage extends Component {
                         <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
-                        :(this.state.searchedSongsList.length == 0) ? this.state.songsListData.map(item =>
+                        :(this.state.searchedSongsList.length == 0) ? <View style={{margin:8}}>
+                        {this.state.songsListData.map(item =>
                           <Content key={item.added_date}>
                              <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                               <Card>
@@ -190,7 +192,7 @@ export default class SongBookPage extends Component {
                               </Card>
                               </TouchableOpacity>
                           </Content>
-                          ): this.state.searchedSongsList.map(item =>
+                          )}</View> : <View style={{margin:8}}>{this.state.searchedSongsList.map(item =>
                           <Content key={item.added_date}>
                                <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                                 <Card>
@@ -206,7 +208,8 @@ export default class SongBookPage extends Component {
                                 </CardItem>
                                 </Card>
                                 </TouchableOpacity>
-                                </Content>)
+                                </Content>
+                                )}</View>
                 }
               </ScrollView>
               </View>

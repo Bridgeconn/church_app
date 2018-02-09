@@ -56,7 +56,7 @@ export default class App extends Component {
                   case 'cellular': {
                   }
                   case 'wifi': {
-                    this.setState({isLoading:true,isRefreshing:true})
+                  this.setState({isLoading:true})
                   const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
                   axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                   let url = Config.BASE_API_URL + Config.GET_CONTACTS_API_URL + (searchText == null ? '' : '?search='+searchText);
@@ -186,6 +186,7 @@ export default class App extends Component {
               </Header>
               <View style={styles.container}>
               <ScrollView 
+              contentContainerStyle={{flexGrow:1}}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                       <RefreshControl

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
@@ -32,8 +32,8 @@ export default class ProfilePage extends Component{
   async saveToAsyncStorage(){
       await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
       await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
-      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,this.state.newcheckboxEmail);
-      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxContact,this.state.newcheckboxContact);
+      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,JSON.stringify(this.state.newcheckboxEmail));
+      await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxContact,JSON.stringify(this.state.newcheckboxContact));
 
       Actions.pop()
   }
@@ -59,34 +59,7 @@ export default class ProfilePage extends Component{
         });
 
     }
-
-     componentDidMount() {
-       AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
-        this.setState({ token: value})
-      })
-       AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
-        this.setState({email: value})
-      })
-       AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
-        console.log("value "+value)
-        this.setState({ user: value, newUser: value})
-      })
-       AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
-        this.setState({contact: value, newContact: value})
-      })
-       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
-        console.log("email_value "+value)
-        this.setState({ checkboxEmail: value, newcheckboxEmail: value})
-      })
-       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
-        this.setState({checkboxContact: value, newcheckboxContact: value})
-      })
-      console.log("newUser" +this.state.newUser)
-      console.log("newcheckboxEmail"+this.state.newcheckboxEmail)
-      console.log("newcheckboxContact"+this.state.newcheckboxContact)
-    }
-
-  onBackButton(){
+    onBackButton(){
       if(this.state.showSaveProfile){
           Alert.alert(
             'Save changes',
@@ -105,6 +78,36 @@ export default class ProfilePage extends Component{
       
     }
 
+     componentDidMount() {
+       AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
+        this.setState({ token: value})
+      })
+       AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
+        this.setState({email: value})
+      })
+       AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
+        console.log("value "+value)
+        this.setState({ user: value, newUser: value})
+      })
+       AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
+        this.setState({contact: value, newContact: value})
+      })
+       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
+        console.log("email_value "+value)
+
+        this.setState({ checkboxEmail: JSON.parse(value),newcheckboxEmail: JSON.parse(value)})
+      })
+       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
+        this.setState({checkboxContact: JSON.parse(value), newcheckboxContact: JSON.parse(value)})
+      })
+      console.log("newUser" +this.state.newUser)
+      console.log("newcheckboxEmail"+this.state.newcheckboxEmail)
+      console.log("newcheckboxContact"+this.state.newcheckboxContact)
+       BackHandler.addEventListener('hardwareBackPress', this.onBackButton)
+    }
+    componentWillUnmount(){
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackButton)
+    }
   checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
 
     if (this.state.user!== newUser || this.state.contact !== newContact || 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, AsyncStorage,RefreshControl} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, AsyncStorage,RefreshControl,NetInfo} from 'react-native';
 import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import eventsList from './eventListDummy.json'
@@ -18,31 +18,52 @@ export default class EventsPage extends Component{
         this.state = {
           tokenValue: this.props.tokenValue,
           data: [],
-          isloading:false,
+          isLoading:false,
           isRefreshing:false
         }
     }
 
     fetchEventsData(){
-      this.setState({isloading:true})
-      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue} }
-      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-      axios.get(Config.BASE_API_URL + Config.EVENTS_API_URL, config)
-        .then((response) => { 
-       console.log("response "+JSON.stringify(response.data.events))
-       this.setState({data:response.data.events})
-       this.setState({isloading:false,isRefreshing:false})
-     })
-      .catch((error) => { 
-        console.log("something went wrong")
-       this.setState({isloading:false,isRefreshing:false})
-     })
-    }
+      NetInfo.getConnectionInfo()
+              .then((connectionInfo) => {
+                switch(connectionInfo.type) {
+                  case 'cellular': {
+                  }
+                  case 'wifi': {
+                    this.setState({isLoading:true})
+                      var url = Config.BASE_API_URL + Config.EVENTS_API_URL;
+                      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue}}
+                          axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+                          console.log("hi i am in fetchEventsData ...")
+                          axios.get(url, config)
+                        .then((response) => { 
+                          console.log("hi i am in fetchEventsData ------")
+                           console.log("response "+JSON.stringify(response.data.events))
+                           this.setState({data:response.data.events})
+                           this.setState({isLoading:false,isRefreshing:false})
+                           console.log("loader in event page "+this.state.isLoading)
+                         })
+                         .catch((error) =>{
+                            console.log(error)
+                            console.log("something went wrong")
+                             this.setState({isLoading:false,isRefreshing:false})
+                          })  
+                          break;   
+                        }
+                    default : {
+                    console.log("conenction none or unknoisw")
+                    this.setState({isRefreshing:false})
+
+                    break;
+                  }
+                  }
+                })
+      }
 
      onRefreshFunction(){
-        // if(this.state.isloading){
-        //   return
-        // }
+        if(this.state.isLoading){
+          return
+        }
         this.setState({isRefreshing:true})
         this.fetchEventsData()
       }
@@ -53,18 +74,9 @@ export default class EventsPage extends Component{
 
     render() {
       let data = this.state.data;
-      // console.log("render "+data)
-      // if (this.state.showProgress) {
-      //   return(
-      //   <View style={{flex:1,justifyContent:"center"}}>
-      //     <ActivityIndicator animating={this.state.isRefreshing ? false : true} style={{alignItems:"center"}} color="#3F51B5" size="large"/>
-      //   </View>
-      // )
-      // }
           return (  
-           <View style={styles.container}>
               <ScrollView 
-              // contentContainerStyle={styles.container}
+              contentContainerStyle={{flexGrow:1}}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -75,15 +87,17 @@ export default class EventsPage extends Component{
               >
 
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
-                </View> : 
+                <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={{alignItems:"center"}} color="#3F51B5"/>
+                  </View>
+                  : 
                   (this.state.data.length == 0) ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
                     </View>
                     :
-                    data.map(item =>
+                    <View style={{margin:8}}>
+                   { data.map(item =>
                         <Content key={item.name}>
                         <TouchableOpacity 
                         onPress={()=>{
@@ -119,9 +133,12 @@ export default class EventsPage extends Component{
                         </TouchableOpacity>
 
                         </Content>
-                        )}
+                        )
+                    }
+                    </View>
+                    }
               </ScrollView>
-              </View>
+              
                 )
                                                                                                                                                                                                                                        
 }

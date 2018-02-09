@@ -63,7 +63,7 @@ class Login extends Component {
             this.saveItem(AsyncStorageConstants.UserContactNumber, response.data.user.user_contact)
             this.saveItem(AsyncStorageConstants.UserEmail, response.data.user.email)
             this.saveItem(AsyncStorageConstants.UserCheckBoxEmail, response.data.user.user_status)
-            this.saveItem(AsyncStorageConstants.UserCheckBoxContact, response.data.user.user_status)
+            this.saveItem(AsyncStorageConstants.UserCheckBoxContact, JSON.stringify(response.data.user.user_status))
               Actions.home2({tokenValue:tokenValue, contactNum:response.data.user.user_contact,email:email, username:response.data.user.first_name,showpregress:this.state.showProgress});
           } else {
             alert(response.data.message);
