@@ -179,12 +179,10 @@ export default class SongBookPage extends Component {
                           <Content key={item.added_date}>
                              <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                               <Card>
-                              <CardItem>
+                              <CardItem style={{flexDirection:"column",alignItems:"flex-start"}}>
                                 <Text style={styles.songTitleText}>
                                     {item.title}  
                                 </Text>
-                                </CardItem>
-                                <CardItem>
                                 <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
                                     {item.lyrics}
                                 </Text>
@@ -200,8 +198,6 @@ export default class SongBookPage extends Component {
                                   <Text style={styles.songTitleText}>
                                       {item.title}  
                                   </Text>
-                                  </CardItem>
-                                  <CardItem>
                                   <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
                                       {item.lyrics}
                                   </Text>

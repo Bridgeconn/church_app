@@ -29,6 +29,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import FCM from "react-native-fcm"
 import SQLite from 'react-native-sqlite-storage'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+import LocalEventEmitter from './LocalEventEmitter'
+import EventRegister from './EventListner'
 
 
 const NotificationModule = NativeModules.NotificationModule;
@@ -85,6 +87,11 @@ export default class RoutesPage extends Component {
       console.log("Event = " + JSON.stringify(e))
       console.log("Event = TITLE" + e.notification_title)
       console.log("Event = body" + e.notification_body)
+
+      var offset = new Date().getTimezoneOffset();
+            console.log(offset);
+            e.notification_timestamp = e.notification_timestamp - (offset*60*1000)
+
       // add to db here
         db.transaction((tx)=>{
         tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
@@ -106,7 +113,10 @@ export default class RoutesPage extends Component {
             big_text: e.notification_body,
         })
 
-   
+        EventRegister.emit('myCustomEvent', 'it works!!!')
+
+
+     LocalEventEmitter.trigger('NewVerseNotification', {timestamp:e.notification_timestamp, chapter_num:e.chapter_num,verse_num: e.verse_num, book_name: e.book_name, verse_body: e.notification_title}) 
     })
 
   }

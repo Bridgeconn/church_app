@@ -1,5 +1,6 @@
 
 
+
 import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -364,6 +365,7 @@ const styles = StyleSheet.create({
   songLyricsText:{
     fontSize:16,
     lineHeight: 26,
+    marginTop:16
   },
   TouchableOpacityFloatingButtonStyle:{
     

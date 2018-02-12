@@ -78,26 +78,27 @@ export default class ProfilePage extends Component{
       
     }
 
-     componentDidMount() {
-       AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
+    async componentDidMount() {
+      
+      await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
         this.setState({ token: value})
       })
-       AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
+      await AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
         this.setState({email: value})
       })
-       AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
-        console.log("value "+value)
+      await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
+        console.log("value "+value+"  " + typeof value)
         this.setState({ user: value, newUser: value})
       })
-       AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
+      await AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
         this.setState({contact: value, newContact: value})
       })
-       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
-        console.log("email_value "+value)
+      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
+        console.log("email_value "+value+ " "+ typeof value)
 
         this.setState({ checkboxEmail: JSON.parse(value),newcheckboxEmail: JSON.parse(value)})
       })
-       AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
+      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
         this.setState({checkboxContact: JSON.parse(value), newcheckboxContact: JSON.parse(value)})
       })
       console.log("newUser" +this.state.newUser)
@@ -109,7 +110,8 @@ export default class ProfilePage extends Component{
       BackHandler.removeEventListener('hardwareBackPress', this.onBackButton)
     }
   checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
-
+    console.log("new check email type of object "+typeof newcheckboxEmail)
+      console.log("newUser "+newUser+" newContact "+newContact+" newcheckboxContact "+newCheckContact+" newcheckboxEmail "+newCheckEmail)
     if (this.state.user!== newUser || this.state.contact !== newContact || 
         this.state.checkboxContact !== newCheckContact || this.state.checkboxEmail !== newCheckEmail) {
       
