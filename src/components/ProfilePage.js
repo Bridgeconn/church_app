@@ -7,6 +7,7 @@ import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import axios from 'axios';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+import LocalEventEmitter from "./LocalEventEmitter"
 
 export default class ProfilePage extends Component{
 	
@@ -60,6 +61,7 @@ export default class ProfilePage extends Component{
 
     }
     onBackButton(){
+      console.log("in back buttion orifke")
       if(this.state.showSaveProfile){
           Alert.alert(
             'Save changes',
@@ -78,8 +80,15 @@ export default class ProfilePage extends Component{
       
     }
 
+
+  
+
+  componentWillUnmount() { 
+      LocalEventEmitter.rm('BackButtonPressProfile', 'ProfilePage') ;
+    }
+
+
     async componentDidMount() {
-      
       await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
         this.setState({ token: value})
       })
@@ -104,11 +113,13 @@ export default class ProfilePage extends Component{
       console.log("newUser" +this.state.newUser)
       console.log("newcheckboxEmail"+this.state.newcheckboxEmail)
       console.log("newcheckboxContact"+this.state.newcheckboxContact)
-       BackHandler.addEventListener('hardwareBackPress', this.onBackButton)
+
+      LocalEventEmitter.on('BackButtonPressProfile', 'ProfilePage',  (data) => {
+        console.log("in event receive")
+        this.onBackButton()
+      })
     }
-    componentWillUnmount(){
-      BackHandler.removeEventListener('hardwareBackPress', this.onBackButton)
-    }
+    
   checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
     console.log("new check email type of object "+typeof newcheckboxEmail)
       console.log("newUser "+newUser+" newContact "+newContact+" newcheckboxContact "+newCheckContact+" newcheckboxEmail "+newCheckEmail)

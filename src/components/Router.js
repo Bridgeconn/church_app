@@ -30,8 +30,6 @@ import FCM from "react-native-fcm"
 import SQLite from 'react-native-sqlite-storage'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from './LocalEventEmitter'
-import EventRegister from './EventListner'
-
 
 const NotificationModule = NativeModules.NotificationModule;
 
@@ -113,9 +111,6 @@ export default class RoutesPage extends Component {
             big_text: e.notification_body,
         })
 
-        EventRegister.emit('myCustomEvent', 'it works!!!')
-
-
      LocalEventEmitter.trigger('NewVerseNotification', {timestamp:e.notification_timestamp, chapter_num:e.chapter_num,verse_num: e.verse_num, book_name: e.book_name, verse_body: e.notification_title}) 
     })
 
@@ -126,11 +121,12 @@ export default class RoutesPage extends Component {
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab_events" || Actions.currentScene == "newsignup") {
         console.log("home2")
         BackHandler.exitApp();
-        return true;
+    } else if (Actions.currentScene == "profile"){
+     LocalEventEmitter.trigger('BackButtonPressProfile', {})
     } else {
       Actions.pop()
-      return true
     }
+    return true
   }
 
 
@@ -211,6 +207,8 @@ export default class RoutesPage extends Component {
                 email={this.state.email}
                 username={this.state.username}               
                 titleStyle={styles.navbarTitle}
+                ref={profileRef => this.profileRef = profileRef}
+
               />
               
               <Scene 

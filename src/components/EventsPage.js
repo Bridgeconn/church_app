@@ -34,19 +34,21 @@ export default class EventsPage extends Component{
                       var url = Config.BASE_API_URL + Config.EVENTS_API_URL;
                       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue}}
                           axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-                          console.log("hi i am in fetchEventsData ...")
                           axios.get(url, config)
                         .then((response) => { 
                           console.log("hi i am in fetchEventsData ------")
-                           console.log("response "+JSON.stringify(response.data.events))
-                           this.setState({data:response.data.events})
+                           console.log("response "+JSON.stringify(response))
+                           if (response.data.success) {
+                             this.setState({data:response.data.events})
+                           } else {
+                            this.setState({data: null})
+                           }
                            this.setState({isLoading:false,isRefreshing:false})
-                           console.log("loader in event page "+this.state.isLoading)
                          })
                          .catch((error) =>{
                             console.log(error)
                             console.log("something went wrong")
-                             this.setState({isLoading:false,isRefreshing:false})
+                             this.setState({data:null, isLoading:false,isRefreshing:false})
                           })  
                           break;   
                         }
@@ -73,7 +75,6 @@ export default class EventsPage extends Component{
   }
 
     render() {
-      let data = this.state.data;
           return (  
               <ScrollView 
               contentContainerStyle={{flexGrow:1}}
@@ -91,13 +92,18 @@ export default class EventsPage extends Component{
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={{alignItems:"center"}} color="#3F51B5"/>
                   </View>
                   : 
+                  (this.state.data == null) ? 
+                  <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                      <Icon name="signal-wifi-off" size={48}/><Text>There is no Internet Connection</Text>
+                    </View>
+                    :
                   (this.state.data.length == 0) ? 
                     <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
-                      <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
+                      <Icon name="signal-wifi-off" size={48}/><Text>No Events Found</Text>
                     </View>
                     :
                     <View style={{margin:8}}>
-                   { data.map(item =>
+                   { this.state.data.map(item =>
                         <Content key={item.name}>
                         <TouchableOpacity 
                         onPress={()=>{

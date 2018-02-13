@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM, {FCMEvent} from "react-native-fcm"
 let SQLite = require('react-native-sqlite-storage')
 import LocalEventEmitter from "./LocalEventEmitter"
-import EventRegister from './EventListner'
 var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err))
 
 export default class VersePage extends Component{
@@ -38,49 +37,33 @@ export default class VersePage extends Component{
     }).then(this._showResult);
   }
 
-  onNewNotificationReceived(data){
-    console.log("new onNewNotificationReceived in verse page")
-    console.log("new  data "+JSON.stringify(data))
-
-    // console.log("verseData "+this.state.verseData)
-
-    // let a = this.state.verseData //creates the clone of the state
-    // a[0] = data;
-    // this.setState({verseData: a});
-  }
-  
-  
   componentDidMount(){
     this.getVersesFromDb()
-    LocalEventEmitter.on('NewVerseNotification', 'VersePage', this.onNewNotificationReceived);
+    LocalEventEmitter.on('NewVerseNotification', 'VersePage',  (data) => {
 
+      let a = this.state.verseData //creates the clone of the state
+      a.splice(0, 0, data);
+      this.setState({verseData: a});
 
+    })
   }
 
-  componentWillMount() {
-    EventRegister.addEventListener('myCustomEvent', (data) => {
-      console.log("new evet here + " + data)
-        })
-  }
+  componentWillUnmount() { 
+      LocalEventEmitter.rm('NewVerseNotification', 'VersePage') ;
+    }
 
     getVersesFromDb(){
-      // this.setState({isLoading:false})
+      this.setState({isLoading:true})
       db.transaction((tx)=>{
         tx.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC', [], (tx,res) => {
           console.log("Query completed");
           console.log("data response"+  JSON.stringify(res.rows.raw()))
           let rows = res.rows.raw();
-            this.setState({verseData: rows})
+            this.setState({verseData: rows, isLoading:false, isRefreshing: false})
             
             // this.setState({isLoading:false,isRefreshing:false})
         })
       })
-    }
-
-    componentWillUnmount() { 
-      LocalEventEmitter.rm('NewVerseNotification', 'VersePage') ;
-
-      // EventRegister.removeEventListener(this.listener)
     }
 
    onRefreshFunction(){

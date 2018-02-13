@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   songLyricsText:{
     fontSize:16,
     lineHeight: 26,
-    marginTop:16
+    marginTop:8
   },
   TouchableOpacityFloatingButtonStyle:{
     
