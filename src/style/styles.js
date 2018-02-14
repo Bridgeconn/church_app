@@ -10,11 +10,9 @@ const centerAlign = 'center';
 const profileMargin = 8;
 const octaValue = 8;
 
-const styles = StyleSheet.create({
-	container:{
-		flex:1,
-    margin:octaValue,
-	},
+
+ const styles = StyleSheet.create({
+
   navigationBarColor:{
     backgroundColor: navBarColor
   },
@@ -142,14 +140,7 @@ const styles = StyleSheet.create({
     fontFamily:'roboto-medium',
     fontWeight:'400'
   },
-  cell: {
-        margin:4,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1,
-        backgroundColor: '#fff',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+  
   navbarTitleRight:{
     fontSize:19,
     color:'#fff',
@@ -186,10 +177,7 @@ const styles = StyleSheet.create({
   height:height*0.35,
   width:width
   },
-  eventImage:{
-    height:width/4,
-    width:width/4
-    },
+  
   eventData:{
     fontSize:20,
     padding:1,
@@ -228,33 +216,15 @@ const styles = StyleSheet.create({
     width:width*0.98,
     height:height*0.33
   },
-  verseListItemStyle:{
-    borderBottomWidth:0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-   tabTextSize:{
-    padding:0,
-    fontSize:18,
-    width:width/2
-  },
-  tabTextVerseSize: {
-    padding:0,
-    fontSize:18,
-  },
+  
+ 
+  
    contactListStyle:{
     padding:octaValue,
     margin: octaValue,
 
   },
-  contactListItemStyle:{
-    borderBottomWidth:0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  verseTimestamp:{
-    fontSize:16
-  },
+  
 
   linearGradient: {
     width: width,
@@ -359,14 +329,8 @@ const styles = StyleSheet.create({
     fontSize:16,
     marginTop:8
   },
-  songTitleText:{
-    fontSize:18,
-  },
-  songLyricsText:{
-    fontSize:16,
-    lineHeight: 26,
-    marginTop:8
-  },
+  
+  
   TouchableOpacityFloatingButtonStyle:{
     
   },

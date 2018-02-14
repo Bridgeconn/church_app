@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
-import styles from '../style/styles.js'
+import {profilePage as profilePage} from '../style/style2.js'
 import Config from 'react-native-config'
 import axios from 'axios';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from "./LocalEventEmitter"
+
+const profilePageStyle = StyleSheet.create(profilePage)
 
 export default class ProfilePage extends Component{
 	
@@ -152,8 +154,8 @@ export default class ProfilePage extends Component{
                       </Right>                      
                     </Header>
         <ScrollView>
-		        <View style={styles.profilePageContent}>
-			        <View style={styles.profileView}>
+		        <View style={profilePageStyle.profilePageContent}>
+			        <View style={profilePageStyle.profileView}>
 		        		<Text>
 				          Name
 				        </Text>
@@ -181,23 +183,23 @@ export default class ProfilePage extends Component{
 				        />
                 
                 <Text style={{marginTop:12}}>Email</Text>
-                <Text style={styles.customEmail}>{this.state.email}</Text>
-                <View style={styles.shareContainer}>
-                <View style={styles.checkboxContainer}>
+                <Text style={profilePageStyle.customEmail}>{this.state.email}</Text>
+                <View style={profilePageStyle.shareContainer}>
+                <View style={profilePageStyle.checkboxContainer}>
                 <CheckBox onPress={()=> {
                   this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, !this.state.newcheckboxEmail, this.state.newcheckboxContact)
                   this.setState({newcheckboxEmail: !this.state.newcheckboxEmail})
                 }} 
                   checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
-                  <Text style={styles.checkboxText}>Share email with church members</Text>
+                  <Text style={profilePageStyle.checkboxText}>Share email with church members</Text>
                 </View>
-                <View style={styles.checkboxContainer}>
+                <View style={profilePageStyle.checkboxContainer}>
                 <CheckBox onPress={()=>{ 
                   this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, this.state.newcheckboxEmail, !this.state.newcheckboxContact);
                   this.setState({newcheckboxContact:!this.state.newcheckboxContact})
                 }} 
                 checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
-                  <Text style={styles.checkboxText}>Share contact with church members</Text>
+                  <Text style={profilePageStyle.checkboxText}>Share contact with church members</Text>
                 </View>
                 </View>
 					</View>

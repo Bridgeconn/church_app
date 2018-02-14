@@ -11,7 +11,8 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import styles from '../style/styles.js'
+import {guestLogin as guestLogin} from '../style/style2.js'
+const guestLoginStyle = StyleSheet.create(guestLogin)
 
 class GuestLogin extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class GuestLogin extends Component {
   render() {
     return (
       
-        <Text style={styles.tryGuestText} onPress={this.onGuestLogin.bind(this) }>
+        <Text style={guestLogin.tryGuestText} onPress={this.onGuestLogin.bind(this) }>
             Explore as Guest
         </Text>
       

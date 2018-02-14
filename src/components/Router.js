@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
 import { Router, Scene,  Schema, Animations, Actions} from 'react-native-router-flux'
 import { Container, Header, Item, Input, Button} from 'native-base';
-import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View, DeviceEventEmitter, NativeModules, NativeEventEmitter} from 'react-native'
+import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View, DeviceEventEmitter, NativeModules, NativeEventEmitter, StyleSheet} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
 import HomePage from './HomePage'
 import HomePage2 from './HomePage2'
-import NavBar from './NavBar'
 import Settings from './Settings'
 import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
@@ -21,9 +20,8 @@ import SongBookPage from './SongBookPage'
 import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
-import Searchbar from './Searchbar'
 import YoutubeSongSearch from './YoutubeSongSearch'
-import styles from '../style/styles.js'
+import {routerPage as routerPage} from '../style/style2'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 import FCM from "react-native-fcm"
@@ -31,6 +29,7 @@ import SQLite from 'react-native-sqlite-storage'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from './LocalEventEmitter'
 
+const styleRoute = StyleSheet.create(routerPage)
 const NotificationModule = NativeModules.NotificationModule;
 
 import {registerKilledListener, registerAppListener, registerTopicListener} from "./Listeners";
@@ -138,11 +137,11 @@ export default class RoutesPage extends Component {
 
   rightButton = () =>{
     return(
-        <View style={{flexDirection:"row",justifyContent:"center"}}>
-                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={{alignItems:"center",marginLeft:10,marginRight:10}}>
+        <View style={styleRoute.navbarRightButton}>
+                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={styleRoute.buttonTouchable}>
                     <Icon name="account-circle" size={26} color="white"/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>{Actions.settings()}} style={{alignItems:"center",marginLeft:10,marginRight:10}}>
+                  <TouchableOpacity onPress={()=>{Actions.settings()}} style={styleRoute.buttonTouchable}>
                     <Icon name="settings" size={26} color="white" />
                   </TouchableOpacity>
               </View>
@@ -160,11 +159,11 @@ export default class RoutesPage extends Component {
         else{
         return(
           <Router
-          navigationBarStyle={styles.navigationBarColor} 
+          navigationBarStyle={styleRoute.navigationBarColor}
           leftButtonIconSize={30} 
           leftButtonColor={"white"} 
           tintColor={'white'} 
-          titleStyle={styles.navbarTitle}
+          titleStyle={styleRoute.navbarTitle}
           >
             <Scene key="root">
               <Scene 
@@ -206,7 +205,7 @@ export default class RoutesPage extends Component {
                 contactNum={this.state.contactNum}
                 email={this.state.email}
                 username={this.state.username}               
-                titleStyle={styles.navbarTitle}
+                titleStyle={styleRoute.navbarTitle}
                 ref={profileRef => this.profileRef = profileRef}
 
               />
@@ -215,7 +214,7 @@ export default class RoutesPage extends Component {
                 key = "eventsDetails"   
                 title = "Events"    
                 component = {EventsDetail}                  
-                titleStyle={styles.navbarTitle} 
+                titleStyle={styleRoute.navbarTitle} 
                        
               />
               <Scene 
@@ -250,7 +249,7 @@ export default class RoutesPage extends Component {
               swipeEnabled={false}
               lazyLoad={false}
               animationEnabled={false}
-              tabBarStyle={styles.tabBar} 
+              tabBarStyle={styleRoute.tabBar} 
               tabs={true} 
               tabBarPosition="bottom" 
                 renderRightButton={this.rightButton}

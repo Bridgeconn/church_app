@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
-import {Text,View, ScrollView,AsyncStorage,Dimensions,Alert} from 'react-native';
-import styles from '../style/styles.js'
+import {Text,View, ScrollView,AsyncStorage,Dimensions,Alert,StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import YouTube from 'react-native-youtube';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+import {songLyricsPage as songLyricsPage} from '../style/style2.js'
+
+const songLyricsPageStyle = StyleSheet.create(songLyricsPage)
 
 export default class EventsDetail extends Component{
 
@@ -38,7 +40,7 @@ export default class EventsDetail extends Component{
   }
   render(){
       return (
-        <View style={styles.songLyricsContainer}>
+        <View style={songLyricsPageStyle.songLyricsContainer}>
         {this.state.videoId !==null && this.state.playVideo ?
             <View style={{flexDirection:"column"}}>
               <YouTube
@@ -75,10 +77,10 @@ export default class EventsDetail extends Component{
           </View>
           : null
         }
-          <ScrollView style={styles.songLyricsScrollView} showsVerticalScrollIndicator={false}>
+          <ScrollView style={songLyricsPageStyle.songLyricsScrollView} showsVerticalScrollIndicator={false}>
 
             <View>
-              <Text style={styles.textSong}>{this.state.songLyrics + '\n\n\n\n'}</Text>
+              <Text style={songLyricsPageStyle.textSong}>{this.state.songLyrics + '\n\n\n\n'}</Text>
             </View>
           </ScrollView>
 
@@ -89,7 +91,7 @@ export default class EventsDetail extends Component{
             }}
             name="youtube-play" 
             size={60} 
-            style={styles.youtubeButton}/>
+            style={songLyricsPageStyle.youtubeButton}/>
         </View>
       );
   }

@@ -8,6 +8,7 @@ import SongBookPage from './SongBookPage'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import styles from '../style/styles.js'
+
 export default class HomePage2 extends Component{
 
 	render(){

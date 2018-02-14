@@ -11,7 +11,7 @@ import {
     RefreshControl,
     NetInfo,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 import { 
   Header, 
@@ -30,12 +30,12 @@ import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
-import styles from '../style/styles.js'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import {homeTab as homeTab} from '../style/style2.js'
 
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-
+const tabStyle = StyleSheet.create(homeTab)
 export default class SongBookPage extends Component {
     constructor(props, context) {
         super(props, context);
@@ -152,7 +152,7 @@ export default class SongBookPage extends Component {
                 </Item>
               </Header>
               <ScrollView 
-              contentContainerStyle={{flexGrow:1}}
+              contentContainerStyle={tabStyle.scrollViewContainer}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -162,43 +162,43 @@ export default class SongBookPage extends Component {
                 }
               >
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <View style={tabStyle.centerView}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
                 </View> : 
                   (this.state.songsListData.length == 0  && this.state.searchQuery.trim() == "") ? 
-                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                    <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
                     </View>
                     :
                       (this.state.searchQuery.trim() !== "" && this.state.searchedSongsList.length == 0) ?
-                        <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                        <View  style={tabStyle.centerView}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
-                        :(this.state.searchedSongsList.length == 0) ? <View style={{margin:8}}>
+                        :(this.state.searchedSongsList.length == 0) ? <View  style={tabStyle.tabBounderyMargin}>
                         {this.state.songsListData.map(item =>
                           <Content key={item.added_date}>
                              <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                               <Card>
                               <CardItem style={{flexDirection:"column",alignItems:"flex-start"}}>
-                                <Text style={styles.songTitleText}>
+                                <Text style={tabStyle.songTitleText}>
                                     {item.title}  
                                 </Text>
-                                <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
+                                <Text numberOfLines={2} ellipsizeMode='tail' style={tabStyle.songLyricsText}>
                                     {item.lyrics}
                                 </Text>
                               </CardItem>
                               </Card>
                               </TouchableOpacity>
                           </Content>
-                          )}</View> : <View style={{margin:8}}>{this.state.searchedSongsList.map(item =>
+                          )}</View> : <View  style={tabStyle.tabBounderyMargin}>{this.state.searchedSongsList.map(item =>
                           <Content key={item.added_date}>
                                <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                                 <Card>
                                 <CardItem>
-                                  <Text style={styles.songTitleText}>
+                                  <Text style={tabStyle.songTitleText}>
                                       {item.title}  
                                   </Text>
-                                  <Text numberOfLines={2} ellipsizeMode='tail' style={styles.songLyricsText}>
+                                  <Text numberOfLines={2} ellipsizeMode='tail' style={tabStyle.songLyricsText}>
                                       {item.lyrics}
                                   </Text>
                                 </CardItem>

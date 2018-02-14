@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import {
-  StyleSheet,
+  registerPageStyleheet,
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
@@ -9,20 +9,24 @@ import {
   Text,
   Alert,
   View,
-  Keyboard
+  Keyboard,
+  StyleSheet
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Login from "./LoginPage"
 import Signup from "./SignupPage"
-import styles from '../style/styles.js'
+
+import {newSignupOrRegister as newSignupOrRegister} from '../style/style2.js'
+
+const registerPageStyle = StyleSheet.create(newSignupOrRegister)
 
 var GuestLogin = React.createClass({
 
   render: function() {
         if (this.props.visible) {
             return (
-                <Text key="guestLogin" style={styles.tryGuestText} onPress={this.onGuestLogin }>
+                <Text key="guestLogin" style={registerPageStyle.tryGuestText} onPress={this.onGuestLogin }>
                   Explore as Guest
                 </Text>
             );
@@ -81,18 +85,18 @@ class Register extends Component {
 
   render() {
     return (
-      <View style={styles.userContainer}>
-      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
-        <Text style={styles.heading}>
+      <View style={registerPageStyle.userContainer}>
+      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={registerPageStyle.spinnerCustom}/>
+        <Text style={registerPageStyle.heading}>
           Church App
         </Text>
         <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
-          style={styles.input} placeholder="Email">
+          style={registerPageStyle.input} placeholder="Email">
         </TextInput>
         <TextInput
           onChangeText={ (text)=> this.setState({password: text}) }
-          style={styles.input}
+          style={registerPageStyle.input}
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
@@ -101,7 +105,7 @@ class Register extends Component {
         password={this.state.password}
         />
 
-        <Text style={styles.noAccountText} onPress={this.onOpenSignupPage.bind(this) }>
+        <Text style={registerPageStyle.noAccountText} onPress={this.onOpenSignupPage.bind(this) }>
             No account yet? Create one
         </Text>
         

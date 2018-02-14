@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, AsyncStorage,RefreshControl,NetInfo} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, StyleSheet, AsyncStorage,RefreshControl,NetInfo} from 'react-native';
 import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import eventsList from './eventListDummy.json'
-import styles from '../style/styles.js'
+import {homeTab as homeTab} from '../style/style2.js'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Config from 'react-native-config'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 
+const tabStyle = StyleSheet.create(homeTab)
 export default class EventsPage extends Component{
 
  constructor(props){
@@ -77,7 +77,7 @@ export default class EventsPage extends Component{
     render() {
           return (  
               <ScrollView 
-              contentContainerStyle={{flexGrow:1}}
+              contentContainerStyle={tabStyle.scrollViewContainer}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -88,21 +88,21 @@ export default class EventsPage extends Component{
               >
 
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
-                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={{alignItems:"center"}} color="#3F51B5"/>
+                <View style={tabStyle.centerView}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } color="#3F51B5"/>
                   </View>
                   : 
                   (this.state.data == null) ? 
-                  <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                  <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no Internet Connection</Text>
                     </View>
                     :
                   (this.state.data.length == 0) ? 
-                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                    <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>No Events Found</Text>
                     </View>
                     :
-                    <View style={{margin:8}}>
+                    <View style={tabStyle.tabBounderyMargin}>
                    { this.state.data.map(item =>
                         <Content key={item.name}>
                         <TouchableOpacity 
@@ -119,17 +119,17 @@ export default class EventsPage extends Component{
                             event_topic:item.event_venue_name
                           })
                         }}>
-                          <Card style={{flexDirection:'row'}}>
-                            <CardItem style={{flexDirection:'column'}}>
-                              <Text style={styles.tabTextSize}>{item.name}</Text>
-                              <Text style={styles.tabTextSize}>
+                          <Card style={tabStyle.flexRow}>
+                            <CardItem style={tabStyle.flexCol}>
+                              <Text style={tabStyle.tabContentText}>{item.name}</Text>
+                              <Text style={tabStyle.tabContentText}>
                                 {item.start_date}
                              </Text> 
                             </CardItem>
                             <CardItem>                              
                                 <Image 
                                   source={{uri:'http://www.mannaexpressonline.com/wp-content/uploads/2014/09/early-morning-prayer_edited.jpg'}} 
-                                  style={styles.eventImage} 
+                                  style={tabStyle.eventImage} 
                                   onLoadEnd={ ()=>{ this.setState({ loading: false }) }}>
                                   <ActivityIndicator animating={ this.state.loading } 
                                   />

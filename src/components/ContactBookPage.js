@@ -1,4 +1,5 @@
 
+
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -12,7 +13,7 @@ import {
     Dimensions,
     RefreshControl,
     NetInfo,
-    ActivityIndicator
+    ActivityIndicator,
 } from 'react-native';
 import { 
   Header, 
@@ -27,11 +28,12 @@ import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
-import styles from '../style/styles.js'
+import {homeTab as homeTab} from '../style/style2.js'
 import Toast, {DURATION} from 'react-native-easy-toast'
 
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
+const tabStyle = StyleSheet.create(homeTab)
 
 export default class App extends Component {
     constructor(props ) {
@@ -135,12 +137,12 @@ export default class App extends Component {
      _renderCell(data) {
         console.log("dataaaaaaaaaa "+JSON.stringify(data))
         return (
-            <View style={styles.cell}>
+            <View style={tabStyle.contactBookView}>
                 <View style={{margin:10}}>
-                <Text style={styles.name}>
+                <Text>
                     {data.name} 
                 </Text>
-                <Text style={styles.name}>
+                <Text>
                     {data.contact_number}
                 </Text>
                 <View style={{flexDirection:"row"}}>
@@ -184,9 +186,9 @@ export default class App extends Component {
                     {this.state.searchBoxText =="" ? null : <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>}  
                   </Item>
               </Header>
-              <View style={styles.container}>
+              <View style={tabStyle.container}>
               <ScrollView 
-              contentContainerStyle={{flexGrow:1}}
+              contentContainerStyle={tabStyle.scrollViewContainer}
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                       <RefreshControl
@@ -196,16 +198,16 @@ export default class App extends Component {
                   }
                 >
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+                <View style={tabStyle.centerView}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
                   </View> : 
                   (this.state.dataContactDetail == null  && this.state.searchQuery.trim() == "") ? 
-                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                    <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no internet connection</Text>
                     </View>
                     :
                       (this.state.searchQuery.trim() !== "" && this.state.searchedData == null) ?
-                        <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                        <View  style={tabStyle.centerView}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
                         :

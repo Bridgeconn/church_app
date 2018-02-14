@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,Content,CardItem} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import styles from '../style/styles.js'
+import {homeTab as homeTab} from '../style/style2.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Timestamp from 'react-timestamp'
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-
+const tabStyle = StyleSheet.create(homeTab)
 export default class LiveStreamPage extends Component{
 	constructor(props){
 		super(props)
@@ -37,7 +37,7 @@ export default class LiveStreamPage extends Component{
 		// console.log("url  live "+this.state.liveStreamData[0].url)
 		return(
 		 <ScrollView 
-              contentContainerStyle={{flexGrow:1}}
+              contentContainerStyle={tabStyle.scrollViewContainer}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -48,21 +48,21 @@ export default class LiveStreamPage extends Component{
               >
 
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
-                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={{alignItems:"center"}} color="#3F51B5"/>
+                <View style={tabStyle.centerView}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={tabStyle.alignItemsloader} color="#3F51B5"/>
                   </View>
                   : 
                   (this.state.liveStreamData == null) ? 
-                  <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                  <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>There is no Internet Connection</Text>
                     </View>
                     :
                   (this.state.liveStreamData.length == 0) ? 
-                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                    <View  style={tabStyle.centerView}>
                       <Icon name="signal-wifi-off" size={48}/><Text>No liveStream  Found</Text>
                     </View>
                     :
-                    <View style={{margin:8}}>
+                    <View  style={tabStyle.tabBounderyMargin}>
                    { this.state.liveStreamData.map(item =>
                         <Content key={item.name}>
                         <TouchableOpacity 
@@ -71,10 +71,10 @@ export default class LiveStreamPage extends Component{
                             title:item.name, 
                           })
                         }}>
-                          <Card style={{flexDirection:'row'}}>
-                            <CardItem style={{flexDirection:'column'}}>
-                              <Text style={styles.tabTextSize}>{item.title}</Text>
-                               <Timestamp time={item.added_date} utc={false} component={Text} format='ago' style={{fontSize:16}}/>
+                          <Card  style={tabStyle.flexRow}>
+                            <CardItem style={tabStyle.flexColContent}>
+                              <Text style={tabStyle.tabContentText}>{item.title}</Text>
+                               <Timestamp time={item.added_date} utc={false} component={Text} format='ago' style={{fontSize:16,alignSelf:"flex-start"}}/>
                             </CardItem>
                             <CardItem>                              
                                 <Icon name="live-tv" size={60} color={'#cc181e'} />

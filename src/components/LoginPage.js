@@ -12,10 +12,12 @@ import {
   NetInfo
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import styles from '../style/styles.js'
+import {loginPage as loginPage} from '../style/style2.js'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+
+const loginPageStyle = StyleSheet.create(loginPage)
 
 
 class Login extends Component {
@@ -82,8 +84,8 @@ class Login extends Component {
   render() {
     return (
       <View >
-        <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={styles.buttonRegister}>
-          <Text style={styles.loginButtonText}>
+        <TouchableOpacity onPress={this.onLoginPressed.bind(this) } style={loginPageStyle.buttonRegister}>
+          <Text style={loginPageStyle.loginButtonText}>
             Login
           </Text>
         </TouchableOpacity>

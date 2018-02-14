@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Icon,Body,Content,CardItem} from 'native-base'
 import YouTube, {  YouTubeStandaloneIOS,  YouTubeStandaloneAndroid,} from 'react-native-youtube';
-import styles from '../style/styles.js'
 import Config from 'react-native-config'
+import {liveStream as liveStream} from '../style/style2.js'
 
+const liveStreamStyle = StyleSheet.create(liveStream)
 
 export default class LiveStreamPage extends Component{
 	constructor(props){
@@ -30,11 +31,11 @@ export default class LiveStreamPage extends Component{
 	
 	render(){
 		return(
-		<View style={styles.container}>
+		<View style={liveStreamStyle.container}>
 			<ScrollView>
 			<Content>
 			<Card>
-		 		<View style={styles.liveStreamView}>
+		 		<View style={liveStreamStyle.liveStreamView}>
 		 			<YouTube
 		          ref={component => {
 		            this._youTubeRef = component;
@@ -45,7 +46,7 @@ export default class LiveStreamPage extends Component{
 		          loop={this.state.isLooping}
 		          fullscreen={this.state.fullscreen}
 		          controls={1}
-		          style={styles.player}
+		          style={liveStreamStyle.liveStreamVideo}
 		          onError={e => this.setState({ error: e.error })}
 		          onReady={e => this.setState({ isReady: true })}
 		          onChangeState={e => this.setState({ status: e.state })}
@@ -63,12 +64,12 @@ export default class LiveStreamPage extends Component{
 		          }
         		/>
         			{!this.state.fullscreen &&
-			          	<View style={styles.buttonGroup}>
+			          	<View>
 			            <TouchableOpacity
-			              style={styles.button}
+			              style={liveStreamStyle.button}
 			              onPress={() => this.setState({ fullscreen: true })}
 			            >
-			             <Text style={styles.buttonText}>Set Fullscreen</Text>
+			             <Text style={liveStreamStyle.buttonText}>Set Fullscreen</Text>
 			            </TouchableOpacity>
 			          	</View>}
 		 		</View>

@@ -1,15 +1,16 @@
 import React, {Component} from 'react'
 import {Text,View,Image,TouchableOpacity, ScrollView, ActivityIndicator,Dimensions, StyleSheet,AsyncStorage} from 'react-native';
 import {Button, Content, List, ListItem}  from 'native-base'
-import styles from '../style/styles.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-
 import Modal from 'react-native-simple-modal';
 import YouTube from 'react-native-youtube';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+import {youtubeSongSearchPage as youtubeSongSearchPage} from '../style/style2.js'
+
+const youtubeSongSearchStyle = StyleSheet.create(youtubeSongSearchPage)
 
 export default class YoutubeSongSearch extends Component{
 
@@ -33,22 +34,22 @@ export default class YoutubeSongSearch extends Component{
   render(){
   	if (this.state.data.length == 0) {
   		return (
-  			<Spinner visible={this.state.isLoading} size={"large"} color={"#3F51B5"} style={styles.spinnerCustom}/>
+  			<Spinner visible={this.state.isLoading} size={"large"} color={"#3F51B5"} style={youtubeSongSearchStyle.spinnerCustom}/>
   		)
   	} else {
       return (
-        <View style={styles.container}>
+        <View style={youtubeSongSearchStyle.youtubeContainer}>
          <ScrollView>
                 {this.state.data.map(item =>
                   <Content key={item.id.videoId}>
-                      <TouchableOpacity style={{flexDirection:'row', marginBottom:8}}  onPress={() => {this.setStartPlay(item.id.videoId,item.snippet.title);}}>
-                        <Image style={{width:120, height:90}}
+                      <TouchableOpacity style={youtubeSongSearchStyle.imageContainer}  onPress={() => {this.setStartPlay(item.id.videoId,item.snippet.title);}}>
+                        <Image style={youtubeSongSearchStyle.imageCustom}
                             source={{uri:item.snippet.thumbnails.default.url}} >
-                          <Icon color={'white'} name="play" size={24} style={{alignItems:'center',justifyContent:'center',position:'absolute',right:0,bottom:0}}/>
+                          <Icon color={'white'} name="play" size={24} style={youtubeSongSearchStyle.playIconAlignment}/>
                         </Image>
-                        <View style={{height:90, width:Dimensions.get('window').width-160, marginLeft:8}}>
-                          <Text numberOfLines={2} ellipsizeMode='tail' style={{marginBottom:8, fontSize:14}}>{item.snippet.title}</Text>
-                          <Text numberOfLines={3} ellipsizeMode='tail' style={{fontSize:12}}>{item.snippet.description}</Text>
+                        <View style={youtubeSongSearchStyle.youtubeTextCustom}>
+                          <Text numberOfLines={2} ellipsizeMode='tail' style={youtubeSongSearchStyle.youtubeTextTitle}>{item.snippet.title}</Text>
+                          <Text numberOfLines={3} ellipsizeMode='tail' style={youtubeSongSearchStyle.youtubeDescription}>{item.snippet.description}</Text>
                         </View>
                         </TouchableOpacity>
                   </Content>
@@ -60,18 +61,11 @@ export default class YoutubeSongSearch extends Component{
 			        modalDidOpen={() => console.log('modal did open')}
 			        modalDidClose={() => this.setState({open: false})}
 			        closeOnTouchOutside={true}
-					containerStyle={{
-					   justifyContent: 'center'
-					}}
-					modalStyle={{
-					   borderRadius: 2,
-					   margin:5,
-					   padding: 5,paddingTop:0,
-					   backgroundColor: '#F5F5F5'
-					}}
+    					containerStyle={youtubeSongSearchStyle.modalContainer}
+    					modalStyle={youtubeSongSearchStyle.modal}
 			        >
-	         		<View style={{flexDirection:"column"}}>
-	         		<Text numberOfLines={1} ellipsizeMode='tail' style={{fontSize:18,margin:10}}>{this.state.title}</Text>
+	         		<View style={youtubeSongSearchStyle.modalConent}>
+	         		<Text numberOfLines={1} ellipsizeMode='tail' style={modalConentTitle}>{this.state.title}</Text>
 	                  <YouTube
 	                    apiKey={Config.YOUTUBE_API_KEY}
 	                    videoId={this.state.playVideoId}   
@@ -82,19 +76,19 @@ export default class YoutubeSongSearch extends Component{
 	                    onChangeState={e => console.log('onChangeState'+e.state)}
 	                    onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
 	                    onError={e => console.log('onError'+e.error)}
-	                    style={{ height: (Dimensions.get("window").width) * 0.5625}} />
-	                <View style={{flexDirection:"row",justifyContent:"flex-end"}}>
+	                    style={youtubeSongSearchStyle.youtubeViewRatio} />
+	                <View style={youtubeSongSearchStyle.modalOpen}>
 	                <TouchableOpacity
-			            style={{margin: 5,marginRight:20,alignItems:"flex-end",}}
+			            style={youtubeSongSearchStyle.modalClose}
 			            onPress={() => this.setState({open: false})}
 			            >
-			            <Text style={{fontSize:20}}>Cancel</Text>
+			            <Text style={youtubeSongSearchStyle.modalText}>Cancel</Text>
 		          	</TouchableOpacity>
 		          	<TouchableOpacity
-			            style={{margin: 5,alignItems:"flex-end"}}
+			            style={youtubeSongSearchStyle.modalSave}
 			            onPress={()=>{this.refreshOnSave()}} 
 			            >
-			            <Text style={{fontSize:20}}>Save</Text>
+			            <Text style={youtubeSongSearchStyle.modalText}>Save</Text>
 		          	</TouchableOpacity>
 		          	</View>
 	                </View>	

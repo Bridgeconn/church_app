@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Platform, RefreshControl,ActivityIndicator} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,Share,Platform, RefreshControl,ActivityIndicator,StyleSheet} from 'react-native';
 import {ListItem,List,Card,CardItem,Body,Right, Button} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 // import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
-import styles from '../style/styles.js'
+import {homeTab as homeTab} from '../style/style2.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM, {FCMEvent} from "react-native-fcm"
 let SQLite = require('react-native-sqlite-storage')
 import LocalEventEmitter from "./LocalEventEmitter"
 var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err))
-
+const tabStyle = StyleSheet.create(homeTab)
 export default class VersePage extends Component{
 
  constructor(props){
@@ -80,7 +80,7 @@ export default class VersePage extends Component{
       console
         return (
           <ScrollView 
-              contentContainerStyle={{flexGrow:1}}
+              contentContainerStyle={tabStyle.scrollViewContainer}
               showsVerticalScrollIndicator={false}
               refreshControl={
                     <RefreshControl
@@ -91,26 +91,26 @@ export default class VersePage extends Component{
               >
 
               {this.state.isLoading ? 
-                <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
-                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={{alignItems:"center"}} color="#3F51B5"/>
+                <View style={tabStyle.centerView}>
+                  <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={tabStyle.alignItemsloader} color="#3F51B5"/>
                   </View>
                   : 
                   (this.state.verseData.length == 0) ? 
-                    <View style={{flex:1,justifyContent: 'center',alignItems: 'center'}}>
+                    <View style={tabStyle.centerView}>
                       <Text>No notifications</Text>
                     </View>
                     :
-                    <View style={{margin:8}}>
+                    <View  style={tabStyle.tabBounderyMargin}>
                    { this.state.verseData.map(item =>
-                       <Card key={item.timestamp} style={styles.cardVerse}>
-                       <CardItem style={styles.verseListItemStyle}>
-                        <Text style={styles.tabTextSize}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
-                        <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='ago' style={styles.verseTimestamp}/>
+                       <Card key={item.timestamp}>
+                       <CardItem style={tabStyle.verseListItemStyle}>
+                        <Text style={tabStyle.tabContentText}>{item.book_name} {item.chapter_num} : {item.verse_num} </Text>
+                        <Timestamp time={item.timestamp/1000} utc={false} component={Text} format='ago' style={tabStyle.verseTimestamp}/>
                       </CardItem>
                       <CardItem>
-                        <Text style={styles.tabTextVerseSize}>{item.verse_body}</Text>
+                        <Text style={tabStyle.tabTextVerseSize}>{item.verse_body}</Text>
                       </CardItem>
-                      <CardItem style={styles.contactListItemStyle}>
+                      <CardItem style={tabStyle.contactListItemStyle}>
                       <TouchableOpacity  onPress={this._shareMessage.bind(this,
                         item.verse_body,
                         item.book_name,

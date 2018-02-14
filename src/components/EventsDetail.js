@@ -1,17 +1,20 @@
 
 import React, {Component} from 'react'
-import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform,ActivityIndicator,ScrollView} from 'react-native';
+import {Text,View,Image,TouchableOpacity,TouchableHighlight, Animated,Dimensions,Button,Linking,Platform,ActivityIndicator,ScrollView,StyleSheet} from 'react-native';
 import {List, ListItem,Header,Left,Title,Right}  from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
 import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
-import styles from '../style/styles.js'
+import {eventDetail as eventDetail} from '../style/style2.js'
 import moment from 'moment';
 
 const utcDateToLocalString = (momentInUTC: moment): string => {
   return moment(momentInUTC).local().format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
 };
+
+const eventDetailStyle = StyleSheet.create(eventDetail)
+
 export default class EventsDetail extends Component{
   constructor(props){
     super(props)
@@ -82,26 +85,26 @@ export default class EventsDetail extends Component{
   render(){
     return (
       
-      <View style={{flex:1}}>
+      <View style={eventDetailStyle.flexOne}>
       <ScrollView>
-      <Image source={{uri:this.props.event_poster}} style={styles.eventDetailImage}/>
-        <Text  style={styles.eventData}><Icon name="map-marker" size={24}/> {this.state.event_topic}</Text>
-        <Text  style={styles.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
-        <Text style={styles.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
-        <View style={{flexDirection:"row", alignItems:'center', justifyContent:"center"}}>
-        <Icon name="calendar-clock" size={48} color="#3F51B5" style={{margin:16}} onPress={() => {
+      <Image source={{uri:this.props.event_poster}} style={eventDetailStyle.eventDetailImage}/>
+        <Text  style={eventDetailStyle.eventData}><Icon name="map-marker" size={24}/> {this.state.event_topic}</Text>
+        <Text  style={eventDetailStyle.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
+        <Text style={eventDetailStyle.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
+        <View style={eventDetailStyle.centerView}>
+        <Icon name="calendar-clock" size={48} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
             this.addToCalendar(
               this.state.title, 
               this.state.event_time_start,
               this.state.event_time_end 
               );
           }}/>
-        <Icon name="navigation" onPress={this.openGpsFromName.bind(this, this.props.event_topic)} size={48}  color="#3F51B5" style={{margin:24}}/>
+        <Icon name="navigation" onPress={this.openGpsFromName.bind(this, this.props.event_topic)} size={48}  color="#3F51B5" style={eventDetailStyle.mapNavigationIconMargin}/>
         </View>
         
        <View>
         <MapView 
-          style={ styles.EventMap }
+          style={ eventDetailStyle.eventMap }
           mapType={"standard"}
           region={this.state.region}
           zoomEnabled={true}
