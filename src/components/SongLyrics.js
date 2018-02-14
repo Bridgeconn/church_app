@@ -5,7 +5,7 @@ import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import YouTube from 'react-native-youtube';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
-import {songLyricsPage as songLyricsPage} from '../style/style2.js'
+import {songLyricsPage as songLyricsPage} from '../style/styles.js'
 
 const songLyricsPageStyle = StyleSheet.create(songLyricsPage)
 
@@ -42,7 +42,7 @@ export default class EventsDetail extends Component{
       return (
         <View style={songLyricsPageStyle.songLyricsContainer}>
         {this.state.videoId !==null && this.state.playVideo ?
-            <View style={{flexDirection:"column"}}>
+            <View style={songLyricsPageStyle.topYoutubeView}>
               <YouTube
                 apiKey={Config.YOUTUBE_API_KEY}
                 videoId={this.state.videoId}   // The YouTube video ID
@@ -53,25 +53,25 @@ export default class EventsDetail extends Component{
                 onChangeState={e => console.log('onChangeState'+e.state)}
                 onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
                 onError={e => console.log('onError'+e.error)}
-                style={{height: (Dimensions.get("window").width) * 0.5625}} />
-                <View style={{backgroundColor:"#000"}}>
+                style={songLyricsPageStyle.youtubeViewRatio} />
+                <View style={songLyricsPageStyle.initialYoutubeColor}>
                 <Icon color={'#fff'} 
                   onPress={() => {
                     this.removeVideo()
                   }}
                   name="delete" 
                   size={32}
-                  style={{alignSelf:"flex-end"}} />
+                  style={songLyricsPageStyle.alignDeleteIcon} />
                 </View>
           </View>
           : 
           ( this.state.videoId !==null && !this.state.playVideo) ? 
-          <View style={{backgroundColor:'black', height:(Dimensions.get("window").width) * 0.5625,justifyContent:"center",}}>
+          <View style={songLyricsPageStyle.youtubePlay}>
               <Icon color={'#fff'} 
                   onPress={() => {
                     this.playVideoMethod()
                   }}
-                  style={{alignSelf:'center'}}
+                  style={songLyricsPageStyle.playIconAlignment}
                   name="play" 
                   size={48} />
           </View>

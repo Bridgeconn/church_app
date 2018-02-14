@@ -96,6 +96,9 @@ export const eventDetail = {
     flex:1,
     margin:octaValue,
   },
+  centerView:{
+     flex:1,justifyContent: 'center',alignItems: 'center'
+   },
   eventDetailImage:{
     width:width,
     height:height*0.40,
@@ -274,6 +277,24 @@ export const songLyricsPage = {
   songLyricsContainer:{
     flex:1,
   },
+  topYoutubeView:{
+    flexDirection:"column"
+  },
+  youtubeViewRatio:{
+    height: (Dimensions.get("window").width) * 0.5625
+  },
+  initialYoutubeColor:{
+    backgroundColor:"#000"
+  },
+  alignDeleteIcon:{
+    alignSelf:"flex-end"
+  },
+  youtubePlay:{
+    backgroundColor:'black', height:(Dimensions.get("window").width) * 0.5625,justifyContent:"center"
+  },
+  playIconAlignment:{
+    alignSelf:'center'
+  }
   songLyricsScrollView: {
     margin: octaValue
   },

@@ -4,7 +4,7 @@ import {ListItem,List,Card,CardItem,Body,Right, Button} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 // import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
-import {homeTab as homeTab} from '../style/style2.js'
+import {homeTab as homeTab} from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM, {FCMEvent} from "react-native-fcm"
 let SQLite = require('react-native-sqlite-storage')

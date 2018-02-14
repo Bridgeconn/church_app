@@ -12,7 +12,7 @@ import {
   NetInfo
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import {loginPage as loginPage} from '../style/style2.js'
+import {loginPage as loginPage} from '../style/styles.js'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
 import * as AsyncStorageConstants from './AsyncStorageConstants';

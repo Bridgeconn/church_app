@@ -3,7 +3,7 @@ import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncSto
 import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
-import {profilePage as profilePage} from '../style/style2.js'
+import {profilePage as profilePage} from '../style/styles.js'
 import Config from 'react-native-config'
 import axios from 'axios';
 import * as AsyncStorageConstants from './AsyncStorageConstants';

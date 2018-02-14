@@ -17,7 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Login from "./LoginPage"
 import Signup from "./SignupPage"
 
-import {newSignupOrRegister as newSignupOrRegister} from '../style/style2.js'
+import {newSignupOrRegister as newSignupOrRegister} from '../style/styles.js'
 
 const registerPageStyle = StyleSheet.create(newSignupOrRegister)
 

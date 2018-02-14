@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,Content,CardItem} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import {homeTab as homeTab} from '../style/style2.js'
+import {homeTab as homeTab} from '../style/styles.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';

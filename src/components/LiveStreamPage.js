@@ -3,7 +3,7 @@ import {View,Text,TouchableOpacity,Image,ScrollView, Platform,StyleSheet} from '
 import {Header, Card, Title, Left,Button,Right,Icon,Body,Content,CardItem} from 'native-base'
 import YouTube, {  YouTubeStandaloneIOS,  YouTubeStandaloneAndroid,} from 'react-native-youtube';
 import Config from 'react-native-config'
-import {liveStream as liveStream} from '../style/style2.js'
+import {liveStream as liveStream} from '../style/styles.js'
 
 const liveStreamStyle = StyleSheet.create(liveStream)
 

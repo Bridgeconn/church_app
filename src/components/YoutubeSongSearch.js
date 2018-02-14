@@ -8,7 +8,7 @@ import YouTube from 'react-native-youtube';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
-import {youtubeSongSearchPage as youtubeSongSearchPage} from '../style/style2.js'
+import {youtubeSongSearchPage as youtubeSongSearchPage} from '../style/styles.js'
 
 const youtubeSongSearchStyle = StyleSheet.create(youtubeSongSearchPage)
 
@@ -65,7 +65,7 @@ export default class YoutubeSongSearch extends Component{
     					modalStyle={youtubeSongSearchStyle.modal}
 			        >
 	         		<View style={youtubeSongSearchStyle.modalConent}>
-	         		<Text numberOfLines={1} ellipsizeMode='tail' style={modalConentTitle}>{this.state.title}</Text>
+	         		<Text numberOfLines={1} ellipsizeMode='tail' style={youtubeSongSearchStyle.modalConentTitle}>{this.state.title}</Text>
 	                  <YouTube
 	                    apiKey={Config.YOUTUBE_API_KEY}
 	                    videoId={this.state.playVideoId}   

@@ -31,7 +31,7 @@ import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Toast, {DURATION} from 'react-native-easy-toast'
-import {homeTab as homeTab} from '../style/style2.js'
+import {homeTab as homeTab} from '../style/styles.js'
 
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})

@@ -13,7 +13,7 @@ import {
 import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
-import {newSignupOrRegister as newSignupOrRegister} from '../style/style2.js'
+import {newSignupOrRegister as newSignupOrRegister} from '../style/styles.js'
 
 const SignupStyle = StyleSheet.create(newSignupOrRegister)
 

@@ -15,7 +15,7 @@ import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Login from "./LoginPage"
 import Signup from "./SignupPage"
-import {newSignupOrRegister as newSignupOrRegister} from '../style/style2.js'
+import {newSignupOrRegister as newSignupOrRegister} from '../style/styles.js'
 
 const newSignupStyle = StyleSheet.create(newSignupOrRegister)
 
