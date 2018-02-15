@@ -76,8 +76,6 @@ export const tabStyle = StyleSheet.create({
   },
   contactBookView: {
     margin:4,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
     backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
@@ -89,7 +87,7 @@ export const tabStyle = StyleSheet.create({
     paddingLeft: 10 
   },
   contactData:{
-    margin:8
+    margin:8,
   },
   contactPhoneIcon:{
     margin:10,

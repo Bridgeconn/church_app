@@ -115,14 +115,15 @@ export default class App extends Component {
             </View>
         )
     }
-     redirectToApp = (url) =>{
-       Linking.canOpenURL(url).then(supported => {
-       if (!supported) {
+    redirectToApp = (url) =>{
+      Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        alert("no App found to perform action")
         console.log('Can\'t handle url: ' + url);
-       } else {
+      } else {
         return Linking.openURL(url);
-       }
-     }).catch(err => console.error('An error occurred', err));
+      }
+      }).catch(err => console.error('An error occurred', err));
     }
       onRefreshFunction(){
          if(this.state.isLoading){
@@ -145,9 +146,9 @@ export default class App extends Component {
                     {data.contact_number}
                 </Text>
                 <View style={{flexDirection:"row"}}>
-                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:+{data.contact_num')}}><Icon name="phone" size={20} style={tabStyle.contactPhoneIcon}/></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp(`mailto:somethingemail@gmail.com?subject=abcdefg&body=body`)}}><Icon name="email" size={20} style={tabStyle.contactEmailIcon}/></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp(`sms:number?body=yourMessage`)}}><Icon name="message" size={20} style={tabStyle.contactSMSIcon}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="phone" size={20} style={tabStyle.contactPhoneIcon}/> : null}</TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp('mailto:'+data.email)}}>{data.show_email ? <Icon name="email" size={20} style={tabStyle.contactEmailIcon}/> : null}</TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp('sms:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="message" size={20} style={tabStyle.contactSMSIcon}/> : null}</TouchableOpacity>
                 </View>
                 </View>
               </View>
@@ -210,15 +211,14 @@ export default class App extends Component {
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
                         :
-                          <View style={tabStyle.contactView}>
                             <AtoZList
+                              style={{borderWidth: 0}}
                               sectionHeaderHeight={35}
                               cellHeight={95}
                               data={(this.state.searchedData == null) ? this.state.dataContactDetail : this.state.searchedData}
                               renderCell={this._renderCell}
                               renderSection={this._renderHeader}
                               />
-                          </View>
                 }
                 </ScrollView>
                 </View>
