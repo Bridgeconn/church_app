@@ -11,8 +11,7 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
-import {guestLogin as guestLogin} from '../style/styles.js'
-const guestLoginStyle = StyleSheet.create(guestLogin)
+import {guestLoginStyle} from '../style/styles.js'
 
 class GuestLogin extends Component {
   constructor(props) {

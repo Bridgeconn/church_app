@@ -1,4 +1,3 @@
-import PopupDialog from 'react-native-popup-dialog';
 import { Button ,View,Text} from 'react-native'
 import React, {Component} from 'react'
 

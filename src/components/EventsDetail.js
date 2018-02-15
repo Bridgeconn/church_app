@@ -6,14 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView from 'react-native-maps'
 import * as AddCalendarEvent from 'react-native-add-calendar-event';
 import {Actions} from 'react-native-router-flux'
-import {eventDetail as eventDetail} from '../style/styles.js'
+import {eventDetailStyle} from '../style/styles.js'
 import moment from 'moment';
 
 const utcDateToLocalString = (momentInUTC: moment): string => {
   return moment(momentInUTC).local().format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
 };
 
-const eventDetailStyle = StyleSheet.create(eventDetail)
 
 export default class EventsDetail extends Component{
   constructor(props){
@@ -92,6 +91,7 @@ export default class EventsDetail extends Component{
         <Text  style={eventDetailStyle.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
         <Text style={eventDetailStyle.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
         <View style={eventDetailStyle.centerView}>
+        <View style={{alignItems:"center"}} >
         <Icon name="calendar-clock" size={48} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
             this.addToCalendar(
               this.state.title, 
@@ -99,7 +99,14 @@ export default class EventsDetail extends Component{
               this.state.event_time_end 
               );
           }}/>
-        <Icon name="navigation" onPress={this.openGpsFromName.bind(this, this.props.event_topic)} size={48}  color="#3F51B5" style={eventDetailStyle.mapNavigationIconMargin}/>
+          <Text >Add to calender</Text>
+        </View>
+        <View style={{alignItems:"center"}}>
+        <Icon name="navigation" 
+          onPress={this.openGpsFromName.bind(this, this.props.event_topic)} 
+          size={48}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
+        <Text >Go to map</Text>
+        </View>
         </View>
         
        <View>

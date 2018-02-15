@@ -8,9 +8,8 @@ import YouTube from 'react-native-youtube';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
-import {youtubeSongSearchPage as youtubeSongSearchPage} from '../style/styles.js'
+import {youtubeSongSearchStyle} from '../style/styles.js'
 
-const youtubeSongSearchStyle = StyleSheet.create(youtubeSongSearchPage)
 
 export default class YoutubeSongSearch extends Component{
 

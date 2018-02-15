@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
-import ImagePicker from 'react-native-image-picker'
 import { Actions } from 'react-native-router-flux'
-import {profilePage as profilePage} from '../style/styles.js'
+import {profilePageStyle} from '../style/styles.js'
+
 import Config from 'react-native-config'
 import axios from 'axios';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from "./LocalEventEmitter"
 
-const profilePageStyle = StyleSheet.create(profilePage)
+// const profilePageStyle = StyleSheet.create(profilePage)
 
 export default class ProfilePage extends Component{
 	
@@ -136,8 +136,7 @@ export default class ProfilePage extends Component{
   
 	render(){
 		return(
-      <View style={{flex:1}}>
-
+      <View style={profilePageStyle.profileContainer}>
                     <Header>
                       <Left>
                         <Button transparent onPress={()=>{this.onBackButton()}}>
@@ -145,7 +144,7 @@ export default class ProfilePage extends Component{
                         </Button>
                       </Left>
                       <Body>
-                        <Title style={{textAlign:"left"}}>Profile</Title>
+                        <Title style={profilePageStyle.profileTitle}>Profile</Title>
                       </Body>
                       <Right>
                       {this.state.showSaveProfile ?  <TouchableOpacity onPress={()=>this.saveProfileData()}>
@@ -168,7 +167,7 @@ export default class ProfilePage extends Component{
                   }}
                   value={this.state.newUser}
 				        />
-				        <Text style={{marginTop:12}}>
+				        <Text style={profilePageStyle.contactField}>
 				          Contact Number
 				        </Text>
 				        <TextInput
@@ -182,7 +181,7 @@ export default class ProfilePage extends Component{
                   keyboardType="numeric"
 				        />
                 
-                <Text style={{marginTop:12}}>Email</Text>
+                <Text style={profilePageStyle.emailField}>Email</Text>
                 <Text style={profilePageStyle.customEmail}>{this.state.email}</Text>
                 <View style={profilePageStyle.shareContainer}>
                 <View style={profilePageStyle.checkboxContainer}>
@@ -190,7 +189,7 @@ export default class ProfilePage extends Component{
                   this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, !this.state.newcheckboxEmail, this.state.newcheckboxContact)
                   this.setState({newcheckboxEmail: !this.state.newcheckboxEmail})
                 }} 
-                  checked={this.state.newcheckboxEmail} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                  checked={this.state.newcheckboxEmail} style={profilePageStyle.checkBoxFiled}/>
                   <Text style={profilePageStyle.checkboxText}>Share email with church members</Text>
                 </View>
                 <View style={profilePageStyle.checkboxContainer}>
@@ -198,7 +197,7 @@ export default class ProfilePage extends Component{
                   this.checkSaveButtonVisibility(this.state.newUser, this.state.newContact, this.state.newcheckboxEmail, !this.state.newcheckboxContact);
                   this.setState({newcheckboxContact:!this.state.newcheckboxContact})
                 }} 
-                checked={this.state.newcheckboxContact} style={{margin:-8,padding:0,flexDirection:"row"}}/>
+                checked={this.state.newcheckboxContact} style={profilePageStyle.checkBoxFiled}/>
                   <Text style={profilePageStyle.checkboxText}>Share contact with church members</Text>
                 </View>
                 </View>

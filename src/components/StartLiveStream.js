@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,Content,CardItem} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import {homeTab as homeTab} from '../style/styles.js'
+import {tabStyle} from '../style/styles.js'
 import Config from 'react-native-config'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Timestamp from 'react-timestamp'
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-const tabStyle = StyleSheet.create(homeTab)
+
 export default class LiveStreamPage extends Component{
 	constructor(props){
 		super(props)
@@ -74,7 +74,7 @@ export default class LiveStreamPage extends Component{
                           <Card  style={tabStyle.flexRow}>
                             <CardItem style={tabStyle.flexColContent}>
                               <Text style={tabStyle.tabContentText}>{item.title}</Text>
-                               <Timestamp time={item.added_date} utc={false} component={Text} format='ago' style={{fontSize:16,alignSelf:"flex-start"}}/>
+                               <Timestamp time={item.added_date} utc={false} component={Text} format='ago' style={tabStyle.timeStampStyle}/>
                             </CardItem>
                             <CardItem>                              
                                 <Icon name="live-tv" size={60} color={'#cc181e'} />

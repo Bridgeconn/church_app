@@ -3,11 +3,8 @@ import android.app.Application;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.vonovak.AddCalendarEventPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.zmxv.RNSound.RNSoundPackage;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
-import com.imagepicker.ImagePickerPackage;
 import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -36,11 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           new SplashScreenReactPackage(),
           new AddCalendarEventPackage(),
           new VectorIconsPackage(),
-          new LinearGradientPackage(),
           new MapsPackage(),
-          new RNSoundPackage(),
           new ReactNativeYouTube(),
-          new ImagePickerPackage(),
           new SQLitePluginPackage(),
           new FIRMessagingPackage(),
           new NotificationPackage()      

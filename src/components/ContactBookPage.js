@@ -14,6 +14,7 @@ import {
     RefreshControl,
     NetInfo,
     ActivityIndicator,
+    Linking
 } from 'react-native';
 import { 
   Header, 
@@ -28,12 +29,10 @@ import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
-import {homeTab as homeTab} from '../style/styles.js'
-import Toast, {DURATION} from 'react-native-easy-toast'
+import {tabStyle} from '../style/styles.js'
 
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-const tabStyle = StyleSheet.create(homeTab)
 
 export default class App extends Component {
     constructor(props ) {
@@ -111,7 +110,7 @@ export default class App extends Component {
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
         return (
-            <View style={{ height: 35, justifyContent: 'center', backgroundColor: '#eee', paddingLeft: 10 }}>
+            <View style={tabStyle.contactList}>
                 <Text>{data.sectionId}</Text>
             </View>
         )
@@ -138,7 +137,7 @@ export default class App extends Component {
         console.log("dataaaaaaaaaa "+JSON.stringify(data))
         return (
             <View style={tabStyle.contactBookView}>
-                <View style={{margin:10}}>
+                <View style={tabStyle.contactData}>
                 <Text>
                     {data.name} 
                 </Text>
@@ -146,9 +145,9 @@ export default class App extends Component {
                     {data.contact_number}
                 </Text>
                 <View style={{flexDirection:"row"}}>
-                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:+91${data.contact_num')}}><Icon name="phone" size={20} style={{margin:10,marginLeft:0}}/></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp(`mailto:somethingemail@gmail.com?subject=abcdefg&body=body`)}}><Icon name="email" size={20} style={{margin:10}}/></TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp(`sms:number?body=yourMessage`)}}><Icon name="message" size={20} style={{margin:10}}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:+{data.contact_num')}}><Icon name="phone" size={20} style={tabStyle.contactPhoneIcon}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp(`mailto:somethingemail@gmail.com?subject=abcdefg&body=body`)}}><Icon name="email" size={20} style={tabStyle.contactEmailIcon}/></TouchableOpacity>
+                <TouchableOpacity onPress={()=>{this.redirectToApp(`sms:number?body=yourMessage`)}}><Icon name="message" size={20} style={tabStyle.contactSMSIcon}/></TouchableOpacity>
                 </View>
                 </View>
               </View>
@@ -172,12 +171,12 @@ export default class App extends Component {
 
     render() {
         return (
-           <View style={{flex:1}}>
+           <View style={tabStyle.contactView}>
              <Header searchBar rounded>
                 <Item>
-                  <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                  <Icon active name="search" size={24} style={tabStyle.searchIconPadding}/>
                   <TextInput 
-                    style={{width:Dimensions.get('window').width-80}}  
+                    style={tabStyle.searchText}  
                     placeholder="Enter name or contact" 
                     onChangeText ={(text) => this.refreshResults(text)}
                     ref={ref => this.textInputRef = ref}
@@ -211,7 +210,7 @@ export default class App extends Component {
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
                         :
-                          <View style={{flex:1}}>
+                          <View style={tabStyle.contactView}>
                             <AtoZList
                               sectionHeaderHeight={35}
                               cellHeight={95}

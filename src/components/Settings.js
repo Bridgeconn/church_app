@@ -16,7 +16,7 @@ import {
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {Card,CardItem,Body} from 'native-base';
-import styles from '../style/styles.js'
+import {settingStyle} from '../style/styles'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class Settings extends Component {
@@ -63,23 +63,23 @@ _showResult(result) {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={settingStyle.container}>
       <ScrollView>
-        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={{justifyContent:"center",alignItems:"center"}} />
+        <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={settingStyle.spinnerCustom} />
          <TouchableOpacity  onPress={this._shareMessage.bind(this)}>
         <Card>
-            <Text style={{margin:20}}>Share</Text>
+            <Text style={settingStyle.textStyle}>Share</Text>
         </Card>
         </TouchableOpacity>
         <TouchableOpacity >
           <Card>
-            <Text style={{margin:20}}>About</Text>
+            <Text style={settingStyle.textStyle}>About</Text>
           </Card>
         </TouchableOpacity>
        
         <TouchableOpacity  onPress={this.userLogout}>
              <Card>
-            <Text style={{margin:20}}>Logout</Text>
+            <Text style={settingStyle.textStyle}>Logout</Text>
             </Card>
         </TouchableOpacity>
       </ScrollView>

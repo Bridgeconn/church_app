@@ -5,9 +5,7 @@ import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import YouTube from 'react-native-youtube';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
-import {songLyricsPage as songLyricsPage} from '../style/styles.js'
-
-const songLyricsPageStyle = StyleSheet.create(songLyricsPage)
+import {songLyricStyle} from '../style/styles.js'
 
 export default class EventsDetail extends Component{
 
@@ -40,9 +38,9 @@ export default class EventsDetail extends Component{
   }
   render(){
       return (
-        <View style={songLyricsPageStyle.songLyricsContainer}>
+        <View style={songLyricStyle.songLyricsContainer}>
         {this.state.videoId !==null && this.state.playVideo ?
-            <View style={songLyricsPageStyle.topYoutubeView}>
+            <View style={songLyricStyle.topYoutubeView}>
               <YouTube
                 apiKey={Config.YOUTUBE_API_KEY}
                 videoId={this.state.videoId}   // The YouTube video ID
@@ -53,34 +51,34 @@ export default class EventsDetail extends Component{
                 onChangeState={e => console.log('onChangeState'+e.state)}
                 onChangeQuality={e => console.log('onChangeQuality'+e.quality)}
                 onError={e => console.log('onError'+e.error)}
-                style={songLyricsPageStyle.youtubeViewRatio} />
-                <View style={songLyricsPageStyle.initialYoutubeColor}>
+                style={songLyricStyle.youtubeViewRatio} />
+                <View style={songLyricStyle.initialYoutubeColor}>
                 <Icon color={'#fff'} 
                   onPress={() => {
                     this.removeVideo()
                   }}
                   name="delete" 
                   size={32}
-                  style={songLyricsPageStyle.alignDeleteIcon} />
+                  style={songLyricStyle.alignDeleteIcon} />
                 </View>
           </View>
           : 
           ( this.state.videoId !==null && !this.state.playVideo) ? 
-          <View style={songLyricsPageStyle.youtubePlay}>
+          <View style={songLyricStyle.youtubePlay}>
               <Icon color={'#fff'} 
                   onPress={() => {
                     this.playVideoMethod()
                   }}
-                  style={songLyricsPageStyle.playIconAlignment}
+                  style={songLyricStyle.playIconAlignment}
                   name="play" 
                   size={48} />
           </View>
           : null
         }
-          <ScrollView style={songLyricsPageStyle.songLyricsScrollView} showsVerticalScrollIndicator={false}>
+          <ScrollView style={songLyricStyle.songLyricsScrollView} showsVerticalScrollIndicator={false}>
 
             <View>
-              <Text style={songLyricsPageStyle.textSong}>{this.state.songLyrics + '\n\n\n\n'}</Text>
+              <Text style={songLyricStyle.textSong}>{this.state.songLyrics + '\n\n\n\n'}</Text>
             </View>
           </ScrollView>
 
@@ -91,7 +89,7 @@ export default class EventsDetail extends Component{
             }}
             name="youtube-play" 
             size={60} 
-            style={songLyricsPageStyle.youtubeButton}/>
+            style={songLyricStyle.youtubeButton}/>
         </View>
       );
   }

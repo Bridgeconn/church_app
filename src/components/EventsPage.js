@@ -2,14 +2,13 @@ import React, {Component} from 'react'
 import {View,Text,ScrollView,TouchableOpacity,Image,Dimensions,ActivityIndicator, StyleSheet, AsyncStorage,RefreshControl,NetInfo} from 'react-native';
 import {Card,CardItem,Content} from 'native-base'
 import {Actions} from 'react-native-router-flux'
-import {homeTab as homeTab} from '../style/styles.js'
+import {tabStyle} from '../style/styles.js'
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Config from 'react-native-config'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 
-const tabStyle = StyleSheet.create(homeTab)
 export default class EventsPage extends Component{
 
  constructor(props){

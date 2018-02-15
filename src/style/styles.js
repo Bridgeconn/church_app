@@ -4,10 +4,10 @@ import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
  const titleColor = '#48BBEC';
  const navBarColor = "#3F51B5"
  const centerAlign = 'center';
- const profileMargin = 8;
- const octaValue = 8;
+ // const 8 = 8;
+const paddingValue = 8;
 
-export const routerPage = {
+export const styleRouter = StyleSheet.create({
 navbarRightButton:{
   flexDirection:"row",justifyContent:"center"
 },
@@ -22,12 +22,22 @@ navbarTitle:{
     color:'#fff',
     fontFamily:'roboto-medium',
     fontWeight:'400'
-  }
-}
-export const homeTab = {
+  },
+  tabContainer:{
+    flex:1, 
+    flexDirection:'column', 
+    alignItems:'center', 
+    alignSelf:'center', 
+    justifyContent: 'center'
+  },
+})
+export const tabStyle = StyleSheet.create({
+  containerFlexValue:{
+    flex:1
+  },
   container:{
     flex:1,
-    margin:octaValue,
+    margin:8,
   },
   scrollViewContainer:{
     flexGrow:1
@@ -72,6 +82,34 @@ export const homeTab = {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  contactList:{
+    height: 35, 
+    justifyContent: 'center', 
+    backgroundColor: '#eee', 
+    paddingLeft: 10 
+  },
+  contactData:{
+    margin:8
+  },
+  contactPhoneIcon:{
+    margin:10,
+    marginLeft:0
+  },
+  contactEmailIcon:{
+  margin:10
+  },
+  contactSMSIcon:{
+    margin:10
+  },
+  contactView:{
+    flex:1
+  },
+  searchIconPadding:{
+    paddingLeft:4
+  },
+  searchText:{
+    width:Dimensions.get('window').width-80
+  },
   verseListItemStyle:{
     borderBottomWidth:0,
     flexDirection: 'row',
@@ -88,16 +126,23 @@ export const homeTab = {
     borderBottomWidth:0,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  songCardItem:{
+    flexDirection:"column",
+    alignItems:"flex-start"
+  },
+  timeStampStyle:{
+    fontSize:16,alignSelf:"flex-start"
   }
-  
-}
-export const eventDetail = {
+
+})
+export const eventDetailStyle = StyleSheet.create({
   container:{
     flex:1,
-    margin:octaValue,
+    margin:8,
   },
   centerView:{
-     flex:1,justifyContent: 'center',alignItems: 'center'
+     flex:1,justifyContent:'space-around',alignItems: 'center',margin:8,flexDirection:"row"
    },
   eventDetailImage:{
     width:width,
@@ -106,27 +151,31 @@ export const eventDetail = {
   },
   eventMap: {
   height:height*0.35,
-  width:width
+  width:width,
+  marginTop:8
   },
-
+  calendarMargin:{
+    margin:8
+  },
+  
   eventData:{
     fontSize:20,
     padding:1,
-    marginLeft:octaValue
+    marginLeft:8
   },
   eventCalendar:{
     fontSize:20,
     color:navBarColor,
     marginTop:12,
     marginBottom:20,
-    marginLeft:octaValue
+    marginLeft:8
   },
   flexOne:{
     flex:1
   }
-}
+})
 
-export const guestLogin = {
+export const guestLoginStyle = StyleSheet.create({
   tryGuestText: {
     fontSize: 16,
     alignSelf: centerAlign,
@@ -137,21 +186,17 @@ export const guestLogin = {
   centerView:{
     flex:1,justifyContent: 'center',alignItems: 'center'
   },
-  calendarMargin:{
-    margin:16
-  },
-  mapNavigationIconMargin:{
-    margin:24
-  }
-}
   
-export const liveStream = {
+ 
+})
+  
+export const liveStreamStyle = StyleSheet.create({
   container:{
     flex:1,
-    margin:octaValue,
+    margin:8,
   },
   liveStreamView:{
-    padding:octaValue,
+    padding:8,
   },
   liveStreamVideo: {
     height: PixelRatio.roundToNearestPixel(
@@ -165,7 +210,7 @@ export const liveStream = {
     backgroundColor: navBarColor,
     borderColor: navBarColor,
     borderWidth: 1,
-    borderRadius: octaValue,
+    borderRadius: 8,
     marginBottom: 12,
     alignSelf: 'stretch',
     justifyContent: centerAlign
@@ -176,8 +221,8 @@ export const liveStream = {
     alignSelf: centerAlign
   },
 
-}
-export const loginPage = {
+})
+export const loginButtonStyle = StyleSheet.create({
   buttonRegister: {
     height: 50,
     backgroundColor: titleColor,
@@ -192,9 +237,9 @@ export const loginPage = {
     color: 'white',
     alignSelf: centerAlign
   },
-}
+})
 
-export const newSignupOrRegister = {
+export const SigninStyle = StyleSheet.create({
   tryGuestText: {
     fontSize: 16,
     alignSelf: centerAlign,
@@ -247,9 +292,24 @@ export const newSignupOrRegister = {
     padding:12,
     justifyContent:centerAlign
   }
-}
+})
 
-export const profilePage = {
+export const profilePageStyle = StyleSheet.create({
+  profileContainer:{
+    flex:1
+  },
+  profileTitle:{
+    textAlign:"left"
+  },
+  emailField:{
+    marginTop:12
+  },
+  contactField:{
+    marginTop:12
+  },
+  checkEmail:{
+    margin:-8,padding:0,flexDirection:"row"
+  },
   ProfilePageContent:{
     margin:16,
     padding:8
@@ -271,9 +331,16 @@ export const profilePage = {
     marginTop:20,
     alignSelf:'flex-start'
   },
-}
+  checkBoxFiled:{
+    alignSelf:"flex-start",
+    marginRight:16
+  },
+  checkboxText:{
+    color:"#000"
+  }
+})
 
-export const songLyricsPage = {
+export const songLyricStyle = StyleSheet.create({
   songLyricsContainer:{
     flex:1,
   },
@@ -294,9 +361,9 @@ export const songLyricsPage = {
   },
   playIconAlignment:{
     alignSelf:'center'
-  }
+  },
   songLyricsScrollView: {
-    margin: octaValue
+    margin: 8
   },
   textSong:{
     fontSize:16
@@ -311,12 +378,12 @@ export const songLyricsPage = {
     backgroundColor:"#E9E9EF",
     bottom: 0,
   },
-}
+})
 
-export const youtubeSongSearchPage = {
+export const youtubeSongSearchStyle = StyleSheet.create({
   youtubeContainer:{
     flex:1,
-    margin:octaValue,
+    margin:8,
   },
    spinnerCustom:{
     justifyContent:centerAlign,
@@ -371,4 +438,18 @@ export const youtubeSongSearchPage = {
     margin: 5,alignItems:"flex-end"
   }
 
-}
+})
+
+export const settingStyle = StyleSheet.create({
+  container:{
+    flex:1,
+    margin:8,
+  },
+  spinnerCustom:{
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  textStyle:{
+      margin:20
+  }
+})

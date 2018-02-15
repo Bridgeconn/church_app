@@ -30,12 +30,11 @@ import axios from 'axios';
 import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
-import Toast, {DURATION} from 'react-native-easy-toast'
-import {homeTab as homeTab} from '../style/styles.js'
+import {tabStyle} from '../style/styles.js'
 
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-const tabStyle = StyleSheet.create(homeTab)
+
 export default class SongBookPage extends Component {
     constructor(props, context) {
         super(props, context);
@@ -135,14 +134,15 @@ export default class SongBookPage extends Component {
     }
 
     render() {
+      let displayData = (this.state.searchedSongsList.length == 0) ? this.state.songsListData : this.state.searchedSongsList;
       console.log("searched data render"+this.state.searchedSongsList.length == 0 ? true :false)
           return (
-           <View style={{flex:1}}>
+           <View style={tabStyle.containerFlexValue}>
              <Header searchBar rounded>
                 <Item>
-                  <Icon active name="search" size={24} style={{paddingLeft:4}}/>
+                  <Icon active name="search" size={24} style={tabStyle.searchIconPadding}/>
                   <TextInput 
-                    style={{width:Dimensions.get('window').width-80}}  
+                    style={tabStyle.searchText}  
                     placeholder="Enter text" 
                     onChangeText ={(text) => this.refreshResults(text)}
                     ref={ref => this.textInputRef = ref}
@@ -174,12 +174,13 @@ export default class SongBookPage extends Component {
                         <View  style={tabStyle.centerView}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
-                        :(this.state.searchedSongsList.length == 0) ? <View  style={tabStyle.tabBounderyMargin}>
-                        {this.state.songsListData.map(item =>
+                        :
+                        <View  style={tabStyle.tabBounderyMargin}>
+                        {displayData.map(item =>
                           <Content key={item.added_date}>
                              <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
                               <Card>
-                              <CardItem style={{flexDirection:"column",alignItems:"flex-start"}}>
+                              <CardItem style={tabStyle.songCardItem}>
                                 <Text style={tabStyle.songTitleText}>
                                     {item.title}  
                                 </Text>
@@ -190,22 +191,8 @@ export default class SongBookPage extends Component {
                               </Card>
                               </TouchableOpacity>
                           </Content>
-                          )}</View> : <View  style={tabStyle.tabBounderyMargin}>{this.state.searchedSongsList.map(item =>
-                          <Content key={item.added_date}>
-                               <TouchableOpacity onPress={()=>{ console.log("songId "+item.added_date); Actions.songLyrics({title:item.title,songLyrics:item.lyrics,songId:item.added_date})}}>
-                                <Card>
-                                <CardItem>
-                                  <Text style={tabStyle.songTitleText}>
-                                      {item.title}  
-                                  </Text>
-                                  <Text numberOfLines={2} ellipsizeMode='tail' style={tabStyle.songLyricsText}>
-                                      {item.lyrics}
-                                  </Text>
-                                </CardItem>
-                                </Card>
-                                </TouchableOpacity>
-                                </Content>
-                                )}</View>
+                          )}</View> 
+                        
                 }
               </ScrollView>
               </View>

@@ -13,18 +13,15 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
-import Login from "./LoginPage"
+import LoginButton from "./LoginPage"
 import Signup from "./SignupPage"
-import {newSignupOrRegister as newSignupOrRegister} from '../style/styles.js'
-
-const newSignupStyle = StyleSheet.create(newSignupOrRegister)
+import {SigninStyle} from '../style/styles.js'
 
 var GuestLogin = React.createClass({
-
   render: function() {
         if (this.props.visible) {
             return (
-                <Text key="guestLogin" style={newSignupStyle.tryGuestText} onPress={this.onGuestLogin }>
+                <Text key="guestLogin" style={SigninStyle.tryGuestText} onPress={this.onGuestLogin }>
                   Explore as Guest
                 </Text>
             );
@@ -84,24 +81,24 @@ class NewSignup extends Component {
 
   render() {
     return (
-      <View style={newSignupStyle.userContainer}>
-      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={newSignupStyle.spinnerCustom}/>
-        <Text style={newSignupStyle.heading}>
+      <View style={SigninStyle.userContainer}>
+      <Spinner visible={this.state.showProgress} size={"large"} color={"#3F51B5"} style={SigninStyle.spinnerCustom}/>
+        <Text style={SigninStyle.heading}>
           Church App
         </Text>
         <TextInput
           onChangeText={ (text)=> this.setState({name: text}) }
-          style={newSignupStyle.input} placeholder="Name">
+          style={SigninStyle.input} placeholder="Name">
         </TextInput>
 
         <TextInput
           onChangeText={ (text)=> this.setState({email: text}) }
-          style={newSignupStyle.input} placeholder="Email">
+          style={SigninStyle.input} placeholder="Email">
         </TextInput>
 
         <TextInput
           onChangeText={ (text)=> this.setState({password: text}) }
-          style={newSignupStyle.input}
+          style={SigninStyle.input}
           placeholder="Password"
           secureTextEntry={true}>
         </TextInput>
@@ -112,7 +109,7 @@ class NewSignup extends Component {
           password={this.state.password}
         />
         
-        <Text style={newSignupStyle.noAccountText} onPress={this.onOpenLoginPage.bind(this) }>
+        <Text style={SigninStyle.noAccountText} onPress={this.onOpenLoginPage.bind(this) }>
             Already have an account? Login here
         </Text>
 

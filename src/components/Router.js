@@ -5,7 +5,6 @@ import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View, D
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
-import HomePage from './HomePage'
 import HomePage2 from './HomePage2'
 import Settings from './Settings'
 import Login from './LoginPage'
@@ -21,7 +20,7 @@ import SongLyrics from './SongLyrics'
 import ContactBookPage from './ContactBookPage'
 import VersePage from './VersePage'
 import YoutubeSongSearch from './YoutubeSongSearch'
-import {routerPage as routerPage} from '../style/style2'
+import {styleRouter} from '../style/styles'
 import SplashScreen from 'react-native-splash-screen'
 import Spinner from 'react-native-loading-spinner-overlay';
 import FCM from "react-native-fcm"
@@ -29,7 +28,6 @@ import SQLite from 'react-native-sqlite-storage'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from './LocalEventEmitter'
 
-const styleRoute = StyleSheet.create(routerPage)
 const NotificationModule = NativeModules.NotificationModule;
 
 import {registerKilledListener, registerAppListener, registerTopicListener} from "./Listeners";
@@ -137,11 +135,11 @@ export default class RoutesPage extends Component {
 
   rightButton = () =>{
     return(
-        <View style={styleRoute.navbarRightButton}>
-                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={styleRoute.buttonTouchable}>
+        <View style={styleRouter.navbarRightButton}>
+                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={styleRouter.buttonTouchable}>
                     <Icon name="account-circle" size={26} color="white"/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>{Actions.settings()}} style={styleRoute.buttonTouchable}>
+                  <TouchableOpacity onPress={()=>{Actions.settings()}} style={styleRouter.buttonTouchable}>
                     <Icon name="settings" size={26} color="white" />
                   </TouchableOpacity>
               </View>
@@ -159,11 +157,11 @@ export default class RoutesPage extends Component {
         else{
         return(
           <Router
-          navigationBarStyle={styleRoute.navigationBarColor}
+          navigationBarStyle={styleRouter.navigationBarColor}
           leftButtonIconSize={30} 
           leftButtonColor={"white"} 
           tintColor={'white'} 
-          titleStyle={styleRoute.navbarTitle}
+          titleStyle={styleRouter.navbarTitle}
           >
             <Scene key="root">
               <Scene 
@@ -205,7 +203,7 @@ export default class RoutesPage extends Component {
                 contactNum={this.state.contactNum}
                 email={this.state.email}
                 username={this.state.username}               
-                titleStyle={styleRoute.navbarTitle}
+                titleStyle={styleRouter.navbarTitle}
                 ref={profileRef => this.profileRef = profileRef}
 
               />
@@ -214,7 +212,7 @@ export default class RoutesPage extends Component {
                 key = "eventsDetails"   
                 title = "Events"    
                 component = {EventsDetail}                  
-                titleStyle={styleRoute.navbarTitle} 
+                titleStyle={styleRouter.navbarTitle} 
                        
               />
               <Scene 
@@ -249,7 +247,7 @@ export default class RoutesPage extends Component {
               swipeEnabled={false}
               lazyLoad={false}
               animationEnabled={false}
-              tabBarStyle={styleRoute.tabBar} 
+              tabBarStyle={styleRouter.tabBar} 
               tabs={true} 
               tabBarPosition="bottom" 
                 renderRightButton={this.rightButton}
@@ -306,7 +304,7 @@ class TabIcon extends Component {
   render() {
     var color = this.props.focused ? '#fff':'#3F51B5'
     return (
-      <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center', justifyContent: 'center'}}>
+      <View style={styleRouter.tabContainer}>
         <Icon color={color} name={this.props.iconName || "circle"} size={28}/>
         {this.props.focused?<Text style={{color: color, fontSize: 12}}>{this.props.title}</Text>:null}
       </View>

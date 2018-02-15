@@ -13,9 +13,7 @@ import {
 import {Actions} from 'react-native-router-flux'
 import Config from 'react-native-config'
 import Utilities from './Utilities'
-import {newSignupOrRegister as newSignupOrRegister} from '../style/styles.js'
-
-const SignupStyle = StyleSheet.create(newSignupOrRegister)
+import {SigninStyle} from '../style/styles.js'
 
 class Signup extends Component {
   constructor(props){
@@ -70,8 +68,8 @@ class Signup extends Component {
   render() {
     return (
       <View >
-        <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={SignupStyle.buttonRegister}>
-          <Text style={SignupStyle.buttonText}>
+        <TouchableOpacity onPress={this.onRegisterPressed.bind(this)} style={SigninStyle.buttonRegister}>
+          <Text style={SigninStyle.buttonText}>
             Signup
           </Text>
         </TouchableOpacity>

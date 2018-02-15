@@ -4,15 +4,14 @@ import {ListItem,List,Card,CardItem,Body,Right, Button} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 // import verse from './verseOfTheDayListDummy.json'
 import Timestamp from 'react-timestamp';
-import {homeTab as homeTab} from '../style/styles.js'
+import {tabStyle} from '../style/styles.js'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM, {FCMEvent} from "react-native-fcm"
 let SQLite = require('react-native-sqlite-storage')
 import LocalEventEmitter from "./LocalEventEmitter"
 var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err))
-const tabStyle = StyleSheet.create(homeTab)
-export default class VersePage extends Component{
 
+export default class VersePage extends Component{
  constructor(props){
         super(props)
       
