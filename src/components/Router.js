@@ -5,7 +5,6 @@ import {AsyncStorage,ActivityIndicator,BackHandler,TouchableOpacity,Text,View, D
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
-import HomePage2 from './HomePage2'
 import Settings from './Settings'
 import Login from './LoginPage'
 import GuestLogin from './GuestLoginPage'
@@ -41,10 +40,19 @@ export default class RoutesPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: false, guestKey:false, tokenValue:null,
-      imageUri:null,username:null,contactNum:null,email:null,
+      isLoaded: false, 
+      guestKey:false, 
+      tokenValue:null,
+      imageUri:null,
+      username:null,
+      contactNum:null,
+      email:null,
+      showEmail:null,
+      showContact:null
       // verseData:[]
     };
+    this.updateTokenValue = this.updateTokenValue.bind(this);
+    this.updateProfileValue =this.updateProfileValue.bind(this);
   }
 
   async componentDidMount() {
@@ -65,6 +73,23 @@ export default class RoutesPage extends Component {
           console.log("email"+email)
           this.setState({email:email})
         })
+
+      await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
+        console.log("value "+value+"  " + typeof value)
+        this.setState({ username: value})
+      })
+      await AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
+        this.setState({contactNum: value})
+      })
+      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
+        console.log("email_value "+value+ " "+ typeof value)
+
+        this.setState({ showEmail: JSON.parse(value)})
+      })
+      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
+        this.setState({showContact: JSON.parse(value)})
+      })
+
      }
     
     this.setState({isLoaded:true}) 
@@ -73,11 +98,45 @@ export default class RoutesPage extends Component {
     
   }
 
+    updateTokenValue(params) {
+      console.log("here in updateTokenValue")
+ // updateTokenValue(paramToken, paramEmail, paramUserName, paramContact, paramShowEmail, paramShowContact) {
+     this.setState({tokenValue: params[0]})
+     this.setState({email:params[1]})
+     this.setState({username:params[2]})
+     this.setState({contactNum:params[3]})
+     this.setState({showEmail:params[4]})
+     this.setState({showContact:params[5]})
+
+    console.log("now call home 2 with tabs")
+    Actions.home2();
+    // {tokenValue:response.data.user.auth_token, contactNum:response.data.user.user_contact,
+      // email:response.data.user.email, username:response.data.user.first_name,showpregress:this.state.showProgress});
+
+   }
+
+   updateProfileValue(params){
+      this.setState({username:params[0]})
+     this.setState({contactNum:params[1]})
+     this.setState({showEmail:params[2]})
+     this.setState({showContact:params[3]})
+   }
+
   componentWillUnmount(){
     BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
  
   componentWillMount(){
+
+    db.transaction((tx)=>{
+            tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
+              [],
+              (tx, res)=>{
+                console.log("Table created",JSON.stringify(res))
+              }
+            )
+         })
+
     DeviceEventEmitter.addListener('notificationReceived', function(e: Event) {
       console.log("Event = " + JSON.stringify(e))
       console.log("Event = TITLE" + e.notification_title)
@@ -89,12 +148,6 @@ export default class RoutesPage extends Component {
 
       // add to db here
         db.transaction((tx)=>{
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
-          [],
-          (tx, res)=>{
-            console.log("Table created",JSON.stringify(res))
-          }
-        )
         tx.executeSql("INSERT INTO Verse (timestamp, chapter_num, verse_num, book_name, verse_body) VALUES (?,?,?,?,?)", [e.notification_timestamp, e.chapter_num, e.verse_num, e.book_name, e.notification_title], 
           function(tx, res) {
             console.log("insertId: " + res.insertId + " -- probably 1");
@@ -136,7 +189,12 @@ export default class RoutesPage extends Component {
   rightButton = () =>{
     return(
         <View style={styleRouter.navbarRightButton}>
-                  <TouchableOpacity onPress={()=>{Actions.profile()}} style={styleRouter.buttonTouchable}>
+                  <TouchableOpacity onPress={()=>{Actions.profile({tokenValue: this.state.tokenValue,
+                contactNum:this.state.contactNum,
+                email:this.state.email,
+                username:this.state.username,   
+                showEmail:this.state.showEmail,
+                showContact:this.state.showContact})}} style={styleRouter.buttonTouchable}>
                     <Icon name="account-circle" size={26} color="white"/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Actions.settings()}} style={styleRouter.buttonTouchable}>
@@ -172,6 +230,7 @@ export default class RoutesPage extends Component {
                 guestKey={this.state.guestKey}
                 hideNavBar={true}  
                 type="reset"
+                action={this.updateTokenValue}
               />
                
               
@@ -202,9 +261,12 @@ export default class RoutesPage extends Component {
                 tokenValue={this.state.tokenValue}
                 contactNum={this.state.contactNum}
                 email={this.state.email}
-                username={this.state.username}               
+                username={this.state.username}   
+                showEmail={this.state.showEmail}
+                showContact={this.state.showContact}            
                 titleStyle={styleRouter.navbarTitle}
                 ref={profileRef => this.profileRef = profileRef}
+                action = {this.updateProfileValue}
 
               />
               
@@ -259,14 +321,17 @@ export default class RoutesPage extends Component {
                   icon={TabIcon}
                   iconName="eventbrite"
                   component={EventsPage}
+                  tokenValue={this.state.tokenValue}
                 />
                 <Scene
                 key="tab_contacts"
                 title="Contacts"  
                 component={ContactBookPage}
-                icon={TabIcon} 
+                icon={TabIcon}
                 iconName="contacts"
                 renderTitle="Contacts Book"
+                tokenValue={this.state.tokenValue}
+
                 />
                 <Scene 
                 key="tab_songbook" 
@@ -275,6 +340,8 @@ export default class RoutesPage extends Component {
                 iconName="itunes"
                 component={SongBookPage}
                 renderTitle="Songs Book"
+                tokenValue={this.state.tokenValue}
+
 
                 />
                 <Scene 
@@ -284,13 +351,17 @@ export default class RoutesPage extends Component {
                 iconName="book-open-page-variant"
                 component={VersePage}
                 renderTitle="Verse of the day"
+                tokenValue={this.state.tokenValue}
+
                 />
                 <Scene 
                 key="tab_livestream" 
                 title="Video" 
                 icon={TabIcon} 
                 iconName="video"
-                component={StartLiveStream} 
+                component={StartLiveStream}
+                tokenValue={this.state.tokenValue}
+
                 />
               </Scene>
             </Scene> 

@@ -12,6 +12,7 @@ import {
     NetInfo,
     FlatList,
     ActivityIndicator,
+    AsyncStorage
 } from 'react-native';
 import { 
   Header, 
@@ -31,7 +32,6 @@ import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {tabStyle} from '../style/styles.js'
-
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
@@ -101,10 +101,10 @@ export default class SongBookPage extends Component {
   }
   
     componentDidMount() {
+      
         this.fetchSongBooks();
-
+      
      }
-
        onRefreshFunction(){
         if(this.state.isLoading){
           return

@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FCM, {FCMEvent} from "react-native-fcm"
 let SQLite = require('react-native-sqlite-storage')
 import LocalEventEmitter from "./LocalEventEmitter"
-var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err))
+var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () => console.log("SQL Database Opened"),(err) => console.log("SQL Error: " + err),)
 
 export default class VersePage extends Component{
  constructor(props){
@@ -39,7 +39,6 @@ export default class VersePage extends Component{
   componentDidMount(){
     this.getVersesFromDb()
     LocalEventEmitter.on('NewVerseNotification', 'VersePage',  (data) => {
-
       let a = this.state.verseData //creates the clone of the state
       a.splice(0, 0, data);
       this.setState({verseData: a});
@@ -53,16 +52,40 @@ export default class VersePage extends Component{
 
     getVersesFromDb(){
       this.setState({isLoading:true})
-      db.transaction((tx)=>{
+
+      
+
+
+      SQLite.openDatabase({name: 'church_app.db', location: 'default'}, 
+        (db) =>  {
+          console.log("sqlite open openDatabase")
+
+          db.transaction((tx)=>{
         tx.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC', [], (tx,res) => {
           console.log("Query completed");
           console.log("data response"+  JSON.stringify(res.rows.raw()))
           let rows = res.rows.raw();
-            this.setState({verseData: rows, isLoading:false, isRefreshing: false})
-            
-            // this.setState({isLoading:false,isRefreshing:false})
-        })
+          this.setState({verseData: rows, isLoading:false, isRefreshing: false})
+        }, (err)=> {console.log("erro in transaction = " + err)
+                this.setState({isLoading:false, isRefreshing: false})
+})
       })
+
+          // db.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC'),
+          // (res) =>{
+          //     console.log("Query completed");
+          //       console.log("data response"+  JSON.stringify(res.rows.raw()))
+          //       let rows = res.rows.raw();
+          //         this.setState({verseData: rows, isLoading:false, isRefreshing: false})
+          //       },
+            
+          // (error) => {
+          //           console.log("error in transaction  "+error);
+
+          // }
+        },
+        (err) => console.log("SQL Error: " + err));
+
     }
 
    onRefreshFunction(){

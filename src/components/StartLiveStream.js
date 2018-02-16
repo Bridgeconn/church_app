@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet,AsyncStorage} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,Content,CardItem} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import {tabStyle} from '../style/styles.js'
@@ -9,7 +9,6 @@ import axios from 'axios';
 import Timestamp from 'react-timestamp'
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
-
 export default class LiveStreamPage extends Component{
 	constructor(props){
 		super(props)
@@ -31,7 +30,9 @@ export default class LiveStreamPage extends Component{
 	})
 	}
 	componentDidMount(){
-		this.fetchLiveStream()
+     
+      this.fetchLiveStream()
+    
 	}
 	render(){
 		// console.log("url  live "+this.state.liveStreamData[0].url)
@@ -47,7 +48,7 @@ export default class LiveStreamPage extends Component{
                 }
               >
 
-              {this.state.isLoading ? 
+              {this.state.isLoading? 
                 <View style={tabStyle.centerView}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } style={tabStyle.alignItemsloader} color="#3F51B5"/>
                   </View>

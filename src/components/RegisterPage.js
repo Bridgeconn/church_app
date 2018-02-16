@@ -101,6 +101,7 @@ class Register extends Component {
         <LoginButton 
         email={this.state.email}
         password={this.state.password}
+        action={this.props.action}
         />
 
         <Text style={SigninStyle.noAccountText} onPress={this.onOpenSignupPage.bind(this) }>

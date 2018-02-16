@@ -30,7 +30,6 @@ import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {tabStyle} from '../style/styles.js'
-
 let SQLite = require('react-native-sqlite-storage')
 var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
@@ -105,7 +104,9 @@ export default class App extends Component {
   }
   
     componentDidMount() {
-        this.fetchContacts(null);
+      
+      this.fetchContacts(null);
+        
   }
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
@@ -197,7 +198,7 @@ export default class App extends Component {
                       />
                   }
                 >
-              {this.state.isLoading ? 
+              {this.state.isLoading? 
                 <View style={tabStyle.centerView}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false :true } color="#3F51B5"/>
                   </View> : 
@@ -210,7 +211,7 @@ export default class App extends Component {
                         <View  style={tabStyle.centerView}>
                           <Icon name="search" size={48}/><Text>Sorry, no results were found </Text>
                         </View>
-                        :
+                        :<View>
                             <AtoZList
                               style={{borderWidth: 0}}
                               sectionHeaderHeight={35}
@@ -219,6 +220,7 @@ export default class App extends Component {
                               renderCell={this._renderCell}
                               renderSection={this._renderHeader}
                               />
+                        </View>
                 }
                 </ScrollView>
                 </View>

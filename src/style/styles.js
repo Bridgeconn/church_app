@@ -84,7 +84,6 @@ export const tabStyle = StyleSheet.create({
     height: 35, 
     justifyContent: 'center', 
     backgroundColor: '#eee', 
-    paddingLeft: 10 
   },
   contactData:{
     margin:8,

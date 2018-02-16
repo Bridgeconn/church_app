@@ -7,13 +7,12 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import axios from 'axios';
 import Config from 'react-native-config'
-import * as AsyncStorageConstants from './AsyncStorageConstants';
 
 export default class EventsPage extends Component{
 
  constructor(props){
         super(props)
-        console.log('props value of token on event page '+this.props.tokenValue)
+        console.log('props value of token on event page == '+this.props.tokenValue)
         this.state = {
           tokenValue: this.props.tokenValue,
           data: [],
@@ -68,10 +67,10 @@ export default class EventsPage extends Component{
         this.setState({isRefreshing:true})
         this.fetchEventsData()
       }
-   componentDidMount() {
-        // this.setState({tokenValue:auth_token})
-        this.fetchEventsData();
-  }
+      
+     componentDidMount() {
+      this.fetchEventsData();
+    }
 
     render() {
           return (  
@@ -86,7 +85,7 @@ export default class EventsPage extends Component{
                 }
               >
 
-              {this.state.isLoading ? 
+              {this.state.isLoading? 
                 <View style={tabStyle.centerView}>
                   <ActivityIndicator size={"large"} animating={ this.state.isRefreshing ? false:true } color="#3F51B5"/>
                   </View>

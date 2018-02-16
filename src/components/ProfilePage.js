@@ -15,24 +15,27 @@ export default class ProfilePage extends Component{
 	
 	constructor(props){
 		super(props)
+     console.log("contact in profile page "+props.contactNum)
+     console.log("token in profile page "+props.tokenValue)
 		this.state = {
         token: props.tokenValue,
         email: props.email,
-        contact: "",
-        user: "",
-        checkboxEmail: false,
-        checkboxContact: false,
+        contact: props.contactNum,
+        user: props.username,
+        checkboxEmail: props.showEmail,
+        checkboxContact: props.showContact,
         
-        newUser: "",
-        newContact: "",
-        newcheckboxEmail: false,
-        newcheckboxContact: false,
+        newUser: props.username,
+        newContact: props.contactNum,
+        newcheckboxEmail: props.showEmail,
+        newcheckboxContact: props.showContact,
         showSaveProfile: false
 	  	};
 	}
 
 
   async saveToAsyncStorage(){
+      this.props.action([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
       await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
       await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,JSON.stringify(this.state.newcheckboxEmail));
@@ -91,30 +94,7 @@ export default class ProfilePage extends Component{
 
 
     async componentDidMount() {
-      await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((value) => {
-        this.setState({ token: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((value) => {
-        this.setState({email: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
-        console.log("value "+value+"  " + typeof value)
-        this.setState({ user: value, newUser: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
-        this.setState({contact: value, newContact: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
-        console.log("email_value "+value+ " "+ typeof value)
-
-        this.setState({ checkboxEmail: JSON.parse(value),newcheckboxEmail: JSON.parse(value)})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
-        this.setState({checkboxContact: JSON.parse(value), newcheckboxContact: JSON.parse(value)})
-      })
-      console.log("newUser" +this.state.newUser)
-      console.log("newcheckboxEmail"+this.state.newcheckboxEmail)
-      console.log("newcheckboxContact"+this.state.newcheckboxContact)
+     
 
       LocalEventEmitter.on('BackButtonPressProfile', 'ProfilePage',  (data) => {
         console.log("in event receive")
