@@ -268,7 +268,7 @@ export const SigninStyle = StyleSheet.create({
     marginBottom:8,
     fontSize: 18,
     borderWidth: 1,
-    borderColor:titleColor
+    borderColor:titleColor,
   },
   noAccountText: {
     fontSize: 16,

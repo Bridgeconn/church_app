@@ -127,7 +127,6 @@ export default class RoutesPage extends Component {
   }
  
   componentWillMount(){
-
     db.transaction((tx)=>{
             tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
               [],

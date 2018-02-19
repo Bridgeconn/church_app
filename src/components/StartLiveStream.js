@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet,AsyncStorage} from 'react-native'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,RefreshControl,StyleSheet,AsyncStorage,ActivityIndicator} from 'react-native'
 import {Header, Card, Title, Left,Button,Right,Body,Content,CardItem} from 'native-base'
 import {Actions} from 'react-native-router-flux'
 import {tabStyle} from '../style/styles.js'
@@ -14,7 +14,8 @@ export default class LiveStreamPage extends Component{
 		super(props)
 		console.log("key on start live"+this.props.tokenValue)
 		this.state = {
-			liveStreamData : [] 
+			liveStreamData : [] ,
+      isLoading:false
 		}
 	}
 
@@ -24,13 +25,20 @@ export default class LiveStreamPage extends Component{
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_VIDEO_API_URL, config)
         .then((response) => { 
-       console.log("response livestream ...."+JSON.stringify(response))
-       this.setState({liveStreamData:response.data.video_list})
-
+          this.setState({isLoading:true})
+          console.log("response livestream ...."+JSON.stringify(response))
+          this.setState({liveStreamData:response.data.video_list})
+          this.setState({isLoading:false,isRefreshing:false})
 	})
 	}
+  onRefreshFunction(){
+        if(this.state.isLoading){
+          return
+        }
+        this.setState({isRefreshing:true})
+        this.fetchLiveStream()
+      }
 	componentDidMount(){
-     
       this.fetchLiveStream()
     
 	}

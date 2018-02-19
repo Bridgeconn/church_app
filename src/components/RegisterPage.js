@@ -10,13 +10,14 @@ import {
   Alert,
   View,
   Keyboard,
-  StyleSheet
+  StyleSheet,
+  Switch
 } from 'react-native';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import LoginButton from "./LoginPage"
 import Signup from "./SignupPage"
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {SigninStyle} from '../style/styles.js'
 
 var GuestLogin = React.createClass({
@@ -47,7 +48,8 @@ class Register extends Component {
       email: "",
       password: "",
       showProgress:false,
-      guestVisible:true
+      guestVisible:true,
+      isSecureTextEntry:true
     }
 
   }
@@ -92,18 +94,21 @@ class Register extends Component {
           onChangeText={ (text)=> this.setState({email: text}) }
           style={SigninStyle.input} placeholder="Email">
         </TextInput>
+        
         <TextInput
           onChangeText={ (text)=> this.setState({password: text}) }
           style={SigninStyle.input}
-          placeholder="Password"
-          secureTextEntry={true}>
+          placeholder="password"
+          secureTextEntry={this.state.isSecureTextEntry}>
         </TextInput>
+        <TouchableOpacity onPress={()=>{this.setState({isSecureTextEntry:!this.state.isSecureTextEntry})}} >
+          {this.state.password ? <Icon name={this.state.isSecureTextEntry ? "eye-off" : "eye"} size={28}/> :null}
+        </TouchableOpacity>
         <LoginButton 
         email={this.state.email}
         password={this.state.password}
         action={this.props.action}
         />
-
         <Text style={SigninStyle.noAccountText} onPress={this.onOpenSignupPage.bind(this) }>
             No account yet? Create one
         </Text>
