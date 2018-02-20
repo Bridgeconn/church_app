@@ -35,7 +35,7 @@ export default class ProfilePage extends Component{
 
 
   async saveToAsyncStorage(){
-      this.props.action([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
+      this.props.profileProps([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
       await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
       await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,JSON.stringify(this.state.newcheckboxEmail));

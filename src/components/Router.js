@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfilePage from './ProfilePage'
 import Register from './RegisterPage'
 import Settings from './Settings'
-import Login from './LoginPage'
+import LoginButton from './LoginPage'
 import GuestLogin from './GuestLoginPage'
 import Signup from './SignupPage'
 import NewSignup from './NewSignupPage'
@@ -73,7 +73,6 @@ export default class RoutesPage extends Component {
           console.log("email"+email)
           this.setState({email:email})
         })
-
       await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
         console.log("value "+value+"  " + typeof value)
         this.setState({ username: value})
@@ -188,12 +187,15 @@ export default class RoutesPage extends Component {
   rightButton = () =>{
     return(
         <View style={styleRouter.navbarRightButton}>
-                  <TouchableOpacity onPress={()=>{Actions.profile({tokenValue: this.state.tokenValue,
+              <TouchableOpacity onPress={()=>{Actions.profile({
+                tokenValue: this.state.tokenValue,
                 contactNum:this.state.contactNum,
                 email:this.state.email,
                 username:this.state.username,   
                 showEmail:this.state.showEmail,
-                showContact:this.state.showContact})}} style={styleRouter.buttonTouchable}>
+                showContact:this.state.showContact})
+                }} style={styleRouter.buttonTouchable}
+              >
                     <Icon name="account-circle" size={26} color="white"/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={()=>{Actions.settings()}} style={styleRouter.buttonTouchable}>
@@ -232,7 +234,11 @@ export default class RoutesPage extends Component {
                 action={this.updateTokenValue}
               />
                
-              
+              <Scene
+              key = "login"       
+              component = {LoginButton}
+
+              />
               <Scene 
                 key = "newsignup"       
                 component = {NewSignup}   
@@ -264,9 +270,6 @@ export default class RoutesPage extends Component {
                 showEmail={this.state.showEmail}
                 showContact={this.state.showContact}            
                 titleStyle={styleRouter.navbarTitle}
-                ref={profileRef => this.profileRef = profileRef}
-                action = {this.updateProfileValue}
-
               />
               
               <Scene 

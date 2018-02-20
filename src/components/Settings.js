@@ -27,19 +27,19 @@ export default class Settings extends Component {
     }
   }
 
-   userLogout(){
+  async userLogout(){
     try {
     Actions.refresh({showProgress:true})
-      AsyncStorage.removeItem(AsyncStorageConstants.UserToken);
-      AsyncStorage.removeItem('guest');
-      AsyncStorage.removeItem(AsyncStorageConstants.UserName)
-      AsyncStorage.removeItem(AsyncStorageConstants.UserContactNumber)
-      AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxEmail)
-      AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxContact)
-      AsyncStorage.removeItem(AsyncStorageConstants.UserEmail)
+    await AsyncStorage.removeItem(AsyncStorageConstants.UserToken);
+    await  AsyncStorage.removeItem('guest');
+    await  AsyncStorage.removeItem(AsyncStorageConstants.UserName)
+    await  AsyncStorage.removeItem(AsyncStorageConstants.UserContactNumber)
+    await  AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxEmail)
+    await  AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxContact)
+    await  AsyncStorage.removeItem(AsyncStorageConstants.UserEmail)
     Actions.refresh({showProgress:false})
-    Actions.reset("register", {tokenValue:null, guestKey:false})
     // alert('Logout Success!');
+    Actions.register()
 
     } catch (error) {
     console.log('AsyncStorage error: ' + error.message);
