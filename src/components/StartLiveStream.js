@@ -15,7 +15,8 @@ export default class LiveStreamPage extends Component{
 		console.log("key on start live"+this.props.tokenValue)
 		this.state = {
 			liveStreamData : [] ,
-      isLoading:false
+      isLoading:false,
+      isRefreshing:false
 		}
 	}
 
@@ -29,19 +30,32 @@ export default class LiveStreamPage extends Component{
           console.log("response livestream ...."+JSON.stringify(response))
           this.setState({liveStreamData:response.data.video_list})
           this.setState({isLoading:false,isRefreshing:false})
-	})
+	 })
 	}
+
+  extractVideoId(url){
+    var video_id = url.split('v=')[1];
+    console.log("video_id "+video_id)
+    var ampersandPosition = video_id.indexOf('&');
+    if(ampersandPosition != -1) {
+      video_id = video_id.substring(0, ampersandPosition);
+      return video_id
+    }
+    return video_id;
+  }
+
   onRefreshFunction(){
         if(this.state.isLoading){
           return
         }
         this.setState({isRefreshing:true})
         this.fetchLiveStream()
-      }
+  }
+
 	componentDidMount(){
-      this.fetchLiveStream()
-    
+      this.fetchLiveStream()  
 	}
+
 	render(){
 		// console.log("url  live "+this.state.liveStreamData[0].url)
 		return(
@@ -77,7 +91,8 @@ export default class LiveStreamPage extends Component{
                         <TouchableOpacity 
                         onPress={()=>{
                           Actions.live({
-                            title:item.name, 
+                            title:item.name,
+                            videoId:this.extractVideoId(item.url)
                           })
                         }}>
                           <Card  style={tabStyle.flexRow}>

@@ -14,7 +14,6 @@ var db = SQLite.openDatabase({name: 'church_app.db', location: 'default'}, () =>
 export default class VersePage extends Component{
  constructor(props){
         super(props)
-      
         this.state ={
             verseData: [],
             result:"",
@@ -37,12 +36,13 @@ export default class VersePage extends Component{
   }
 
   componentDidMount(){
+
+    console.log("verseapage componentDidMount")
     this.getVersesFromDb()
     LocalEventEmitter.on('NewVerseNotification', 'VersePage',  (data) => {
       let a = this.state.verseData //creates the clone of the state
       a.splice(0, 0, data);
       this.setState({verseData: a});
-
     })
   }
 
@@ -52,37 +52,19 @@ export default class VersePage extends Component{
 
     getVersesFromDb(){
       this.setState({isLoading:true})
-
-      
-
-
       SQLite.openDatabase({name: 'church_app.db', location: 'default'}, 
         (db) =>  {
           console.log("sqlite open openDatabase")
-
-          db.transaction((tx)=>{
+        db.transaction((tx)=>{
         tx.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC', [], (tx,res) => {
           console.log("Query completed");
           console.log("data response"+  JSON.stringify(res.rows.raw()))
           let rows = res.rows.raw();
           this.setState({verseData: rows, isLoading:false, isRefreshing: false})
-        }, (err)=> {console.log("erro in transaction = " + err)
+        }, (err)=> {console.log("erro in transaction = " + JSON.stringify(err))
                 this.setState({isLoading:false, isRefreshing: false})
 })
       })
-
-          // db.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC'),
-          // (res) =>{
-          //     console.log("Query completed");
-          //       console.log("data response"+  JSON.stringify(res.rows.raw()))
-          //       let rows = res.rows.raw();
-          //         this.setState({verseData: rows, isLoading:false, isRefreshing: false})
-          //       },
-            
-          // (error) => {
-          //           console.log("error in transaction  "+error);
-
-          // }
         },
         (err) => console.log("SQL Error: " + err));
 
@@ -92,7 +74,7 @@ export default class VersePage extends Component{
         if(this.state.isLoading){
           return
         }
-        // this.setState({isRefreshing:true})
+        this.setState({isRefreshing:true})
         this.getVersesFromDb()
       }
 

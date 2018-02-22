@@ -18,6 +18,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {Card,CardItem,Body} from 'native-base';
 import {settingStyle} from '../style/styles'
 import * as AsyncStorageConstants from './AsyncStorageConstants';
+import SQLite from 'react-native-sqlite-storage'
 
 export default class Settings extends Component {
   constructor(props){
@@ -31,19 +32,27 @@ export default class Settings extends Component {
     try {
     Actions.refresh({showProgress:true})
     await AsyncStorage.removeItem(AsyncStorageConstants.UserToken);
-    await  AsyncStorage.removeItem('guest');
     await  AsyncStorage.removeItem(AsyncStorageConstants.UserName)
     await  AsyncStorage.removeItem(AsyncStorageConstants.UserContactNumber)
     await  AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxEmail)
     await  AsyncStorage.removeItem(AsyncStorageConstants.UserCheckBoxContact)
     await  AsyncStorage.removeItem(AsyncStorageConstants.UserEmail)
-    Actions.refresh({showProgress:false})
-    // alert('Logout Success!');
-    Actions.register()
+    SQLite.openDatabase({name: 'church_app.db', location: 'default'}, 
+        (db) =>  {
+          console.log("sqlite open openDatabase")
 
+        db.transaction((tx)=>{
+        tx.executeSql('DROP TABLE IF EXISTS Verse ')
+        
+        })
+        },
+        (err) => console.log("SQL Error: " + err));
+   
     } catch (error) {
     console.log('AsyncStorage error: ' + error.message);
     }
+    Actions.refresh({showProgress:false})
+    Actions.register()
     }
 
     _shareMessage(message) {

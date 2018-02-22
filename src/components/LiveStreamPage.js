@@ -9,49 +9,35 @@ import {liveStreamStyle} from '../style/styles.js'
 export default class LiveStreamPage extends Component{
 	constructor(props){
 		super(props)
-		
+		console.log("prop videoId"+this.props.videoId)
 		this.state = {
 		    avatarSource: null,
 		    videoSource: null,
-		    setImage:'',
-		    isReady: false,
-		    status: null,
-		    quality: null,
-		    error: null,
-		    isLooping: true,
 		    duration: 0,
 		    currentTime: 0,
-		    fullscreen: false,
-		    volume: .5,
-	      	isVideoPlaying: false,
-	  	};
+		    fullscreen: true,
+	  	}
 	  	
 	}
 	
 	render(){
 		return(
-		<View style={liveStreamStyle.container}>
-			<ScrollView>
-			<Content>
-			<Card>
-		 		<View style={liveStreamStyle.liveStreamView}>
+			<View style={{backgroungColor:"#000"}}>
 		 			<YouTube
 		          ref={component => {
 		            this._youTubeRef = component;
 		          }}
 		          apiKey="AIzaSyBsUeJYvXWnxUDhd0GX03D5jknGPaV41Tw"
-		          videoId={this.props.watchId}
+		          videoId={this.props.videoId}
 		          play={this.state.isVideoPlaying}
 		          loop={this.state.isLooping}
-		          fullscreen={this.state.fullscreen}
+		          fullscreen={true}
 		          controls={1}
 		          style={liveStreamStyle.liveStreamVideo}
 		          onError={e => this.setState({ error: e.error })}
 		          onReady={e => this.setState({ isReady: true })}
 		          onChangeState={e => this.setState({ status: e.state })}
 		          onChangeQuality={e => this.setState({ quality: e.quality })}
-		          onChangeFullscreen={e =>
-		            this.setState({ fullscreen: e.isFullscreen })}
 		          onProgress={
 		            Platform.OS === 'ios'
 		              ? e =>
@@ -62,25 +48,7 @@ export default class LiveStreamPage extends Component{
 		              : undefined
 		          }
         		/>
-        			{!this.state.fullscreen &&
-			          	<View>
-			            <TouchableOpacity
-			              style={liveStreamStyle.button}
-			              onPress={() => this.setState({ fullscreen: true })}
-			            >
-			             <Text style={liveStreamStyle.buttonText}>Set Fullscreen</Text>
-			            </TouchableOpacity>
-			          	</View>}
-		 		</View>
-		 		
-		 		</Card>
-		 		<Card>
-				
-		 		</Card>
-		 	</Content>
-			
-			</ScrollView>
-		</View>
+        	</View>
 			)
 	}
 	

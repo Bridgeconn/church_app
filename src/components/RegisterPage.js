@@ -19,7 +19,7 @@ import LoginButton from "./LoginPage"
 import Signup from "./SignupPage"
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {SigninStyle} from '../style/styles.js'
-
+import {CheckBox} from 'native-base'
 var GuestLogin = React.createClass({
 
   render: function() {
@@ -72,6 +72,7 @@ class Register extends Component {
   _keyboardDidHide = (event) => {
     console.log("keyboard will hide");
     this.setState({guestVisible:true});
+    this.refPassword.blur();
   }
   
   componentWillReceiveProps(props) {
@@ -82,7 +83,13 @@ class Register extends Component {
   onOpenSignupPage() {
     Actions.newsignup();
   }
+  onSelectionToggle(){
+  // console.log("event "+event.nativeEvent.selection+ " , "+this.state.selectionValue)
+    this.setState({isSecureTextEntry:!this.state.isSecureTextEntry})
+    this.refPassword.blur();
+  // console.log("value from textInputToggle" +this.textInputToggle)
 
+}
   render() {
     return (
       <View style={SigninStyle.userContainer}>
@@ -90,20 +97,24 @@ class Register extends Component {
         <Text style={SigninStyle.heading}>
           Church App
         </Text>
-        <TextInput
-          onChangeText={ (text)=> this.setState({email: text}) }
-          style={SigninStyle.input} placeholder="Email">
-        </TextInput>
-        
-        <TextInput
-          onChangeText={ (text)=> this.setState({password: text}) }
-          style={SigninStyle.input}
-          placeholder="password"
-          secureTextEntry={this.state.isSecureTextEntry}>
-        </TextInput>
-        <TouchableOpacity onPress={()=>{this.setState({isSecureTextEntry:!this.state.isSecureTextEntry})}} >
-          {this.state.password ? <Icon name={this.state.isSecureTextEntry ? "eye-off" : "eye"} size={28}/> :null}
-        </TouchableOpacity>
+          <TextInput
+            onChangeText={ (text)=> this.setState({email: text}) }
+            style={SigninStyle.input}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            placeholder="Email">
+          </TextInput>
+            <TextInput
+              onChangeText={ (text)=> this.setState({password: text}) }
+              style={SigninStyle.input}
+              underlineColorAndroid='rgba(0,0,0,0)'
+              placeholder="Password"
+              ref = {ref => (this.refPassword) = ref}
+              onSubmitEditing={()=>this._keyboardDidHide}
+              secureTextEntry={this.state.isSecureTextEntry}/>
+              <View style={{flexDirection:'row',marginTop:8}}> 
+                <CheckBox onPress={this.onSelectionToggle.bind(this)} checked={!this.state.isSecureTextEntry} />
+                <Text style={{marginLeft:16}}>Show Password</Text>
+              </View>
         <LoginButton 
         email={this.state.email}
         password={this.state.password}

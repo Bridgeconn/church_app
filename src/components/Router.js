@@ -56,9 +56,7 @@ export default class RoutesPage extends Component {
   }
 
   async componentDidMount() {
-    
     registerAppListener();
-
     await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((auth_token) => {
       console.log('token1 '+auth_token)
       this.setState({tokenValue:auth_token})
@@ -143,8 +141,13 @@ export default class RoutesPage extends Component {
       var offset = new Date().getTimezoneOffset();
             console.log(offset);
             e.notification_timestamp = e.notification_timestamp - (offset*60*1000)
-
-      // add to db here
+      FCM.presentLocalNotification({
+            title: e.notification_title,                 
+            body: e.notification_body,                
+            show_in_foreground: true,
+            big_text: e.notification_body,
+            click_Action: Actions.jump("tab_verses")
+      })
         db.transaction((tx)=>{
         tx.executeSql("INSERT INTO Verse (timestamp, chapter_num, verse_num, book_name, verse_body) VALUES (?,?,?,?,?)", [e.notification_timestamp, e.chapter_num, e.verse_num, e.book_name, e.notification_title], 
           function(tx, res) {
@@ -152,12 +155,6 @@ export default class RoutesPage extends Component {
             console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
        })
      })
-      FCM.presentLocalNotification({
-            title: e.notification_title,                 
-            body: e.notification_body,                
-            show_in_foreground: true,
-            big_text: e.notification_body,
-        })
 
      LocalEventEmitter.trigger('NewVerseNotification', {timestamp:e.notification_timestamp, chapter_num:e.chapter_num,verse_num: e.verse_num, book_name: e.book_name, verse_body: e.notification_title}) 
     })
@@ -282,7 +279,8 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "live"       
                 component = {LiveStreamPage}     
-                title = "Live Event"                 
+                title = "Live Event"      
+                hideNavBar={true}           
               />
               
               <Scene 

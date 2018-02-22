@@ -20,21 +20,19 @@ export function registerTopicListener() {
 export function registerKilledListener(){
   // these callback will be triggered even when app is killed
       console.log('in registerKilledListener');
-  FCM.on(FCMEvent.Notification, notif => {
+      FCM.on(FCMEvent.Notification, notif => {
         console.log(' in registerKilledListener, fcm = ' + JSON.stringify(notif));
-    AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
+        AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
   });
 }
 
 // these callback will be triggered only when app is foreground or background
 export function registerAppListener(){
       console.log('in registerAppListener');
-  
-  FCM.on(FCMEvent.Notification, notif => {
+    FCM.on(FCMEvent.Notification, notif => {
     if(notif.opened_from_tray){
       console.log("hi it opened from here");
       Actions.jump("tab_verses");
-     
       return
     }
 
@@ -58,7 +56,7 @@ export function registerAppListener(){
   });
 
   FCM.on(FCMEvent.RefreshToken, token => {
-    console.log("TOKEN (refreshUnsubscribe)", token);
+    console.log("TOKEN (refreshUnsubscribe)", +token);
     this.props.onChangeToken(token);
   });
 

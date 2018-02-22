@@ -196,11 +196,9 @@ export const liveStreamStyle = StyleSheet.create({
     padding:8,
   },
   liveStreamVideo: {
-    height: PixelRatio.roundToNearestPixel(
-      Dimensions.get('window').width / (16 / 9),
-    ),
     alignSelf: 'stretch',
-    marginVertical: 12,
+    backgroundColor:"#000",
+    height: (Dimensions.get("window").width) * 0.5625
   },
   button: {
     height: 36,
@@ -269,6 +267,19 @@ export const SigninStyle = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     borderColor:titleColor,
+  },
+  passwordInput: {
+    height: 50,
+    marginTop: 8,
+    marginBottom:8,
+    fontSize: 18,
+    width:width, 
+  },
+  passwordHolder: {
+    height: 50,
+    borderWidth: 1,
+    borderColor:titleColor,
+    flexDirection:'row',
   },
   noAccountText: {
     fontSize: 16,
