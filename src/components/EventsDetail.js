@@ -33,6 +33,7 @@ export default class EventsDetail extends Component{
 
         }
   }
+
  openGps = (latitude,longitude) =>{
       // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
       var url = 'https://www.google.com/maps/search/?api=1&query='+latitude+','+longitude;
@@ -60,72 +61,74 @@ export default class EventsDetail extends Component{
       }
     });
   }
-  addToCalendar(title, startDateUTC: string,endDateUTC:string ) {
-  const eventConfig = {
-    title,
-    startDate: utcDateToLocalString(1507631844000),
-    endDate:utcDateToLocalString(1507631844000),
-  };
 
-  AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
-    .then(eventId => {
-      //handle success (receives event id) or dismissing the modal (receives false)
-      if (eventId) {
-        console.warn(eventId);
-      } else {
-        console.warn('dismissed');
-      }
-    })
-    .catch((error: string) => {
-      // handle error such as when user rejected permissions
-      console.warn(error);
-    });
+  addToCalendar(title, startDateUTC: string,endDateUTC:string ) {
+    const eventConfig = {
+      title,
+      startDate: utcDateToLocalString(1507631844000),
+      endDate:utcDateToLocalString(1507631844000),
+    };
+
+    AddCalendarEvent.presentNewCalendarEventDialog(eventConfig)
+      .then(eventId => {
+        //handle success (receives event id) or dismissing the modal (receives false)
+        if (eventId) {
+          console.warn(eventId);
+        } else {
+          console.warn('dismissed');
+        }
+      })
+      .catch((error: string) => {
+        // handle error such as when user rejected permissions
+        console.warn(error);
+      });
   }
+
   render(){
     return (
       
       <View style={eventDetailStyle.flexOne}>
       <ScrollView>
-      <Image source={{uri:this.props.event_poster}} style={eventDetailStyle.eventDetailImage}/>
+        <Image source={{uri:this.props.event_poster}} style={eventDetailStyle.eventDetailImage}/>
         <Text  style={eventDetailStyle.eventData}><Icon name="map-marker" size={24}/> {this.state.event_topic}</Text>
         <Text  style={eventDetailStyle.eventData}><Icon name="microphone-variant" size={24}/> {this.state.event_speaker}</Text>
         <Text style={eventDetailStyle.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
         <View style={eventDetailStyle.centerView}>
-        <View style={{alignItems:"center"}} >
-        <Icon name="calendar-clock" size={48} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
-            this.addToCalendar(
-              this.state.title, 
-              this.state.event_time_start,
-              this.state.event_time_end 
-              );
-          }}/>
-          <Text >Add to calender</Text>
-        </View>
-        <View style={{alignItems:"center"}}>
-        <Icon name="navigation" 
-          onPress={this.openGpsFromName.bind(this, this.props.event_topic)} 
-          size={48}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
-        <Text >Go to map</Text>
-        </View>
-        </View>
-        
-       <View>
-        <MapView 
-          style={ eventDetailStyle.eventMap }
-          mapType={"standard"}
-          region={this.state.region}
-          zoomEnabled={true}
-          scrollEnabled={true} 
-        >
-        <MapView.Marker
-          coordinate={{
-            latitude: this.props.venue_latitude,
-            longitude: this.props.venue_longitude
-          }}
-        />
-        </MapView>
+            <View style={{alignItems:"center"}} >
+              <Icon name="calendar-clock" size={48} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
+                  this.addToCalendar(
+                    this.state.title, 
+                    this.state.event_time_start,
+                    this.state.event_time_end 
+                    );
+                }}/>
+                <Text >Add to calender</Text>
+            </View>
+            <View style={{alignItems:"center"}}>
+              <Icon name="navigation" 
+                onPress={this.openGpsFromName.bind(this, this.props.event_topic)} 
+                size={48}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
+              <Text >Go to map</Text>
+            </View>
+          </View>
+          
+         <View>
+          <MapView 
+            style={ eventDetailStyle.eventMap }
+            mapType={"standard"}
+            region={this.state.region}
+            zoomEnabled={true}
+            scrollEnabled={true} 
+          >
+            <MapView.Marker
+              coordinate={{
+                latitude: this.props.venue_latitude,
+                longitude: this.props.venue_longitude
+              }}
+            />
+          </MapView>
 
-       </View>
+        </View>
       </ScrollView>
       </View>
    

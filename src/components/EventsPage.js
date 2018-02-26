@@ -128,8 +128,12 @@ export default class EventsPage extends Component{
                                 <Image 
                                   source={{uri:'http://www.mannaexpressonline.com/wp-content/uploads/2014/09/early-morning-prayer_edited.jpg'}} 
                                   style={tabStyle.eventImage} 
-                                  onLoadEnd={ ()=>{ this.setState({ loading: false }) }}>
-                                  <ActivityIndicator animating={ this.state.loading } 
+                                  onLoad={()=>{this.setState({ isImageLoading: false })}}
+                                  onLoadStart={()=>{this.setState({ isImageLoading: true })}}
+                                  onError={()=>{this.setState({ isImageLoading: false })}}
+                                  >
+                                  <ActivityIndicator animating={ this.state.isImageLoading }
+                                    style={tabStyle.imageLoaderCenter} 
                                   />
                                 </Image>
                             </CardItem>

@@ -1,5 +1,5 @@
 
-
+//import libararies
 import React, { Component } from 'react';
 import {
     AppRegistry,
@@ -30,8 +30,6 @@ import AtoZList from 'react-native-atoz-list';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import {tabStyle} from '../style/styles.js'
-let SQLite = require('react-native-sqlite-storage')
-var db = SQLite.openDatabase({name: 'church_app_new.db', location: 'default'})
 
 export default class App extends Component {
     constructor(props ) {
@@ -48,42 +46,59 @@ export default class App extends Component {
         this._renderCell = this._renderCell.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
     }
-
+    
+//Fetch contacts from api 
   fetchContacts(searchText){
+    //Get connection information 
       NetInfo.getConnectionInfo()
+      //Connection  response
               .then((connectionInfo) => {
+                //Check connection type
                 switch(connectionInfo.type) {
+                  //Connecton type cellular
                   case 'cellular': {
                   }
+                  //Connecton type wifi
                   case 'wifi': {
+                    //set state value of laoder as true (show loader) until data is fetching from api
                   this.setState({isLoading:true})
+                  //api's header value and token value 
                   const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
                   axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+                  // url for searching contacts
                   let url = Config.BASE_API_URL + Config.GET_CONTACTS_API_URL + (searchText == null ? '' : '?search='+searchText);
+                  //Get url respoonse value 
                   axios.get(url, config)
+                  //response from url
                     .then((response) => { 
                       console.log("response contacts "+response.data.contacts)
                          let newnames = _.groupBy(response.data.contacts, (name) => name.name[0].toUpperCase());
-                      
+                         //If searched text is null set state value of contact
                       if (searchText == null) {
                          this.setState({dataContactDetail:newnames})
-                      } else {
-                        if (response.data.contacts.length >0) {
+
+                      }
+                      //else if respose.data.contacts is not empty set state value of contacts
+                      else {
+                        if (response.data.contacts.length > 0) {
                           this.setState({searchedData:newnames})
                         }
                       }
+                    //set state value of laoder and isrefreshing as false (hide loader or refreshControl of scrollView) when data fetched from api
                           this.setState({isLoading:false,isRefreshing:false})
                      })
+                    //catch block fetch error from api 
                      .catch((error) =>{
-                        console.log(error)
-                       this.setState({isLoading:false})
-                       this.setState({isRefreshing:false})
+                      console.log(error)
+                      // set state value of loader and refresh control to false 
+                       this.setState({isLoading:false,isRefreshing:false})
                       })
 
                     break;
                   }
+                  // if connection if unknown
                   default : {
-                    console.log("conenction none or unknoisw")
+                    console.log("conenction none or unknown")
                     this.setState({isRefreshing:false})
 
                     break;
@@ -93,6 +108,7 @@ export default class App extends Component {
             })
     }
 
+    // Through SearchFilterFunction function pass searched text value to fetchContacts function to search the related data in search bar
    SearchFilterFunction(param){
     console.log("text nativeEvent................"+param)
       var text = param.trim()
@@ -102,12 +118,13 @@ export default class App extends Component {
       this.setState({searchQuery:param})
       this.fetchContacts(param);
   }
-  
+
+  //render data when conponent did mount 
     componentDidMount() {
-      
       this.fetchContacts(null);
-        
   }
+
+  //render header to ATOZList component
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
         return (
@@ -116,25 +133,46 @@ export default class App extends Component {
             </View>
         )
     }
+
+    /**
+    * Linking app or interact with external app for sending e-mail , making call and messaging 
+    * @Pparam {string} url
+    * open this url for email, call or sms
+    *
+    * @return
+    * return corresponding app link for that url
+    */
     redirectToApp = (url) =>{
+      //To start the corresponding activity for a link for email, call , message 
+      // check if any installed app can handle a given URL
       Linking.canOpenURL(url).then(supported => {
+      // if not supported  
       if (!supported) {
         alert("no App found to perform action")
         console.log('Can\'t handle url: ' + url);
       } else {
+        //else open linked url 
         return Linking.openURL(url);
       }
-      }).catch(err => console.error('An error occurred', err));
+      })
+      //catch error 
+      .catch(err => console.error('An error occurred', err));
     }
+
+    //called when the view start refreshing 
       onRefreshFunction(){
+        // if loader is there than return 
          if(this.state.isLoading){
           return
         }
+        // set state of refresh to true 
         this.setState({isRefreshing:true})
+        // call fetchContacts function to render response data 
+        // pass value of searchQuery as null if it is empty  else pass value 
         this.fetchContacts(this.state.searchQuery.trim() == "" ? null : this.state.searchQuery.trim())
-       
-
       }
+
+      //render cell to ATOZList component
      _renderCell(data) {
         console.log("dataaaaaaaaaa "+JSON.stringify(data))
         return (
@@ -155,8 +193,9 @@ export default class App extends Component {
               </View>
         );
     }
-
+    //call when textinput data changes 
     refreshResults(text) {
+
       this.setState({searchBoxText:text});
       console.log("refress called  : "+text)
       if (text.trim() == "") {

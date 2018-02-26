@@ -7,6 +7,7 @@ import Config from 'react-native-config'
 import axios from 'axios';
 import * as AsyncStorageConstants from './AsyncStorageConstants';
 import LocalEventEmitter from "./LocalEventEmitter"
+import Spinner from 'react-native-loading-spinner-overlay';
 
 // const profilePageStyle = StyleSheet.create(profilePage)
 
@@ -28,42 +29,50 @@ export default class ProfilePage extends Component{
         newContact: props.contactNum,
         newcheckboxEmail: props.showEmail,
         newcheckboxContact: props.showContact,
-        showSaveProfile: false
+        showSaveProfile: false,
+
+        isloading: false
 	  	};
 	}
 
 
   async saveToAsyncStorage(){
-      this.props.profileProps([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
       await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
       await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,JSON.stringify(this.state.newcheckboxEmail));
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxContact,JSON.stringify(this.state.newcheckboxContact));
-
+      // this.setState({isloading:false})
       Actions.pop()
+      this.props.action([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
   }
+
   async saveProfileData(){
+    if (this.state.isloading) {
+      return;
+    }
+    this.setState({isloading:true})
       let data = new FormData();
       data.append("first_name", this.state.newUser);
       data.append("contact_number", this.state.newContact);
       data.append("contact_show",this.state.newcheckboxContact)
       data.append("show_email", this.state.newcheckboxEmail);
+
       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.token} }
       axios.defaults.headers.post[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.post(Config.BASE_API_URL + Config.CONTACT_UPDATE_API_URL, data, config)
         .then((response) => { 
             console.log(response);
-
             this.saveToAsyncStorage()
-
       
         })
         .catch(function (error) {
           console.log("ERROR == "+error)
+          this.setState({isloading:false})
           alert("Something went wrong. Profile data not updated")
         });
 
     }
+
     onBackButton(){
       console.log("in back buttion orifke")
       if(this.state.showSaveProfile){
@@ -116,6 +125,7 @@ export default class ProfilePage extends Component{
 	render(){
 		return(
       <View style={profilePageStyle.profileContainer}>
+        <Spinner visible={this.state.isloading} size={"large"} color={"#3F51B5"} style={profilePageStyle.spinnerCustom}/>
                     <Header>
                       <Left>
                         <Button transparent onPress={()=>{this.onBackButton()}}>
@@ -123,7 +133,7 @@ export default class ProfilePage extends Component{
                         </Button>
                       </Left>
                       <Body>
-                        <Title style={profilePageStyle.profileTitle}>Profile</Title>
+                        <Title style={profilePageStyle.profileTitle}>Edit Profile</Title>
                       </Body>
                       <Right>
                       {this.state.showSaveProfile ?  <TouchableOpacity onPress={()=>this.saveProfileData()}>

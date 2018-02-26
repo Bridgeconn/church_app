@@ -22,7 +22,7 @@ export default class LiveStreamPage extends Component{
 	
 	render(){
 		return(
-			<View style={{backgroungColor:"#000"}}>
+			<View style={{backgroundColor:"#000"}}>
 		 			<YouTube
 		          ref={component => {
 		            this._youTubeRef = component;

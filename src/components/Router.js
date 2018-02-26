@@ -265,15 +265,15 @@ export default class RoutesPage extends Component {
                 email={this.state.email}
                 username={this.state.username}   
                 showEmail={this.state.showEmail}
-                showContact={this.state.showContact}            
-                titleStyle={styleRouter.navbarTitle}
+                showContact={this.state.showContact}    
+                action={this.updateProfileValue}
+        
               />
               
               <Scene 
                 key = "eventsDetails"   
                 title = "Events"    
                 component = {EventsDetail}                  
-                titleStyle={styleRouter.navbarTitle} 
                        
               />
               <Scene 
