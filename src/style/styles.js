@@ -1,116 +1,176 @@
 import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
- var width = Dimensions.get('window').width; //full width
- var height = Dimensions.get('window').height; //full height
- const titleColor = '#48BBEC';
- const navBarColor = "#3F51B5"
- const centerAlign = 'center';
- // const 8 = 8;
-const paddingValue = 8;
+
+  var width = Dimensions.get('window').width; 
+  var height = Dimensions.get('window').height;
+
+  var heightHalf = height/2
+  var heightQuarter = height/4
+  var youtubeViewHeight = width * 0.5625
+  var heightOneThird = height/3
+
+  
+  var widthHalf = width/2
+  var widthQuarter = width/4
+  var youtubeTextWidth = width-160
+  var searchTextContainerWidth =  width-80 
+
+  const titleColor = '#48BBEC';
+  const navBarColor = "#3F51B5"
+  const colorBlack = "#000";
+  const colorWhite = "#fff";
+  const modalBackgroundColor = "#F5F5F5"
+  const contactListBackgroundColor = "#eee"
+  const youtubeIconBackgroundColor = "#E9E9EF"
+
+  const justifyContentStart = "flex-start"
+  const justifyContentEnd = "flex-end"
+  const justifyContentCenter = "center"
+  const justifyContentSpaceBetween = "space-between"
+  const justifyContentSpaceAround = "space-around"
+
+  const alignItemsStart = "flex-start"
+  const alignItemsEnd = "flex-end"
+  const alignItemsCenter = "center"
+
+  const alignSelfCenter = "center"
+  const alignSelfStart = "flex-start"
+  const alignSelfEnd = "flex-end"
+  const alignSelfStretch = "stretch"
+
+  const marginTab = 8;
+  const paddingValue = 8;
+
+  const flexFirst = 1
+  const flexDirectionRow = "row"
+  const flexDirectionColumn = "column"
+
+  const fontFamilyRobotoMedium = 'roboto-medium'
+  const fontFamilyRoboto = 'Roboto'
+
+  const absolutePosition = 'absolute'
+
+  const textAlignLeft = "left"
+
+  const navbarTitlefontWeight ="400"
+
+  const routerbuttonLeftMargin = 8
+  const routerbuttonRightMargin = 8
+
+  const NavbarTitleFontSize = 19
+  const tabContentTextFontSize = 18
+  const songLyricsTextFontSize = 16
+  const songTitleTextFontSize = 18
 
 export const styleRouter = StyleSheet.create({
 navbarRightButton:{
-  flexDirection:"row",justifyContent:"center"
+  flexDirection:flexDirectionRow,
+  justifyContent:justifyContentCenter
 },
 buttonTouchable:{
-  alignItems:"center",marginLeft:10,marginRight:10
+  alignItems:alignItemsCenter,
+  marginLeft:routerbuttonLeftMargin,
+  marginRight:routerbuttonRightMargin
 },
 navigationBarColor:{
     backgroundColor: navBarColor
   },
 navbarTitle:{
-    fontSize:19,
-    color:'#fff',
-    fontFamily:'roboto-medium',
-    fontWeight:'400'
+    fontSize:NavbarTitleFontSize,
+    color:colorWhite,
+    fontFamily:fontFamilyRobotoMedium,
+    fontWeight:navbarTitlefontWeight
   },
   tabContainer:{
-    flex:1, 
-    flexDirection:'column', 
-    alignItems:'center', 
-    alignSelf:'center', 
-    justifyContent: 'center'
+    flex:flexFirst, 
+    flexDirection:flexDirectionColumn, 
+    alignItems:alignItemsCenter, 
+    alignSelf:alignSelfCenter, 
+    justifyContent:justifyContentCenter
   },
 })
 export const tabStyle = StyleSheet.create({
   containerFlexValue:{
-    flex:1
+    flex:flexFirst
   },
   container:{
-    flex:1,
-    margin:8,
+    flex:flexFirst,
+    margin:marginTab,
   },
   scrollViewContainer:{
-    flexGrow:1
+    flexGrow:flexFirst
   },
   centerView:{
-    flex:1,justifyContent: 'center',alignItems: 'center'
+    flex:flexFirst,
+    justifyContent: justifyContentCenter,
+    alignItems:alignItemsCenter
   },
   tabBounderyMargin:{
-    margin:8
+    margin:marginTab
   },
   flexRow:{
-    flexDirection:"row"
+    flexDirection:flexDirectionRow
   },
   flexCol:{
-    flexDirection:"column"
+    flexDirection:flexDirectionColumn
   },
   flexColContent:{
-    flexDirection:'column',justifyContent:"flex-start"
+    flexDirection:flexDirectionColumn,
+    justifyContent:justifyContentStart
   },
   tabContentText:{
     padding:0,
-    fontSize:18,
-    width:width/2
+    fontSize:tabContentTextFontSize,
+    width:widthHalf
   },
   eventImage:{
-    height:width/4,
-    width:width/4
+    height:widthQuarter,
+    width:widthQuarter
   },
   songTitleText:{
-    fontSize:18,
+    fontSize:songTitleTextFontSize,
   },
   songLyricsText:{
-    fontSize:16,
+    fontSize:songLyricsTextFontSize,
     lineHeight: 26,
-    marginTop:8
+    marginTop:marginTab
   },
   contactBookView: {
     margin:4,
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'center',
+    backgroundColor: colorWhite,
+    flexDirection: flexDirectionRow,
+    alignItems: alignItemsCenter,
   },
   contactList:{
-    height: 35, 
-    justifyContent: 'center', 
-    backgroundColor: '#eee', 
+    height:height/16, 
+    justifyContent:justifyContentCenter, 
+    backgroundColor: contactListBackgroundColor, 
   },
   contactData:{
-    margin:8,
+    margin:marginTab,
   },
   contactPhoneIcon:{
-    margin:10,
+    margin:marginTab,
     marginLeft:0
   },
   contactEmailIcon:{
-  margin:10
+  margin:marginTab
   },
   contactSMSIcon:{
-    margin:10
+    margin:marginTab
   },
   contactView:{
-    flex:1
+    flex:flexFirst
   },
   searchIconPadding:{
     paddingLeft:4
   },
   searchText:{
-    width:Dimensions.get('window').width-80
+    width:searchTextContainerWidth
   },
   verseListItemStyle:{
     borderBottomWidth:0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: flexDirectionRow,
+    justifyContent: justifyContentSpaceBetween
   },
   verseTimestamp:{
     fontSize:16
@@ -121,33 +181,38 @@ export const tabStyle = StyleSheet.create({
   },
   contactListItemStyle:{
     borderBottomWidth:0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: flexDirectionRow,
+    justifyContent: justifyContentSpaceBetween
   },
   songCardItem:{
-    flexDirection:"column",
-    alignItems:"flex-start"
+    flexDirection:flexDirectionColumn,
+    alignItems:alignItemsStart
   },
   timeStampStyle:{
-    fontSize:16,alignSelf:"flex-start"
+    fontSize:16,
+    alignSelf:alignSelfStart
   }
 
 })
 export const eventDetailStyle = StyleSheet.create({
   container:{
-    flex:1,
+    flex:flexFirst,
     margin:8,
   },
   centerView:{
-     flex:1,justifyContent:'space-around',alignItems: 'center',margin:8,flexDirection:"row"
+     flex:flexFirst,
+     justifyContent:justifyContentSpaceAround,
+     alignItems: alignItemsCenter,
+     margin:8,
+     flexDirection:flexDirectionRow
    },
   eventDetailImage:{
     width:width,
-    height:height*0.40,
+    height:heightOneThird,
     marginBottom:15
   },
   eventMap: {
-  height:height*0.35,
+  height:heightOneThird,
   width:width,
   marginTop:8
   },
@@ -168,20 +233,22 @@ export const eventDetailStyle = StyleSheet.create({
     marginLeft:8
   },
   flexOne:{
-    flex:1
+    flex:flexFirst
   }
 })
 
 export const guestLoginStyle = StyleSheet.create({
   tryGuestText: {
     fontSize: 16,
-    alignSelf: centerAlign,
+    alignSelf:alignSelfCenter,
     marginBottom:36,
-    position: 'absolute',
+    position: absolutePosition,
     bottom: 0,
   },
   centerView:{
-    flex:1,justifyContent: 'center',alignItems: 'center'
+    flex:flexFirst,
+    justifyContent: justifyContentCenter,
+    alignItems: alignItemsCenter
   },
   
  
@@ -189,62 +256,62 @@ export const guestLoginStyle = StyleSheet.create({
   
 export const liveStreamStyle = StyleSheet.create({
   container:{
-    flex:1,
+    flex:flexFirst,
     margin:8,
   },
   liveStreamView:{
     padding:8,
   },
   liveStreamVideo: {
-    alignSelf: 'stretch',
-    backgroundColor:"#000",
-    height: (Dimensions.get("window").width) * 0.5625
+    alignSelf: alignSelfStretch,
+    backgroundColor:colorBlack,
+    height: youtubeViewHeight
   },
   button: {
-    height: 36,
+    height: height/16,
     backgroundColor: navBarColor,
     borderColor: navBarColor,
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 12,
-    alignSelf: 'stretch',
-    justifyContent: centerAlign
+    alignSelf: alignSelfStretch,
+    justifyContent: justifyContentCenter
   },
   buttonText: {
     fontSize: 18,
-    color: 'white',
-    alignSelf: centerAlign
+    color: colorWhite,
+    alignSelf: alignSelfCenter
   },
 
 })
 export const loginButtonStyle = StyleSheet.create({
   buttonRegister: {
-    height: 50,
+    height: height/12,
     backgroundColor: titleColor,
-    alignSelf: 'stretch',
+    alignSelf: alignSelfStretch,
     marginTop: 24,
     marginBottom: 48,
     padding:12,
-    justifyContent:centerAlign
+    justifyContent:justifyContentCenter
   }, 
   loginButtonText: {
     fontSize: 20,
-    color: 'white',
-    alignSelf: centerAlign
+    color: colorWhite,
+    alignSelf: alignSelfCenter
   },
 })
 
 export const SigninStyle = StyleSheet.create({
   tryGuestText: {
     fontSize: 16,
-    alignSelf: centerAlign,
+    alignSelf: alignSelfCenter,
     marginBottom:36,
-    position: 'absolute',
+    position: absolutePosition,
     bottom: 0,
   },
   userContainer:{
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colorWhite,
     paddingTop: 64,
     paddingLeft:24,
     paddingRight:24
@@ -252,16 +319,16 @@ export const SigninStyle = StyleSheet.create({
    heading:{
     fontSize:28,
     color:titleColor,
-    fontFamily: "Roboto",
-    alignSelf: centerAlign,
+    fontFamily: fontFamilyRoboto,
+    alignSelf: alignSelfCenter,
     marginBottom:16
   },
   spinnerCustom:{
-    justifyContent:centerAlign,
-    alignItems:centerAlign
+    justifyContent:justifyContentCenter,
+    alignItems:alignItemsCenter
   },
   input: {
-    height: 50,
+    height: height/12,
     marginTop: 8,
     marginBottom:8,
     fontSize: 18,
@@ -269,45 +336,45 @@ export const SigninStyle = StyleSheet.create({
     borderColor:titleColor,
   },
   passwordInput: {
-    height: 50,
+    height: height/12,
     marginTop: 8,
     marginBottom:8,
     fontSize: 18,
     width:width, 
   },
   passwordHolder: {
-    height: 50,
+    height: height/12,
     borderWidth: 1,
     borderColor:titleColor,
-    flexDirection:'row',
+    flexDirection:flexDirectionRow,
   },
   noAccountText: {
     fontSize: 16,
-    alignSelf: centerAlign,
+    alignSelf: alignSelfCenter,
     marginBottom:24,
   },
    buttonText: {
     fontSize: 18,
-    color: 'white',
-    alignSelf: centerAlign
+    color: colorWhite,
+    alignSelf: alignSelfCenter
   },
   buttonRegister: {
-    height: 50,
+    height: height/12,
     backgroundColor: titleColor,
-    alignSelf: 'stretch',
+    alignSelf: alignSelfStretch,
     marginTop: 24,
     marginBottom: 48,
     padding:12,
-    justifyContent:centerAlign
+    justifyContent:justifyContentCenter
   }
 })
 
 export const profilePageStyle = StyleSheet.create({
   profileContainer:{
-    flex:1
+    flex:flexFirst
   },
   profileTitle:{
-    textAlign:"left"
+    textAlign:textAlignLeft
   },
   emailField:{
     marginTop:12
@@ -316,7 +383,9 @@ export const profilePageStyle = StyleSheet.create({
     marginTop:12
   },
   checkEmail:{
-    margin:-8,padding:0,flexDirection:"row"
+    margin:-8,
+    padding:0,
+    flexDirection:flexDirectionRow
   },
   ProfilePageContent:{
     margin:16,
@@ -326,7 +395,7 @@ export const profilePageStyle = StyleSheet.create({
     margin:20,
   },
   customEmail:{
-    color:'#000',
+    color:colorBlack,
     fontSize:16,
     marginTop:8
   },
@@ -334,41 +403,43 @@ export const profilePageStyle = StyleSheet.create({
     marginTop:28
   },
   checkboxContainer:{
-    flexDirection:"row",
+    flexDirection:flexDirectionRow,
     marginBottom:4,
     marginTop:20,
-    alignSelf:'flex-start'
+    alignSelf:alignSelfStart
   },
   checkBoxFiled:{
-    alignSelf:"flex-start",
+    alignSelf:alignSelfStart,
     marginRight:16
   },
   checkboxText:{
-    color:"#000"
+    color:colorBlack
   }
 })
 
 export const songLyricStyle = StyleSheet.create({
   songLyricsContainer:{
-    flex:1,
+    flex:flexFirst,
   },
   topYoutubeView:{
-    flexDirection:"column"
+    flexDirection:flexDirectionColumn
   },
   youtubeViewRatio:{
-    height: (Dimensions.get("window").width) * 0.5625
+    height: youtubeViewHeight
   },
   initialYoutubeColor:{
-    backgroundColor:"#000"
+    backgroundColor:colorBlack
   },
   alignDeleteIcon:{
-    alignSelf:"flex-end"
+    alignSelf:alignSelfEnd
   },
   youtubePlay:{
-    backgroundColor:'black', height:(Dimensions.get("window").width) * 0.5625,justifyContent:"center"
+    backgroundColor:colorBlack, 
+    height:youtubeViewHeight,
+    justifyContent:justifyContentCenter
   },
   playIconAlignment:{
-    alignSelf:'center'
+    alignSelf:alignSelfCenter
   },
   songLyricsScrollView: {
     margin: 8
@@ -379,83 +450,99 @@ export const songLyricStyle = StyleSheet.create({
  youtubeButton: {
     marginRight:16, 
     marginBottom:8,
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: absolutePosition,
+    alignItems: alignItemsCenter,
+    justifyContent: justifyContentCenter,
     right: 0,
-    backgroundColor:"#E9E9EF",
+    backgroundColor:youtubeIconBackgroundColor,
     bottom: 0,
   },
 })
 
 export const youtubeSongSearchStyle = StyleSheet.create({
   youtubeContainer:{
-    flex:1,
+    flex:flexFirst,
     margin:8,
   },
    spinnerCustom:{
-    justifyContent:centerAlign,
-    alignItems:centerAlign
+    justifyContent:justifyContentCenter,
+    alignItems:alignItemsCenter
   },
   imageContainer:{
-    flexDirection:'row', marginBottom:8
+    flexDirection:flexDirectionRow,
+    marginBottom:8
   },
   imageCustom:{
-    width:120, height:90
+    width:width/3, 
+    height:height/8
   },
   playIconAlignment:{
-    alignItems:'center',justifyContent:'center',position:'absolute',right:0,bottom:0
+    alignItems:alignItemsCenter,
+    justifyContent:justifyContentCenter,
+    position:absolutePosition,
+    right:0,
+    bottom:0
   },
   youtubeTextCustom:{
-    height:90, width:Dimensions.get('window').width-160, marginLeft:8
+    height:height/8
+    , 
+    width:youtubeTextWidth , 
+    marginLeft:8
   },
   youtubeTextTitle:{
-    marginBottom:8, fontSize:14
+    marginBottom:8, 
+    fontSize:14
   },
   youtubeDescription:{
     fontSize:12
   },
   modalContainer:{
-     justifyContent: 'center'
+     justifyContent: justifyContentCenter
   },
   modal:{
    borderRadius: 2,
    margin:5,
-   padding: 5,paddingTop:0,
-   backgroundColor: '#F5F5F5'
+   padding: 5,
+   paddingTop:0,
+   backgroundColor: modalBackgroundColor
   },
   modalConent:{
-    flexDirection:"column"
+    flexDirection:flexDirectionColumn
   },
   modalConentTitle:{
-    fontSize:18,margin:10
+    fontSize:18,
+    margin:10
   },
   youtubeViewRatio:{
-  height: (Dimensions.get("window").width) * 0.5625
+  height: youtubeViewHeight
   },
   modalOpen:{
-    flexDirection:"row",justifyContent:"flex-end"
+    flexDirection:flexDirectionRow,
+    justifyContent:justifyContentEnd
   },
   modalClose:{
-    margin: 5,marginRight:20,alignItems:"flex-end"
+    margin: 5,
+    marginRight:20,
+    alignItems:alignItemsEnd
   },
   modalText:{
    fontSize:20
   },
   modalSave:{
-    margin: 5,alignItems:"flex-end"
+    margin: 5,
+    alignItems:alignItemsEnd
   }
 
 })
 
 export const settingStyle = StyleSheet.create({
   container:{
-    flex:1,
+    flex:flexFirst,
     margin:8,
   },
   spinnerCustom:{
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent:justifyContentCenter,
+    alignItems:alignItemsCenter
   },
   textStyle:{
       margin:20

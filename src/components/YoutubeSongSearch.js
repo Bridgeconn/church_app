@@ -55,7 +55,7 @@ export default class YoutubeSongSearch extends Component{
                 )}
              </ScrollView>
         	    <Modal
-    				overlayBackground={'rgba(0, 0, 0, 0)'}
+    				  overlayBackground={'rgba(0, 0, 0, 0)'}
 			        open={this.state.open}
 			        modalDidOpen={() => console.log('modal did open')}
 			        modalDidClose={() => this.setState({open: false})}
