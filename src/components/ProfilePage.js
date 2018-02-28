@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler,StyleSheet, Button} from 'react-native'
-import {Header, Card, Title, Left,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
+import {Header, Card, Title, Left,Right,Body,CheckBox,Item,Input} from 'native-base'
 import { Actions } from 'react-native-router-flux'
 import {profilePageStyle} from '../style/styles.js'
 import Config from 'react-native-config'

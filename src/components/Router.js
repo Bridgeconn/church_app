@@ -303,7 +303,7 @@ export default class RoutesPage extends Component {
               <Scene 
                 key = "youtubeSongSearch"       
                 component = {YoutubeSongSearch}       
-                title = "Search Results"            
+                renderTitle = "Search Results"            
               />
              
               <Scene 

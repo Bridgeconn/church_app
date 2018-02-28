@@ -21,6 +21,7 @@ import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
   const modalBackgroundColor = "#F5F5F5"
   const contactListBackgroundColor = "#eee"
   const youtubeIconBackgroundColor = "#E9E9EF"
+  const colorGrey = "grey"
 
   const justifyContentStart = "flex-start"
   const justifyContentEnd = "flex-end"
@@ -469,7 +470,8 @@ export const youtubeSongSearchStyle = StyleSheet.create({
   },
   imageCustom:{
     width:width/3, 
-    height:height/8
+    height:height/8,
+    backgroundColor:colorGrey
   },
   playIconAlignment:{
     alignItems:alignItemsCenter,
