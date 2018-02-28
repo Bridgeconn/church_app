@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler,StyleSheet} from 'react-native'
-import {Header, Card, Title, Left,Button,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
+import {View,Text,TouchableOpacity,Image,ScrollView, Platform,TextInput,AsyncStorage,Alert,BackHandler,StyleSheet, Button} from 'react-native'
+import {Header, Card, Title, Left,Right,Body,CheckBox,Item,Input,Icon} from 'native-base'
 import { Actions } from 'react-native-router-flux'
 import {profilePageStyle} from '../style/styles.js'
 import Config from 'react-native-config'
@@ -29,7 +29,8 @@ export default class ProfilePage extends Component{
         newContact: props.contactNum,
         newcheckboxEmail: props.showEmail,
         newcheckboxContact: props.showContact,
-        showSaveProfile: false,
+
+        showSaveButton: false,
 
         isloading: false
 	  	};
@@ -48,7 +49,7 @@ export default class ProfilePage extends Component{
 
   async saveProfileData(){
     if (this.state.isloading) {
-      return;
+      return
     }
     this.setState({isloading:true})
       let data = new FormData();
@@ -73,15 +74,15 @@ export default class ProfilePage extends Component{
 
     }
 
-    onBackButton(){
+    onBackPress(){
       console.log("in back buttion orifke")
-      if(this.state.showSaveProfile){
+      if(this.state.showSaveButton){
           Alert.alert(
             'Save changes',
             'Save changes',
             [
-              {text: 'Cancel', onPress: () => Actions.pop()},
-              {text: 'OK', onPress: () =>   {this.saveProfileData()}
+              {text: 'No', onPress: () => Actions.pop()},
+              {text: 'Yes', onPress: () =>   {this.saveProfileData()}
               },
             ]
 
@@ -92,21 +93,22 @@ export default class ProfilePage extends Component{
       }
       
     }
-
-
   
+  // componentDidUpdate(props){
+  //     Actions.refresh({showProfileData:this.state.showSaveButton})
+
+  //   }
 
   componentWillUnmount() { 
       LocalEventEmitter.rm('BackButtonPressProfile', 'ProfilePage') ;
     }
-
-
-    async componentDidMount() {
-     
-
+    
+    componentDidMount() {
+      Actions.refresh({right: this.renderRightButton})//,back:this.onBackPress()})
+        // showProfileData:this.state.showSaveButton,onBackPress:this.onBackPress})
       LocalEventEmitter.on('BackButtonPressProfile', 'ProfilePage',  (data) => {
         console.log("in event receive")
-        this.onBackButton()
+        this.onBackPress()
       })
     }
     
@@ -115,32 +117,31 @@ export default class ProfilePage extends Component{
       console.log("newUser "+newUser+" newContact "+newContact+" newcheckboxContact "+newCheckContact+" newcheckboxEmail "+newCheckEmail)
     if (this.state.user!== newUser || this.state.contact !== newContact || 
         this.state.checkboxContact !== newCheckContact || this.state.checkboxEmail !== newCheckEmail) {
-      
-      this.setState({showSaveProfile:true});
+        this.setState({showSaveButton:true});
+            Actions.refresh({right: this.renderRightButton, showSaveMenu:true})
+
     } else {
-      this.setState({showSaveProfile:false});
+      this.setState({showSaveButton:false});
+      Actions.refresh({right: this.renderRightButton, showSaveMenu:false})
     }
   }
+
+renderRightButton = (props)=>{
+  console.log("renderRightButton")
+  // console.log("showSaveButton in renderRightButton"+JSON.stringify(show.showProfileData))
+  return(
+      <View>
+       {props.showSaveMenu ? <TouchableOpacity onPress={this.saveProfileData.bind(this)} style={profilePageStyle.RightButton}>
+          <Text style={profilePageStyle.RightButtonText} >Save</Text>
+        </TouchableOpacity> :null}
+      </View>
+    )
+}
   
 	render(){
 		return(
       <View style={profilePageStyle.profileContainer}>
         <Spinner visible={this.state.isloading} size={"large"} color={"#3F51B5"} style={profilePageStyle.spinnerCustom}/>
-                    <Header>
-                      <Left>
-                        <Button transparent onPress={()=>{this.onBackButton()}}>
-                          <Icon name='arrow-back'/>
-                        </Button>
-                      </Left>
-                      <Body>
-                        <Title style={profilePageStyle.profileTitle}>Edit Profile</Title>
-                      </Body>
-                      <Right>
-                      {this.state.showSaveProfile ?  <TouchableOpacity onPress={()=>this.saveProfileData()}>
-                          <Title>Save</Title>
-                        </TouchableOpacity>: null}
-                      </Right>                      
-                    </Header>
         <ScrollView>
 		        <View style={profilePageStyle.profilePageContent}>
 			        <View style={profilePageStyle.profileView}>

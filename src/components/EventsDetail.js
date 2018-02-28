@@ -95,20 +95,20 @@ export default class EventsDetail extends Component{
         <Text style={eventDetailStyle.eventData}><Icon name="clock" size={24}/> {this.state.event_time_start}</Text> 
         <View style={eventDetailStyle.centerView}>
             <View style={{alignItems:"center"}} >
-              <Icon name="calendar-clock" size={48} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
+              <Icon name="calendar-clock" size={36} color="#3F51B5" style={eventDetailStyle.calendarMargin} onPress={() => {
                   this.addToCalendar(
                     this.state.title, 
                     this.state.event_time_start,
                     this.state.event_time_end 
                     );
                 }}/>
-                <Text >Add to calender</Text>
+                <Text style={eventDetailStyle.iconTitle}>Add to calender</Text>
             </View>
             <View style={{alignItems:"center"}}>
               <Icon name="navigation" 
                 onPress={this.openGpsFromName.bind(this, this.props.event_topic)} 
-                size={48}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
-              <Text >Go to map</Text>
+                size={36}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
+              <Text style={eventDetailStyle.iconTitle}>Go to map</Text>
             </View>
           </View>
           

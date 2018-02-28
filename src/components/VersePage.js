@@ -36,7 +36,6 @@ export default class VersePage extends Component{
   }
 
   componentDidMount(){
-
     console.log("verseapage componentDidMount")
     this.getVersesFromDb()
     LocalEventEmitter.on('NewVerseNotification', 'VersePage',  (data) => {

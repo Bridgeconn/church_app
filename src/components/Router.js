@@ -113,10 +113,10 @@ export default class RoutesPage extends Component {
    }
 
    updateProfileValue(params){
-      this.setState({username:params[0]})
-     this.setState({contactNum:params[1]})
-     this.setState({showEmail:params[2]})
-     this.setState({showContact:params[3]})
+    this.setState({username:params[0]})
+    this.setState({contactNum:params[1]})
+    this.setState({showEmail:params[2]})
+    this.setState({showContact:params[3]})
    }
 
   componentWillUnmount(){
@@ -162,7 +162,7 @@ export default class RoutesPage extends Component {
   }
 
   handleAndroidBack(){
-    console.log('back press'+Actions.currentScene)
+    console.log('back press  '+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab_events" || Actions.currentScene == "newsignup") {
         console.log("home2")
         BackHandler.exitApp();
@@ -174,12 +174,19 @@ export default class RoutesPage extends Component {
     return true
   }
 
+  onBackFunctionProfilePage() {
+     LocalEventEmitter.trigger('BackButtonPressProfile', {})
+  }
+
 
   hideSplashScreen(){
     setTimeout(()=>{SplashScreen.hide()},
          500
       )
   }
+  componentWillReceiveProps(props) {
+      console.log("componentWillReceivePropscallback : RoutesPage=" + JSON.stringify(props))
+    }
 
   rightButton = () =>{
     return(
@@ -190,7 +197,9 @@ export default class RoutesPage extends Component {
                 email:this.state.email,
                 username:this.state.username,   
                 showEmail:this.state.showEmail,
-                showContact:this.state.showContact})
+                showContact:this.state.showContact,
+                onBack: ()=>this.onBackFunctionProfilePage()
+              })
                 }} style={styleRouter.buttonTouchable}
               >
                     <Icon name="account-circle" size={26} color="white"/>
@@ -258,8 +267,7 @@ export default class RoutesPage extends Component {
               
               <Scene key = "profile"    
                 component = {ProfilePage}        
-                title = "Profile" 
-                hideNavBar={true}
+                title = "Edit Profile" 
                 tokenValue={this.state.tokenValue}
                 contactNum={this.state.contactNum}
                 email={this.state.email}
@@ -267,7 +275,10 @@ export default class RoutesPage extends Component {
                 showEmail={this.state.showEmail}
                 showContact={this.state.showContact}    
                 action={this.updateProfileValue}
-        
+                showSaveMenu = {false}
+                renderRightButton = {()=>{null}}
+                renderBackButton={()=>{}}
+                
               />
               
               <Scene 

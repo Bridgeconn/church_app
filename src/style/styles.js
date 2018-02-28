@@ -59,9 +59,11 @@ import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
   const itemMargin = 8
 
   const itemPadding = 4
-
+  const textSizeLarge = 20
   const titleTextSize = 18
   const subTextSize = 16
+  const textSizeMedium = 14
+  const textSizeSmall = 12
 
 export const styleRouter = StyleSheet.create({
 navbarRightButton:{
@@ -232,12 +234,15 @@ export const eventDetailStyle = StyleSheet.create({
   },
   flexOne:{
     flex:flexFirst
+  },
+  iconTitle:{
+    fontSize:subTextSize
   }
 })
 
 export const guestLoginStyle = StyleSheet.create({
   tryGuestText: {
-    fontSize: 16,
+    fontSize: subTextSize,
     alignSelf:alignSelfCenter,
     marginBottom:36,
     position: absolutePosition,
@@ -274,7 +279,7 @@ export const loginButtonStyle = StyleSheet.create({
     justifyContent:justifyContentCenter
   }, 
   loginButtonText: {
-    fontSize: 20,
+    fontSize: textSizeLarge,
     color: colorWhite,
     alignSelf: alignSelfCenter
   },
@@ -310,7 +315,7 @@ export const SigninStyle = StyleSheet.create({
     height: height/12,
     marginTop: 8,
     marginBottom:8,
-    fontSize: 18,
+    fontSize: titleTextSize,
     borderWidth: 1,
     borderColor:titleColor,
   },
@@ -318,7 +323,7 @@ export const SigninStyle = StyleSheet.create({
     height: height/12,
     marginTop: 8,
     marginBottom:8,
-    fontSize: 18,
+    fontSize: titleTextSize,
     width:width, 
   },
   passwordHolder: {
@@ -373,9 +378,16 @@ export const profilePageStyle = StyleSheet.create({
   profileView:{
     margin:sceneVerticalMargin,
   },
+  RightButton:{
+    marginRight:itemHorizontalMargin,
+  },
+  RightButtonText:{
+    color:colorWhite,
+    fontSize:subTextSize
+  },
   customEmail:{
     color:colorBlack,
-    fontSize:subTextSize,
+    fontSize:titleTextSize,
     marginTop:itemMargin
   },
   shareContainer:{
@@ -474,10 +486,10 @@ export const youtubeSongSearchStyle = StyleSheet.create({
   },
   youtubeTextTitle:{
     marginBottom:itemMargin, 
-    fontSize:14
+    fontSize:textSizeMedium
   },
   youtubeDescription:{
-    fontSize:12
+    fontSize:textSizeSmall
   },
   modalContainer:{
      justifyContent: justifyContentCenter
