@@ -27,7 +27,12 @@ export default class Settings extends Component {
      showProgress: false
     }
   }
-
+  /**
+  @funtion userLogout
+  *remove all asyncstorage (local storage) key 
+  *remove table Verse from db used to save notification data
+  *redirect to register page 
+  */
   async userLogout(){
     try {
     Actions.refresh({showProgress:true})
@@ -43,7 +48,6 @@ export default class Settings extends Component {
 
         db.transaction((tx)=>{
         tx.executeSql('DROP TABLE IF EXISTS Verse ')
-        
         })
         },
         (err) => console.log("SQL Error: " + err));
@@ -54,18 +58,29 @@ export default class Settings extends Component {
     Actions.refresh({showProgress:false})
     Actions.register()
     }
-
-    _shareMessage(message) {
-      if(Platform.OS=="android"){
+    /**
+    @function _shareMessage
+    *share data 
+    *@param {string} message 
+    *
+    */
+  _shareMessage() {
+    if(Platform.OS=="android"){
       let packageName = 'com.churchapplication';
       let messageText = "Hey checkout this awesome Church App  https://play.google.com/store/apps/details?id="+packageName;
       console.log("share package name")
       Share.share({
         message: messageText
-      }).then(this._showResult);
+      }).then(this._showResult(messageText));
     }
   }
-
+/**
+    @function _showResult
+    *share data result
+    *
+    *@param {string} result
+    *result to show
+    */
 _showResult(result) {
     this.setState({result});
   }

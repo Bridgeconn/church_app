@@ -20,6 +20,38 @@ export default class EventsDetail extends Component{
     }
   }
 
+  /**
+  *function removeVideo 
+  *to remove saved video
+  *show alert box  
+  */
+  removeVideo() {
+    Alert.alert(
+  'Delete',
+  'Are you sure !',
+  [
+    {text: 'Cancel', onPress: () => this.state.videoId},
+    {text: 'OK', onPress: () =>   { 
+      try{
+        AsyncStorage.removeItem(AsyncStorageConstants.SONG_ID + this.props.songId); this.setState({videoId:null}) 
+      }
+      catch(error){
+        console.log("AsyncStorage")
+      } 
+      } 
+    },
+  ]
+
+)
+  }
+/**
+*function playVideoMethod
+*set state value of of playvideo to true (to play video)
+*/
+  playVideoMethod() {
+    this.setState({playVideo:true})
+  }
+
   componentWillReceiveProps(nextProps){
     console.log("nextProps "+nextProps.videoId)
     this.setState({playVideo: false})
@@ -28,6 +60,10 @@ export default class EventsDetail extends Component{
       this.setState({videoId:nextProps.videoId})
     }
   }
+  /**
+  *render function when compnentDidmount 
+  *get asynctorage (local storage) song_id
+  */
   componentDidMount(){
      AsyncStorage.getItem(AsyncStorageConstants.SONG_ID + this.props.songId).then((value)=>{
       console.log("videoId"+value)
@@ -94,34 +130,4 @@ export default class EventsDetail extends Component{
       );
   }
 
-  removeVideo() {
-    Alert.alert(
-  'Delete',
-  'Are you sure !',
-  [
-    {text: 'Cancel', onPress: () => this.state.videoId},
-    {text: 'OK', onPress: () =>   { 
-      try{
-        AsyncStorage.removeItem(AsyncStorageConstants.SONG_ID + this.props.songId); this.setState({videoId:null}) 
-      }
-      catch(error){
-        console.log("AsyncStorage")
-      } 
-      } 
-    },
-  ]
-
-)
-    // try{
-    // 
-    //  this.setState({videoId:null})
-    
-    // } catch (error) {
-    //   console.error('AsyncStorage error: ' + error);
-    // }
-  }
-
-  playVideoMethod() {
-    this.setState({playVideo:true})
-  }
 }

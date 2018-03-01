@@ -1,5 +1,7 @@
 import {StyleSheet,PixelRatio, Dimensions} from 'react-native'
-
+/**
+*put all frequent values to variables to easily change value at single place 
+*/
   var width = Dimensions.get('window').width; 
   var height = Dimensions.get('window').height;
 

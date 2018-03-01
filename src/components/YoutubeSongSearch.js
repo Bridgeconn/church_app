@@ -24,7 +24,74 @@ export default class YoutubeSongSearch extends Component{
         open: false
     }
   }
+  /**
+  *function refreshOnSave
+  *save selected video 
+  *onBack refresh videoId on songLyrics page  
+  */
+  refreshOnSave(){
+  this.saveVideo();
+  Actions.pop({refresh:{videoId: this.state.playVideoId} }) 
 
+ }
+
+/**
+*function setStartPlay 
+*open modal to play video onclick 
+*
+*param {string} videoId searchTitle
+*get videoId searchTitle from response data 
+*set state value of videoId to playVideoId
+*set state value of title to searchTitle 
+*/
+  setStartPlay(videoId,searchTitle) {
+    this.setState({playVideoId:videoId, startPlay:true,open:true,title:searchTitle});
+  }
+/**
+*function stopPlay
+*set state value of startPLay as false to stop video play
+*set state of playVideoId to empty
+*/
+  stopPlay() {
+   this.setState({playVideoId:"", startPlay:false}); 
+  }
+
+/**
+*function savevideo 
+*save song id to asyncStorage (local storage)
+*/
+  async saveVideo() {
+    try {
+      AsyncStorage.setItem(AsyncStorageConstants.SONG_ID+ this.props.songId, this.state.playVideoId);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error);
+    }
+  }
+/**
+*function callfetchLib 
+*fetch youtube search title video 
+*/
+  callFetchLib() {
+    var str = this.props.title;
+    console.log('title --- ' + str)
+    var formatStr = str.replace(/ /g,'+');
+    //show loader until data fetch
+    this.setState({isLoading:true})
+
+    fetch('https://www.googleapis.com/youtube/v3/search?key='+ Config.YOUTUBE_API_KEY +
+      '&part=snippet,id&maxResults=5&type=video&videoDefinition=any&q='+ formatStr)
+      .then((response) => response.json())
+      //response data 
+      .then((responseJson) => {
+        this.setState({isLoading:false})
+        console.log("response in fetch : " + JSON.stringify(responseJson));
+        this.setState({data:responseJson.items})
+      })
+      .catch((error) => {
+        this.setState({isLoading:false})
+        console.log("error in fetch : "+error);
+      });
+  }
   componentDidMount(){
   	this.callFetchLib();
   }
@@ -97,46 +164,6 @@ export default class YoutubeSongSearch extends Component{
       );
   	}
   }
- refreshOnSave(){
-	this.saveVideo();
- 	Actions.pop({refresh:{videoId: this.state.playVideoId} }) 
-
- }
-  setStartPlay(videoId,searchTitle) {
-    this.setState({playVideoId:videoId, startPlay:true,open:true,title:searchTitle});
-
-  }
-
-  stopPlay() {
-   this.setState({playVideoId:"", startPlay:false}); 
-  }
-
-  async saveVideo() {
-    try {
-      AsyncStorage.setItem(AsyncStorageConstants.SONG_ID+ this.props.songId, this.state.playVideoId);
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error);
-    }
-  }
-
-  callFetchLib() {
-  	var str = this.props.title;
-  	console.log('title --- ' + str)
-  	var formatStr = str.replace(/ /g,'+');
-    this.setState({isLoading:true})
-
-    fetch('https://www.googleapis.com/youtube/v3/search?key='+ Config.YOUTUBE_API_KEY +
-      '&part=snippet,id&maxResults=5&type=video&videoDefinition=any&q='+ formatStr)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({isLoading:false})
-        console.log("response in fetch : " + JSON.stringify(responseJson));
-        this.setState({data:responseJson.items})
-      })
-      .catch((error) => {
-        this.setState({isLoading:false})
-        console.log("error in fetch : "+error);
-      });
-  }
+ 
 
 }

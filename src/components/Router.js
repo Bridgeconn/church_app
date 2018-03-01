@@ -49,55 +49,55 @@ export default class RoutesPage extends Component {
       email:null,
       showEmail:null,
       showContact:null
-      // verseData:[]
     };
     this.updateTokenValue = this.updateTokenValue.bind(this);
     this.updateProfileValue =this.updateProfileValue.bind(this);
   }
-
+  /**
+  *get all asyncStorage (local value) value
+  *if token value is not present or null it will show registerPage
+  *show splashscreen for few seconds
+  */
   async componentDidMount() {
     registerAppListener();
     await AsyncStorage.getItem(AsyncStorageConstants.UserToken).then((auth_token) => {
       console.log('token1 '+auth_token)
       this.setState({tokenValue:auth_token})
     })
-    if(this.state.tokenValue==null){
+      if(this.state.tokenValue==null){
         await AsyncStorage.getItem('guest').then((value) => {
           console.log('key1 '+value)
           this.setState({ guestKey: value !== null })
         })
-     } else {  
+      } else {  
         await AsyncStorage.getItem(AsyncStorageConstants.UserEmail).then((email) => {
           console.log("email"+email)
           this.setState({email:email})
         })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
-        console.log("value "+value+"  " + typeof value)
-        this.setState({ username: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
-        this.setState({contactNum: value})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
-        console.log("email_value "+value+ " "+ typeof value)
+        await AsyncStorage.getItem(AsyncStorageConstants.UserName).then((value) => {
+          console.log("value "+value+"  " + typeof value)
+          this.setState({ username: value})
+        })
+        await AsyncStorage.getItem(AsyncStorageConstants.UserContactNumber).then((value) => {
+          this.setState({contactNum: value})
+        })
+        await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxEmail).then((value) => {
+          console.log("email_value "+value+ " "+ typeof value)
 
-        this.setState({ showEmail: JSON.parse(value)})
-      })
-      await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
-        this.setState({showContact: JSON.parse(value)})
-      })
-
-     }
-    
+          this.setState({ showEmail: JSON.parse(value)})
+        })
+        await AsyncStorage.getItem(AsyncStorageConstants.UserCheckBoxContact).then((value) => {
+          this.setState({showContact: JSON.parse(value)})
+        })
+      }
     this.setState({isLoaded:true}) 
     this.hideSplashScreen()
     BackHandler.addEventListener('hardwareBackPress', this.handleAndroidBack)
     
   }
-
     updateTokenValue(params) {
-      console.log("here in updateTokenValue")
- // updateTokenValue(paramToken, paramEmail, paramUserName, paramContact, paramShowEmail, paramShowContact) {
+    console.log("here in updateTokenValue")
+    // updateTokenValue(paramToken, paramEmail, paramUserName, paramContact, paramShowEmail, paramShowContact) {
      this.setState({tokenValue: params[0]})
      this.setState({email:params[1]})
      this.setState({username:params[2]})
@@ -122,7 +122,11 @@ export default class RoutesPage extends Component {
   componentWillUnmount(){
     BackHandler.removeEventListener('hardwareBackPress', this.handleAndroidBack)
   }
- 
+ /**
+ * call when notification recieves
+ * create table insert table data of notification to db
+ * and trigger event listner to verse page to render notification from data 
+ */
   componentWillMount(){
     db.transaction((tx)=>{
             tx.executeSql('CREATE TABLE IF NOT EXISTS Verse (timestamp int, chapter_num int, verse_num text, book_name text, verse_body text)',
@@ -160,7 +164,11 @@ export default class RoutesPage extends Component {
     })
 
   }
-
+  /**
+  *@function handleAndroidBack
+  *handle android back button of currentscene home2 register _tab_events newsignup
+  *if current scene are  home2 register _tab_events and newsignup exitApp
+  */
   handleAndroidBack(){
     console.log('back press  '+Actions.currentScene)
     if (Actions.currentScene == "home2" || Actions.currentScene == "register" || Actions.currentScene == "_tab_events" || Actions.currentScene == "newsignup") {
@@ -187,7 +195,10 @@ export default class RoutesPage extends Component {
   componentWillReceiveProps(props) {
       console.log("componentWillReceivePropscallback : RoutesPage=" + JSON.stringify(props))
     }
-
+/**
+@function rightButton
+render right button icon for profile page and settings page 
+*/
   rightButton = () =>{
     return(
         <View style={styleRouter.navbarRightButton}>

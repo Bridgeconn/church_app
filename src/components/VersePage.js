@@ -23,11 +23,24 @@ export default class VersePage extends Component{
           this._shareMessage = this._shareMessage.bind(this);
           this._showResult = this._showResult.bind(this);
 }
-  
-    _showResult(result) {
+
+  /**
+  *@function _showResult
+  *call in shareMessage function
+  *
+  *@param {string} result
+  *setState of result
+  */
+  _showResult(result) {
     this.setState({result});
   }
 
+  /**
+  *@function shareMessage
+  *
+  *@param {string} message, book_name, verse_number
+  *share message, book_name, chapter, verse_number using Share.share() function
+  */
   _shareMessage(message, book_name, chapter, verse_number) {
     let messageText = book_name+" " +chapter+ ":" +verse_number+ "\n" +message;
     Share.share({
@@ -35,6 +48,9 @@ export default class VersePage extends Component{
     }).then(this._showResult);
   }
 
+  /**
+  * render notification data and add incoming notification data 
+  */
   componentDidMount(){
     console.log("verseapage componentDidMount")
     this.getVersesFromDb()
@@ -46,41 +62,49 @@ export default class VersePage extends Component{
   }
 
   componentWillUnmount() { 
-      LocalEventEmitter.rm('NewVerseNotification', 'VersePage') ;
-    }
-
-    getVersesFromDb(){
-      this.setState({isLoading:true})
-      SQLite.openDatabase({name: 'church_app.db', location: 'default'}, 
-        (db) =>  {
-          console.log("sqlite open openDatabase")
+    LocalEventEmitter.rm('NewVerseNotification', 'VersePage') ;
+  }
+  /**
+  *function getVerseFromDb
+  *retrieve notification data from database
+  */
+  getVersesFromDb(){
+    this.setState({isLoading:true})
+    SQLite.openDatabase({name: 'church_app.db', location: 'default'}, 
+      (db) =>  {
+      console.log("sqlite open openDatabase")
         db.transaction((tx)=>{
-        tx.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC', [], (tx,res) => {
-          console.log("Query completed");
-          console.log("data response"+  JSON.stringify(res.rows.raw()))
-          let rows = res.rows.raw();
-          this.setState({verseData: rows, isLoading:false, isRefreshing: false})
-        }, (err)=> {console.log("erro in transaction = " + JSON.stringify(err))
-                this.setState({isLoading:false, isRefreshing: false})
-})
+          tx.executeSql('SELECT * FROM Verse ORDER BY timestamp DESC', [], (tx,res) => {
+            console.log("Query completed");
+            console.log("data response"+  JSON.stringify(res.rows.raw()))
+            let rows = res.rows.raw();
+            this.setState({verseData: rows, isLoading:false, isRefreshing: false})
+          }, (err)=> {console.log("erro in transaction = " + JSON.stringify(err))
+                  this.setState({isLoading:false, isRefreshing: false})
+          })
       })
-        },
-        (err) => console.log("SQL Error: " + err));
+    },
+    (err) => console.log("SQL Error: " + err));
+  }
 
+  /**
+  *@function onRefreshFunction 
+  *@ var isRefreshing 
+  * needs to be set to true in the onRefreshfunction to show refresh indicator  
+  *
+  *function getVersesFromDb
+  * call getVersesFromDb inside onRefreshFunction to reload data 
+  */
+  onRefreshFunction(){
+    if(this.state.isLoading){
+        return
     }
-
-   onRefreshFunction(){
-        if(this.state.isLoading){
-          return
-        }
-        this.setState({isRefreshing:true})
-        this.getVersesFromDb()
-      }
+    this.setState({isRefreshing:true})
+    this.getVersesFromDb()
+  }
 
     render() {
       console.log("state data = " + JSON.stringify(this.state.verseData))
-
-      console
         return (
           <ScrollView 
               contentContainerStyle={tabStyle.scrollViewContainer}

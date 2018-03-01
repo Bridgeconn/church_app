@@ -11,6 +11,9 @@ import {
   Keyboard,
   StyleSheet
 } from 'react-native';
+import { 
+  CheckBox
+} from 'native-base';
 import {Actions} from 'react-native-router-flux'
 import Spinner from 'react-native-loading-spinner-overlay';
 import LoginButton from "./LoginPage"
@@ -45,16 +48,21 @@ class NewSignup extends Component {
       password: "",
       name: "",
       showProgress:false,
-      guestVisible:true
+      guestVisible:true,
+      isSecureTextEntry:true
     }
 
   }
-
+ /**
+  *hid/show keyboard by adding event listner
+  */
   componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
-
+ /**
+  *removing event listner
+  */
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
@@ -68,6 +76,7 @@ class NewSignup extends Component {
   _keyboardDidHide = (event) => {
     console.log("keyboard will hide");
     this.setState({guestVisible:true});
+    this.refPassword.blur();
   }
 
   componentWillReceiveProps(props) {
@@ -75,10 +84,23 @@ class NewSignup extends Component {
       this.setState({showProgress:props.showProgress})
   }
 
+  /**
+  redirect to signup Page
+  */
   onOpenLoginPage() {
     Actions.register();
   }
 
+  /**
+  *@function onSelectionToggle
+  *hide / show password  
+  */
+  onSelectionToggle(){
+  // console.log("event "+event.nativeEvent.selection+ " , "+this.state.selectionValue)
+    this.setState({isSecureTextEntry:!this.state.isSecureTextEntry})
+    this.refPassword.blur();
+  // console.log("value from textInputToggle" +this.textInputToggle)
+}
   render() {
     return (
       <View style={SigninStyle.userContainer}>
@@ -100,9 +122,15 @@ class NewSignup extends Component {
           onChangeText={ (text)=> this.setState({password: text}) }
           style={SigninStyle.input}
           placeholder="Password"
-          secureTextEntry={true}>
-        </TextInput>
-
+          ref = {ref => (this.refPassword) = ref}
+          secureTextEntry={true}
+          onSubmitEditing={()=>this._keyboardDidHide}
+          secureTextEntry={this.state.isSecureTextEntry}
+          />
+          <View style={{flexDirection:'row',marginTop:8}}> 
+            <CheckBox onPress={this.onSelectionToggle.bind(this)} checked={!this.state.isSecureTextEntry} />
+            <Text style={{marginLeft:16}}>Show Password</Text>
+          </View>
         <Signup 
           name={this.state.name}
           email={this.state.email}

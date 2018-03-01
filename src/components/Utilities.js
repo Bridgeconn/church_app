@@ -1,4 +1,16 @@
 "use strict"
+/**
+*@ function validateEmailAndPassword 
+*validate email and password  
+*param {string} password , email
+*email, password value to check string is valid or not 
+*return number
+*
+*@function formValidationAlerts
+*param {number} value 
+*get return value from validateEmailAndPassword function 
+*return string  
+*/
 export default class Utilities {
 
 	static validateEmailAndPassword(email:string, password:string){

@@ -33,20 +33,24 @@ export default class EventsDetail extends Component{
 
         }
   }
-
- openGps = (latitude,longitude) =>{
-      // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
-      var url = 'https://www.google.com/maps/search/?api=1&query='+latitude+','+longitude;
-      this.openExternalApp(url)
-    }
-  
-  openGpsFromName = (venue) =>{
-      // var scheme = Platform.android === 'ios' ? 'http://maps.apple.com/?ll=' : 'geo:'
-      var url = 'https://www.google.com/maps/search/?api=1&query='+venue;
-      this.openExternalApp(url)
+  /**
+  *function openMap
+  *param {} latitude, longitude  
+  *to show latitude longitude on map
+  */
+  openMap(venue){
+    var url = 'https://www.google.com/maps/search/?api=1&query='+venue;
+    this.openExternalApp(url)
     }
 
-  openExternalApp = (url) => {
+  /**
+  *function openExternalApp
+  *param {string} url
+  *open url for map app 
+  *
+  *Linking app or interact with map app
+  */
+  openExternalApp(url){
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
@@ -61,7 +65,14 @@ export default class EventsDetail extends Component{
       }
     });
   }
-
+/**
+*function addToCalendar
+*add event to calender
+*
+*param {string} title , startDateUTC, EndDateUTC
+*title , startDateUTC, EndDateUTC show on calender 
+*
+*/
   addToCalendar(title, startDateUTC: string,endDateUTC:string ) {
     const eventConfig = {
       title,
@@ -106,7 +117,7 @@ export default class EventsDetail extends Component{
             </View>
             <View style={{alignItems:"center"}}>
               <Icon name="navigation" 
-                onPress={this.openGpsFromName.bind(this, this.props.event_topic)} 
+                onPress={this.openMap.bind(this, this.props.event_topic)} 
                 size={36}  color="#3F51B5" style={eventDetailStyle.calendarMargin}/>
               <Text style={eventDetailStyle.iconTitle}>Go to map</Text>
             </View>

@@ -19,12 +19,20 @@ export default class LiveStreamPage extends Component{
       isRefreshing:false
 		}
 	}
-
+ /**
+  *@funtion fetchLiveStreamData 
+  * Fetch contacts from api    
+  * 
+  * @function NetInfo 
+  * get type of internet used and give info about internet if it is present or not 
+  */  
+  //Fetch contacts from api 
 	fetchLiveStream(){
 	console.log("on vesre start page")
 	const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
       axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
       axios.get(Config.BASE_API_URL + Config.GET_VIDEO_API_URL, config)
+        //get response data from api 
         .then((response) => { 
           this.setState({isLoading:true})
           console.log("response livestream ...."+JSON.stringify(response))
@@ -32,7 +40,12 @@ export default class LiveStreamPage extends Component{
           this.setState({isLoading:false,isRefreshing:false})
 	 })
 	}
-
+  /**
+  *@extractVideoId
+  *
+  *param {string} url
+  *extract videoId from url 
+  */
   extractVideoId(url){
     var video_id = url.split('v=')[1];
     console.log("video_id "+video_id)
@@ -43,7 +56,14 @@ export default class LiveStreamPage extends Component{
     }
     return video_id;
   }
-
+   /**
+    *@function onRefreshFunction 
+    *@ var isRefreshing 
+    * needs to be set to true in the onRefreshfunction to show refresh indicator  
+    *
+    *function fetchContacts
+    * call fetchContacts inside onRefreshFunction to reload data 
+    */
   onRefreshFunction(){
         if(this.state.isLoading){
           return
@@ -57,7 +77,6 @@ export default class LiveStreamPage extends Component{
 	}
 
 	render(){
-		// console.log("url  live "+this.state.liveStreamData[0].url)
 		return(
 		 <ScrollView 
               contentContainerStyle={tabStyle.scrollViewContainer}

@@ -53,17 +53,21 @@ class Register extends Component {
     }
 
   }
-
+  /**
+  *hid/show keyboard by adding event listner
+  */
   componentWillMount () {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
-
+ /**
+  *removing event listner
+  */
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
-
+  
   _keyboardDidShow = (event) => {
     console.log("keyboard will show");
     this.setState({guestVisible:false});
@@ -79,10 +83,16 @@ class Register extends Component {
       console.log("componentWillReceivePropscallback : userPage=" + props.showProgress)
       this.setState({showProgress:props.showProgress})
     }
-
+  /**
+  redirect to signup Page
+  */
   onOpenSignupPage() {
     Actions.newsignup();
   }
+  /**
+  *@function onSelectionToggle
+  *hide / show password  
+  */
   onSelectionToggle(){
   // console.log("event "+event.nativeEvent.selection+ " , "+this.state.selectionValue)
     this.setState({isSecureTextEntry:!this.state.isSecureTextEntry})

@@ -20,7 +20,13 @@ export default class EventsPage extends Component{
           isRefreshing:false
         }
     }
-
+  /**
+  *@funtion fetchEventData 
+  * Fetch Events from api    
+  * 
+  * @function NetInfo 
+  * get type of internet used and give info about internet if it is present or not 
+  */  
     fetchEventsData(){
       NetInfo.getConnectionInfo()
               .then((connectionInfo) => {
@@ -28,11 +34,13 @@ export default class EventsPage extends Component{
                   case 'cellular': {
                   }
                   case 'wifi': {
+                    //set state value of laoder as true (show loader) until data is fetching from api
                     this.setState({isLoading:true})
                       var url = Config.BASE_API_URL + Config.EVENTS_API_URL;
                       const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.state.tokenValue}}
                           axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
                           axios.get(url, config)
+                      //get response datafrom url
                         .then((response) => { 
                           console.log("hi i am in fetchEventsData ------")
                            console.log("response "+JSON.stringify(response))
@@ -59,8 +67,16 @@ export default class EventsPage extends Component{
                   }
                 })
       }
-
+      /**
+    *@function onRefreshFunction 
+    *@ var isRefreshing 
+    * needs to be set to true in the onRefreshfunction to show refresh indicator  
+    *
+    *function fetchEventData
+    * call fetchContacts inside onRefreshFunction to reload data 
+    */
      onRefreshFunction(){
+       // if loader is there than return 
         if(this.state.isLoading){
           return
         }

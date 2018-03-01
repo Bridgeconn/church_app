@@ -36,17 +36,23 @@ export default class ProfilePage extends Component{
 	  	};
 	}
 
-
+  /**
+  @function saveToAsyncStorage
+  save updated or new values of UserName, UserContactNumber, UserCheckBoxEmail and UserCheckBoxContact to asyncStorage (local storage) 
+  */
   async saveToAsyncStorage(){
       await AsyncStorage.setItem(AsyncStorageConstants.UserName,this.state.newUser);
       await AsyncStorage.setItem(AsyncStorageConstants.UserContactNumber,this.state.newContact);
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxEmail,JSON.stringify(this.state.newcheckboxEmail));
       await AsyncStorage.setItem(AsyncStorageConstants.UserCheckBoxContact,JSON.stringify(this.state.newcheckboxContact));
-      // this.setState({isloading:false})
+      //on pop update value of UserName, UserContactNumber, UserCheckBoxEmail and UserCheckBoxContact in router page
       Actions.pop()
       this.props.action([this.state.newUser,this.state.newContact,this.state.newcheckboxEmail,this.state.newcheckboxContact])
   }
-
+  /**
+  *@function saveProfileData 
+  *save profile updated data and post it to server 
+  */
   async saveProfileData(){
     if (this.state.isloading) {
       return
@@ -73,7 +79,10 @@ export default class ProfilePage extends Component{
         });
 
     }
-
+    /**
+    *@function onBackPress
+    *onback show alert if data modified 
+    */
     onBackPress(){
       console.log("in back buttion orifke")
       if(this.state.showSaveButton){
@@ -94,41 +103,48 @@ export default class ProfilePage extends Component{
       
     }
   
-  // componentDidUpdate(props){
-  //     Actions.refresh({showProfileData:this.state.showSaveButton})
-
-  //   }
-
+ 
   componentWillUnmount() { 
       LocalEventEmitter.rm('BackButtonPressProfile', 'ProfilePage') ;
     }
-    
-    componentDidMount() {
+  /**
+  *handle android back press 
+  *render right button on navbar 
+  */
+  componentDidMount() {
       Actions.refresh({right: this.renderRightButton})//,back:this.onBackPress()})
-        // showProfileData:this.state.showSaveButton,onBackPress:this.onBackPress})
       LocalEventEmitter.on('BackButtonPressProfile', 'ProfilePage',  (data) => {
         console.log("in event receive")
         this.onBackPress()
       })
     }
-    
+  /**
+  *@function checkSaveButtonVisibility
+  *check if data is modified then show save button else hide save button
+  *
+  *@param {string} newUser, newContact, newCheckEmail, newCheckContact
+  *get newUser, newContact, newCheckEmail, newCheckContact value from inputField
+  *check newUser, newContact, newCheckEmail, newCheckContact if changed 
+  */
   checkSaveButtonVisibility(newUser, newContact, newCheckEmail, newCheckContact) {
     console.log("new check email type of object "+typeof newcheckboxEmail)
       console.log("newUser "+newUser+" newContact "+newContact+" newcheckboxContact "+newCheckContact+" newcheckboxEmail "+newCheckEmail)
     if (this.state.user!== newUser || this.state.contact !== newContact || 
         this.state.checkboxContact !== newCheckContact || this.state.checkboxEmail !== newCheckEmail) {
         this.setState({showSaveButton:true});
-            Actions.refresh({right: this.renderRightButton, showSaveMenu:true})
+        Actions.refresh({right: this.renderRightButton, showSaveMenu:true})
 
     } else {
       this.setState({showSaveButton:false});
       Actions.refresh({right: this.renderRightButton, showSaveMenu:false})
     }
   }
-
+/**
+*@function renderRightButton
+*render right button on navigation bar
+*/
 renderRightButton = (props)=>{
   console.log("renderRightButton")
-  // console.log("showSaveButton in renderRightButton"+JSON.stringify(show.showProfileData))
   return(
       <View>
        {props.showSaveMenu ? <TouchableOpacity onPress={this.saveProfileData.bind(this)} style={profilePageStyle.RightButton}>

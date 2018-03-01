@@ -48,90 +48,120 @@ export default class SongBookPage extends Component {
             
           }
     }
-
-
- fetchSongBooks(searchText){
-  NetInfo.getConnectionInfo()
-              .then((connectionInfo) => {
-                switch(connectionInfo.type) {
-                  case 'cellular': {
-                  }
-                  case 'wifi': {
-                    this.setState({isLoading:true})
-                      const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue,} }
-                      axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-                      var url = Config.BASE_API_URL + Config.GET_SONGS_API_URL + (searchText == null ? '' : '?search='+searchText);
-                      axios.get(url, config)
-                        .then((response) => { 
-                           console.log("response contacts"+JSON.stringify(response.data.songs))
-                           if (searchText == null) {
-                              this.setState({songsListData:response.data.songs})
-                           } else {
-                              this.setState({searchedSongsList:response.data.songs})
-                              console.log("searched data"+this.state.searchedSongsList)
-                           }
-                            this.setState({isLoading:false,isRefreshing:false})
-                         })
-                         .catch((error) =>{
-                            console.log(error)
-                            console.log("something went wrong")
-                             this.setState({isLoading:false,isRefreshing:false})
-                          })  
-                          break;   
-                        }
-                    default : {
-                    console.log("conenction none or unknoisw")
-                    this.setState({isRefreshing:false})
-
-                    break;
-                  }
-                  }
+/**
+  *@funtion fetchSongBookData 
+  * Fetch Song Book Data from api    
+  * @param {string} searchText 
+  * searchText is the text enter in searchbar to search matched data from contact api  
+  * 
+  * @function NetInfo 
+  * get type of internet used and give info about internet if it is present or not 
+  */  
+  fetchSongBookData(searchText){
+    NetInfo.getConnectionInfo()
+      .then((connectionInfo) => {
+        switch(connectionInfo.type) {
+          case 'cellular': {
+          }
+          case 'wifi': {
+            //set state value of laoder as true (show loader) until data is fetching from api
+            this.setState({isLoading:true})
+              const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue,} }
+              axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
+              var url = Config.BASE_API_URL + Config.GET_SONGS_API_URL + (searchText == null ? '' : '?search='+searchText);
+              axios.get(url, config)
+                //get response data from url
+                .then((response) => { 
+                   console.log("response contacts"+JSON.stringify(response.data.songs))
+                    //if searched text is null do not search 
+                   if (searchText == null) {
+                      this.setState({songsListData:response.data.songs})
+                    } else {
+                      this.setState({searchedSongsList:response.data.songs})
+                      console.log("searched data"+this.state.searchedSongsList)
+                    }
+                    this.setState({isLoading:false,isRefreshing:false})
                 })
-      
-    }
-
-   doSearchSongBooks(param){
-    console.log("text nativeEvent................"+param)
-      var text = param.trim()
-      if(text == ""){
-        return
-      }
-      this.setState({searchQuery:param})
-      this.fetchSongBooks(text);
-  }
-  
-    componentDidMount() {
-      
-        this.fetchSongBooks();
-      
-     }
-       onRefreshFunction(){
-        if(this.state.isLoading){
-          return
+                .catch((error) =>{
+                    console.log(error)
+                    console.log("something went wrong")
+                    this.setState({isLoading:false,isRefreshing:false})
+                })  
+                  break;   
+          }
+          default : {
+            console.log("conenction none or unknoisw")
+            this.setState({isRefreshing:false})
+            break;
+          }
         }
-        this.setState({isRefreshing:true})
-        this.fetchSongBooks(this.state.searchQuery.trim() == "" ? null : this.state.searchQuery.trim())
-
-      }
-
-    refreshResults(text) {
-      this.setState({searchBoxText:text});
-      console.log("refress called  : "+text)
-      // this.setState({searchQuery:text})
-      if (text.trim() == "") {
-        console.log("empty search data");
-        this.setState({searchedSongsList:[]})
-        this.setState({searchQuery:""})
-
-      }
+      })
+  }
+    /**
+    *@function fetchSongBookData
+    *filter search data 
+    *
+    *param {string} searchInput 
+    *pass textInput value as param to search filter onSubmitEdit function
+    *
+    *@return 
+    *if text input is empty return   
+    */
+  filterSeachedData(param){
+  console.log("text nativeEvent................"+param)
+    var text = param.trim()
+    if(text == ""){
+      return
     }
+    this.setState({searchQuery:param})
+    this.fetchSongBookData(text);
+  }
 
-
-    clearInput = () => {
-      this.textInputRef.clear();
-      this.refreshResults("");
-  
+  componentDidMount() {
+      this.fetchSongBookData();
+   }
+  /**
+  *@function onRefreshFunction 
+  *@ var isRefreshing 
+  * needs to be set to true in the onRefreshfunction to show refresh indicator  
+  *
+  *function fetchSongBookData
+  * call fetchSongBookData inside onRefreshFunction to reload data 
+  */
+  onRefreshFunction(){
+    if(this.state.isLoading){
+      return
     }
+    this.setState({isRefreshing:true})
+    this.fetchSongBookData(this.state.searchQuery.trim() == "" ? null : this.state.searchQuery.trim())
+
+  }
+  /**
+  *@function refreshResults 
+  *call when input field data changes
+  * 
+  *@param text
+  *input text in inputfield 
+  */
+  refreshResults(text) {
+    this.setState({searchBoxText:text});
+    console.log("refress called  : "+text)
+    if (text.trim() == "") {
+      console.log("empty search data");
+      this.setState({searchedSongsList:[]})
+      this.setState({searchQuery:""})
+
+    }
+  }
+
+  /**
+  *@function clearInput 
+  *clear input field data 
+  */
+  clearInput = () => {
+    this.textInputRef.clear();
+    this.refreshResults("");
+  }
 
     render() {
       let displayData = (this.state.searchedSongsList.length == 0) ? this.state.songsListData : this.state.searchedSongsList;
@@ -147,7 +177,7 @@ export default class SongBookPage extends Component {
                     onChangeText ={(text) => this.refreshResults(text)}
                     ref={ref => this.textInputRef = ref}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    onSubmitEditing={(event) => this.doSearchSongBooks(event.nativeEvent.text)} />
+                    onSubmitEditing={(event) => this.filterSeachedData(event.nativeEvent.text)} />
                     {this.state.searchBoxText =="" ? null : <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>}  
                 </Item>
               </Header>

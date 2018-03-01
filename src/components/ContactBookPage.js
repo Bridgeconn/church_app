@@ -47,50 +47,47 @@ export default class App extends Component {
         this._renderHeader = this._renderHeader.bind(this);
     }
     
-//Fetch contacts from api 
+  /**
+  *@funtion fetchContacts 
+  * Fetch contacts from api    
+  * @param {string} searchText 
+  * searchText is the text enter in searchbar to search matched data from contact api  
+  * 
+  * @function NetInfo 
+  * get type of internet used and give info about internet if it is present or not 
+  */  
+  //Fetch contacts from api 
   fetchContacts(searchText){
-    //Get connection information 
       NetInfo.getConnectionInfo()
-      //Connection  response
               .then((connectionInfo) => {
-                //Check connection type
                 switch(connectionInfo.type) {
-                  //Connecton type cellular
                   case 'cellular': {
                   }
-                  //Connecton type wifi
                   case 'wifi': {
                     //set state value of laoder as true (show loader) until data is fetching from api
                   this.setState({isLoading:true})
-                  //api's header value and token value 
                   const config = { headers: {'Church-App-Id': Config.CHURCH_APP_ID, 'AUTH-TOKEN':this.props.tokenValue} }
                   axios.defaults.headers.get[Config.HEADER_KEY_CONTENT_TYPE] = Config.CONTENT_TYPE;
-                  // url for searching contacts
                   let url = Config.BASE_API_URL + Config.GET_CONTACTS_API_URL + (searchText == null ? '' : '?search='+searchText);
-                  //Get url respoonse value 
                   axios.get(url, config)
-                  //response from url
+                      //get response data from url
                     .then((response) => { 
                       console.log("response contacts "+response.data.contacts)
                          let newnames = _.groupBy(response.data.contacts, (name) => name.name[0].toUpperCase());
-                         //If searched text is null set state value of contact
+                      //if searched text is null do not search 
                       if (searchText == null) {
                          this.setState({dataContactDetail:newnames})
 
                       }
-                      //else if respose.data.contacts is not empty set state value of contacts
                       else {
                         if (response.data.contacts.length > 0) {
                           this.setState({searchedData:newnames})
                         }
                       }
-                    //set state value of laoder and isrefreshing as false (hide loader or refreshControl of scrollView) when data fetched from api
                           this.setState({isLoading:false,isRefreshing:false})
                      })
-                    //catch block fetch error from api 
                      .catch((error) =>{
                       console.log(error)
-                      // set state value of loader and refresh control to false 
                        this.setState({isLoading:false,isRefreshing:false})
                       })
 
@@ -107,24 +104,30 @@ export default class App extends Component {
 
             })
     }
-
-    // Through SearchFilterFunction function pass searched text value to fetchContacts function to search the related data in search bar
-   SearchFilterFunction(param){
-    console.log("text nativeEvent................"+param)
-      var text = param.trim()
+    /**
+    *@function filterSeachedData
+    *filter search data 
+    *
+    *param {string} searchInput 
+    *pass textInput value as param to search filter onSubmitEdit function
+    *
+    *@return 
+    *if text input is empty return   
+    */
+   filterSeachedData(searchInput){
+    console.log("text nativeEvent................"+searchInput)
+      var text = searchInput.trim()
       if(text == ""){
         return
       }
-      this.setState({searchQuery:param})
-      this.fetchContacts(param);
+      this.setState({searchQuery:searchInput})
+      this.fetchContacts(searchInput);
   }
 
-  //render data when conponent did mount 
     componentDidMount() {
       this.fetchContacts(null);
   }
 
-  //render header to ATOZList component
     _renderHeader(data) {
       console.log("data in renderCell"+JSON.stringify(data))
         return (
@@ -136,7 +139,7 @@ export default class App extends Component {
 
     /**
     * Linking app or interact with external app for sending e-mail , making call and messaging 
-    * @Pparam {string} url
+    * @param {string} url
     * open this url for email, call or sms
     *
     * @return
@@ -155,29 +158,56 @@ export default class App extends Component {
         return Linking.openURL(url);
       }
       })
-      //catch error 
       .catch(err => console.error('An error occurred', err));
     }
 
-    //called when the view start refreshing 
+    /**
+    *@function onRefreshFunction 
+    *@ var isRefreshing 
+    * needs to be set to true in the onRefreshfunction to show refresh indicator  
+    *
+    *function fetchContacts
+    * call fetchContacts inside onRefreshFunction to reload data 
+    */
       onRefreshFunction(){
         // if loader is there than return 
          if(this.state.isLoading){
           return
         }
-        // set state of refresh to true 
         this.setState({isRefreshing:true})
-        // call fetchContacts function to render response data 
         // pass value of searchQuery as null if it is empty  else pass value 
         this.fetchContacts(this.state.searchQuery.trim() == "" ? null : this.state.searchQuery.trim())
       }
 
-      //render cell to ATOZList component
+    /**
+    *@function refreshResults 
+    *call when input field data changes
+    * 
+    *@param text
+    *input text in inputfield 
+    */
+      refreshResults(text) {
+        this.setState({searchBoxText:text});
+        console.log("refress called  : "+text)
+        if (text.trim() == "") {
+        console.log("empty search data");
+        this.setState({searchedData:null})
+        this.setState({searchQuery:""})
+        }
+      }
+    /**
+    *@function clearInput 
+    *clear input field data 
+    */
+    clearInput = () => {
+      this.textInputRef.clear();
+      this.refreshResults("");
+  }
      _renderCell(data) {
         console.log("dataaaaaaaaaa "+JSON.stringify(data))
         return (
             <View style={tabStyle.contactBookView}>
-                <View style={tabStyle.contactData}>
+              <View style={tabStyle.contactData}>
                 <Text>
                     {data.name} 
                 </Text>
@@ -185,30 +215,15 @@ export default class App extends Component {
                     {data.contact_number}
                 </Text>
                 <View style={{flexDirection:"row"}}>
-                <TouchableOpacity onPress={()=>{this.redirectToApp('tel:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="phone" size={20} style={tabStyle.contactPhoneIcon}/> : null}</TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp('mailto:'+data.email)}}>{data.show_email ? <Icon name="email" size={20} style={tabStyle.contactEmailIcon}/> : null}</TouchableOpacity>
-                <TouchableOpacity onPress={()=>{this.redirectToApp('sms:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="message" size={20} style={tabStyle.contactSMSIcon}/> : null}</TouchableOpacity>
-                </View>
+                  <TouchableOpacity onPress={()=>{this.redirectToApp('tel:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="phone" size={20} style={tabStyle.contactPhoneIcon}/> : null}</TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{this.redirectToApp('mailto:'+data.email)}}>{data.show_email ? <Icon name="email" size={20} style={tabStyle.contactEmailIcon}/> : null}</TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{this.redirectToApp('sms:'+data.contact_number)}}>{data.contact_info_public ? <Icon name="message" size={20} style={tabStyle.contactSMSIcon}/> : null}</TouchableOpacity>
                 </View>
               </View>
+            </View>
         );
     }
-    //call when textinput data changes 
-    refreshResults(text) {
-
-      this.setState({searchBoxText:text});
-      console.log("refress called  : "+text)
-      if (text.trim() == "") {
-        console.log("empty search data");
-        this.setState({searchedData:null})
-        this.setState({searchQuery:""})
-      }
-    }
-
-    clearInput = () => {
-      this.textInputRef.clear();
-      this.refreshResults("");
-  }
+   
 
     render() {
         return (
@@ -222,14 +237,14 @@ export default class App extends Component {
                     onChangeText ={(text) => this.refreshResults(text)}
                     ref={ref => this.textInputRef = ref}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    onSubmitEditing={(event) => this.SearchFilterFunction(event.nativeEvent.text)} />
+                    onSubmitEditing={(event) => this.filterSeachedData(event.nativeEvent.text)} />
                     {this.state.searchBoxText =="" ? null : <Icon name="clear" size={24} onPress={()=>this.clearInput()}/>}  
                   </Item>
               </Header>
               <View style={tabStyle.container}>
               <ScrollView 
               contentContainerStyle={tabStyle.scrollViewContainer}
-                showsVerticalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
                 refreshControl={
                       <RefreshControl
                           onRefresh={() => this.onRefreshFunction()}

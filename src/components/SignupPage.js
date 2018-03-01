@@ -25,12 +25,18 @@ class Signup extends Component {
 
     }
   }
+  /**
+  *@function onRegisterPressed
+  *validate email and password 
+  *post email , password , name to server to regiter user
+  * 
+  */
   onRegisterPressed() {
     let data = new FormData();
     data.append("user[email]", this.props.email);
     data.append("user[password]", this.props.password);
     data.append("user[first_name]", this.props.name);
-
+    //validation done in Utilities file
     var validationResult = Utilities.validateEmailAndPassword(this.props.email,this.props.password);
     if (validationResult == 0) {
        Actions.refresh({showProgress:true})
@@ -48,7 +54,7 @@ class Signup extends Component {
             alert(response.data)
           }
         })
-       .catch(function (error) {
+       .catch((error)=> {
         console.log("in catch error"+error)
         Actions.refresh({showProgress:false})
           const errors = error.response.data
